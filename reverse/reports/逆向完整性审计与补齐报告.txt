@@ -1,0 +1,128 @@
+公开副本说明：本文件为历史分析报告，具体本机路径已脱敏为 <LOCAL_APP> 或 <LOCAL_WORKSPACE>；报告中的历史完成状态不代表完整原始源码已恢复。
+
+逆向完整性审计与补齐报告
+对象：app_xcs(新).apk.1.1；静态审计日期：2026-10-13
+
+结论：整包原始条目、DEX定义、已输出的Dart业务AOT方法以及全部原生库已建立可核验的完整库存；本轮还补出了此前未导出的原生C、业务方法全文和模型字段。但目前不能标记为“100%原始源码或业务语义还原”。下文逐项列出已完成范围与仍未闭合部分，不把提取、反编译成功和理解全部行为混为一项。
+
+所有工作均为本地静态解析。未安装/执行目标APK、Dart快照或目标原生库；未访问业务服务器。脚本执行的是本地解析器、反编译器和校验器。
+
+一、原包与解包：427个非目录条目，经独立路径索引全匹配
+
+原包及APP/input/app_xcs.apk均为44,379,386字节，SHA256：
+8fd060966759990ab5ef90639e3376a2b6aea209f3f545d768a2fdc668dfeaa9
+
+发现并闭合了普通解包的实际缺口：原APK同时有res/4C.xml和res/4c.xml。前者是112字节的合法最小AXML，后者是2,756字节的notification_template_media_custom布局。当前Mac文件系统不区分大小写，两路径实际指向同一文件，无法用原名同时保存两份不同内容。这是解包路径碰撞，不能据此说原件被人为篡改。
+
+已保留恢复前文件、原小写条目和更正记录；按原ZIP恢复小写后，旧unpacked大写别名成为不匹配项。为彻底解决该文件系统限制，两个原件均独立存入android/case_safe_entries，zip_inventory.json为所有427项登记audit_canonical_file。经索引核验：缺失0、字节不匹配0、额外unpacked文件0、完全同名重复ZIP项0。旧unpacked目录仍不能单独充当完整的原名映射；应使用可逆索引或原APK。
+
+100个原res文件均按原resources.arsc的类型/名称/config映射到已有apktool文件，未映射0、解码文件缺失0。XML/PNG解码是工具转换，不能用其文本或像素直接替代原ZIP字节一致性验证。
+
+证据：analysis/completeness_audit/android/zip_inventory.json、corrected_inputs/、case_safe_entries/。
+
+二、DEX与Android：库存无定义缺失，高层Java语义仍有缺口
+
+APK内1个DEX，逐类解析class_data_item的ULEB128索引增量并比较完整签名：
+  类定义：5,133 / smali类5,133
+  定义方法：28,975 / smali方法28,975
+  定义字段：13,162 / smali字段13,162
+  有code_item的方法：26,569 / smali有代码方法26,569
+逐类集合、签名计数及代码存在性一致。method_ids中的外部引用没有被混算成定义数。每个DEX方法的原指令区保留字节长度及SHA，所有smali类均在清单内。
+
+JADX原输出2,508个Java文件。11次硬错误实际涉及8个不同方法，其中3个重复报错；独立--no-res --log-level debug重跑核实了该对应关系。8个失败方法均有完整smali及fallback，未遗漏另外3个方法。fallback是寄存器/goto伪Java，不是可编译原源码。
+
+仍有1,299条JADX警告，分布305个Java文件，按类型和具体源码位置全量登记。8个fallback不能解决所有类型推断、构造顺序和控制流警告。
+
+Manifest核对5个组件、13项权限和14个插件注册；全部注册类均有smali。全5,133个smali文件扫描出170处平台通道构造调用，其中5处为内部委托，已冻结调用所在完整方法。旧deep_android详细分析的是5个插件加MainActivity、22个通道名，其余9个插件的参数/结果语义仍未全部闭合。动态通道名只保存候选，不提升为确定名称；静态注册也不等于实际运行或Dart调用。
+
+证据：android/android_completeness.json、dex_inventory.json、smali_inventory.json、jadx_inventory.json、platform_channel_inventory.json、failed_methods/。
+
+三、Dart AOT：全部已输出业务方法都有完整正文和原始机器码
+
+package:distinguish的业务汇编共有53个文件：49个包含方法，4个只保留类声明。共612个已输出方法，57,768条有效机器指令；全部5,642个直接BL与原libapp.so字节及解码目标一致。全部612方法现有独立完整注释汇编正文及原始机器码反汇编，未找到明确语义关联的方法另有全文目录。
+
+13个短toJson包装器的Blutter声明size比有效正文多24字节，侵入后继区间：12个直接进入下一业务方法，1个先经过12字节AllocateOnlineConfigStub再到下一业务方法。已分别记录声明大小、实际正文边界、重叠地址和原字节；这是工具跨度元数据问题，不是缺了24字节方法正文，也未擅改原Blutter输出。
+
+按明确局部语义声明、接口合同、消息分发或登录证据进行关联：225个方法支持已记录的局部结论，387个仍需逐方法闭合。225不代表整个方法已完全理解，387也不等于没有提取；部分已有字段库存或其他证据。源码文件哈希、地址出现、整份文件引用或完整摘录均不自动计为语义还原。
+
+全量记录364个间接调用、376处closure分配引用、对象池737次业务代码引用（431个不同方法地址），对象池业务代码引用对应已输出方法的未匹配数为0。间接调用/closure需结合接收者、CID及异步数据流核对，库存数量不能直接解释为所有调用都尚未解析。
+
+HTTP业务层有23个GET/POST调用点：22个固定接口模板加saveImg动态图片GET；没有发现额外固定接口。端点与方法库存不能证明服务端完整Schema、所有动态URL或消息枚举全集。已知msg_type接收分支的业务解释仍以具体方法为限；msg117第0段已确认用于serial_no匹配，第1段含义及完整发送端Schema未确认。
+
+证据：flutter/method_coverage.json、surface_inventory.json、direct_calls.json、complete_methods/、raw_methods/、uncovered_methods/。
+
+四、本轮补齐的业务链与模型字段
+
+补出了12条有指令证据的有限行为链，涉及29个方法，包括密钥保存入口、验证与跳转、更新页面、LogService、用户修改密码入口与退出入口。每条声明都标注完整方法和原ELF指令锚点。
+
+密钥设置：_onSave拒绝空字符串和精确“6666”；其他原文本不trim，UTF8→MD5→Digest.toString→await save_config。save_config调用void async inletPwdDbWrite，不等待真实写盘完成；widget+0xb为true时offAll(LoginPage)，否则Get.back，随后显示保存成功。在线设置入口把该标志设true。已输出业务范围仅确认inlet_pwd.conf写入链，未找到读文件/口令匹配/访问控制用途，不能把它描述为完整登录门禁。
+
+更新页面：自动OTA使用AppUpdate.ota_url，手动下载使用update_url。自动监听读取OtaEvent.value，经double.parse写进度，没有读取status；非数字value可抛FormatException。页面没有保存订阅，也没有本页自有dispose取消该订阅；本地同步catch不能当作stream异步错误处理。手动launchUrl的Future和bool结果未消费。插件安装/下载的全部Android行为仍需独立分析。
+
+LogService：懒加载单例，创建RxList<Log>；红/黑日志拼接本地时间字符串后追加列表。在这两个追加方法中未发现文件或网络写入，不能由此推断其他日志路径无写入。
+
+用户退出按钮先发起wsLogout再立即offAll(LoginPage)，不await注销结果；已审回调本身不清Dart JWT或本地登录配置。修改密码按钮导航EditPwdPage。
+
+模型审计覆盖全部16个模型文件、38个已输出模型方法、35个JSON转换方法，登记94个“类+JSON键”合同、184次键出现，保留所有转换器正文、类型测试和序列化字段槽位。94条序列化字段LDUR全部经原ELF与Capstone独立核验地址、机器字及偏移；JSON键/类型名仍依据Blutter对象池解码，不能当作服务端Schema。这里的94不是后端字段全集；5个模型文件未输出独立JSON转换器，已单列边界。字段观察单独统计，没有自动抬升前述225个业务语义关联方法的计数。
+  AppUpdate：type、version、update_url、ota_url四个nullable字段。
+  ConfigNumber/DataConfig/LightingConfig/WifiConfig/User/MessageUpImg：记录实际键、nullable类型测试、字段偏移；不按名称猜类型。
+  OnlineConfig：四个嵌套Map及对应子模型转换调用。
+  Devices：42个实际JSON键；img_min_hreshold为APK真实拼写。create_time读String后DateTime.parse、输出ISO8601。version为间接调用，返回值按double拆箱；x4=0属于调用现场元数据，不能推断null默认0。其目标、null处理和接受类型尚未确认。
+  MjConfig：setter前读取字段，与数组字面量转换器的先key后value顺序不同；id在+0x17、number在+0x7、name在+0xf、url在+0x13。
+  Message.msg_content：factory保留dynamic；toJson对null写null，非null走GDT[cid+0x6d49]，该库存不猜调用目标或直接说JSON编码。
+  ViewSetting.fromJson：读8个键但丢弃返回值，写固定值3.0、1.9、640.0、34.0、70.0、60.0、64.0、true，不能当作恢复用户配置。
+
+证据：flutter/supplemental_flows.json、supplement_methods/、补链重建伪代码.txt；models/model_field_contracts.json、complete_methods/、模型字段补齐说明.txt。
+
+五、原生库：全部13库保存，7库全可执行段机器码已补齐
+
+APK内13个.so、4个ABI：arm64-v8a、armeabi-v7a、x86_64各含app/flutter/rust/rsa四库，x86只含rsa库。不存在的其他x86库不算解包遗漏。所有库与原ZIP逐字节一致；ELF头/段/节、符号、导入导出、REL/RELA、unwind区间和地址映射均有库存。
+
+Rust三个ABI与RSA四个ABI共7库的LLVM完整可执行段：2,877,230条机器码记录、75,832个ARM64 B/BL目标全部核验；未列出的可执行字节为0。原始机器码保留完整，不等于每个函数的含义已恢复。
+
+ARM64 Ghidra数据库状态：
+  Rust：3,632个发现的函数；3,548份完整C、2个超时、82个非可执行导入占位。
+  RSA：2,863个发现的函数；2,804份完整C、3个反编译错误、5份完整工具输出但含控制流截断、51个导入占位。
+此前分散C合集不足以覆盖整个数据库，本轮已批量补导出并重试失败。completed和语法闭合不能证明原始Rust/Go类型、ABI或所有控制流正确。
+
+实质C缺口共10个，地址为ELF VA（对应Ghidra地址加0x100000）：
+  Rust超时：0x15d9e0、0x15dc9c。
+  RSA错误：0x5af40、0x5b400、0x5b420。
+  RSA控制流截断：0xbd980、0xbdb30、0xbdbe0、0xbdc60、0xc00f0。
+每项保留范围、错误/重试状态及原机器码；导入占位单列，不混算为反编译失败。另有Rust107个、RSA2个函数的完整C含“Could not recover jumptable”警告，109项间接跳转语义仍不确定，不能因为completed就说已全部理解。既有桥接/登录/认证/心跳/QoS/socket/响应销毁的38个重点函数均有完整闭合C且没有明确控制流截断，但其候选C仍保留其他警告，这38个函数也只是已审有限列表。
+
+Ghidra函数范围尚未归入的可执行字节：Rust143,356，RSA370,888；逐区间登记，其用途可能含未发现函数、填充或数据，未擅自断言“不相关”。其他ABI没有现成Ghidra数据库；不能借用ARM64边界替代它们。libflutter引擎及非ARM64 libapp没有完整高层语义重建，Dart业务审计主要针对ARM64快照。
+
+Go pclntab独立恢复：ARM64 4,221、ARMv7 4,303、x86 4,298、x86_64 4,245，共17,067个函数。ARM64仅2,670个与Ghidra入口精确对应，另1,551个已完整列出元数据及原始代码范围；Ghidra的2,863不能当作全部Go函数。标准库/第三方归属只按编译源路径登记，不能证明函数未被业务调用。原生RSA存在也不证明Dart登录调用它；现有登录RSA证据指向Dart/PointyCastle，原生桥的实际业务调用关系仍需具体数据流证据。
+
+证据：native/native_completeness.json、elf/、go/、llvm/、rust_ghidra_functions.json、rsa_ghidra_functions.json、rust_not_complete_c.json、rsa_not_complete_c.json、critical_business_bodies.json。
+
+六、旧结论一致性与仍未闭合清单
+
+现有六套验证器全部重跑通过；154份既有JSON（含本轮状态索引）的13,029个哈希引用、1,344个不同文件无缺失或不匹配。它们原先证明的是证据与选定代码的一致性，没有覆盖整包条目或全部业务语义；本次增加独立范围库存。
+
+纠正了reconnect_flow.json和其生成器中的过强文字：types50/code0会写SDK认证标志+0x2b1，但响应user_id/data只确认解析成局部String，然后经e303c释放，未证明写入SDK。原脚本/JSON及精确diff保存在android/corrections/reconnect_auth_wording；重建与最新重连统一验证已PASS，状态索引已刷新。
+
+历史报告按轮次保留。旧ws_heartbeat的stale_heartbeat_after_relogin已被后轮完整stop-heartbeat证据覆盖：e13c8调用e207c(SDK,0)将时间戳清0。isContentWs无host入参、仅检查连接标志+0x2a5；共享空回调已闭合。认证标志、连接标志和Dart页面状态应分别判断，不能把任何一个单独当作认证可用连接的充分条件。
+
+当前实质范围缺口完整列入coverage_ledger.json：
+  1. 387个Dart方法仍待逐方法语义闭合；间接调用/closure数据流不能由BL数量替代。
+  2. JADX警告涉及305文件；剩余9插件的参数/结果、可选运行时类供应未闭合。
+  3. 上述10个原生C缺口、109个表跳转警告、未归入函数的区间、非ARM64高层语义与引擎范围。
+  4. 模型未解类型/间接转换、未输出转换器、inlet_pwd.conf读/验证用途。
+  5. msg117未使用的第1段含义、服务器枚举/完整Schema、实际认证响应和设备端约束。
+  6. 实际断线/认证失败/晚到WS102的运行时调度和网络送达；此前静态条件场景不是抓包或运行轨迹。
+  7. 编译时被删除、内联、共享入口的原始Dart方法；原始Dart/Rust/Go/Java源码未100%恢复。
+
+这些缺口有明确范围、位置和证据，不能用一条PASS或一个百分比消除。后续逆向优先按清单闭合业务相关方法和数据流，再根据实际授权的运行环境补动态验证；无需重新解包或重复扫描已冻结的原始库存。
+
+七、复现及阅读入口
+
+统一审计验证（在APP目录执行）：python3 scripts/verify_completeness_audit.py
+首次冻结由本轮完成；后续常规验证不需要--freeze-manifest，也不应为掩盖漂移重新冻结。
+总验证：analysis/completeness_audit/verification.json。
+冻结清单：analysis/completeness_audit/audit_artifact_manifest.json。
+分层覆盖/未闭合项：analysis/completeness_audit/coverage_ledger.json。
+各子目录说明与独立--verify脚本分别覆盖Android、Flutter、native、models；原始文件SHA与完整证据均可追溯。
+
+PASS含义限定为：记录的APK字节、库存、方法全文、机器码、字段观察及证据未缺失/漂移。semantic_reconstruction_complete=false，original_dart_source_recovered=false。

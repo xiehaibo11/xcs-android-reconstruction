@@ -1,0 +1,97 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000059800 <.text>:
+   5c380: 66 48 0f 6e c0               	movq	%rax, %xmm0
+   5c385: 66 0f 60 c0                  	punpcklbw	%xmm0, %xmm0    # xmm0 = xmm0[0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7]
+   5c389: 66 0f 60 c0                  	punpcklbw	%xmm0, %xmm0    # xmm0 = xmm0[0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7]
+   5c38d: 66 0f 70 c0 00               	pshufd	$0x0, %xmm0, %xmm0      # xmm0 = xmm0[0,0,0,0]
+   5c392: 48 83 fb 10                  	cmpq	$0x10, %rbx
+   5c396: 7c 54                        	jl	0x5c3ec <.text+0x2bec>
+   5c398: 48 89 f7                     	movq	%rsi, %rdi
+   5c39b: 48 83 fb 20                  	cmpq	$0x20, %rbx
+   5c39f: 0f 87 8d 00 00 00            	ja	0x5c432 <.text+0x2c32>
+   5c3a5: 48 8d 44 1e f0               	leaq	-0x10(%rsi,%rbx), %rax
+   5c3aa: eb 15                        	jmp	0x5c3c1 <.text+0x2bc1>
+   5c3ac: f3 0f 6f 0f                  	movdqu	(%rdi), %xmm1
+   5c3b0: 66 0f 74 c8                  	pcmpeqb	%xmm0, %xmm1
+   5c3b4: 66 0f d7 d1                  	pmovmskb	%xmm1, %edx
+   5c3b8: 0f bc d2                     	bsfl	%edx, %edx
+   5c3bb: 75 25                        	jne	0x5c3e2 <.text+0x2be2>
+   5c3bd: 48 83 c7 10                  	addq	$0x10, %rdi
+   5c3c1: 48 39 c7                     	cmpq	%rax, %rdi
+   5c3c4: 72 e6                        	jb	0x5c3ac <.text+0x2bac>
+   5c3c6: 48 89 c7                     	movq	%rax, %rdi
+   5c3c9: f3 0f 6f 08                  	movdqu	(%rax), %xmm1
+   5c3cd: 66 0f 74 c8                  	pcmpeqb	%xmm0, %xmm1
+   5c3d1: 66 0f d7 d1                  	pmovmskb	%xmm1, %edx
+   5c3d5: 0f bc d2                     	bsfl	%edx, %edx
+   5c3d8: 75 08                        	jne	0x5c3e2 <.text+0x2be2>
+   5c3da: 49 c7 00 ff ff ff ff         	movq	$-0x1, (%r8)
+   5c3e1: c3                           	retq
+   5c3e2: 48 29 f7                     	subq	%rsi, %rdi
+   5c3e5: 48 01 d7                     	addq	%rdx, %rdi
+   5c3e8: 49 89 38                     	movq	%rdi, (%r8)
+   5c3eb: c3                           	retq
+   5c3ec: 48 85 db                     	testq	%rbx, %rbx
+   5c3ef: 74 e9                        	je	0x5c3da <.text+0x2bda>
+   5c3f1: 48 8d 46 10                  	leaq	0x10(%rsi), %rax
+   5c3f5: 66 a9 f0 0f                  	testw	$0xff0, %ax             # imm = 0xFF0
+   5c3f9: 74 19                        	je	0x5c414 <.text+0x2c14>
+   5c3fb: f3 0f 6f 0e                  	movdqu	(%rsi), %xmm1
+   5c3ff: 66 0f 74 c8                  	pcmpeqb	%xmm0, %xmm1
+   5c403: 66 0f d7 d1                  	pmovmskb	%xmm1, %edx
+   5c407: 0f bc d2                     	bsfl	%edx, %edx
+   5c40a: 74 ce                        	je	0x5c3da <.text+0x2bda>
+   5c40c: 39 da                        	cmpl	%ebx, %edx
+   5c40e: 73 ca                        	jae	0x5c3da <.text+0x2bda>
+   5c410: 49 89 10                     	movq	%rdx, (%r8)
+   5c413: c3                           	retq
+   5c414: f3 0f 6f 4c 1e f0            	movdqu	-0x10(%rsi,%rbx), %xmm1
+   5c41a: 66 0f 74 c8                  	pcmpeqb	%xmm0, %xmm1
+   5c41e: 66 0f d7 d1                  	pmovmskb	%xmm1, %edx
+   5c422: 89 d9                        	movl	%ebx, %ecx
+   5c424: d3 e2                        	shll	%cl, %edx
+   5c426: c1 ea 10                     	shrl	$0x10, %edx
+   5c429: 0f bc d2                     	bsfl	%edx, %edx
+   5c42c: 74 ac                        	je	0x5c3da <.text+0x2bda>
+   5c42e: 49 89 10                     	movq	%rdx, (%r8)
+   5c431: c3                           	retq
+   5c432: 80 3d 4a 68 41 00 01         	cmpb	$0x1, 0x41684a(%rip)    # 0x472c83
+   5c439: 0f 85 66 ff ff ff            	jne	0x5c3a5 <.text+0x2ba5>
+   5c43f: 66 48 0f 6e c0               	movq	%rax, %xmm0
+   5c444: 4c 8d 5c 1e e0               	leaq	-0x20(%rsi,%rbx), %r11
+   5c449: c4 e2 7d 78 c8               	vpbroadcastb	%xmm0, %ymm1
+   5c44e: c5 fe 6f 17                  	vmovdqu	(%rdi), %ymm2
+   5c452: c5 ed 74 d9                  	vpcmpeqb	%ymm1, %ymm2, %ymm3
+   5c456: c4 e2 7d 17 db               	vptest	%ymm3, %ymm3
+   5c45b: 75 26                        	jne	0x5c483 <.text+0x2c83>
+   5c45d: 48 83 c7 20                  	addq	$0x20, %rdi
+   5c461: 4c 39 df                     	cmpq	%r11, %rdi
+   5c464: 7c e8                        	jl	0x5c44e <.text+0x2c4e>
+   5c466: 4c 89 df                     	movq	%r11, %rdi
+   5c469: c5 fe 6f 17                  	vmovdqu	(%rdi), %ymm2
+   5c46d: c5 ed 74 d9                  	vpcmpeqb	%ymm1, %ymm2, %ymm3
+   5c471: c4 e2 7d 17 db               	vptest	%ymm3, %ymm3
+   5c476: 75 0b                        	jne	0x5c483 <.text+0x2c83>
+   5c478: c5 f8 77                     	vzeroupper
+   5c47b: 49 c7 00 ff ff ff ff         	movq	$-0x1, (%r8)
+   5c482: c3                           	retq
+   5c483: c5 fd d7 d3                  	vpmovmskb	%ymm3, %edx
+   5c487: 0f bc d2                     	bsfl	%edx, %edx
+   5c48a: 48 29 f7                     	subq	%rsi, %rdi
+   5c48d: 48 01 fa                     	addq	%rdi, %rdx
+   5c490: 49 89 10                     	movq	%rdx, (%r8)
+   5c493: c5 f8 77                     	vzeroupper
+   5c496: c3                           	retq
+   5c497: cc                           	int3
+   5c498: cc                           	int3
+   5c499: cc                           	int3
+   5c49a: cc                           	int3
+   5c49b: cc                           	int3
+   5c49c: cc                           	int3
+   5c49d: cc                           	int3
+   5c49e: cc                           	int3
+   5c49f: cc                           	int3

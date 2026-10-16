@@ -1,0 +1,275 @@
+{
+  "original_source_restored": false,
+  "all_business_semantics_restored": false,
+  "files": [
+    {
+      "implementation": "<LOCAL_APP>/reconstruction/app/src/main/java/com/re/xcs/rebuild/core/ApiContract.java",
+      "sha256": "f7eea172f4ab151685f9e898a2de18e2512142bb89ef609bace3a5485c6469be",
+      "kind": "executable functional reconstruction; not original recovered source",
+      "evidence": [
+        {
+          "file": "<LOCAL_APP>/analysis/http_contract/endpoint_contracts.json",
+          "sha256": "f401d9a002ee38660256784c373d050d13886138fcded1991abf346009fa1486",
+          "method_addresses": []
+        },
+        {
+          "file": "<LOCAL_APP>/analysis/login_flow/dart_login_flow.json",
+          "sha256": "0a460be332fe7e68ac0fae3c2c0049a9df7b5effc810c915faa52fb282879643",
+          "method_addresses": []
+        },
+        {
+          "file": "<LOCAL_APP>/analysis/message_semantics/dispatch_evidence.asm.txt",
+          "sha256": "17a40315ddcb0e26c0507cf0d0d1023fbb35a8c7683bf524458fad268d1d6d06",
+          "method_addresses": [
+            "0x528074"
+          ]
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/logic/logic_contracts.json",
+          "sha256": "60e03cdd50ce4b3513641b44e7ebec9cc5dfbf3b7265cd287b10c4cec1d7b7bc",
+          "method_addresses": [
+            "0x42c004",
+            "0x455208"
+          ]
+        }
+      ]
+    },
+    {
+      "implementation": "<LOCAL_APP>/reconstruction/app/src/main/java/com/re/xcs/rebuild/core/Models.java",
+      "sha256": "ed93f237a2ee0c423b0cd71e49d4b00d3084d566e7a89c0875a8bea07c5ff9e2",
+      "kind": "executable functional reconstruction; not original recovered source",
+      "evidence": [
+        {
+          "file": "<LOCAL_APP>/analysis/completeness_audit/models/model_field_contracts.json",
+          "sha256": "8ba2cf20f8f446d31be8affdacd00af79bf83b14947d5fcdb07fce799a1291d3",
+          "method_addresses": []
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round2/models/contracts.json",
+          "sha256": "484f8672af9b24f6f033a356f6c365ad8d137d32521aee4216c39aca542abf3e"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/datetime/contracts.json",
+          "sha256": "918a59fd1cc08b3861c0aa7e29d367f1f4687cb608522aee73a5d41df17ff2fd"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/mint/contracts.json",
+          "sha256": "535c8f3fb96a44204ca9d4c7dd06de5bc6127baac70e2e9db14064e0aad67bfa"
+        }
+      ]
+    },
+    {
+      "implementation": "<LOCAL_APP>/reconstruction/app/src/main/java/com/re/xcs/rebuild/core/SessionState.java",
+      "sha256": "cead6c7b13906535ebfd5b7012af681e0cf02178abd7d1f395e1036cb07505ac",
+      "kind": "executable functional reconstruction; not original recovered source",
+      "evidence": [
+        {
+          "file": "<LOCAL_APP>/analysis/local_state/local_state.json",
+          "sha256": "f18bbe5ab5d113eadef1aee7acd447617b346022a6d40d4fc671c18fc57f3182",
+          "method_addresses": []
+        },
+        {
+          "file": "<LOCAL_APP>/analysis/login_flow/dart_login_flow.json",
+          "sha256": "0a460be332fe7e68ac0fae3c2c0049a9df7b5effc810c915faa52fb282879643",
+          "method_addresses": []
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round2/callbacks/callback_contracts.json",
+          "sha256": "4cf6226faf5adf55c263ba89d893d658e40b5eecc92a6ea23f7da67fbded86fb"
+        }
+      ]
+    },
+    {
+      "implementation": "<LOCAL_APP>/reconstruction/app/src/main/java/com/re/xcs/rebuild/core/JsonHttpTransport.java",
+      "sha256": "d3447f87596d607ac0332df4ebf9b0ac19c8f151b54ba92624ec023a53577a68",
+      "kind": "executable functional reconstruction; not original recovered source",
+      "evidence": [
+        {
+          "file": "<LOCAL_APP>/analysis/http_contract/endpoint_contracts.json",
+          "sha256": "f401d9a002ee38660256784c373d050d13886138fcded1991abf346009fa1486",
+          "method_addresses": []
+        }
+      ]
+    },
+    {
+      "implementation": "<LOCAL_APP>/reconstruction/app/src/main/java/com/re/xcs/rebuild/core/LoginFlow.java",
+      "sha256": "9289490da5e077dee31fb856b8aa7fdcab75eec2470f9c49f25b0682455ed97b",
+      "kind": "executable functional reconstruction; not original recovered source",
+      "evidence": [
+        {
+          "file": "<LOCAL_APP>/analysis/login_flow/dart_login_flow.json",
+          "sha256": "0a460be332fe7e68ac0fae3c2c0049a9df7b5effc810c915faa52fb282879643",
+          "method_addresses": []
+        },
+        {
+          "file": "<LOCAL_APP>/analysis/login_flow/dart_login_evidence.json",
+          "sha256": "725dbfec3f2c55712e11838c8754b4cb8c48a3b9ebb6064f49c10d60e32472ae",
+          "method_addresses": []
+        }
+      ]
+    },
+    {
+      "implementation": "<LOCAL_APP>/reconstruction/app/src/main/java/com/re/xcs/rebuild/core/ResultRules.java",
+      "sha256": "6e4ce2bc3b8869dc5597d8dcaf1da8a7ab75b8d5eb90d67ac10823fce0a4db47",
+      "kind": "executable functional reconstruction; not original recovered source",
+      "evidence": [
+        {
+          "file": "<LOCAL_APP>/analysis/result_pipeline/reconstructed_pipeline.dart",
+          "sha256": "8ebe804d39178fec96ef2d1151df525376aadd1cd5e5d34b3cc6f91900875eda",
+          "method_addresses": [
+            "0x4a26cc",
+            "0x4a2164",
+            "0x4a67dc",
+            "0x4b68d4",
+            "0x4a33cc",
+            "0x4b6b2c"
+          ]
+        },
+        {
+          "file": "<LOCAL_APP>/analysis/result_pipeline/evidence_manifest.json",
+          "sha256": "7b6fd4c7d7c69cf0b6509375411edab0c9697ba9f1c4a15e4d83666097cfa7f7",
+          "method_addresses": []
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round2/callbacks/callback_contracts.json",
+          "sha256": "4cf6226faf5adf55c263ba89d893d658e40b5eecc92a6ea23f7da67fbded86fb"
+        }
+      ]
+    },
+    {
+      "implementation": "<LOCAL_APP>/reconstruction/app/src/main/java/com/re/xcs/rebuild/core/MessageEngine.java",
+      "sha256": "02e786a543b2baa27445f8c949b902861beebde78f6504a62f5aabb3b327a911",
+      "kind": "executable functional reconstruction; not original recovered source",
+      "evidence": [
+        {
+          "file": "<LOCAL_APP>/analysis/message_semantics/msg_type_mapping.json",
+          "sha256": "571c4c5b97a527726e991625fb2ac438016884efcc7f0aa1e97e6b9f56703573",
+          "method_addresses": [
+            "0x527460",
+            "0x5281d8",
+            "0x529164",
+            "0x52a3d0",
+            "0x52a52c"
+          ]
+        },
+        {
+          "file": "<LOCAL_APP>/analysis/result_pipeline/reconstructed_pipeline.dart",
+          "sha256": "8ebe804d39178fec96ef2d1151df525376aadd1cd5e5d34b3cc6f91900875eda",
+          "method_addresses": []
+        },
+        {
+          "file": "<LOCAL_APP>/analysis/completeness_audit/flutter/complete_methods/4aab28.asm.txt",
+          "sha256": "5ba971382d35906d0ccf4974ecd5477c86d69ae4c0ffc7ee976ae5fe8a6219f1",
+          "method_addresses": [
+            "0x4aab28"
+          ]
+        },
+        {
+          "file": "<LOCAL_APP>/analysis/completeness_audit/flutter/complete_methods/4aac38.asm.txt",
+          "sha256": "236077532f1676558d73e69bf24ce279b257d5f61ccbc4a49ee09f08bb51b056",
+          "method_addresses": [
+            "0x4aac38"
+          ]
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round2/callbacks/callback_contracts.json",
+          "sha256": "4cf6226faf5adf55c263ba89d893d658e40b5eecc92a6ea23f7da67fbded86fb"
+        }
+      ]
+    },
+    {
+      "implementation": "<LOCAL_APP>/reconstruction/app/src/main/java/com/re/xcs/rebuild/core/CachedImageLoader.java",
+      "sha256": "a7d0eac6a7dcab8cbae97a0c746587240c7565fc3dabcb399dc6b09f69135986",
+      "kind": "executable functional reconstruction; not original recovered source",
+      "evidence": [
+        {
+          "file": "<LOCAL_APP>/analysis/http_contract/endpoint_contracts.json",
+          "sha256": "f401d9a002ee38660256784c373d050d13886138fcded1991abf346009fa1486",
+          "method_addresses": [
+            "0x528820",
+            "0x529164"
+          ]
+        }
+      ]
+    },
+    {
+      "implementation": "<LOCAL_APP>/reconstruction/app/src/main/java/com/re/xcs/rebuild/core/LocalConfig.java",
+      "sha256": "8813e9b0a5fcff2987587af37c12dd66b6a7a70d29348bc8afd259f80de0a77c",
+      "kind": "executable functional reconstruction; not original recovered source",
+      "evidence": [
+        {
+          "file": "<LOCAL_APP>/analysis/local_state/local_state.json",
+          "sha256": "f18bbe5ab5d113eadef1aee7acd447617b346022a6d40d4fc671c18fc57f3182",
+          "method_addresses": []
+        }
+      ]
+    },
+    {
+      "implementation": "<LOCAL_APP>/reconstruction/app/src/main/java/com/re/xcs/rebuild/core/JsonCodec.java",
+      "sha256": "1ea03024863ee825881ec5684d0014983bcbef9434906ac5344c7d026328c97a",
+      "kind": "executable functional reconstruction; not original recovered source",
+      "evidence": [
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/numeric_json/verification.json",
+          "sha256": "5ef00bd40bd88c8bd3d4ae77dcae9897268acc4a7582bd09cd010b62bfd0f792"
+        }
+      ]
+    },
+    {
+      "implementation": "<LOCAL_APP>/reconstruction/app/src/main/java/com/re/xcs/rebuild/core/DartConversions.java",
+      "sha256": "2260d89ac4ea1bf011b992ae311c9913eeec6b4d4d8525e8cdedbda8c5188216",
+      "kind": "new bounded executable reconstruction",
+      "evidence": [
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round2/models/contracts.json",
+          "sha256": "484f8672af9b24f6f033a356f6c365ad8d137d32521aee4216c39aca542abf3e"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round2/models/verification.json",
+          "sha256": "8e3b7829f1bc7a625cd0a7bd8941c9c07fd1d5b0992a6091afa6c76e3651efd1"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/mint/contracts.json",
+          "sha256": "535c8f3fb96a44204ca9d4c7dd06de5bc6127baac70e2e9db14064e0aad67bfa"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/datetime/contracts.json",
+          "sha256": "918a59fd1cc08b3861c0aa7e29d367f1f4687cb608522aee73a5d41df17ff2fd"
+        }
+      ]
+    },
+    {
+      "implementation": "<LOCAL_APP>/reconstruction/app/src/main/java/com/re/xcs/rebuild/core/DartIntegers.java",
+      "kind": "new executable bounded reconstruction",
+      "evidence": [
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/mint/contracts.json",
+          "sha256": "535c8f3fb96a44204ca9d4c7dd06de5bc6127baac70e2e9db14064e0aad67bfa"
+        }
+      ],
+      "sha256": "f7f6e7cd2f46df3369dbae2a5bdc34417e683e3e89fe2b9a3705e65c3d62bc45"
+    },
+    {
+      "implementation": "<LOCAL_APP>/reconstruction/app/src/main/java/com/re/xcs/rebuild/core/DartDateTime.java",
+      "kind": "new executable bounded reconstruction",
+      "evidence": [
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/datetime/contracts.json",
+          "sha256": "918a59fd1cc08b3861c0aa7e29d367f1f4687cb608522aee73a5d41df17ff2fd"
+        }
+      ],
+      "sha256": "e1e52d12c572084e2be067289f07821d4370ec7554ca47ea664913b2a7bba0d0"
+    },
+    {
+      "implementation": "<LOCAL_APP>/reconstruction/app/src/main/java/com/re/xcs/rebuild/core/GoBytePrimitives.java",
+      "kind": "new executable bounded reconstruction",
+      "evidence": [
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/simd/verification.json",
+          "sha256": "f62f24223565d320f3474839aa618ad32714d9ae552e258531f6ed195351f526"
+        }
+      ],
+      "sha256": "2b2061c38fe2ea83ba5767cb5b269dec5c955721c2b0deb5e4c4f8c1a7fea3e5"
+    }
+  ]
+}

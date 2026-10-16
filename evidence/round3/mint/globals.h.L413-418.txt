@@ -1,0 +1,6 @@
+413: #define Pu32 PRIu32
+414: #define Px32 PRIx32
+415: #define PX32 PRIX32
+416: #define Pd64 PRId64
+417: #define Pu64 PRIu64
+418: #define Px64 PRIx64

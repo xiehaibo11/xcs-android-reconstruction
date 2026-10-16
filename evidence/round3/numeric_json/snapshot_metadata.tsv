@@ -1,0 +1,9 @@
+FUNCTION	0x2ed154	[dart:convert] __JsonStringParser&_JsonParserWithListener&_ChunkedJsonParser::parseNumber	native=0
+FUNCTION	0x2eb3ac	[dart:convert] __JsonStringParser&_JsonParserWithListener&_ChunkedJsonParser::finishChunkNumber	native=0
+FUNCTION	0x2eb520	[dart:convert] _NumberBuffer::parseDouble	native=0
+FUNCTION	0x2ebda4	[dart:convert] _NumberBuffer::parseNum	native=0
+FUNCTION	0x2edd6c	[dart:convert] ::_parseDouble	native=1	native_name=Double_parse
+POOL	0xbe8	0x7ff0000000000000
+POOL	0xbf8	0x4340000000000000
+POOL	0xc90	0x8000000000000000
+POOL	0xc98	0xfff0000000000000

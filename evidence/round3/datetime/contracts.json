@@ -1,0 +1,724 @@
+{
+  "scope": "Observed Devices.create_time DateTime.parse/toIso8601String and DateTime dynamic toString reconstruction; not complete SDK or original application source",
+  "claims": [
+    {
+      "id": "Devices.create_time.parse_and_serialize",
+      "status": "implemented_for_observed_String_input_path",
+      "calls": [
+        "0x490328 ->0x491264 DateTime.parse",
+        "0x459f80 ->0x45a9dc DateTime.toIso8601String"
+      ],
+      "details": [
+        "JSON[create_time] undergoes required String checking at0x4902f8..0x490320; no null fallback. Parsing happens before subsequent server_id fields and before version dyn:toDouble at0x490620.",
+        "Devices stores the parsed DateTime in field_f, and toJson serializes that object rather than preserving original source spelling.",
+        "Malformed date throws at its original field position; version conversion must not be moved ahead of it."
+      ],
+      "integration_api": [
+        "DartDateTime.parse(String)",
+        "DartDateTime.toIso8601String()"
+      ],
+      "whole_original_business_method_closed": false
+    },
+    {
+      "id": "DateTime.parse.grammar_and_components",
+      "status": "original_pool_and_body_correlated_to_versioned_reference",
+      "regex_pool_offset": "0x10578",
+      "fraction_loop": "0x4913fc..0x491460, exactly6 digits, pad zeros, ignore further digits, never round",
+      "timezone": "0x491488..0x491570; group8 present setsisUtc; numeric offset subtracts signed minutes before normalization",
+      "rules": [
+        "ASCII optional signed4..6digit year; month/day2digits; separators and hour/minute/second according to original regex; suffix only inside optional time block.",
+        "Accept uppercase T or space, uppercase/lowercase Z, comma or decimal fractional second; no trimming or lowercase t; trailing line terminators are invalid.",
+        "Month/day/hour/minute/second accept overflow. Leap second60 normalizes into the next minute. Fraction limited to6microsecond digits.",
+        "Numeric offsets may have two-digit hours/minutes outside ordinary timezone ranges, and normalize arithmetically. Explicit suffix yields UTC; no suffix means local even when local zone is UTC."
+      ],
+      "error_branches": {
+        "0x4915b0..0x4915d8": "FormatException Time out of range",
+        "0x4915dc..0x491604": "FormatException Invalid date format"
+      }
+    },
+    {
+      "id": "DateTime.arithmetic_range",
+      "status": "implemented_with_original_wrapping_arithmetic",
+      "body": "0x4918e0..0x491b34",
+      "day_from_year": "0x442410",
+      "range_microseconds": [
+        -8640000000000000000,
+        8640000000000000000
+      ],
+      "rules": [
+        "Proleptic Gregorian calendar with astronomical year0; positive and negative months normalize using floor division.",
+        "0x491a18..0x491a6c execute64bit MUL/ADD without overflow checks, so some six-digit outlying years wrap into the permitted epoch range; Java long deliberately preserves that behavior.",
+        "Local parse has an extra preliminary one-day margin, then subtracts local offset; both UTC/local have finalabsolute range check.",
+        "millisecondsSinceEpoch floors negatives: -1microsecond -> -1millisecond; cached microsecond remains999.",
+        "_withValue calls_parts during microsecond validation at0x491710 and then_validate at0x49174c; format uses those cached parts."
+      ],
+      "extreme_exceptions": [
+        "-290308-12-21T19:59:05.224192Z wraps exactly to signed64 minimum; abs and floor subtraction overflow and constructor validation raisesRangeError.",
+        "The same suffix-free input inAmerica/Los_Angeles reaches DateTime native offset guard withseconds=-18444944491255 and raisesArgumentError. This is reproduced without silently converting either into ordinary FormatException."
+      ]
+    },
+    {
+      "id": "DateTime.local_timezone",
+      "status": "VM_algorithm_ported_OS_offset_provider_remains_host_dependent",
+      "original_methods": [
+        "0x442248 _equivalentSeconds",
+        "0x442320 _equivalentYear",
+        "0x491b34 _toLocalTimeOffset",
+        "0x4421c8 nativeoffsetentry"
+      ],
+      "rules": [
+        "Offset lookups whose floored seconds magnitude exceeds2147483647 map to a calendar-equivalent year in2008..2035 before the OS call. This is not unrestricted historical Java timezone lookup.",
+        "Dart local resolution uses sequential offsets and a two-hour earlier probe. Overlaps choose the earliest valid instant; gaps choose the earlier offset, moving the wall clock forward.",
+        "Native runtime/lib/date.cc rejects clampedseconds magnitude>2147483647; Java ArgumentError reproduces this guard.",
+        "Default parser uses TimeZone.getDefault(); explicitTimeZone overload is for deterministic offline testing. Parsed field parts are cached atconstruction."
+      ],
+      "limits": [
+        "OS tzdata remains external. Same zone ID with different operating-system timezone database versions can give different offsets; six-zone sampled agreement is not all historical zone-rule equivalence.",
+        "The VM two-hour probe is retained, including its limitations for unusual multiple transitions; no replacement by Java atZone/lenientGregorianCalendar."
+      ]
+    },
+    {
+      "id": "DateTime.format_and_dynamic_content",
+      "status": "implemented_and_reference_compared",
+      "iso_entry": "0x45a9dc",
+      "display_entry": "0x5715ac",
+      "message_selector": "GDT[cid+0x6d49], CID4688->0x5715ac",
+      "rules": [
+        "ISO uses T, four-digit year within[-9999,9999], otherwise explicitsign and at least6digits.",
+        "toString uses a space and_fourDigits for every year, so year10000 is10000 rather than+010000.",
+        "Always3millisecond digits; append3microsecond digits onlywhenmicrosecond!=0. UTC endsZ; localhasnooffsetsuffix.",
+        "DateTime in Message.msg_content must use its own toString override, not ISO or Object_toString. This does not add supportforcustomreceiverclasses orcycles."
+      ]
+    }
+  ],
+  "machine_code_review": {
+    "status": "PASS",
+    "business_bodies_checked": 2,
+    "SDK_bodies_checked": 31,
+    "instruction_words_checked": 4042,
+    "failures": []
+  },
+  "business_proofs": [
+    {
+      "entry": "0x4901f0",
+      "signature": "factory _ Devices.fromJson(/* No info */) {",
+      "instruction_count": 1050,
+      "checks": {
+        "frozen_asm_sha256": true,
+        "frozen_raw_sha256": true,
+        "frozen_body_sha256": true,
+        "full_body_words_match": true
+      },
+      "body_sha256": "9cc4acee7c93175a51f4df53d44f97d05e45f8288e8435c251a84b1d6f50792a",
+      "whole_business_method_claimed_complete": false
+    },
+    {
+      "entry": "0x459f08",
+      "signature": "Map<String, dynamic> toJson(Devices) {",
+      "instruction_count": 693,
+      "checks": {
+        "frozen_asm_sha256": true,
+        "frozen_raw_sha256": true,
+        "frozen_body_sha256": true,
+        "full_body_words_match": true
+      },
+      "body_sha256": "eb37e89916b13432c339d2652c480a20ed9e65d68f6205de90136f6410da1741",
+      "whole_business_method_claimed_complete": false
+    }
+  ],
+  "SDK_proofs": [
+    {
+      "entry": "0x441990",
+      "name": "[dart:core] DateTime::second",
+      "size": 92,
+      "elf_file_offset": 4462992,
+      "sha256": "c33548623cc11cfc573334d40fe4e4fb8597608c80a2c88cd4658a46c49a442f",
+      "instruction_count": 23,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x4419ec",
+      "name": "[dart:core] DateTime::minute",
+      "size": 92,
+      "elf_file_offset": 4463084,
+      "sha256": "fc1095eeb7def5ccd72ef4d65f4698930eb7d81ea671361e55d906c5d86126f0",
+      "instruction_count": 23,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x441a48",
+      "name": "[dart:core] DateTime::hour",
+      "size": 92,
+      "elf_file_offset": 4463176,
+      "sha256": "d45d05dd368365f8882c225455cdf4bae8a518abf7a79876c0f2d222b56c205e",
+      "instruction_count": 23,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x441aa4",
+      "name": "[dart:core] DateTime::year",
+      "size": 92,
+      "elf_file_offset": 4463268,
+      "sha256": "17b5de0367b06a24b245247a5abb8bf525ed4512fdb9704ba84c336f07efdfd7",
+      "instruction_count": 23,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x441b00",
+      "name": "[dart:core] DateTime::month",
+      "size": 92,
+      "elf_file_offset": 4463360,
+      "sha256": "b6dbd5b793e0b79b01ccc65c4213c8223fdf827ec5b18e30f7ac2f0f17ed3912",
+      "instruction_count": 23,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x441b5c",
+      "name": "[dart:core] DateTime::day",
+      "size": 92,
+      "elf_file_offset": 4463452,
+      "sha256": "f59e39f7f0e7ba6746d45ebac532314afa4d2871f3d05e2607309c79ad5bfbe5",
+      "instruction_count": 23,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x441bb8",
+      "name": "[dart:core] DateTime::weekday",
+      "size": 92,
+      "elf_file_offset": 4463544,
+      "sha256": "84e7dc7b78a07a8fb03977e9858fe7a2cfc82c4a33adae04b8f66f2788cca040",
+      "instruction_count": 23,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x441c14",
+      "name": "[dart:core] DateTime::_parts",
+      "size": 132,
+      "elf_file_offset": 4463636,
+      "sha256": "e6ff777f96c2c8f67ca6409260f9cff122f592f0640ab4ad36513a3fb64aedad",
+      "instruction_count": 33,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x441c98",
+      "name": "[dart:core] DateTime::_computeUpperPart",
+      "size": 1128,
+      "elf_file_offset": 4463768,
+      "sha256": "52d6ddca578799900ff8b06f99393331f7cad033f87227b4ed3512e62498505f",
+      "instruction_count": 282,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x442100",
+      "name": "[dart:core] DateTime::_localDateInUtcMicros",
+      "size": 104,
+      "elf_file_offset": 4464896,
+      "sha256": "5459937e08ff23a7070e8056db141e66b7c1d5aef0954c6a9041c9a15eb3b91c",
+      "instruction_count": 26,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x442168",
+      "name": "[dart:core] DateTime::_timeZoneOffsetInSeconds",
+      "size": 96,
+      "elf_file_offset": 4465000,
+      "sha256": "d08d98ff046326166c902ff6e91ba8d7cf25bab0dd18d4dd3f6f9f91cff846f5",
+      "instruction_count": 24,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x4421c8",
+      "name": "[dart:core] DateTime::_timeZoneOffsetInSecondsForClampedSeconds",
+      "size": 128,
+      "elf_file_offset": 4465096,
+      "sha256": "96f171f8de4b930fa15ac446556cd672b4ba1304b6680d76644dc755cf462802",
+      "instruction_count": 32,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x442248",
+      "name": "[dart:core] DateTime::_equivalentSeconds",
+      "size": 216,
+      "elf_file_offset": 4465224,
+      "sha256": "fef39b4347b9c78e9ee1d7c54cc74dbc8188b5a5b5930e7e4df901fc532b0cdc",
+      "instruction_count": 54,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x442320",
+      "name": "[dart:core] DateTime::_equivalentYear",
+      "size": 164,
+      "elf_file_offset": 4465440,
+      "sha256": "ae53f5557105b3f0aa745903da224e38631aaedaf53ea65021c1a14cbbf7f2d6",
+      "instruction_count": 41,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x4423c4",
+      "name": "[dart:core] DateTime::_weekDay",
+      "size": 76,
+      "elf_file_offset": 4465604,
+      "sha256": "771b2bb2407b15ecdeba9960733d8bd2b5d59b3adb9350e958dbd227ac0477a8",
+      "instruction_count": 19,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x442410",
+      "name": "[dart:core] DateTime::_dayFromYear",
+      "size": 208,
+      "elf_file_offset": 4465680,
+      "sha256": "6fcaaad479e6e7b5098086c7eefdaab48ddc45a32100c651ea76f8aab37f1a24",
+      "instruction_count": 52,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x4424e0",
+      "name": "[dart:core] DateTime::_yearsFromSecondsSinceEpoch",
+      "size": 172,
+      "elf_file_offset": 4465888,
+      "sha256": "c4cb1b53028501b85feaa7241863b6af5e9f2c9a160ada5fa34475b63e40d09c",
+      "instruction_count": 43,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x45a9dc",
+      "name": "[dart:core] DateTime::toIso8601String",
+      "size": 1252,
+      "elf_file_offset": 4565468,
+      "sha256": "927f81f206560e193fcf00d7b7dc15cc89188fc98299be98527c7c5d9a55164b",
+      "instruction_count": 313,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x45aec0",
+      "name": "[dart:core] DateTime::millisecond",
+      "size": 92,
+      "elf_file_offset": 4566720,
+      "sha256": "09f5610abc299a690b38d454655d6aadf9f160d348df72029e9bf58f3d5b2b90",
+      "instruction_count": 23,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x45af1c",
+      "name": "[dart:core] DateTime::_threeDigits",
+      "size": 244,
+      "elf_file_offset": 4566812,
+      "sha256": "eb887e472f6caf9ebda962da8c0340cfb227bc7c38660b50cb8164715bb43a0a",
+      "instruction_count": 61,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x45b010",
+      "name": "[dart:core] DateTime::_twoDigits",
+      "size": 160,
+      "elf_file_offset": 4567056,
+      "sha256": "3f3152fb8152ee7b4a11ec82ace5ad224c9a69d604d07ceb54eac34392796a0f",
+      "instruction_count": 40,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x45b0b0",
+      "name": "[dart:core] DateTime::_sixDigits",
+      "size": 260,
+      "elf_file_offset": 4567216,
+      "sha256": "b717df642e2f086e240a4270944bf3a1f7fe67230664f1562116bb4cd62ad9ca",
+      "instruction_count": 65,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x45b1b4",
+      "name": "[dart:core] DateTime::_fourDigits",
+      "size": 408,
+      "elf_file_offset": 4567476,
+      "sha256": "475cafe082d492641999d9ad41617a763211dc8be33dab971104e3197a8ad03a",
+      "instruction_count": 102,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x491264",
+      "name": "[dart:core] DateTime::parse",
+      "size": 968,
+      "elf_file_offset": 4788836,
+      "sha256": "6c13a7fa6382b12de4e28fc4e9cb0b7ddd59c9687e474438dd807ebbce118caa",
+      "instruction_count": 242,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x49162c",
+      "name": "[dart:core] DateTime::_finishParse",
+      "size": 136,
+      "elf_file_offset": 4789804,
+      "sha256": "0acfb9dec29971eacc7335ab2a6387578259ee3fed56d4c043fdcca1f9056983",
+      "instruction_count": 34,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x4916b4",
+      "name": "[dart:core] DateTime::DateTime._withValue",
+      "size": 184,
+      "elf_file_offset": 4789940,
+      "sha256": "7832940571e19ca9ddc03ce720d05cf85e511d6c8106cd5f0efdd52cccbf32ba",
+      "instruction_count": 46,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x49176c",
+      "name": "[dart:core] DateTime::_validate",
+      "size": 372,
+      "elf_file_offset": 4790124,
+      "sha256": "3ca1f0d883e1e541cce5e1b2f3718a5931627dc1e9b7f9ebd7867e83a13d327b",
+      "instruction_count": 93,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x4918e0",
+      "name": "[dart:core] DateTime::_brokenDownDateToValue",
+      "size": 596,
+      "elf_file_offset": 4790496,
+      "sha256": "49de402931b5e53bf8a55e1a8c0a381abeb70a948db3f3ac1fd818702b06eea3",
+      "instruction_count": 149,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x491b34",
+      "name": "[dart:core] DateTime::_toLocalTimeOffset",
+      "size": 344,
+      "elf_file_offset": 4791092,
+      "sha256": "e30c7375b939c18f7f8fca5020a3119317799a51318d49a817f76326a6fba4cf",
+      "instruction_count": 86,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x491c8c",
+      "name": "[dart:core] DateTime::_parseFormat",
+      "size": 88,
+      "elf_file_offset": 4791436,
+      "sha256": "77728e4f6aa5f799d26467b9304765ea0cefe4edfa5142b6c4cf7a92bb4dd827",
+      "instruction_count": 22,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    },
+    {
+      "entry": "0x5715ac",
+      "name": "[dart:core] DateTime::toString",
+      "size": 1024,
+      "elf_file_offset": 5707180,
+      "sha256": "40567ea10a0999a68e313b8a1a062a436de8e3b3e8fcd7f1628f8e8b0861b38f",
+      "instruction_count": 256,
+      "checks": {
+        "raw_word_count_equals_full_snapshot_body": true,
+        "all_words_match_original_elf": true
+      },
+      "scope": "SDK method body for this path, not recovery of the full original SDK source"
+    }
+  ],
+  "dynamic_dispatch_proof": {
+    "cid": 4688,
+    "receiver": "[dart:core] DateTime",
+    "entry": "0x5715ac",
+    "target": "[dart:core] DateTime::toString",
+    "source": "analysis/reconstruction_round2/models/snapshot_targets.tsv"
+  },
+  "pool_references": [
+    {
+      "line": 12468,
+      "text": "[pp+0xd5c0] IMM: 0x141dd76000"
+    },
+    {
+      "line": 12469,
+      "text": "[pp+0xd5c8] List<List<int>>(2) [List<int>(12) [0, 0x1f, 0x3b, 0x5a, 0x78, 0x97, 0xb5, 0xd4, 0xf3, 0x111, 0x130, 0x14e], List<int>(12) [0, 0x1f, 0x3c, 0x5b, 0x79, 0x98, 0xb6, 0xd5, 0xf4, 0x112, 0x131, 0x14f]]"
+    },
+    {
+      "line": 12478,
+      "text": "[pp+0xd610] IMM: double(3.8708291835598634e+269) from 0x77e7724d49376000"
+    },
+    {
+      "line": 12479,
+      "text": "[pp+0xd618] IMM: double(3.870778507821269e+269) from 0x77e772392b600000"
+    },
+    {
+      "line": 12480,
+      "text": "[pp+0xd620] IMM: 0x1ad274800"
+    },
+    {
+      "line": 14330,
+      "text": "[pp+0x10528] Field <DateTime._parseFormat@0150898>: static late final (offset: 0x390)"
+    },
+    {
+      "line": 14331,
+      "text": "[pp+0x10530] String: \"Time out of range\""
+    },
+    {
+      "line": 14332,
+      "text": "[pp+0x10538] String: \"Invalid date format\""
+    },
+    {
+      "line": 14340,
+      "text": "[pp+0x10578] String: \"^([+-]\\?\\\\d{4,6})-\\?(\\\\d\\\\d)-\\?(\\\\d\\\\d)(\\?:[ T](\\\\d\\\\d)(\\?::\\?(\\\\d\\\\d)(\\?::\\?(\\\\d\\\\d)(\\?:[.,](\\\\d+))\\?)\\?)\\?( \\?[zZ]| \\?([-+])(\\\\d\\\\d)(\\?::\\?(\\\\d\\\\d))\\?)\\?)\\?$\""
+    },
+    {
+      "line": 14343,
+      "text": "[pp+0x10590] String: \"T\""
+    },
+    {
+      "line": 15269,
+      "text": "[pp+0x11cc8] String: \"Z\""
+    }
+  ],
+  "pool_note": "Some raw64bit IMM constants are printed as double by the old dumper; use their hexbits as integer constants according to original integer load/CMP instructions. Snapshot OffsetFromIndex includes tagged base offset, thus metadata POOL0x10577 corresponds to disassembler PP+0x10578.",
+  "versioned_official_references": [
+    {
+      "url": "https://raw.githubusercontent.com/dart-lang/sdk/3.5.2/sdk/lib/core/date_time.dart",
+      "path": "reference/date_time.dart",
+      "parts": "parse lines293-354; _validate408-435; toString600-615; toIso8601String640-657; regex890-893",
+      "sha256": "57c2914adfd4618308df38f0217f8b6cb8e21465611e496fe40ad8a8b73d62d8"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/dart-lang/sdk/3.5.2/sdk/lib/_internal/vm_shared/lib/date_patch.dart",
+      "path": "reference/date_patch.dart",
+      "parts": "_withValue43-45; _parts230-232; floor290-292; brokenDown307-361; equivalentSeconds427-445; toLocalOffset480-566",
+      "sha256": "1b6906bd5ea6b70f4298719b30a42f5596a1c6bc2bc69d6f0fbfe5a55237a54c"
+    },
+    {
+      "url": "https://storage.googleapis.com/dart-archive/channels/stable/release/3.5.2/sdk/dartsdk-macos-arm64-release.zip",
+      "path": "reference/dartsdk-macos-arm64-release.zip",
+      "parts": "Official local reference execution, not target APK",
+      "sha256": "5bbbfd94db56131a5ffbbe106f7d3b15c8bc3436fbf8aaaef32cf28131e1d20c"
+    }
+  ],
+  "validation": {
+    "java_assertions": 62,
+    "reference_comparisons": 37224,
+    "original_machine_arithmetic": 24211,
+    "fixture_replay": "run_tests.sh performs62assertions plus allsaved reference outputs withoutDartSDK/network",
+    "target_apk_run": false,
+    "reference_execution_is_not_target_execution": true
+  },
+  "source_manifest": [
+    {
+      "path": "unpacked/lib/arm64-v8a/libapp.so",
+      "sha256": "40d890193daa716defe2eec6cd2959bdbf7f7cf8345f8213b1747e54863a5a55"
+    },
+    {
+      "path": "analysis/reconstruction_round3/datetime/build_contracts.py",
+      "sha256": "20790e8dc3e3bc459c44d7da0d4001239a236a245728e4383a984f04df9a80da"
+    },
+    {
+      "path": "analysis/reconstruction_round2/models/snapshot_targets.tsv",
+      "sha256": "4ef1bfb32b5235763b9e22b4655a8ad4c49ef82e4dcc58aa4cc935539cf2824e"
+    },
+    {
+      "path": "reconstruction/evidence/round3/datetime/DART_LICENSE.txt",
+      "sha256": "2cfa3ee8e7512e6d44c854b986510810fadc815f93f890373b3a81c1b6ccd256"
+    },
+    {
+      "path": "reconstruction/evidence/round3/datetime/reference_oracle.dart",
+      "sha256": "9a8c96c465ccc543539d07f13861ee458d132cfe721089193b2392b081fc4316"
+    },
+    {
+      "path": "reconstruction/evidence/round3/datetime/reference_sources/date_time.dart",
+      "sha256": "57c2914adfd4618308df38f0217f8b6cb8e21465611e496fe40ad8a8b73d62d8"
+    },
+    {
+      "path": "reconstruction/evidence/round3/datetime/reference_sources/date_patch.dart",
+      "sha256": "1b6906bd5ea6b70f4298719b30a42f5596a1c6bc2bc69d6f0fbfe5a55237a54c"
+    },
+    {
+      "path": "reconstruction/evidence/round3/datetime/reference_sources/date.cc",
+      "sha256": "d27990aafcc0a6589f6f31760dce5773b5447a3b81ac8d85dc5c8a95740674a5"
+    },
+    {
+      "path": "analysis/reconstruction_round3/datetime/snapshot_datetime_targets.cpp",
+      "sha256": "d2d3ff7a504b87a6cb85db9f32882e1e853885c0a38c20549ff1b91ac7ade824"
+    },
+    {
+      "path": "analysis/reconstruction_round3/datetime/snapshot_targets.tsv",
+      "sha256": "4c50f98e57a13624ddc4e116c6b61f99bfdd1a944ddc0a7bde46c0001ce42d5c"
+    },
+    {
+      "path": "analysis/reconstruction_round3/datetime/snapshot_tool_build_commands.json",
+      "sha256": "f629d5bd62fcccb11d5e787a9fb5c9f00ee8a119499ce5765764e706de4acb8e"
+    },
+    {
+      "path": "analysis/reconstruction_round3/datetime/emulate_arithmetic.py",
+      "sha256": "b9a1dc0a472a25d73b31945aacdf4c26c56f4bc7c6142d0fdd60cc0ca65b5c2a"
+    },
+    {
+      "path": "analysis/reconstruction_round3/datetime/verify_reference.py",
+      "sha256": "a9b08c482e507ec166b53d5616afbd88432eb358c1d56320fbb4d3a9fa042dc2"
+    },
+    {
+      "path": "analysis/reconstruction_round3/datetime/package_reference_fixtures.py",
+      "sha256": "49deea9d5f68ec0a15e25adaf32dc32aed34148fe6c55f0f503773e12b6c741f"
+    },
+    {
+      "path": "analysis/reconstruction_round3/datetime/reference_oracle.dart",
+      "sha256": "9a8c96c465ccc543539d07f13861ee458d132cfe721089193b2392b081fc4316"
+    },
+    {
+      "path": "tools/blutter/dartsdk/v3.5.2/runtime/lib/date.cc",
+      "sha256": "d27990aafcc0a6589f6f31760dce5773b5447a3b81ac8d85dc5c8a95740674a5"
+    },
+    {
+      "path": "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/DartDateTime.java",
+      "sha256": "e1e52d12c572084e2be067289f07821d4370ec7554ca47ea664913b2a7bba0d0"
+    },
+    {
+      "path": "reconstruction/evidence/round3/datetime/DateTimeTest.java",
+      "sha256": "a152c819d6c0c8116e164f78b3b67a2c700c199f474d039c797c30300408eefc"
+    },
+    {
+      "path": "reconstruction/evidence/round3/datetime/run_tests.sh",
+      "sha256": "35bf0b63812f13237f8e35aa0c41fb2c9d3299a7ec9985505a2cbbd0c883244a"
+    },
+    {
+      "path": "reconstruction/evidence/round3/datetime/reference-fixtures.zip",
+      "sha256": "85fd04be548aa6fdc060220f4d5a49d823d9567fbc59b9d19ebd8cf66fb8a7c4"
+    },
+    {
+      "path": "reconstruction/evidence/round3/datetime/reference_verification.json",
+      "sha256": "20ee17b10c1e0cdaaf3ee8391d950751d63b6afd87c09eda84547ec7c1a130d3"
+    },
+    {
+      "path": "reconstruction/evidence/round3/datetime/reference_fixture_manifest.json",
+      "sha256": "3d36c6267d165fa574c191e8d91b3d1c98af98384e0ce9604a8cec2c3fe7a5b6"
+    },
+    {
+      "path": "reconstruction/evidence/round3/datetime/machine_execution.json",
+      "sha256": "69cb003d29083ac773bc19b7dc71a6fd0d4b05330cd013b95b4419aa13b02921"
+    }
+  ],
+  "remaining": [
+    "Original Dart class/source text, exceptions stack trace/text identity and compiler metadata are not restored. Java preserves relevant exception categories/reasons, not Dart runtime exception objects.",
+    "Full DateTime API(now,add,subtract,timezone-name,etc) and allcustomreceivers are outside the observedbusiness path.",
+    "Local tzdata equivalence across every device/OS version and exhaustiveallinputstrings are not proven.",
+    "Full original app initialization, UI, business callbacks and everyexportedmethod remain separate gaps."
+  ],
+  "coverage": {
+    "new_business_method_associations": [],
+    "whole_business_methods_claimed_complete": 0,
+    "frozen_baseline_modified": false
+  },
+  "original_source_recovered": false,
+  "complete_application_semantics": false,
+  "business_server_contacted": false
+}

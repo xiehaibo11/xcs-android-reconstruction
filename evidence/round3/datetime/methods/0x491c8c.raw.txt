@@ -1,0 +1,23 @@
+[dart:core] DateTime::_parseFormat
+0x491c8c: fd79bfa9 stp x29, x30, [x15, #-0x10]!
+0x491c90: fd030faa mov x29, x15
+0x491c94: efc100d1 sub x15, x15, #0x30
+0x491c98: 501f40f9 ldr x16, [x26, #0x38]
+0x491c9c: ff0110eb cmp x15, x16
+0x491ca0: e9010054 b.ls #0x491cdc
+0x491ca4: 70434091 add x16, x27, #0x10, lsl #12
+0x491ca8: 10be42f9 ldr x16, [x16, #0x578]
+0x491cac: f05902a9 stp x16, x22, [x15, #0x20]
+0x491cb0: d0c20091 add x16, x22, #0x30
+0x491cb4: de820091 add x30, x22, #0x20
+0x491cb8: fe4101a9 stp x30, x16, [x15, #0x10]
+0x491cbc: d0c20091 add x16, x22, #0x30
+0x491cc0: dec20091 add x30, x22, #0x30
+0x491cc4: fe4100a9 stp x30, x16, [x15]
+0x491cc8: 64ef48f9 ldr x4, [x27, #0x11d8]
+0x491ccc: cbd6f897 bl #0x2c77f8
+0x491cd0: ef031daa mov x15, x29
+0x491cd4: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x491cd8: c0035fd6 ret 
+0x491cdc: 87a00994 bl #0x6f9ef8
+0x491ce0: f1ffff17 b #0x491ca4

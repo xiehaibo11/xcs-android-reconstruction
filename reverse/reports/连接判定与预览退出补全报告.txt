@@ -1,0 +1,138 @@
+公开副本说明：本文件为历史分析报告，具体本机路径已脱敏为 <LOCAL_APP> 或 <LOCAL_WORKSPACE>；报告中的历史完成状态不代表完整原始源码已恢复。
+
+连接判定、认证状态与预览退出补全报告
+
+对象：app_xcs(新).apk.1.1，com.re.xcs，Manifest版本2.1.6/code39。
+范围：静态追踪ARM64 Flutter AOT、Rust异步任务、FRB桥接及页面退出链。
+本报告补齐前轮未知的isContentWs实际判据和共享回调0x6f2a58，并纠正旧伪代码的host入参。
+原始APK和原生库未修改；没有运行APK、目标Dart快照或业务原生库，没有请求业务服务器。
+
+1. isContentWs()的实际判定
+
+实际调用无业务参数，正常完成的Future<bool>返回SDK+0x2a5的连接标志。
+它不读取SDK+0x2b1认证标志，不检查JWT，不比较host/URI，也不发起实时网络探测。
+该bool是读取时刻的本地状态快照，不能代表后续HTTP请求时连接仍有效或认证已完成。
+
+闭合路径（Rust地址为Ghidra VA；对应ELF VA减0x100000）：
+  FRB id5 wrapper 0x1aff28 → helper0x1b8174 → scheduler0x1a96d8
+  → vtable ELF0x1a34f0，槽+0x18的RELA ELF0x1a3508绑定worker ELF0xb06b4
+  → worker GH0x1b06b4 → actual body GH0x1b8348 → getter GH0x1e2c04。
+actual body访问全局SDK GH0x2b4508，用action0/bool编码并发回Dart。
+getter在SDK+0x29c读锁及+0x2a4 poison检查下读取+0x2a5；关键原指令为：
+  ELF0xe2c48 ADD x8,x0,#0x2a5
+  ELF0xe2c50 LDRB w0,[x8]
+没有将poison/未初始化等异常路径统一转换为false，不能把所有失败写成“返回false”。
+
+Dart证据：simple.isContentWs 0x4aad80不加载用户参数；RustLibApiImpl方法0x4aae00
+建立NormalTask，serializer闭包0x4aaed8创建空WriteBuffer/SseSerializer后直接派发funcId=5，
+没有sse_encode_String调用。worker payload只有返回port，不含host。
+
+开始按钮onStartGames 0x4aac98仍执行server_url.substring(7)，搜索:8081并再substring，
+但截取返回值被丢弃，未作为isContentWs参数。该计算仍可因非法索引抛异常，阻止后续调用。
+旧的isContentWs(host)伪代码已纠正为isContentWs()；initWs(host)是另一条真实有String入参的链。
+
+2. 连接与认证是两个独立字段
+
+SDK+0x2a5：传输连接标志；SDK+0x2b1：曾经走过成功认证分支的原生标志。
+后者不是每次断线都会复位，因此不能无条件解释为当前连接已经认证。
+连接/认证是依据读写分支重建的描述名称，不是恢复出的Rust原始字段名。
+
+静态已确认的状态变化：
+  SDK构造：两个标志都初始化为0。
+  建立连接：+0x2a5置1，不以+0x2b1为前置条件。event10随后使Dart调用wsLogin(JWT)。
+  有效且未被QoS重复过滤的types50/code0：+0x2b1置1，+0x2a5置1，启动心跳/QoS并停止重登。
+  普通认证失败/断线清理：已审查路径清+0x2a5，没有清+0x2b1；旧的认证标志可能保留1。
+  full stop GH0x1e2ea0：清两个标志并停止心跳、QoS、重登等任务。
+  主动wsLogout与types54踢下线进入full stop；普通断线不是该完整停止路径。
+  wsLogout还尝试发送types3，忽略发送返回状态，然后清保存的JWT字符串并停止。
+  types54本身的full stop不等于主动wsLogout的JWT清除动作。
+
+因此可以出现连接=1、认证=0的连接建立但认证未完成阶段；也可以在普通断线后出现
+连接=0、认证=1的历史标志组合。isContentWs仅反映第一个字段。
+这些是原生代码允许的本地状态，具体时序及服务器状态未做运行验证。
+
+开始牌局的客户端门控：
+  isContentWs()==true → 直接GET /api/zhuo/start_games。
+  isContentWs()==false → wsLogin(JWT).then → GET /api/zhuo/start_games。
+第二条链不检查wsLogin的int返回值，也不等待types50/code0认证响应。
+wsLogin的Future完成表示本地发送/排队调用完成，不能当作服务器认证完成。
+两条路径都没有以认证成功作为开始HTTP请求的可靠前置条件。
+
+3. 共享回调0x6f2a58已经闭合
+
+此可执行入口只有8字节：e00316aac0035fd6。
+  0x6f2a58 mov x0,x22     // Dart NULL寄存器
+  0x6f2a5c ret
+没有加载参数、检查HTTP响应、字段写入、分支或调用；回调等价于(_) => null。
+它不清设备ID、Rx图片、订阅、timer、JWT或WebSocket状态，也不处理异步error分支。
+
+对象池将许多Function对象标注为[dart:ui] Shader::Shader._并指向这个地址。
+这是共享机器码入口的标签，不能据标签推断它执行着色器逻辑或还原出原始闭包名称。
+实际业务引用分别是：
+  预览保存回调0x460b60中，0x460c50加载此Function，AllocateClosure后挂endPreview.then。
+  Main事件回调0x527460中，0x52755c加载同入口，挂的是saveImg的Future.then。
+后者并不是另一条endPreview链；两处共享的是无操作完成回调。
+
+4. 预览退出时实际清理和保留的状态
+
+PreviewService.currentDeviceId与MainService.previewDeviceId是两个不同字段。
+startPreview在HTTP发出前写前者；响应回调无ok/success门控地写后者=device.id??0。
+前者用于路由退出补发end；后者用于WS102的deviceId前缀过滤。
+
+endPreview入口0x461014：
+  先把PreviewService.currentDeviceId设为0；
+  再POST /api/preview/end_preview/{调用时device_id}，无业务body，返回HTTP Future。
+没有在此处检查结束响应是否成功，也没有失败后恢复ID或重试。
+
+另一个清零入口不能遗漏：savePreviewParams 0x460ab4在0x460ad0执行
+stur wzr,[x1,#0xb]，然后才POST /api/preview/set_params_v2/{device_id}。
+这一操作与close=false/true无关，也不依赖保存响应成功；失败后没有恢复ID。
+
+保存配置的close=true路径0x460b60：
+  仅在set_params_v2响应ok且success as bool为true时调用endPreview；
+  挂无操作共享then回调；
+  随即Navigator.pop(true)，不等待结束HTTP响应。
+父页面预览路由完成回调0x4ac0b8只检查currentDeviceId!=0；若非0则endPreview(id)，
+忽略路由返回值和HTTP Future。正常save(true)先清0，故不会再补发相同end。
+普通返回走父路由完成回调，但不保证发end：更新预览图像(save(false))或保存失败都已清0，
+之后普通返回会跳过end，除非期间又startPreview重写ID。保存close=true的成功分支
+使用捕获的selectedDevice.id显式发end，仍不依赖全局ID是否已清0。
+如果已发的结束请求失败，ID同样为0，所审查链没有自动重试。
+
+退出后本地状态：
+  PreviewService.currentDeviceId：savePreviewParams或endPreview都清0，在HTTP响应前完成。
+  MainService.previewDeviceId：上述end/路由/共享回调均未清；保留上次设备ID。
+  MainService预览Rx字符串：上述链未清；下一次预览页initState才设空字符串。
+  参数Devices缓存：此前save在HTTP前修改，退出不回滚，保存失败也没有回滚。
+  Main的WS事件订阅：仍归Main页面所有；关闭其上的预览路由没有调用Main.dispose。
+  原生WebSocket/JWT/心跳：上述预览退出链没有wsLogout或full stop调用。
+  子页面UI观察者：两处Obx卸载时由ObxState.dispose 0x55e25c取消自身subscription并关闭自身
+    RxNotifier，解绑UI跟踪订阅；这不清共享Rx字符串，也不取消Main的WS事件订阅。
+
+WS102仍由Main事件监听处理：带deviceId|前缀时与保留的MainService.previewDeviceId比较；
+无前缀旧格式不按设备过滤。已审查分支没有再检查currentDeviceId是否为0或预览路由是否可见。
+因此如果服务器继续发旧设备帧，本地处理条件仍可能满足并更新共享Rx值；这是条件推导，
+没有证明服务器实际会在end后继续发帧，也没有运行验证实际晚到帧。
+
+5. Main销毁与预览退出的清理边界
+
+Main.dispose 0x556974才取消事件订阅、设备轮询Timer及接收倒计时Timer，删除图片缓存，
+并关闭Wakelock。这些清理未await，未取消已发出的HTTP Future；该完整body未调用wsLogout。
+FRB的async-star解码worker0x51fcb8有StreamIterator.cancel/await及ReceivePort.close收尾。
+ReceivePort.close 0x43f184原始21条指令关闭RawReceivePort及StreamController，然后返回null。
+这些是Dart接收端资源清理，不能等同于原生认证退出或网络socket完整停止。
+对间接调用及其他native侧机制不作超出列出方法的普遍否定。
+
+6. 证据、复现与验证
+
+analysis/connection_preview_closure/is_content_ws/：异步vtable、RELA、worker/getter、Dart空入参证据。
+analysis/connection_preview_closure/end_preview/：共享8字节回调、预览路由和状态写入/保留证据。
+analysis/connection_preview_closure/state_audit/：SDK字段读写库存、连接/认证/full stop状态矩阵。
+analysis/connection_preview_closure/stream_lifetime/：Main订阅所有权、完整FRB方法及接收端关闭指令。
+统一验证：scripts/verify_connection_preview_closure.py。
+结果：analysis/connection_preview_closure_verification.json。
+前轮报告和生成脚本中的旧未知项及host入参解释已同步更正；原始反汇编未修改。
+
+所有还原伪代码属于分析重建，不是恢复出的可编译Dart/Rust源码。
+原始指令、跳转目标、来源片段、哈希及合成分析代码检查证明的是本地静态证据一致性，
+不能代替真实抓包、服务器认证结果或设备退出预览效果的端到端验证。

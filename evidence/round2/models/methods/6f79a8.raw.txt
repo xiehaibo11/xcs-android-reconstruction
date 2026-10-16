@@ -1,0 +1,2 @@
+0x6f79a8: e00140f9 ldr x0, [x15]
+0x6f79ac: c0035fd6 ret 

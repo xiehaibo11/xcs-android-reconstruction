@@ -1,0 +1,18 @@
+
+<LOCAL_APP>/unpacked/lib/x86/librsa_bridge.so:	file format elf32-i386
+
+Disassembly of section .text:
+
+0001d8f0 <.text>:
+   8d840: e8 4b 1c fd ff               	calll	0x5f490 <.text+0x41ba0>
+   8d845: c3                           	retl
+   8d846: cc                           	int3
+   8d847: cc                           	int3
+   8d848: cc                           	int3
+   8d849: cc                           	int3
+   8d84a: cc                           	int3
+   8d84b: cc                           	int3
+   8d84c: cc                           	int3
+   8d84d: cc                           	int3
+   8d84e: cc                           	int3
+   8d84f: cc                           	int3

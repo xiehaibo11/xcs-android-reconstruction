@@ -1,0 +1,44 @@
+[dart:core] DateTime::_yearsFromSecondsSinceEpoch
+0x4424e0: fd79bfa9 stp x29, x30, [x15, #-0x10]!
+0x4424e4: fd030faa mov x29, x15
+0x4424e8: 00308ad2 mov x0, #0x5180
+0x4424ec: 2000a0f2 movk x0, #1, lsl #16
+0x4424f0: 501f40f9 ldr x16, [x26, #0x38]
+0x4424f4: ff0110eb cmp x15, x16
+0x4424f8: 49040054 b.ls #0x442580
+0x4424fc: 220cc09a sdiv x2, x1, x0
+0x442500: 5f0000f1 cmp x2, #0
+0x442504: 8d010054 b.le #0x442534
+0x442508: 511d96d2 mov x17, #0xb0ea
+0x44250c: 5f0011eb cmp x2, x17
+0x442510: 2a010054 b.ge #0x442534
+0x442514: a0b680d2 mov x0, #0x5b5
+0x442518: 41f47ed3 lsl x1, x2, #2
+0x44251c: 22080091 add x2, x1, #2
+0x442520: 410cc09a sdiv x1, x2, x0
+0x442524: 20c81e91 add x0, x1, #0x7b2
+0x442528: ef031daa mov x15, x29
+0x44252c: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x442530: c0035fd6 ret 
+0x442534: 104888d2 mov x16, #0x4240
+0x442538: f001a0f2 movk x16, #0xf, lsl #16
+0x44253c: 207c109b mul x0, x1, x16
+0x442540: e10300aa mov x1, x0
+0x442544: d5fdff97 bl #0x441c98
+0x442548: e20300aa mov x2, x0
+0x44254c: 43b040b8 ldur w3, [x2, #0xb]
+0x442550: 607c4193 sbfx x0, x3, #1, #0x1f
+0x442554: 010180d2 mov x1, #8
+0x442558: 3f0000eb cmp x1, x0
+0x44255c: 62010054 b.hs #0x442588
+0x442560: 41f042b8 ldur w1, [x2, #0x2f]
+0x442564: 21801c8b add x1, x1, x28, lsl #32
+0x442568: 207c4193 sbfx x0, x1, #1, #0x1f
+0x44256c: 41000036 tbz w1, #0, #0x442574
+0x442570: 207040f8 ldur x0, [x1, #7]
+0x442574: ef031daa mov x15, x29
+0x442578: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x44257c: c0035fd6 ret 
+0x442580: 5ede0a94 bl #0x6f9ef8
+0x442584: deffff17 b #0x4424fc
+0x442588: 6edf0a94 bl #0x6fa340

@@ -1,0 +1,44 @@
+
+<LOCAL_APP>/unpacked/lib/armeabi-v7a/librsa_bridge.so:	file format elf32-littlearm
+
+Disassembly of section .text:
+
+0001d7ec <.text>:
+   96b00: e52de004     	str	lr, [sp, #-0x4]!
+   96b04: e59d0008     	ldr	r0, [sp, #0x8]
+   96b08: e59a1018     	ldr	r1, [r10, #0x18]
+   96b0c: e5912030     	ldr	r2, [r1, #0x30]
+   96b10: e152000a     	cmp	r2, r10
+   96b14: 0a000019     	beq	0x96b80 <.text+0x79394> @ imm = #0x64
+   96b18: e5912000     	ldr	r2, [r1]
+   96b1c: e152000a     	cmp	r2, r10
+   96b20: 0a000016     	beq	0x96b80 <.text+0x79394> @ imm = #0x58
+   96b24: e591306c     	ldr	r3, [r1, #0x6c]
+   96b28: e153000a     	cmp	r3, r10
+   96b2c: 0a000003     	beq	0x96b40 <.text+0x79354> @ imm = #0xc
+   96b30: e59f005c     	ldr	r0, [pc, #0x5c]         @ 0x96b94 <.text+0x793a8>
+   96b34: e08f0000     	add	r0, pc, r0
+   96b38: e12fff30     	blx	r0
+   96b3c: ea000705     	b	0x98758 <.text+0x7af6c> @ imm = #0x1c14
+   96b40: ebffff1a     	bl	0x967b0 <.text+0x78fc4> @ imm = #-0x398
+   96b44: e1a05000     	mov	r5, r0
+   96b48: e1a00002     	mov	r0, r2
+   96b4c: ebffff26     	bl	0x967ec <.text+0x79000> @ imm = #-0x368
+   96b50: e1a00005     	mov	r0, r5
+   96b54: e592d01c     	ldr	sp, [r2, #0x1c]
+   96b58: e1a07000     	mov	r7, r0
+   96b5c: e5900000     	ldr	r0, [r0]
+   96b60: e12fff30     	blx	r0
+   96b64: e59a1018     	ldr	r1, [r10, #0x18]
+   96b68: e591006c     	ldr	r0, [r1, #0x6c]
+   96b6c: ebffff1e     	bl	0x967ec <.text+0x79000> @ imm = #-0x388
+   96b70: e59ad01c     	ldr	sp, [r10, #0x1c]
+   96b74: e3a03000     	mov	r3, #0
+   96b78: e58a301c     	str	r3, [r10, #0x1c]
+   96b7c: e49df004     	ldr	pc, [sp], #4
+   96b80: e1a07000     	mov	r7, r0
+   96b84: e5900000     	ldr	r0, [r0]
+   96b88: e49de004     	ldr	lr, [sp], #4
+   96b8c: e280f000     	add	pc, r0, #0
+   96b90: eafffffe     	b	0x96b90 <.text+0x793a4> @ imm = #-0x8
+   96b94: fffea078     	<unknown>

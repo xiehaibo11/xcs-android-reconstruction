@@ -1,0 +1,42 @@
+{
+  "scope": "Independent MainActivity integration review, compile only; emulator validation owned by root",
+  "source_sha256": "686fb5f730d1b2ab4cbd8d7349874edd711056ce265fd98f54aaf279710cc253",
+  "java_compile": "PASS --release 8 + android-35.jar, including instrumentation source",
+  "fixed": [
+    "Old HTTP/WS callbacks dereferencing null/new engine after stopMain",
+    "Concurrent repeated login and worker CheckBox access",
+    "Generation-specific HTTP/image execution, serialized session mutation across login",
+    "WS instance ownership after manual reconnect",
+    "Upload parsing exceptions surfaced before request; live-engine callback identity checked",
+    "Result edit synchronization and stale tile guard",
+    "get_default_wifi strict bool path through SettingsLogic",
+    "Online config/defaults and data pre-request mutation through SettingsLogic",
+    "Password validation/response via SettingsLogic",
+    "Compressed WAV assets supported through stream cache, async MediaPlayer, release on completion/error/destroy",
+    "Preview Bitmap ownership/release and captured device/engine callbacks",
+    "System back on update/no-engine returns login rather than unusable main"
+  ],
+  "explicit_reconstruction_changes": [
+    "Generation invalidation discards old callbacks, not a claim of original async scheduling equivalence",
+    "HTTP work serialized around mutable shared session",
+    "Password-success stopMain closes reconstruction runtime although original callback only navigated",
+    "Manual WiFi page explicitly shows scan-list integration not yet complete"
+  ],
+  "not_tested_here": [
+    "Real business server/device behavior",
+    "All preview failure/race equivalence",
+    "Emulator runtime; root is performing that separately"
+  ],
+  "subsequent_revision": {
+    "review_kind": "root integration addition after independent review",
+    "source_sha256": "582497dd3259c08aa32c6059740c1395fc1af12a245051e4b3548f176238b71e",
+    "changes": [
+      "Wi-Fi scan dialog now connected to SettingsLogic parser, polling, selection and save"
+    ],
+    "android_validation": "PASS 18 assertions: evidence/runtime/verification.json",
+    "remaining": [
+      "Original Wi-Fi multi-item ordering remains unresolved",
+      "Original Flutter async lifecycle and race equivalence remain unresolved"
+    ]
+  }
+}

@@ -1,0 +1,1491 @@
+{
+  "format": "reconstruction-gap-progress-v1",
+  "recorded_at_utc": "2026-10-15T15:59:08.231280+00:00",
+  "baseline_ledger": {
+    "file": "<LOCAL_APP>/analysis/completeness_audit/coverage_ledger.json",
+    "sha256": "3da17a2ba384e9e6d7ed0cd6fdb59c681bfc3e728916b0380e11a8b1fa802770"
+  },
+  "baseline_frozen": true,
+  "baseline_scope_counts": {
+    "apk_zip_entries": 427,
+    "dex_classes": 5133,
+    "dex_defined_methods": 28975,
+    "dex_defined_fields": 13162,
+    "dart_business_files": 53,
+    "dart_exported_business_methods": 612,
+    "dart_partial_claim_associations": 225,
+    "dart_without_explicit_claim_associations": 387,
+    "model_files": 16,
+    "model_class_key_contracts": 94,
+    "native_libraries": 13,
+    "native_abis": 4,
+    "native_explicit_c_failures_or_truncations": 10,
+    "go_functions_all_abis": 17067
+  },
+  "semantic_reconstruction_complete": false,
+  "source_reconstruction_complete": false,
+  "original_source_recovered": false,
+  "complete_behavioral_equivalence": false,
+  "completion_percentage": null,
+  "interpretation": "每一项原 remaining_gaps 都逐项原样保留在 baseline 并追加更新；工具输出、局部证据、编译成功、夹具通过均不等于整方法/原始源码/真实后端闭合。",
+  "remaining_gap_updates": [
+    {
+      "id": "dart_method_semantics",
+      "baseline": {
+        "id": "dart_method_semantics",
+        "state": "partial",
+        "count": 387,
+        "meaning": "No explicit business claim association in the conservative mapping; includes 23 serialization methods with separately recorded field observations. All bodies/raw are extracted.",
+        "inventory": {
+          "file": "<LOCAL_APP>/analysis/completeness_audit/flutter/semantic_gaps.json",
+          "sha256": "5f8ad794d5e846f88eeedd6b578e169ab67fdb75c1615643affbbcc6d3f6fdf7"
+        }
+      },
+      "state": "open",
+      "semantic_gap_closed": false,
+      "original_source_gap_closed": false,
+      "update": {
+        "progress_kind": "bounded_round3_progress",
+        "summary": "前两轮局部关联保留；第三轮补 DateTime parse/ISO/toString、Mint native分派及JSON数值入口的限定范围实现。原方法计数不变，不把参考库验证当全部业务方法完成。",
+        "evidence": [
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/logic/logic_contracts.json",
+            "sha256": "60e03cdd50ce4b3513641b44e7ebec9cc5dfbf3b7265cd287b10c4cec1d7b7bc"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/logic/verification.json",
+            "sha256": "4d62962e8a49f69662ab1cef1b8168688a3076ce8d58ab88da9d914e7eea84c0"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/logic/settings_test_result.json",
+            "sha256": "5a6782634e74647f31321e0dc1f037c06748df72c44a432c1fc2c4cd34a00e2f"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/logic/IMPLEMENTATION_SCOPE.txt",
+            "sha256": "c3542a120e895beb05528dbd313471bcfe429a4c3ea12b0f0eb0b63e5ac7639b"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/runtime/verification.json",
+            "sha256": "8907ca1ee9a986a54e2a84e44585df8e9c3093daa225b70b59e792abc8e3f7b7"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/callbacks/callback_contracts.json",
+            "sha256": "4cf6226faf5adf55c263ba89d893d658e40b5eecc92a6ea23f7da67fbded86fb"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/callbacks/verification.json",
+            "sha256": "b45b5f2fdc3b2589b24156e3f2cf87fc7b22254b97f2edd5ed7cbea8a3d889c1"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/callbacks/test_results.json",
+            "sha256": "8ca1fa0be627eda041ba60895c42c8a5bd0ed30fd2f1b6250fd6d6823df59bdd"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/models/contracts.json",
+            "sha256": "484f8672af9b24f6f033a356f6c365ad8d137d32521aee4216c39aca542abf3e"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/models/verification.json",
+            "sha256": "8e3b7829f1bc7a625cd0a7bd8941c9c07fd1d5b0992a6091afa6c76e3651efd1"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/integration/host-verification.json",
+            "sha256": "f7180721915211dfcf525d0f07dc3d9f5c2d4eef604c1bf6a814fc41b3184058"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/datetime/contracts.json",
+            "sha256": "918a59fd1cc08b3861c0aa7e29d367f1f4687cb608522aee73a5d41df17ff2fd"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/mint/contracts.json",
+            "sha256": "535c8f3fb96a44204ca9d4c7dd06de5bc6127baac70e2e9db14064e0aad67bfa"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/numeric_json/verification.json",
+            "sha256": "5ef00bd40bd88c8bd3d4ae77dcae9897268acc4a7582bd09cd010b62bfd0f792"
+          }
+        ],
+        "metrics": {
+          "baseline_without_explicit_claim_association": 387,
+          "new_local_associations": 33,
+          "reviewed_full_method_evidence_files": 69,
+          "behavior_contracts": 9,
+          "machine_instruction_words_checked": 9441,
+          "whole_original_methods_claimed_complete_this_round": 0
+        },
+        "remaining": "冻结612个导出业务方法225局部关联/387未关联；完整业务、框架动态接收者、异常对象和原源码仍open。"
+      }
+    },
+    {
+      "id": "dart_dynamic_calls",
+      "baseline": {
+        "id": "dart_dynamic_calls",
+        "state": "requires_receiver_and_async_dataflow_review",
+        "indirect_sites": 364,
+        "closure_references_without_local_claim": 279,
+        "different_closure_targets_without_local_claim": 257,
+        "meaning": "Review candidates; not a claim that every target is unknown.",
+        "inventory": {
+          "file": "<LOCAL_APP>/analysis/completeness_audit/flutter/surface_inventory.json",
+          "sha256": "ca7a51d144d207773328918a6419a30fcb92c41548e79697f8a7504cdd1a350c"
+        }
+      },
+      "state": "open",
+      "semantic_gap_closed": false,
+      "original_source_gap_closed": false,
+      "update": {
+        "progress_kind": "bounded_round3_progress",
+        "summary": "原snapshot确认DateTime CID4688独立toString和Mint CID60 Object_toString到Mint::ToCString分派，已接入Message和Devices的动态转换。",
+        "evidence": [
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/logic/logic_contracts.json",
+            "sha256": "60e03cdd50ce4b3513641b44e7ebec9cc5dfbf3b7265cd287b10c4cec1d7b7bc"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/logic/verification.json",
+            "sha256": "4d62962e8a49f69662ab1cef1b8168688a3076ce8d58ab88da9d914e7eea84c0"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/callbacks/callback_contracts.json",
+            "sha256": "4cf6226faf5adf55c263ba89d893d658e40b5eecc92a6ea23f7da67fbded86fb"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/models/contracts.json",
+            "sha256": "484f8672af9b24f6f033a356f6c365ad8d137d32521aee4216c39aca542abf3e"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/runtime/verification.json",
+            "sha256": "8907ca1ee9a986a54e2a84e44585df8e9c3093daa225b70b59e792abc8e3f7b7"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/integration/host-verification.json",
+            "sha256": "f7180721915211dfcf525d0f07dc3d9f5c2d4eef604c1bf6a814fc41b3184058"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/datetime/contracts.json",
+            "sha256": "918a59fd1cc08b3861c0aa7e29d367f1f4687cb608522aee73a5d41df17ff2fd"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/mint/contracts.json",
+            "sha256": "535c8f3fb96a44204ca9d4c7dd06de5bc6127baac70e2e9db14064e0aad67bfa"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/numeric_json/verification.json",
+            "sha256": "5ef00bd40bd88c8bd3d4ae77dcae9897268acc4a7582bd09cd010b62bfd0f792"
+          }
+        ],
+        "remaining": "自定义接收者、循环容器、完整noSuchMethod/异常对象、全部Flutter异步与动态路径仍open。"
+      }
+    },
+    {
+      "id": "java_warning_semantics",
+      "baseline": {
+        "id": "java_warning_semantics",
+        "state": "unresolved",
+        "warnings": 1299,
+        "source_files": 305,
+        "inventory": {
+          "file": "<LOCAL_APP>/analysis/completeness_audit/android/jadx_inventory.json",
+          "sha256": "21c274b6b9463e0bf508baaae9ce43197cc90362d1856fa7a8c38d219ea388a5"
+        }
+      },
+      "state": "open",
+      "semantic_gap_closed": false,
+      "original_source_gap_closed": false,
+      "update": {
+        "progress_kind": "bytecode_roundtrip_not_warning_resolution",
+        "summary": "原 Smali 已重装并完成规范化往返比较；新写 Java 工程可编译。两者都不能消除原 JADX 的 1299 条反编译告警或证明 305 个文件的高层语义。",
+        "evidence": [
+          {
+            "file": "<LOCAL_APP>/analysis/reconstruction_round/native/bytecode_resource_roundtrip.json",
+            "sha256": "30a446fe82d17911188312cc023b5e85ab7ab6a32391b547c2e02ec3699cbc18"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/dist/source-build.json",
+            "sha256": "f1ee762b734ededd3b500dc62cdc258f2a3b6a5953626ddd3735f786f264b106"
+          }
+        ],
+        "remaining": "原 1299 条告警/305 个文件的语义缺口保持 open。"
+      }
+    },
+    {
+      "id": "platform_plugin_semantics",
+      "baseline": {
+        "id": "platform_plugin_semantics",
+        "state": "partial",
+        "registered_plugins": 14,
+        "plugins_without_complete_parameter_result_review": 9,
+        "inventory": {
+          "file": "<LOCAL_APP>/analysis/completeness_audit/android/platform_channel_inventory.json",
+          "sha256": "fd277e579617018956fb696eb309ac29a513e4d881c241a38b0be66a5b89277c"
+        }
+      },
+      "state": "open",
+      "semantic_gap_closed": false,
+      "original_source_gap_closed": false,
+      "update": {
+        "progress_kind": "no_complete_parameter_result_review_added",
+        "summary": "保真包保留原插件与二进制，新 Java UI/平台适配不构成对原 14 个插件完整参数和返回值的恢复。",
+        "evidence": [
+          {
+            "file": "<LOCAL_APP>/analysis/reconstruction_round/native/original_bytecode_rebuild_verification.json",
+            "sha256": "c572a57a4b86636894c2067a14369a5aebd08b085370f91e4ee5e55b47a29468"
+          }
+        ],
+        "remaining": "9 个未完整复核插件保持 open；原插件实现图、错误路径与生命周期仍未全部闭合。"
+      }
+    },
+    {
+      "id": "native_c_failures_or_truncations",
+      "baseline": {
+        "id": "native_c_failures_or_truncations",
+        "state": "unresolved",
+        "count": 10,
+        "items": [
+          {
+            "library": "rust",
+            "elf_address": "0x15d9e0",
+            "ghidra_address": "0x0025d9e0",
+            "state": "decompile_failed_or_deferred",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rust_not_complete_c.json"
+          },
+          {
+            "library": "rust",
+            "elf_address": "0x15dc9c",
+            "ghidra_address": "0x0025dc9c",
+            "state": "decompile_failed_or_deferred",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rust_not_complete_c.json"
+          },
+          {
+            "library": "rsa",
+            "elf_address": "0x5af40",
+            "ghidra_address": "0x0015af40",
+            "state": "decompile_failed_or_deferred",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          },
+          {
+            "library": "rsa",
+            "elf_address": "0x5b400",
+            "ghidra_address": "0x0015b400",
+            "state": "decompile_failed_or_deferred",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          },
+          {
+            "library": "rsa",
+            "elf_address": "0x5b420",
+            "ghidra_address": "0x0015b420",
+            "state": "decompile_failed_or_deferred",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          },
+          {
+            "library": "rsa",
+            "elf_address": "0xbd980",
+            "ghidra_address": "0x001bd980",
+            "state": "complete_tool_output_with_control_flow_gap",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          },
+          {
+            "library": "rsa",
+            "elf_address": "0xbdb30",
+            "ghidra_address": "0x001bdb30",
+            "state": "complete_tool_output_with_control_flow_gap",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          },
+          {
+            "library": "rsa",
+            "elf_address": "0xbdbe0",
+            "ghidra_address": "0x001bdbe0",
+            "state": "complete_tool_output_with_control_flow_gap",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          },
+          {
+            "library": "rsa",
+            "elf_address": "0xbdc60",
+            "ghidra_address": "0x001bdc60",
+            "state": "complete_tool_output_with_control_flow_gap",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          },
+          {
+            "library": "rsa",
+            "elf_address": "0xc00f0",
+            "ghidra_address": "0x001c00f0",
+            "state": "complete_tool_output_with_control_flow_gap",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          }
+        ],
+        "raw_code_extracted": true
+      },
+      "state": "open",
+      "semantic_gap_closed": false,
+      "original_source_gap_closed": false,
+      "update": {
+        "progress_kind": "bounded_round3_progress",
+        "summary": "第二轮8个Go入口限定语义保留。第三轮countbytebody和indexbytebody均有实际可编译C/NEON、标量和Java实现，并与原ARM64片段执行差分；不再只提供诊断反编译文本。",
+        "evidence": [
+          {
+            "file": "<LOCAL_APP>/analysis/reconstruction_round/native/native_gap_retry_results.json",
+            "sha256": "ec4866d82d02d0304a83e7883f18a5d42a31999f4b92fbf138dc7b5a7ae7dc15"
+          },
+          {
+            "file": "<LOCAL_APP>/analysis/reconstruction_round/native/native_gap_classification.json",
+            "sha256": "179d927f9d6579955a13a75b3f85365dd1ae80647a3574b3b6a4380986717457"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/go_gap_resolution.json",
+            "sha256": "2bc9aa5e35bc2ed5615238561a802c6e1f71ce04bb81895cd6681f6302eb62a1"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/emulation_verification.json",
+            "sha256": "a16727ac715d0314241138e6dcba0965e54ed2f92b16a550ddbb20bd02074df5"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/evidence_verification.json",
+            "sha256": "148662212257266509d07230cbf4a783311f94ce4a2f7eef46ca5e6096d447ff"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/evidence_manifest.json",
+            "sha256": "184d35d1ad5855133ca447d9b42180901c03e22fbf76a8f2e8849e80a932278e"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/simd/verification.json",
+            "sha256": "f62f24223565d320f3474839aa618ad32714d9ae552e258531f6ed195351f526"
+          }
+        ],
+        "metrics": {
+          "baseline_items": 10,
+          "rust_new_c_outputs": 2,
+          "rust_type_warning_outputs": 2,
+          "go_rsa_bounded_semantics_established": 8,
+          "go_rsa_original_source_open": 8,
+          "remaining_shared_simd_decompiler_errors": 2,
+          "runtime_truncation_causes_identified": 5,
+          "original_source_gaps_closed": 0,
+          "full_program_equivalence_established": false,
+          "shared_simd_executable_semantic_reconstructions": 2,
+          "shared_simd_original_source_recovered": 0
+        },
+        "remaining": "Ghidra对两共享SIMD体的自动C输出仍报工具错误；原始Go/Rust源码、完整Go运行时和全程序等价仍open；Rust两项类型传播问题未闭合。"
+      },
+      "item_updates": [
+        {
+          "baseline": {
+            "library": "rust",
+            "elf_address": "0x15d9e0",
+            "ghidra_address": "0x0025d9e0",
+            "state": "decompile_failed_or_deferred",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rust_not_complete_c.json"
+          },
+          "state": "open",
+          "current_tool_output_status": "c_output_available_with_type_warning",
+          "new_c_output_available": true,
+          "type_propagation_warning": true,
+          "control_flow_truncation": false,
+          "semantic_gap_closed": false,
+          "original_source_gap_closed": false,
+          "output_evidence": {
+            "file": "<LOCAL_APP>/analysis/reconstruction_round/native/rust_retry/0025d9e0-decompile.c",
+            "sha256": "cd6808a845cbd4205775008b7285e3b6168d9756ceb25db5a1ccaeb855829331",
+            "lines": 512,
+            "warnings": [
+              "Type propagation algorithm not settling ",
+              "Does not return "
+            ],
+            "control_flow_truncation": false,
+            "type_propagation_warning": true
+          }
+        },
+        {
+          "baseline": {
+            "library": "rust",
+            "elf_address": "0x15dc9c",
+            "ghidra_address": "0x0025dc9c",
+            "state": "decompile_failed_or_deferred",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rust_not_complete_c.json"
+          },
+          "state": "open",
+          "current_tool_output_status": "c_output_available_with_type_warning",
+          "new_c_output_available": true,
+          "type_propagation_warning": true,
+          "control_flow_truncation": false,
+          "semantic_gap_closed": false,
+          "original_source_gap_closed": false,
+          "output_evidence": {
+            "file": "<LOCAL_APP>/analysis/reconstruction_round/native/rust_retry/0025dc9c-decompile.c",
+            "sha256": "09e9ad1c0dc8e97895b15d9428000b9bfb75fb9642b95e2ff89c44bc3c51432c",
+            "lines": 328,
+            "warnings": [
+              "Type propagation algorithm not settling ",
+              "Does not return "
+            ],
+            "control_flow_truncation": false,
+            "type_propagation_warning": true
+          }
+        },
+        {
+          "baseline": {
+            "library": "rsa",
+            "elf_address": "0x5af40",
+            "ghidra_address": "0x0015af40",
+            "state": "decompile_failed_or_deferred",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          },
+          "state": "bounded_semantics_established_source_open",
+          "current_tool_output_status": "wrapper_diagnostic_c_available",
+          "new_c_output_available": true,
+          "type_propagation_warning": false,
+          "control_flow_truncation": false,
+          "semantic_gap_closed": false,
+          "original_source_gap_closed": false,
+          "output_evidence": {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/go_gap_resolution.json",
+            "sha256": "2bc9aa5e35bc2ed5615238561a802c6e1f71ce04bb81895cd6681f6302eb62a1"
+          },
+          "bounded_semantics_established": true,
+          "function_name": "internal/bytealg.CountString",
+          "scope": "Isolated original fragments with explicit external-call models, not full Go execution"
+        },
+        {
+          "baseline": {
+            "library": "rsa",
+            "elf_address": "0x5b400",
+            "ghidra_address": "0x0015b400",
+            "state": "decompile_failed_or_deferred",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          },
+          "state": "bounded_semantics_established_source_open",
+          "current_tool_output_status": "wrapper_diagnostic_c_available",
+          "new_c_output_available": true,
+          "type_propagation_warning": false,
+          "control_flow_truncation": false,
+          "semantic_gap_closed": false,
+          "original_source_gap_closed": false,
+          "output_evidence": {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/go_gap_resolution.json",
+            "sha256": "2bc9aa5e35bc2ed5615238561a802c6e1f71ce04bb81895cd6681f6302eb62a1"
+          },
+          "bounded_semantics_established": true,
+          "function_name": "internal/bytealg.IndexByte",
+          "scope": "Isolated original fragments with explicit external-call models, not full Go execution"
+        },
+        {
+          "baseline": {
+            "library": "rsa",
+            "elf_address": "0x5b420",
+            "ghidra_address": "0x0015b420",
+            "state": "decompile_failed_or_deferred",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          },
+          "state": "bounded_semantics_established_source_open",
+          "current_tool_output_status": "wrapper_diagnostic_c_available",
+          "new_c_output_available": true,
+          "type_propagation_warning": false,
+          "control_flow_truncation": false,
+          "semantic_gap_closed": false,
+          "original_source_gap_closed": false,
+          "output_evidence": {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/go_gap_resolution.json",
+            "sha256": "2bc9aa5e35bc2ed5615238561a802c6e1f71ce04bb81895cd6681f6302eb62a1"
+          },
+          "bounded_semantics_established": true,
+          "function_name": "internal/bytealg.IndexByteString",
+          "scope": "Isolated original fragments with explicit external-call models, not full Go execution"
+        },
+        {
+          "baseline": {
+            "library": "rsa",
+            "elf_address": "0xbd980",
+            "ghidra_address": "0x001bd980",
+            "state": "complete_tool_output_with_control_flow_gap",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          },
+          "state": "bounded_semantics_established_source_open",
+          "current_tool_output_status": "intentional_runtime_boundary_identified",
+          "new_c_output_available": false,
+          "type_propagation_warning": false,
+          "control_flow_truncation": false,
+          "semantic_gap_closed": false,
+          "original_source_gap_closed": false,
+          "output_evidence": {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/go_gap_resolution.json",
+            "sha256": "2bc9aa5e35bc2ed5615238561a802c6e1f71ce04bb81895cd6681f6302eb62a1"
+          },
+          "bounded_semantics_established": true,
+          "function_name": "runtime.rt0_go",
+          "scope": "Isolated original fragments with explicit external-call models, not full Go execution"
+        },
+        {
+          "baseline": {
+            "library": "rsa",
+            "elf_address": "0xbdb30",
+            "ghidra_address": "0x001bdb30",
+            "state": "complete_tool_output_with_control_flow_gap",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          },
+          "state": "bounded_semantics_established_source_open",
+          "current_tool_output_status": "intentional_runtime_boundary_identified",
+          "new_c_output_available": false,
+          "type_propagation_warning": false,
+          "control_flow_truncation": false,
+          "semantic_gap_closed": false,
+          "original_source_gap_closed": false,
+          "output_evidence": {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/go_gap_resolution.json",
+            "sha256": "2bc9aa5e35bc2ed5615238561a802c6e1f71ce04bb81895cd6681f6302eb62a1"
+          },
+          "bounded_semantics_established": true,
+          "function_name": "runtime.systemstack",
+          "scope": "Isolated original fragments with explicit external-call models, not full Go execution"
+        },
+        {
+          "baseline": {
+            "library": "rsa",
+            "elf_address": "0xbdbe0",
+            "ghidra_address": "0x001bdbe0",
+            "state": "complete_tool_output_with_control_flow_gap",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          },
+          "state": "bounded_semantics_established_source_open",
+          "current_tool_output_status": "intentional_runtime_boundary_identified",
+          "new_c_output_available": false,
+          "type_propagation_warning": false,
+          "control_flow_truncation": false,
+          "semantic_gap_closed": false,
+          "original_source_gap_closed": false,
+          "output_evidence": {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/go_gap_resolution.json",
+            "sha256": "2bc9aa5e35bc2ed5615238561a802c6e1f71ce04bb81895cd6681f6302eb62a1"
+          },
+          "bounded_semantics_established": true,
+          "function_name": "runtime.morestack",
+          "scope": "Isolated original fragments with explicit external-call models, not full Go execution"
+        },
+        {
+          "baseline": {
+            "library": "rsa",
+            "elf_address": "0xbdc60",
+            "ghidra_address": "0x001bdc60",
+            "state": "complete_tool_output_with_control_flow_gap",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          },
+          "state": "bounded_semantics_established_source_open",
+          "current_tool_output_status": "intentional_runtime_boundary_identified",
+          "new_c_output_available": false,
+          "type_propagation_warning": false,
+          "control_flow_truncation": false,
+          "semantic_gap_closed": false,
+          "original_source_gap_closed": false,
+          "output_evidence": {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/go_gap_resolution.json",
+            "sha256": "2bc9aa5e35bc2ed5615238561a802c6e1f71ce04bb81895cd6681f6302eb62a1"
+          },
+          "bounded_semantics_established": true,
+          "function_name": "runtime.morestack_noctxt",
+          "scope": "Isolated original fragments with explicit external-call models, not full Go execution"
+        },
+        {
+          "baseline": {
+            "library": "rsa",
+            "elf_address": "0xc00f0",
+            "ghidra_address": "0x001c00f0",
+            "state": "complete_tool_output_with_control_flow_gap",
+            "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+          },
+          "state": "bounded_semantics_established_source_open",
+          "current_tool_output_status": "intentional_runtime_boundary_identified",
+          "new_c_output_available": false,
+          "type_propagation_warning": false,
+          "control_flow_truncation": false,
+          "semantic_gap_closed": false,
+          "original_source_gap_closed": false,
+          "output_evidence": {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/go_gap_resolution.json",
+            "sha256": "2bc9aa5e35bc2ed5615238561a802c6e1f71ce04bb81895cd6681f6302eb62a1"
+          },
+          "bounded_semantics_established": true,
+          "function_name": "runtime.abort",
+          "scope": "Isolated original fragments with explicit external-call models, not full Go execution"
+        }
+      ]
+    },
+    {
+      "id": "native_jumptable_semantics",
+      "baseline": {
+        "id": "native_jumptable_semantics",
+        "state": "unconfirmed_control_flow",
+        "rust_functions": 107,
+        "rsa_functions": 2,
+        "inventory": {
+          "file": "<LOCAL_APP>/analysis/completeness_audit/native/native_completeness.json",
+          "sha256": "b8fea2e93115526562f73641ebdbf3a83bdeb56fb79c3996a36864f1c74f2d9e"
+        }
+      },
+      "state": "open",
+      "semantic_gap_closed": false,
+      "original_source_gap_closed": false,
+      "update": {
+        "progress_kind": "bounded_round2_progress",
+        "summary": "本轮 systemstack 的间接分支确定为Go函数值尾调用，5个runtime旧截断解释为有意非法指令/零地址终点。其他原生跳转表和完整调用图未因此闭合。",
+        "evidence": [
+          {
+            "file": "<LOCAL_APP>/analysis/reconstruction_round/native/native_gap_retry_results.json",
+            "sha256": "ec4866d82d02d0304a83e7883f18a5d42a31999f4b92fbf138dc7b5a7ae7dc15"
+          },
+          {
+            "file": "<LOCAL_APP>/analysis/reconstruction_round/native/native_gap_classification.json",
+            "sha256": "179d927f9d6579955a13a75b3f85365dd1ae80647a3574b3b6a4380986717457"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/go_gap_resolution.json",
+            "sha256": "2bc9aa5e35bc2ed5615238561a802c6e1f71ce04bb81895cd6681f6302eb62a1"
+          }
+        ],
+        "remaining": "基线 Rust 107 个、rsa 2 个跳转表不确定函数保持 open。"
+      }
+    },
+    {
+      "id": "native_function_discovery_and_other_abis",
+      "baseline": {
+        "id": "native_function_discovery_and_other_abis",
+        "state": "bounded_function_inventory_only",
+        "unassigned_executable_bytes": {
+          "rust_arm64": 143356,
+          "rsa_arm64": 370888
+        },
+        "meaning": "Ranges are fully extracted; may contain code/data/padding. Non-arm64 Rust and libapp/libflutter do not have full high-level reconstruction.",
+        "inventory": {
+          "file": "<LOCAL_APP>/analysis/completeness_audit/native/native_completeness.json",
+          "sha256": "b8fea2e93115526562f73641ebdbf3a83bdeb56fb79c3996a36864f1c74f2d9e"
+        }
+      },
+      "state": "open",
+      "semantic_gap_closed": false,
+      "original_source_gap_closed": false,
+      "update": {
+        "progress_kind": "bounded_round3_progress",
+        "summary": "第三轮执行原ARM64两SIMD共享体，验证对齐块读取、边界掩码和页边界；其他ABI沿用第二轮限定证据。",
+        "evidence": [
+          {
+            "file": "<LOCAL_APP>/analysis/reconstruction_round/native/original_bytecode_rebuild_verification.json",
+            "sha256": "c572a57a4b86636894c2067a14369a5aebd08b085370f91e4ee5e55b47a29468"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/evidence_verification.json",
+            "sha256": "148662212257266509d07230cbf4a783311f94ce4a2f7eef46ca5e6096d447ff"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/simd/verification.json",
+            "sha256": "f62f24223565d320f3474839aa618ad32714d9ae552e258531f6ed195351f526"
+          }
+        ],
+        "remaining": "全库未归属区间、完整多ABI语义及Go/Rust运行时并发未闭合。"
+      }
+    },
+    {
+      "id": "model_types_and_dynamic_conversion",
+      "baseline": {
+        "id": "model_types_and_dynamic_conversion",
+        "state": "bounded_local_contract",
+        "meaning": "No invented server requiredness/enums. Devices.version indirect target/null behavior unconfirmed; Message content GDT target not guessed; five model files have no standalone JSON converters emitted.",
+        "inventory": {
+          "file": "<LOCAL_APP>/analysis/completeness_audit/models/model_field_contracts.json",
+          "sha256": "8ba2cf20f8f446d31be8affdacd00af79bf83b14947d5fcdb07fce799a1291d3"
+        }
+      },
+      "state": "open",
+      "semantic_gap_closed": false,
+      "original_source_gap_closed": false,
+      "update": {
+        "progress_kind": "bounded_round3_progress",
+        "summary": "Devices.create_time现解析为DartDateTime并ISO序列化，执行顺序先于version；DateTime动态内容、signed64 Mint字符串与toDouble、JSON数值边界均接入。DateTime 37,224对照、Mint 20,856对照及独立集成/Android/真实只读设备数据验证有明确证据。",
+        "evidence": [
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/business/source_map.json",
+            "sha256": "657825ae612e4471711fd1f708367b7712f2badffc0793320526e3403fd3867a"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/business/verification.json",
+            "sha256": "8ff868dc2a934ef1aaaee8fa434e2c9f1541a8b791393f67ae2edd185baf66d4"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/business/README.txt",
+            "sha256": "99790ce1223b3edd2ae0200db4adf5be7228fedcaf7f96978e00c8b8226108ec"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/models/contracts.json",
+            "sha256": "484f8672af9b24f6f033a356f6c365ad8d137d32521aee4216c39aca542abf3e"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/models/verification.json",
+            "sha256": "8e3b7829f1bc7a625cd0a7bd8941c9c07fd1d5b0992a6091afa6c76e3651efd1"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/integration/host-verification.json",
+            "sha256": "f7180721915211dfcf525d0f07dc3d9f5c2d4eef604c1bf6a814fc41b3184058"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/datetime/contracts.json",
+            "sha256": "918a59fd1cc08b3861c0aa7e29d367f1f4687cb608522aee73a5d41df17ff2fd"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/mint/contracts.json",
+            "sha256": "535c8f3fb96a44204ca9d4c7dd06de5bc6127baac70e2e9db14064e0aad67bfa"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/numeric_json/verification.json",
+            "sha256": "5ef00bd40bd88c8bd3d4ae77dcae9897268acc4a7582bd09cd010b62bfd0f792"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/datetime/reference_verification.json",
+            "sha256": "20ee17b10c1e0cdaaf3ee8391d950751d63b6afd87c09eda84547ec7c1a130d3"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/mint/verification.json",
+            "sha256": "ee39daedd7a3b86295cda5856ac42e57926a4ff9f794f8ca0012521a97196db3"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/live/android-verification.json",
+            "sha256": "61f17ad15f51b9ecc8527cdd3c752bd2bdb52ddf4e0d21b55302a3de4978ef98"
+          }
+        ],
+        "remaining": "系统tzdata差异、完整任意动态类型/BigInt/循环容器仍open；Message reader提前能力检查与原fromJson副作用/可变容器异常时序不保证相同；MjConfig原factory仍未恢复；有限Double JSON编码文本、非数字codec和流式接口仍不保证Dart等价。"
+      }
+    },
+    {
+      "id": "inlet_pwd_usage",
+      "baseline": {
+        "id": "inlet_pwd_usage",
+        "state": "unconfirmed_read_or_access_control",
+        "meaning": "Write/validation/navigation traced; no read/unlock consumer established in exported business scope.",
+        "inventory": {
+          "file": "<LOCAL_APP>/analysis/completeness_audit/flutter/supplemental_flows.json",
+          "sha256": "f2701f1ee08817158d6556d5659649b53ce788d9c985f3b46359d3027ec16603"
+        }
+      },
+      "state": "open",
+      "semantic_gap_closed": false,
+      "original_source_gap_closed": false,
+      "update": {
+        "progress_kind": "bounded_negative_reader_search_added",
+        "summary": "扩大了 AOT/Java/native 文本检索并保留写入链；有界范围内未建立读取或解锁消费者。Java 提供已知写盘行为，没有增加猜测的访问控制。",
+        "evidence": [
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/logic/inlet_reader_search.json",
+            "sha256": "28a04c36c5f040f36b933e5da2daaaf371aebe283399e37c7d1f37213195cf3d"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/logic/logic_contracts.json",
+            "sha256": "60e03cdd50ce4b3513641b44e7ebec9cc5dfbf3b7265cd287b10c4cec1d7b7bc"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/business/README.txt",
+            "sha256": "99790ce1223b3edd2ae0200db4adf5be7228fedcaf7f96978e00c8b8226108ec"
+          }
+        ],
+        "remaining": "读取、解锁和访问控制用途保持 open；未命中不证明全局不存在读取行为。"
+      }
+    },
+    {
+      "id": "msg117_server_schema",
+      "baseline": {
+        "id": "msg117_server_schema",
+        "state": "unconfirmed_second_segment_and_full_sender_schema",
+        "inventory": {
+          "file": "<LOCAL_APP>/analysis/message_semantics/msg_type_mapping.json",
+          "sha256": "571c4c5b97a527726e991625fb2ac438016884efcc7f0aa1e97e6b9f56703573"
+        },
+        "meaning": "Recipient splits content on | and uses segment0 for Devices.serial_no matching. Segment1 meaning and full sender schema remain unconfirmed. The prior first-list-item gap label concerns unavailable sender definition, not absence of this recovered recipient use."
+      },
+      "state": "open",
+      "semantic_gap_closed": false,
+      "original_source_gap_closed": false,
+      "update": {
+        "progress_kind": "receiver_use_confirmed_sender_schema_open",
+        "summary": "完整接收函数再次确认按 | 分割后只用第 0 段匹配 serial_no；匹配后置 lighting_switch=1，循环后仍更新等待文本。Java 实现接收端已知路径。",
+        "evidence": [
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/logic/logic_contracts.json",
+            "sha256": "60e03cdd50ce4b3513641b44e7ebec9cc5dfbf3b7265cd287b10c4cec1d7b7bc"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/business/source_map.json",
+            "sha256": "657825ae612e4471711fd1f708367b7712f2badffc0793320526e3403fd3867a"
+          }
+        ],
+        "remaining": "第 1 段语义和完整发送方/服务端 schema 保持 open；接收端不读取不能等同于字段没有业务意义。"
+      }
+    },
+    {
+      "id": "server_device_runtime_contract",
+      "baseline": {
+        "id": "server_device_runtime_contract",
+        "state": "not_dynamically_verified",
+        "meaning": "Backend full schemas/enums, device constraints, actual reconnect/auth/WS102 scheduling and delivery are not proven by static branches."
+      },
+      "state": "open",
+      "semantic_gap_closed": false,
+      "original_source_gap_closed": false,
+      "update": {
+        "progress_kind": "bounded_round3_progress",
+        "summary": "本轮当前Java源码host回归通过；同一最终APK在API35完成35项合成运行断言和7项真实只读检查，设备DateTime解析/ISO往返与version转换通过；真实读取4台设备和50项牌配置。",
+        "evidence": [
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/business/verification.json",
+            "sha256": "8ff868dc2a934ef1aaaee8fa434e2c9f1541a8b791393f67ae2edd185baf66d4"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/logic/settings_test_result.json",
+            "sha256": "5a6782634e74647f31321e0dc1f037c06748df72c44a432c1fc2c4cd34a00e2f"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/transport/network_verification.json",
+            "sha256": "e7bbc0f13c62b5ec79e53e651593cbb31c623895117371ca9d678bc5395f6d40"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/runtime/verification.json",
+            "sha256": "8907ca1ee9a986a54e2a84e44585df8e9c3093daa225b70b59e792abc8e3f7b7"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/runtime/original-bytecode-runtime.json",
+            "sha256": "83ff781620c31141682bfcdbe3a0322832bcdc490bfb0deea2f5a636b90fbcfb"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/live/android-verification.json",
+            "sha256": "05b489a4722634f313a04f30e4b05762083c704471c1b09ab6bf9398c5574603"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/callbacks/test_results.json",
+            "sha256": "8ca1fa0be627eda041ba60895c42c8a5bd0ed30fd2f1b6250fd6d6823df59bdd"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/models/verification.json",
+            "sha256": "8e3b7829f1bc7a625cd0a7bd8941c9c07fd1d5b0992a6091afa6c76e3651efd1"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/integration/host-verification.json",
+            "sha256": "f7180721915211dfcf525d0f07dc3d9f5c2d4eef604c1bf6a814fc41b3184058"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/live/android-verification.json",
+            "sha256": "61f17ad15f51b9ecc8527cdd3c752bd2bdb52ddf4e0d21b55302a3de4978ef98"
+          }
+        ],
+        "remaining": "真实设备控制/上传、服务端全schema、所有认证/重连/晚到消息真实时序及原程序完整端到端等价仍open。",
+        "android_runtime_validation": {
+          "state": "PASS",
+          "scope": "New Java Activity API35 with synthetic counterpart: login/DateTime/Mint/byte primitives/WS/recognition upload/preview late-message/settings/WiFi; no production controls",
+          "assertions": 35,
+          "synthetic_only": true,
+          "business_server_contacted": false,
+          "apk_sha256": "29bd048ce79aaec99af6ce48a24c5830fb7b9aac90fe9a5464006f527eec1f03",
+          "evidence": {
+            "file": "<LOCAL_APP>/reconstruction/evidence/runtime/verification.json",
+            "sha256": "8907ca1ee9a986a54e2a84e44585df8e9c3093daa225b70b59e792abc8e3f7b7"
+          },
+          "screenshots": [
+            {
+              "file": "<LOCAL_APP>/reconstruction/evidence/runtime/login.png",
+              "sha256": "6c141f126786e06c8da4d03963ff13a2a3ac0e116fcc34cea68f56feb2463221"
+            },
+            {
+              "file": "<LOCAL_APP>/reconstruction/evidence/runtime/main.png",
+              "sha256": "710eb749c3125bc590be5301f37a7704ab79a1f399e77dcf38ae1f2ceb6852c9"
+            },
+            {
+              "file": "<LOCAL_APP>/reconstruction/evidence/runtime/preview.png",
+              "sha256": "7e3babae8af4d23df5d510cd273d970dfe4a38c0183b732c487b1fa344e8e865"
+            },
+            {
+              "file": "<LOCAL_APP>/reconstruction/evidence/runtime/settings.png",
+              "sha256": "bf0becad5e814dc36e934bf1f9a81789743aca34a350eeb86be08a6297fa342c"
+            }
+          ],
+          "original_source_recovered": false,
+          "complete_behavioral_equivalence": false
+        },
+        "loopback_test_snapshot": {
+          "status": "PASS",
+          "passed_cases": 14,
+          "failed_cases": 0,
+          "error": null,
+          "scope": "Host Java reconstruction over real TCP sockets bound only to 127.0.0.1; no original target binary or business server"
+        },
+        "original_bytecode_runtime_validation": {
+          "state": "PASS_OFFLINE_STARTUP_ONLY",
+          "scope": "Offline startup only; no login or device business acceptance",
+          "process_alive_after_5s": true,
+          "airplane_mode": "1",
+          "wifi_enabled": "0",
+          "business_server_contacted": false,
+          "business_flow_tested": false,
+          "apk_sha256": "8afd3ac46402bc54a27b5617d52c73e8ff829ec6e71bbd82558f797f2b3767c5",
+          "evidence": {
+            "file": "<LOCAL_APP>/reconstruction/evidence/runtime/original-bytecode-runtime.json",
+            "sha256": "83ff781620c31141682bfcdbe3a0322832bcdc490bfb0deea2f5a636b90fbcfb"
+          },
+          "screenshot": {
+            "file": "<LOCAL_APP>/reconstruction/evidence/runtime/original-bytecode-launch.png",
+            "sha256": "9a00b5ee39ef41d2bc2a4352835b3258251ccc37a83fafe354be576939b33eac"
+          },
+          "original_source_recovered": false,
+          "complete_behavioral_equivalence": false
+        },
+        "live_read_only_validation": {
+          "status": "PASS_READ_ONLY_LIVE_LOGIN",
+          "checks": 7,
+          "device_count": 4,
+          "palette_count": 50,
+          "apk_sha256": "29bd048ce79aaec99af6ce48a24c5830fb7b9aac90fe9a5464006f527eec1f03",
+          "device_mutation_requests_allowed": false,
+          "credentials_recorded": false,
+          "evidence": {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/live/android-verification.json",
+            "sha256": "61f17ad15f51b9ecc8527cdd3c752bd2bdb52ddf4e0d21b55302a3de4978ef98"
+          }
+        }
+      }
+    },
+    {
+      "id": "original_source",
+      "baseline": {
+        "id": "original_source",
+        "state": "not_recovered",
+        "meaning": "Tree-shaken/inlined/shared entry original methods cannot be enumerated from exported snapshots; original editable sources are not fully reconstructed."
+      },
+      "state": "open",
+      "semantic_gap_closed": false,
+      "original_source_gap_closed": false,
+      "update": {
+        "progress_kind": "bounded_round3_progress",
+        "summary": "本轮20个实际Java编译输入，新增DartDateTime、DartIntegers和GoBytePrimitives，SDK与Gradle构建通过。原字节码保留重装包沿用历史离线验证。",
+        "evidence": [
+          {
+            "file": "<LOCAL_APP>/reconstruction/dist/source-build.json",
+            "sha256": "f1ee762b734ededd3b500dc62cdc258f2a3b6a5953626ddd3735f786f264b106"
+          },
+          {
+            "file": "<LOCAL_APP>/analysis/reconstruction_round/native/original_bytecode_rebuild_verification.json",
+            "sha256": "c572a57a4b86636894c2067a14369a5aebd08b085370f91e4ee5e55b47a29468"
+          },
+          {
+            "file": "<LOCAL_APP>/analysis/reconstruction_round/native/bytecode_resource_roundtrip.json",
+            "sha256": "30a446fe82d17911188312cc023b5e85ab7ab6a32391b547c2e02ec3699cbc18"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/runtime/verification.json",
+            "sha256": "8907ca1ee9a986a54e2a84e44585df8e9c3093daa225b70b59e792abc8e3f7b7"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/runtime/original-bytecode-runtime.json",
+            "sha256": "83ff781620c31141682bfcdbe3a0322832bcdc490bfb0deea2f5a636b90fbcfb"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/scripts/build_source.py",
+            "sha256": "e95bd98cba7a5f7e3afad12637c2926bd77526a07e63c891ab02237ece675722"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/retained_assets.json",
+            "sha256": "19a53a179f6d44a6f64288e5af59a852b84c06f8ed2def627af98e96e86f13a8"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/live/android-verification.json",
+            "sha256": "05b489a4722634f313a04f30e4b05762083c704471c1b09ab6bf9398c5574603"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/models/contracts.json",
+            "sha256": "484f8672af9b24f6f033a356f6c365ad8d137d32521aee4216c39aca542abf3e"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/go_gap_resolution.json",
+            "sha256": "2bc9aa5e35bc2ed5615238561a802c6e1f71ce04bb81895cd6681f6302eb62a1"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/integration/host-verification.json",
+            "sha256": "f7180721915211dfcf525d0f07dc3d9f5c2d4eef604c1bf6a814fc41b3184058"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/live/android-verification.json",
+            "sha256": "61f17ad15f51b9ecc8527cdd3c752bd2bdb52ddf4e0d21b55302a3de4978ef98"
+          },
+          {
+            "file": "<LOCAL_APP>/reconstruction/evidence/round3/simd/verification.json",
+            "sha256": "f62f24223565d320f3474839aa618ad32714d9ae552e258531f6ed195351f526"
+          }
+        ],
+        "remaining": "原始Dart/Rust/Go项目、树摇/内联丢失的原方法、注释/变量/工程结构及原签名仍未恢复，全部业务等价仍open。"
+      }
+    }
+  ],
+  "build_artifacts": {
+    "java_source_reconstruction": {
+      "status": "PASS",
+      "evidence": {
+        "file": "<LOCAL_APP>/reconstruction/dist/source-build.json",
+        "sha256": "f1ee762b734ededd3b500dc62cdc258f2a3b6a5953626ddd3735f786f264b106"
+      },
+      "apk": "<LOCAL_APP>/reconstruction/dist/xcs-source-rebuild-debug.apk",
+      "apk_sha256": "29bd048ce79aaec99af6ce48a24c5830fb7b9aac90fe9a5464006f527eec1f03",
+      "source_files": 20,
+      "kind": "new Java reconstruction; not original Dart/Rust/Go source",
+      "report_source_files_changed_since_build": [],
+      "original_native_libraries_reused": false,
+      "retained_assets": true,
+      "original_source_recovered": false,
+      "runtime_validation": "PASS_SYNTHETIC_ANDROID_35_AND_READ_ONLY_LIVE_7",
+      "runtime_evidence": {
+        "file": "<LOCAL_APP>/reconstruction/evidence/runtime/verification.json",
+        "sha256": "8907ca1ee9a986a54e2a84e44585df8e9c3093daa225b70b59e792abc8e3f7b7"
+      },
+      "standalone_source_build_requires_original_apk": false,
+      "standalone_build_inputs": [
+        "app/src/main/assets",
+        "evidence/retained_assets.json"
+      ],
+      "retained_asset_evidence": {
+        "file": "<LOCAL_APP>/reconstruction/evidence/retained_assets.json",
+        "sha256": "19a53a179f6d44a6f64288e5af59a852b84c06f8ed2def627af98e96e86f13a8"
+      },
+      "source_archive_path": "<LOCAL_APP>/reconstruction/dist/xcs-reconstruction-source.zip",
+      "gradle_build": {
+        "status": "PASS",
+        "evidence": {
+          "file": "<LOCAL_APP>/reconstruction/build/gradle-build.log",
+          "sha256": "1c0c48d86c189663239dad3e49ce6f704b5086c5cf152ce3c08a1275191f4ffb"
+        }
+      },
+      "standalone_test_commands": [
+        "sh evidence/business/run_tests.sh",
+        "sh evidence/logic/run_tests.sh",
+        "sh evidence/round2/callbacks/run_tests.sh",
+        "sh evidence/round2/models/run_tests.sh",
+        "sh evidence/round3/integration/run_tests.sh",
+        "sh evidence/round3/mint/run_tests.sh",
+        "sh evidence/round3/datetime/run_tests.sh",
+        "sh evidence/round3/simd/run_tests.sh",
+        "sh evidence/round3/numeric_json/run_tests.sh"
+      ],
+      "standalone_test_scripts": [
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/business/run_tests.sh",
+          "sha256": "7caa5d2fd796885ae136917c0d1ea040fe36574a90f5387469300618cff0a27d"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/logic/run_tests.sh",
+          "sha256": "adc32fc3dd7eba3311701ee35569348431b47432b24a3315d656f7122de47e89"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round2/callbacks/run_tests.sh",
+          "sha256": "7a9393431a63c27793ce0d9e3dab32393c00fc7b3096e60a2d1697eeb52ecd14"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round2/models/run_tests.sh",
+          "sha256": "b7a92130d07a9089a26b810a66ba7997ef04b1f01d3c75ca68a62526f5826f8c"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/integration/run_tests.sh",
+          "sha256": "15403c7ebf69ea7996570d2dc2ec73e5d026392fea2759a3628c5d6f1d5de56b"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/mint/run_tests.sh",
+          "sha256": "87b81e5073f9b7b064bd4f4030e8a4aa3831683184834c1e3dcc6948f14b62da"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/datetime/run_tests.sh",
+          "sha256": "35bf0b63812f13237f8e35aa0c41fb2c9d3299a7ec9985505a2cbbd0c883244a"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/simd/run_tests.sh",
+          "sha256": "dfcefb8574ac931de31102d42947960e6fe9cb1cb26588b9ca73fa9dae73861c"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/numeric_json/run_tests.sh",
+          "sha256": "a636d07b6c0917de2e9be08a4021f5ee76b4a40545e8112021145b441f362a76"
+        }
+      ],
+      "archive_packaging_script": {
+        "file": "<LOCAL_APP>/reconstruction/scripts/package_source.py",
+        "sha256": "554e53ef803e32e506819169340d6fe9a5fe2bbddc050d0eb295dfadb59c228e"
+      },
+      "archive_evidence_scope": "Source archive includes project sources/assets/scripts/evidence/Gradle/readme, not external APP/analysis. Historical absolute audit references identify original full local APP evidence and may not resolve after archive extraction. They are not required for Java source compilation or the bundled business/settings host tests.",
+      "live_read_only_validation": {
+        "status": "PASS_READ_ONLY_LIVE_LOGIN",
+        "checks": 7,
+        "device_count": 4,
+        "palette_count": 50,
+        "apk_sha256": "29bd048ce79aaec99af6ce48a24c5830fb7b9aac90fe9a5464006f527eec1f03",
+        "device_mutation_requests_allowed": false,
+        "credentials_recorded": false,
+        "evidence": {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/live/android-verification.json",
+          "sha256": "61f17ad15f51b9ecc8527cdd3c752bd2bdb52ddf4e0d21b55302a3de4978ef98"
+        }
+      }
+    },
+    "original_bytecode_preservation": {
+      "status": "PASS",
+      "evidence": {
+        "file": "<LOCAL_APP>/analysis/reconstruction_round/native/original_bytecode_rebuild_verification.json",
+        "sha256": "c572a57a4b86636894c2067a14369a5aebd08b085370f91e4ee5e55b47a29468"
+      },
+      "roundtrip_evidence": {
+        "file": "<LOCAL_APP>/analysis/reconstruction_round/native/bytecode_resource_roundtrip.json",
+        "sha256": "30a446fe82d17911188312cc023b5e85ab7ab6a32391b547c2e02ec3699cbc18"
+      },
+      "apk": "<LOCAL_APP>/reconstruction/dist/original-bytecode-rebuild.apk",
+      "apk_sha256": "8afd3ac46402bc54a27b5617d52c73e8ff829ec6e71bbd82558f797f2b3767c5",
+      "native_libraries_preserved": 13,
+      "assets_preserved": 115,
+      "all_native_asset_bytes_identical": true,
+      "signature_verified": true,
+      "signing_identity_matches_original": false,
+      "all_normalized_smali_identical": true,
+      "resource_ids_names_identical": true,
+      "source_only_build": false,
+      "original_source_recovered": false,
+      "runtime_validation": "PASS_OFFLINE_STARTUP_ONLY",
+      "runtime_evidence": {
+        "file": "<LOCAL_APP>/reconstruction/evidence/runtime/original-bytecode-runtime.json",
+        "sha256": "83ff781620c31141682bfcdbe3a0322832bcdc490bfb0deea2f5a636b90fbcfb"
+      },
+      "business_flow_tested": false,
+      "requires_external_original_apk_and_apktool_outputs": true
+    }
+  },
+  "validation_snapshot": {
+    "settings": {
+      "status": "PASS",
+      "current_suite_result": {
+        "command": [
+          "sh",
+          "evidence/logic/run_tests.sh"
+        ],
+        "exit_code": 0,
+        "summaries": [
+          "PASS SettingsLogicTest: 102 assertions; original_source_recovered=false; full_behavior_equivalence=false"
+        ],
+        "suite_results": []
+      },
+      "evidence": {
+        "file": "<LOCAL_APP>/reconstruction/evidence/round3/integration/host-verification.json",
+        "sha256": "f7180721915211dfcf525d0f07dc3d9f5c2d4eef604c1bf6a814fc41b3184058"
+      }
+    },
+    "business": {
+      "status": "PASS",
+      "current_suite_result": {
+        "command": [
+          "sh",
+          "evidence/business/run_tests.sh"
+        ],
+        "exit_code": 0,
+        "summaries": [
+          "PASS 64 local behavior checks; no network calls; RSA used local synthetic ciphertext only."
+        ],
+        "suite_results": []
+      },
+      "evidence": {
+        "file": "<LOCAL_APP>/reconstruction/evidence/round3/integration/host-verification.json",
+        "sha256": "f7180721915211dfcf525d0f07dc3d9f5c2d4eef604c1bf6a814fc41b3184058"
+      }
+    },
+    "android_runtime": {
+      "state": "PASS",
+      "scope": "New Java Activity API35 with synthetic counterpart: login/DateTime/Mint/byte primitives/WS/recognition upload/preview late-message/settings/WiFi; no production controls",
+      "assertions": 35,
+      "synthetic_only": true,
+      "business_server_contacted": false,
+      "apk_sha256": "29bd048ce79aaec99af6ce48a24c5830fb7b9aac90fe9a5464006f527eec1f03",
+      "evidence": {
+        "file": "<LOCAL_APP>/reconstruction/evidence/runtime/verification.json",
+        "sha256": "8907ca1ee9a986a54e2a84e44585df8e9c3093daa225b70b59e792abc8e3f7b7"
+      },
+      "screenshots": [
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/runtime/login.png",
+          "sha256": "6c141f126786e06c8da4d03963ff13a2a3ac0e116fcc34cea68f56feb2463221"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/runtime/main.png",
+          "sha256": "710eb749c3125bc590be5301f37a7704ab79a1f399e77dcf38ae1f2ceb6852c9"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/runtime/preview.png",
+          "sha256": "7e3babae8af4d23df5d510cd273d970dfe4a38c0183b732c487b1fa344e8e865"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/runtime/settings.png",
+          "sha256": "bf0becad5e814dc36e934bf1f9a81789743aca34a350eeb86be08a6297fa342c"
+        }
+      ],
+      "original_source_recovered": false,
+      "complete_behavioral_equivalence": false
+    },
+    "original_bytecode_runtime": {
+      "state": "PASS_OFFLINE_STARTUP_ONLY",
+      "scope": "Offline startup only; no login or device business acceptance",
+      "process_alive_after_5s": true,
+      "airplane_mode": "1",
+      "wifi_enabled": "0",
+      "business_server_contacted": false,
+      "business_flow_tested": false,
+      "apk_sha256": "8afd3ac46402bc54a27b5617d52c73e8ff829ec6e71bbd82558f797f2b3767c5",
+      "evidence": {
+        "file": "<LOCAL_APP>/reconstruction/evidence/runtime/original-bytecode-runtime.json",
+        "sha256": "83ff781620c31141682bfcdbe3a0322832bcdc490bfb0deea2f5a636b90fbcfb"
+      },
+      "screenshot": {
+        "file": "<LOCAL_APP>/reconstruction/evidence/runtime/original-bytecode-launch.png",
+        "sha256": "9a00b5ee39ef41d2bc2a4352835b3258251ccc37a83fafe354be576939b33eac"
+      },
+      "original_source_recovered": false,
+      "complete_behavioral_equivalence": false
+    },
+    "gradle_build": {
+      "status": "PASS",
+      "evidence": {
+        "file": "<LOCAL_APP>/reconstruction/build/gradle-build.log",
+        "sha256": "1c0c48d86c189663239dad3e49ce6f704b5086c5cf152ce3c08a1275191f4ffb"
+      }
+    },
+    "live_read_only": {
+      "status": "PASS_READ_ONLY_LIVE_LOGIN",
+      "checks": 7,
+      "device_count": 4,
+      "palette_count": 50,
+      "apk_sha256": "29bd048ce79aaec99af6ce48a24c5830fb7b9aac90fe9a5464006f527eec1f03",
+      "device_mutation_requests_allowed": false,
+      "credentials_recorded": false,
+      "evidence": {
+        "file": "<LOCAL_APP>/reconstruction/evidence/round3/live/android-verification.json",
+        "sha256": "61f17ad15f51b9ecc8527cdd3c752bd2bdb52ddf4e0d21b55302a3de4978ef98"
+      }
+    },
+    "callbacks": {
+      "status": "PASS",
+      "current_suite_result": {
+        "command": [
+          "sh",
+          "evidence/round2/callbacks/run_tests.sh"
+        ],
+        "exit_code": 0,
+        "summaries": [],
+        "suite_results": [
+          {
+            "status": "PASS",
+            "assertion_count": 124,
+            "checks": [
+              "initial service ID is zero [0]",
+              "initial filter is minus one [-1]",
+              "initial frame empty []",
+              "original main status default [未开始游戏]",
+              "first equal Rx empty value emits [1]",
+              "subsequent equal Rx empty suppressed [1]",
+              "start method [GET]",
+              "start path [/api/preview/start_preview/7]",
+              "start writes service before response [7]",
+              "start does not synchronously change filter [-1]",
+              "prefixed early new device rejected before start value []",
+              "normal HTTP failure value still sets filter [7]",
+              "frame reads only split index one [frame]",
+              "duplicate decoded frame notification suppressed [2]",
+              "equal distinct String object is suppressed [2]",
+              "other device ignored [frame]",
+              "invalid prefix parse throws",
+              "parse failure preserves prior frame [frame]",
+              "decode rule failure throws",
+              "decode failure preserves old frame [frame]",
+              "Rx writes before external renderer validates image [not-base64]",
+              "end path [/api/preview/end_preview/7]",
+              "end clears service before response [0]",
+              "end keeps filter [7]",
+              "end keeps frame [not-base64]",
+              "shared failed end value returns null [null]",
+              "shared failure no filter recovery [7]",
+              "shared failure no service rollback [0]",
+              "late matching WS102 still updates after end [late]",
+              "unprefixed late WS102 still accepted [late-any-device]",
+              "reenter clears frame []",
+              "reenter retains filter [7]",
+              "old-device frame accepted in reentry window [old-session]",
+              "second start request sets new service ID [8]",
+              "second pending start leaves old filter [7]",
+              "disconnect does not reset preview filter [7]",
+              "disconnect does not clear request ID [8]",
+              "reconnect/auth state does not change filter [7]",
+              "out-of-order completion last value wins [7]",
+              "start response does not rewind service ID [8]",
+              "start callback reads captured device live ID [9]",
+              "route ends current service ID not current filter [/api/preview/end_preview/8]",
+              "second route return zero skips end [null]",
+              "nullable start ID preserved [/api/preview/start_preview/null]",
+              "service can hold null [null]",
+              "null callback ID defaults filter zero [0]",
+              "route null differs from zero and ends null [/api/preview/end_preview/null]",
+              "save clears service regardless close mode [0]",
+              "HTTP failure save no end/no pop",
+              "failed save leaves zero so route cleanup skips end [null]",
+              "business false save no end/no pop",
+              "save-only success leaves page",
+              "missing success is type failure",
+              "string success is type failure",
+              "integer success is type failure",
+              "accepted close requests immediate pop",
+              "accepted close uses device live ID [/api/preview/end_preview/10]",
+              "close clears service before caller submits end/pop [0]",
+              "pop continuation avoids second end [null]",
+              "bad reconstruction params rejected",
+              "service clear precedes parameter validation [0]",
+              "new Main engine keeps singleton filter [8]",
+              "new Main engine keeps singleton frame [persist]",
+              "new Main page mode reset [1]",
+              "new Main display default [2]",
+              "reconstruction closed engine intentionally rejects receiver dispatch",
+              "Rx first equal emits in isolation",
+              "Rx later equal does not emit",
+              "Rx changed value emits",
+              "closed framework stream ignores setter",
+              "closed framework stream does not update value [x]",
+              "explicit framework stream close visible",
+              "HTTP numeric equality accepts Long",
+              "matching numeric 401 clears JWT []",
+              "HTTP numeric equality accepts Integer",
+              "matching numeric 401 clears JWT []",
+              "HTTP numeric equality accepts Double",
+              "matching numeric 401 clears JWT []",
+              "nonmatching code rejected 401",
+              "nonmatching code preserves JWT [fixture]",
+              "nonmatching code rejected 400",
+              "nonmatching code preserves JWT [fixture]",
+              "nonmatching code rejected 401.5",
+              "nonmatching code preserves JWT [fixture]",
+              "nonmatching code rejected null",
+              "nonmatching code preserves JWT [fixture]",
+              "code401 with HTTP200 does not clear",
+              "page default 1 [1]",
+              "display default 2 [2]",
+              "initial palette/selection",
+              "open edit sets2 [2]",
+              "close from2 sets1 [1]",
+              "close from1 sets0 [0]",
+              "close from0 sets1 [1]",
+              "result click captures object and opens palette",
+              "display2 becomes1 [1]",
+              "display toggle retains palette/selection",
+              "main selects config id rather than number [11]",
+              "main selection updates image [asset11]",
+              "display1 selection leaves palette",
+              "display1 becomes2 [2]",
+              "display2 selection hides but retains selected object",
+              "cancel clears selected only, caller pops",
+              "no selected tile means selection no-op",
+              "close palette false",
+              "empty channels upload leaves page mode [2]",
+              "empty channels upload leaves palette",
+              "upload replaces list identity",
+              "old list reference retains old result [1]",
+              "accepted upload clears live results [0]",
+              "nonempty channels upload sets page1 [1]",
+              "display2 upload hides palette",
+              "upload retains selected object",
+              "upload retains removed offset [3]",
+              "display1 upload leaves palette visible",
+              "recognition callback sees already-open edit page [2]",
+              "recognition completeness reaches validation callback [1]",
+              "recognition opens edit page [2]",
+              "new round replaces list identity",
+              "new round leaves old list snapshot intact [1]",
+              "new round installs empty live list [0]",
+              "late image appends to current new-round list [1]",
+              "late image keeps captured sequence [2]",
+              "reconstruction close intentionally suppresses late image after disposal [1]"
+            ],
+            "business_server_contacted": false,
+            "original_apk_executed": false,
+            "scope": "Executable reconstructed callback state only; not dynamic equivalence of original Flutter framework or server"
+          }
+        ]
+      },
+      "evidence": {
+        "file": "<LOCAL_APP>/reconstruction/evidence/round3/integration/host-verification.json",
+        "sha256": "f7180721915211dfcf525d0f07dc3d9f5c2d4eef604c1bf6a814fc41b3184058"
+      }
+    },
+    "models": {
+      "status": "PASS",
+      "current_suite_result": {
+        "command": [
+          "sh",
+          "evidence/round2/models/run_tests.sh"
+        ],
+        "exit_code": 0,
+        "summaries": [
+          "PASS 38 model conversion assertions"
+        ],
+        "suite_results": []
+      },
+      "evidence": {
+        "file": "<LOCAL_APP>/reconstruction/evidence/round3/integration/host-verification.json",
+        "sha256": "f7180721915211dfcf525d0f07dc3d9f5c2d4eef604c1bf6a814fc41b3184058"
+      }
+    },
+    "native_go_eight": {
+      "status": "PASS_BOUNDED",
+      "bytealg_cases": 22854,
+      "runtime_boundary_cases": 16,
+      "evidence": {
+        "file": "<LOCAL_APP>/reconstruction/evidence/round2/native/evidence_verification.json",
+        "sha256": "148662212257266509d07230cbf4a783311f94ce4a2f7eef46ca5e6096d447ff"
+      }
+    },
+    "round3": {
+      "status": "PASS_BOUNDED",
+      "evidence": [
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/integration/host-verification.json",
+          "sha256": "f7180721915211dfcf525d0f07dc3d9f5c2d4eef604c1bf6a814fc41b3184058"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/datetime/contracts.json",
+          "sha256": "918a59fd1cc08b3861c0aa7e29d367f1f4687cb608522aee73a5d41df17ff2fd"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/datetime/reference_verification.json",
+          "sha256": "20ee17b10c1e0cdaaf3ee8391d950751d63b6afd87c09eda84547ec7c1a130d3"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/mint/contracts.json",
+          "sha256": "535c8f3fb96a44204ca9d4c7dd06de5bc6127baac70e2e9db14064e0aad67bfa"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/mint/verification.json",
+          "sha256": "ee39daedd7a3b86295cda5856ac42e57926a4ff9f794f8ca0012521a97196db3"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/simd/verification.json",
+          "sha256": "f62f24223565d320f3474839aa618ad32714d9ae552e258531f6ed195351f526"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/numeric_json/verification.json",
+          "sha256": "5ef00bd40bd88c8bd3d4ae77dcae9897268acc4a7582bd09cd010b62bfd0f792"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/runtime/verification.json",
+          "sha256": "8907ca1ee9a986a54e2a84e44585df8e9c3093daa225b70b59e792abc8e3f7b7"
+        },
+        {
+          "file": "<LOCAL_APP>/reconstruction/evidence/round3/live/android-verification.json",
+          "sha256": "61f17ad15f51b9ecc8527cdd3c752bd2bdb52ddf4e0d21b55302a3de4978ef98"
+        }
+      ]
+    }
+  },
+  "reference_verification": {
+    "status": "PASS",
+    "checked_reference_occurrences": 148,
+    "unique_files": 63,
+    "missing_files": [],
+    "sha256_mismatches": [],
+    "baseline_objects_preserved_exactly": 12,
+    "note": "Current pointers updated after actual tests; historical reports retain historical source/APK hashes."
+  },
+  "round": "third reconstruction: DateTime/Mint/JSON numeric conversion and shared SIMD functions"
+}

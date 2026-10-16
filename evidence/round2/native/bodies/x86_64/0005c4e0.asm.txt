@@ -1,0 +1,30 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000059800 <.text>:
+   5c4e0: 55                           	pushq	%rbp
+   5c4e1: 48 89 e5                     	movq	%rsp, %rbp
+   5c4e4: 48 83 ec 18                  	subq	$0x18, %rsp
+   5c4e8: 48 8b 44 24 28               	movq	0x28(%rsp), %rax
+   5c4ed: 48 8b 5c 24 30               	movq	0x30(%rsp), %rbx
+   5c4f2: 0f b6 4c 24 38               	movzbl	0x38(%rsp), %ecx
+   5c4f7: 45 0f 57 ff                  	xorps	%xmm15, %xmm15
+   5c4fb: 4c 8b 35 06 71 3b 00         	movq	0x3b7106(%rip), %r14    # 0x413608
+   5c502: 64 4d 8b 36                  	movq	%fs:(%r14), %r14
+   5c506: e8 b5 f4 ff ff               	callq	0x5b9c0 <.text+0x21c0>
+   5c50b: 48 89 44 24 40               	movq	%rax, 0x40(%rsp)
+   5c510: 48 83 c4 18                  	addq	$0x18, %rsp
+   5c514: 5d                           	popq	%rbp
+   5c515: c3                           	retq
+   5c516: cc                           	int3
+   5c517: cc                           	int3
+   5c518: cc                           	int3
+   5c519: cc                           	int3
+   5c51a: cc                           	int3
+   5c51b: cc                           	int3
+   5c51c: cc                           	int3
+   5c51d: cc                           	int3
+   5c51e: cc                           	int3
+   5c51f: cc                           	int3

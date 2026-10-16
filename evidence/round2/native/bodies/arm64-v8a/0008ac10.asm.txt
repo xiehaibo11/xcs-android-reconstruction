@@ -1,0 +1,44 @@
+
+<LOCAL_APP>/unpacked/lib/arm64-v8a/librsa_bridge.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000059010 <.text>:
+   8ac10: f9400b90     	ldr	x16, [x28, #0x10]
+   8ac14: eb3063ff     	cmp	sp, x16
+   8ac18: 54000409     	b.ls	0x8ac98 <.text+0x31c88>
+   8ac1c: f81f0ffe     	str	x30, [sp, #-0x10]!
+   8ac20: f81f83fd     	stur	x29, [sp, #-0x8]
+   8ac24: d10023fd     	sub	x29, sp, #0x8
+   8ac28: 97fffdce     	bl	0x8a360 <.text+0x31350>
+   8ac2c: f0001ddb     	adrp	x27, 0x445000
+   8ac30: b903af60     	str	w0, [x27, #0x3ac]
+   8ac34: 97ffffb3     	bl	0x8ab00 <.text+0x31af0>
+   8ac38: f0001ddb     	adrp	x27, 0x445000
+   8ac3c: f9020360     	str	x0, [x27, #0x400]
+   8ac40: b0001afb     	adrp	x27, 0x3e7000
+   8ac44: 39760360     	ldrb	w0, [x27, #0xd80]
+   8ac48: 36000220     	tbz	w0, #0x0, 0x8ac8c <.text+0x31c7c>
+   8ac4c: b0001afb     	adrp	x27, 0x3e7000
+   8ac50: b94e3360     	ldr	w0, [x27, #0xe30]
+   8ac54: 92407800     	and	x0, x0, #0x7fffffff
+   8ac58: d503201f     	nop
+   8ac5c: b0001afb     	adrp	x27, 0x3e7000
+   8ac60: b90e3360     	str	w0, [x27, #0xe30]
+   8ac64: b0001afb     	adrp	x27, 0x3e7000
+   8ac68: b94e3760     	ldr	w0, [x27, #0xe34]
+   8ac6c: 927ff801     	and	x1, x0, #0xfffffffffffffffe
+   8ac70: 927ef400     	and	x0, x0, #0xfffffffffffffffc
+   8ac74: d503201f     	nop
+   8ac78: b0001afb     	adrp	x27, 0x3e7000
+   8ac7c: b90e3761     	str	w1, [x27, #0xe34]
+   8ac80: d503201f     	nop
+   8ac84: b0001afb     	adrp	x27, 0x3e7000
+   8ac88: b90e3760     	str	w0, [x27, #0xe34]
+   8ac8c: a97ffbfd     	ldp	x29, x30, [sp, #-0x8]
+   8ac90: 910043ff     	add	sp, sp, #0x10
+   8ac94: d65f03c0     	ret
+   8ac98: aa1e03e3     	mov	x3, x30
+   8ac9c: 9400cbf1     	bl	0xbdc60 <.text+0x64c50>
+   8aca0: 17ffffdc     	b	0x8ac10 <.text+0x31c00>
+		...

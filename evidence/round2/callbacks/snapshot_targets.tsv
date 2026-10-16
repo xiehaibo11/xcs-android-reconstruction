@@ -1,0 +1,83 @@
+TABLE	62582	origin	4096
+GDT	59	[dart:core] _Smi	0	0x674930	[dart:core] _IntegerImplementation::==
+GDT	59	[dart:core] _Smi	27977	0x580434	[dart:core] _Smi::toString
+GDT	60	[dart:core] _Mint	0	0x674930	[dart:core] _IntegerImplementation::==
+GDT	60	[dart:core] _Mint	27977	0x580b30	[dart:core] Object::toString
+GDT	61	[dart:core] _Double	0	0x6747cc	[dart:core] _Double::==
+GDT	61	[dart:core] _Double	27977	0x580114	[dart:core] _Double::toString
+GDT	93	[dart:core] _OneByteString	0	0x674170	[dart:core] _OneByteString::==
+GDT	93	[dart:core] _OneByteString	27977	0x6f79a8	[package:flutter/src/services/restoration.dart] RestorationBucket::<anonymous closure>
+GDT	94	[dart:core] _TwoByteString	0	0x673f8c	[dart:core] _TwoByteString::==
+GDT	94	[dart:core] _TwoByteString	27977	0x6f79a8	[package:flutter/src/services/restoration.dart] RestorationBucket::<anonymous closure>
+GDT	468	[package:string_scanner/src/string_scanner.dart] StringScanner	0	0x674cd4	[dart:core] Object::==
+GDT	468	[package:string_scanner/src/string_scanner.dart] StringScanner	27977	0x580b30	[dart:core] Object::toString
+GDT	471	[package:string_scanner/src/exception.dart] StringScannerException	0	0x674cd4	[dart:core] Object::==
+GDT	471	[package:string_scanner/src/exception.dart] StringScannerException	27977	0x57dc08	[package:source_span/src/span_exception.dart] SourceSpanException::toString
+GDT	673	[package:intl/src/intl/string_stack.dart] StringStack	0	0x674cd4	[dart:core] Object::==
+GDT	673	[package:intl/src/intl/string_stack.dart] StringStack	27977	0x57c828	[package:intl/src/intl/string_stack.dart] StringStack::toString
+GDT	766	[package:get/get_rx/src/rx_types/rx_types.dart] RxString	0	0x669d94	[package:get/get_rx/src/rx_types/rx_types.dart] __RxImpl&RxNotifier&RxObjectMixin::==
+GDT	766	[package:get/get_rx/src/rx_types/rx_types.dart] RxString	27977	0x577308	[package:get/get_rx/src/rx_types/rx_types.dart] __RxImpl&RxNotifier&RxObjectMixin::toString
+GDT	1478	[package:flutter/src/services/message_codecs.dart] StringCodec	0	0x674cd4	[dart:core] Object::==
+GDT	1478	[package:flutter/src/services/message_codecs.dart] StringCodec	27977	0x580b30	[dart:core] Object::toString
+GDT	1518	[package:flutter/src/semantics/semantics.dart] AttributedString	0	0x663be4	[package:flutter/src/semantics/semantics.dart] AttributedString::==
+GDT	1518	[package:flutter/src/semantics/semantics.dart] AttributedString	27977	0x577270	[package:flutter/src/widgets/widget_state.dart] WidgetStatePropertyAll::toString
+GDT	3619	[package:flutter/src/widgets/restoration_properties.dart] RestorableStringN	0	0x674cd4	[dart:core] Object::==
+GDT	3619	[package:flutter/src/widgets/restoration_properties.dart] RestorableStringN	27977	0x580b30	[dart:core] Object::toString
+GDT	3682	[package:characters/src/characters_impl.dart] StringCharacterRange	0	0x674cd4	[dart:core] Object::==
+GDT	3682	[package:characters/src/characters_impl.dart] StringCharacterRange	27977	0x580b30	[dart:core] Object::toString
+GDT	3732	[package:asn1lib/asn1lib.dart] ASN1UTF8String	0	0x63f33c	[package:asn1lib/asn1lib.dart] ASN1Object::==
+GDT	3732	[package:asn1lib/asn1lib.dart] ASN1UTF8String	27977	0x575178	[package:asn1lib/asn1lib.dart] ASN1UTF8String::toString
+GDT	3734	[package:asn1lib/asn1lib.dart] ASN1TeletextString	0	0x63f33c	[package:asn1lib/asn1lib.dart] ASN1Object::==
+GDT	3734	[package:asn1lib/asn1lib.dart] ASN1TeletextString	27977	0x575080	[package:asn1lib/asn1lib.dart] ASN1TeletextString::toString
+GDT	3737	[package:asn1lib/asn1lib.dart] ASN1PrintableString	0	0x63f33c	[package:asn1lib/asn1lib.dart] ASN1Object::==
+GDT	3737	[package:asn1lib/asn1lib.dart] ASN1PrintableString	27977	0x574d4c	[package:asn1lib/asn1lib.dart] ASN1PrintableString::toString
+GDT	3738	[package:asn1lib/asn1lib.dart] ASN1OctetString	0	0x63f33c	[package:asn1lib/asn1lib.dart] ASN1Object::==
+GDT	3738	[package:asn1lib/asn1lib.dart] ASN1OctetString	27977	0x574c68	[package:asn1lib/asn1lib.dart] ASN1OctetString::toString
+GDT	3740	[package:asn1lib/asn1lib.dart] ASN1NumericString	0	0x63f33c	[package:asn1lib/asn1lib.dart] ASN1Object::==
+GDT	3740	[package:asn1lib/asn1lib.dart] ASN1NumericString	27977	0x574b88	[package:asn1lib/asn1lib.dart] ASN1NumericString::toString
+GDT	3743	[package:asn1lib/asn1lib.dart] ASN1IA5String	0	0x63f33c	[package:asn1lib/asn1lib.dart] ASN1Object::==
+GDT	3743	[package:asn1lib/asn1lib.dart] ASN1IA5String	27977	0x574a18	[package:asn1lib/asn1lib.dart] ASN1IA5String::toString
+GDT	3746	[package:asn1lib/asn1lib.dart] ASN1BMPString	0	0x63f33c	[package:asn1lib/asn1lib.dart] ASN1Object::==
+GDT	3746	[package:asn1lib/asn1lib.dart] ASN1BMPString	27977	0x574920	[package:asn1lib/asn1lib.dart] ASN1BMPString::toString
+GDT	3747	[package:asn1lib/asn1lib.dart] ASN1BitString	0	0x63f33c	[package:asn1lib/asn1lib.dart] ASN1Object::==
+GDT	3747	[package:asn1lib/asn1lib.dart] ASN1BitString	27977	0x5748a4	[package:asn1lib/asn1lib.dart] ASN1BitString::toString
+GDT	4122	[dart:convert] _JsonStringifier	0	0x6f2c28	[dart:core] Object::_simpleInstanceOfTrue
+GDT	4122	[dart:convert] _JsonStringifier	27977	0x6fa808	DispatchTableNullErrorStub
+GDT	4126	[dart:convert] _JsonStringStringifier	0	0x674cd4	[dart:core] Object::==
+GDT	4126	[dart:convert] _JsonStringStringifier	27977	0x580b30	[dart:core] Object::toString
+GDT	4127	[dart:convert] __JsonStringStringifierPretty&_JsonStringStringifier&_JsonPrettyPrintMixin	0	0x6fa808	DispatchTableNullErrorStub
+GDT	4127	[dart:convert] __JsonStringStringifierPretty&_JsonStringStringifier&_JsonPrettyPrintMixin	27977	0x6fa808	DispatchTableNullErrorStub
+GDT	4128	[dart:convert] _JsonStringStringifierPretty	0	0x674cd4	[dart:core] Object::==
+GDT	4128	[dart:convert] _JsonStringStringifierPretty	27977	0x580b30	[dart:core] Object::toString
+GDT	4191	[dart:convert] __JsonStringParser&_JsonParserWithListener&_ChunkedJsonParser	0	0x6fa808	DispatchTableNullErrorStub
+GDT	4191	[dart:convert] __JsonStringParser&_JsonParserWithListener&_ChunkedJsonParser	27977	0x6fa808	DispatchTableNullErrorStub
+GDT	4192	[dart:convert] _JsonStringParser	0	0x674cd4	[dart:core] Object::==
+GDT	4192	[dart:convert] _JsonStringParser	27977	0x580b30	[dart:core] Object::toString
+GDT	4395	[dart:core] StringSink	0	0x6fa808	DispatchTableNullErrorStub
+GDT	4395	[dart:core] StringSink	27977	0x6fa808	DispatchTableNullErrorStub
+GDT	4396	[dart:core] StringBuffer	0	0x674cd4	[dart:core] Object::==
+GDT	4396	[dart:core] StringBuffer	27977	0x5723a8	[dart:core] StringBuffer::toString
+GDT	4399	[dart:core] _StringStackTrace	0	0x674cd4	[dart:core] Object::==
+GDT	4399	[dart:core] _StringStackTrace	27977	0x57c7a0	[dart:ui] Paint::_data
+GDT	4698	[dart:core] _StringAllMatchesIterator	0	0x674cd4	[dart:core] Object::==
+GDT	4698	[dart:core] _StringAllMatchesIterator	27977	0x580b30	[dart:core] Object::toString
+GDT	4700	[dart:core] _StringMatch	0	0x674cd4	[dart:core] Object::==
+GDT	4700	[dart:core] _StringMatch	27977	0x580b30	[dart:core] Object::toString
+GDT	4701	[dart:core] _StringBase	0	0x6fa808	DispatchTableNullErrorStub
+GDT	4701	[dart:core] _StringBase	27977	0x6fa808	DispatchTableNullErrorStub
+GDT	4752	[package:characters/src/characters_impl.dart] StringCharacters	0	0x6355a8	[package:characters/src/characters_impl.dart] StringCharacters::==
+GDT	4752	[package:characters/src/characters_impl.dart] StringCharacters	27977	0x56fd28	[dart:ui] Paint::_objects
+GDT	4779	[dart:core] _StringAllMatchesIterable	0	0x674cd4	[dart:core] Object::==
+GDT	4779	[dart:core] _StringAllMatchesIterable	27977	0x5701f0	[dart:core] Iterable::toString
+GDT	4843	[dart:core] String	0	0x6fa808	DispatchTableNullErrorStub
+GDT	4843	[dart:core] String	27977	0x6fa808	DispatchTableNullErrorStub
+GDT	4858	[dart:ui] StringAttribute	0	0x6fa808	DispatchTableNullErrorStub
+GDT	4858	[dart:ui] StringAttribute	27977	0x6fa808	DispatchTableNullErrorStub
+GDT	4860	[dart:ui] SpellOutStringAttribute	0	0x674cd4	[dart:core] Object::==
+GDT	4860	[dart:ui] SpellOutStringAttribute	27977	0x577270	[package:flutter/src/widgets/widget_state.dart] WidgetStatePropertyAll::toString
+FUNCTION	0x674170	196	[dart:core] _OneByteString::==
+FUNCTION	0x673f8c	192	[dart:core] _TwoByteString::==
+FUNCTION	0x6747cc	232	[dart:core] _Double::==
+FUNCTION	0x674930	252	[dart:core] _IntegerImplementation::==
+FUNCTION	0x6f2a58	8	[dart:ui] Shader::Shader._
+FUNCTION	0x6f79a8	8	[package:flutter/src/services/restoration.dart] RestorationBucket::<anonymous closure>

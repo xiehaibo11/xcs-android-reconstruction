@@ -1,0 +1,264 @@
+{
+  "format": "completeness-coverage-ledger-v1",
+  "audit_complete": true,
+  "semantic_reconstruction_complete": false,
+  "source_reconstruction_complete": false,
+  "static_only": true,
+  "scope_counts": {
+    "apk_zip_entries": 427,
+    "dex_classes": 5133,
+    "dex_defined_methods": 28975,
+    "dex_defined_fields": 13162,
+    "dart_business_files": 53,
+    "dart_exported_business_methods": 612,
+    "dart_partial_claim_associations": 225,
+    "dart_without_explicit_claim_associations": 387,
+    "model_files": 16,
+    "model_class_key_contracts": 94,
+    "native_libraries": 13,
+    "native_abis": 4,
+    "native_explicit_c_failures_or_truncations": 10,
+    "go_functions_all_abis": 17067
+  },
+  "active_primary_inventories": [
+    {
+      "file": "<LOCAL_APP>/analysis/completeness_audit/android/android_completeness.json",
+      "sha256": "f458a619f12f24a770733c7011d77ca2c24e58542d63ba691a6c9db903097286"
+    },
+    {
+      "file": "<LOCAL_APP>/analysis/completeness_audit/flutter/method_coverage.json",
+      "sha256": "eddb170f70d13b3ce0571b23586d246624d4f29b819a3488114618bf449619c5"
+    },
+    {
+      "file": "<LOCAL_APP>/analysis/completeness_audit/native/native_completeness.json",
+      "sha256": "b8fea2e93115526562f73641ebdbf3a83bdeb56fb79c3996a36864f1c74f2d9e"
+    },
+    {
+      "file": "<LOCAL_APP>/analysis/completeness_audit/models/model_field_contracts.json",
+      "sha256": "8ba2cf20f8f446d31be8affdacd00af79bf83b14947d5fcdb07fce799a1291d3"
+    }
+  ],
+  "corrections": [
+    {
+      "id": "zip_casefold_collision",
+      "state": "closed_with_reversible_path_index",
+      "evidence": {
+        "file": "<LOCAL_APP>/analysis/completeness_audit/android/zip_inventory.json",
+        "sha256": "63772332bbf98741d3b4c09c6bbaaeeab3c29bfb705861485dbd148e5bfd3138"
+      }
+    },
+    {
+      "id": "types50_user_data_sdk_write",
+      "state": "overclaim_removed",
+      "evidence": {
+        "file": "<LOCAL_APP>/analysis/completeness_audit/android/corrections/reconnect_auth_wording/correction_record.json",
+        "sha256": "f92516ef44f2fc0ea68b91553d4711ed17f1a09b4a20be936bd3ebc02d146304"
+      }
+    },
+    {
+      "id": "model_version_and_read_evidence_ranges",
+      "state": "corrected_and_all_94_slot_loads_decoded",
+      "evidence": {
+        "file": "<LOCAL_APP>/analysis/completeness_audit/models/verification.json",
+        "sha256": "43d0725a9b1b04ea709dbb3d5759eee3c2d219de150ff8ab3bab2de05563cb1b"
+      }
+    },
+    {
+      "id": "old_stale_heartbeat",
+      "state": "superseded_by_full_stop_tail",
+      "evidence": {
+        "file": "<LOCAL_APP>/analysis/reconnect_preview_failure/authentication/authentication_failure.json",
+        "sha256": "caa1e3761e3ac61ad062999b9c6195f65df647f426d12d08ffd72b057da1c973"
+      }
+    }
+  ],
+  "remaining_gaps": [
+    {
+      "id": "dart_method_semantics",
+      "state": "partial",
+      "count": 387,
+      "meaning": "No explicit business claim association in the conservative mapping; includes 23 serialization methods with separately recorded field observations. All bodies/raw are extracted.",
+      "inventory": {
+        "file": "<LOCAL_APP>/analysis/completeness_audit/flutter/semantic_gaps.json",
+        "sha256": "5f8ad794d5e846f88eeedd6b578e169ab67fdb75c1615643affbbcc6d3f6fdf7"
+      }
+    },
+    {
+      "id": "dart_dynamic_calls",
+      "state": "requires_receiver_and_async_dataflow_review",
+      "indirect_sites": 364,
+      "closure_references_without_local_claim": 279,
+      "different_closure_targets_without_local_claim": 257,
+      "meaning": "Review candidates; not a claim that every target is unknown.",
+      "inventory": {
+        "file": "<LOCAL_APP>/analysis/completeness_audit/flutter/surface_inventory.json",
+        "sha256": "ca7a51d144d207773328918a6419a30fcb92c41548e79697f8a7504cdd1a350c"
+      }
+    },
+    {
+      "id": "java_warning_semantics",
+      "state": "unresolved",
+      "warnings": 1299,
+      "source_files": 305,
+      "inventory": {
+        "file": "<LOCAL_APP>/analysis/completeness_audit/android/jadx_inventory.json",
+        "sha256": "21c274b6b9463e0bf508baaae9ce43197cc90362d1856fa7a8c38d219ea388a5"
+      }
+    },
+    {
+      "id": "platform_plugin_semantics",
+      "state": "partial",
+      "registered_plugins": 14,
+      "plugins_without_complete_parameter_result_review": 9,
+      "inventory": {
+        "file": "<LOCAL_APP>/analysis/completeness_audit/android/platform_channel_inventory.json",
+        "sha256": "fd277e579617018956fb696eb309ac29a513e4d881c241a38b0be66a5b89277c"
+      }
+    },
+    {
+      "id": "native_c_failures_or_truncations",
+      "state": "unresolved",
+      "count": 10,
+      "items": [
+        {
+          "library": "rust",
+          "elf_address": "0x15d9e0",
+          "ghidra_address": "0x0025d9e0",
+          "state": "decompile_failed_or_deferred",
+          "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rust_not_complete_c.json"
+        },
+        {
+          "library": "rust",
+          "elf_address": "0x15dc9c",
+          "ghidra_address": "0x0025dc9c",
+          "state": "decompile_failed_or_deferred",
+          "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rust_not_complete_c.json"
+        },
+        {
+          "library": "rsa",
+          "elf_address": "0x5af40",
+          "ghidra_address": "0x0015af40",
+          "state": "decompile_failed_or_deferred",
+          "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+        },
+        {
+          "library": "rsa",
+          "elf_address": "0x5b400",
+          "ghidra_address": "0x0015b400",
+          "state": "decompile_failed_or_deferred",
+          "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+        },
+        {
+          "library": "rsa",
+          "elf_address": "0x5b420",
+          "ghidra_address": "0x0015b420",
+          "state": "decompile_failed_or_deferred",
+          "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+        },
+        {
+          "library": "rsa",
+          "elf_address": "0xbd980",
+          "ghidra_address": "0x001bd980",
+          "state": "complete_tool_output_with_control_flow_gap",
+          "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+        },
+        {
+          "library": "rsa",
+          "elf_address": "0xbdb30",
+          "ghidra_address": "0x001bdb30",
+          "state": "complete_tool_output_with_control_flow_gap",
+          "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+        },
+        {
+          "library": "rsa",
+          "elf_address": "0xbdbe0",
+          "ghidra_address": "0x001bdbe0",
+          "state": "complete_tool_output_with_control_flow_gap",
+          "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+        },
+        {
+          "library": "rsa",
+          "elf_address": "0xbdc60",
+          "ghidra_address": "0x001bdc60",
+          "state": "complete_tool_output_with_control_flow_gap",
+          "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+        },
+        {
+          "library": "rsa",
+          "elf_address": "0xc00f0",
+          "ghidra_address": "0x001c00f0",
+          "state": "complete_tool_output_with_control_flow_gap",
+          "evidence": "<LOCAL_APP>/analysis/completeness_audit/native/rsa_not_complete_c.json"
+        }
+      ],
+      "raw_code_extracted": true
+    },
+    {
+      "id": "native_jumptable_semantics",
+      "state": "unconfirmed_control_flow",
+      "rust_functions": 107,
+      "rsa_functions": 2,
+      "inventory": {
+        "file": "<LOCAL_APP>/analysis/completeness_audit/native/native_completeness.json",
+        "sha256": "b8fea2e93115526562f73641ebdbf3a83bdeb56fb79c3996a36864f1c74f2d9e"
+      }
+    },
+    {
+      "id": "native_function_discovery_and_other_abis",
+      "state": "bounded_function_inventory_only",
+      "unassigned_executable_bytes": {
+        "rust_arm64": 143356,
+        "rsa_arm64": 370888
+      },
+      "meaning": "Ranges are fully extracted; may contain code/data/padding. Non-arm64 Rust and libapp/libflutter do not have full high-level reconstruction.",
+      "inventory": {
+        "file": "<LOCAL_APP>/analysis/completeness_audit/native/native_completeness.json",
+        "sha256": "b8fea2e93115526562f73641ebdbf3a83bdeb56fb79c3996a36864f1c74f2d9e"
+      }
+    },
+    {
+      "id": "model_types_and_dynamic_conversion",
+      "state": "bounded_local_contract",
+      "meaning": "No invented server requiredness/enums. Devices.version indirect target/null behavior unconfirmed; Message content GDT target not guessed; five model files have no standalone JSON converters emitted.",
+      "inventory": {
+        "file": "<LOCAL_APP>/analysis/completeness_audit/models/model_field_contracts.json",
+        "sha256": "8ba2cf20f8f446d31be8affdacd00af79bf83b14947d5fcdb07fce799a1291d3"
+      }
+    },
+    {
+      "id": "inlet_pwd_usage",
+      "state": "unconfirmed_read_or_access_control",
+      "meaning": "Write/validation/navigation traced; no read/unlock consumer established in exported business scope.",
+      "inventory": {
+        "file": "<LOCAL_APP>/analysis/completeness_audit/flutter/supplemental_flows.json",
+        "sha256": "f2701f1ee08817158d6556d5659649b53ce788d9c985f3b46359d3027ec16603"
+      }
+    },
+    {
+      "id": "msg117_server_schema",
+      "state": "unconfirmed_second_segment_and_full_sender_schema",
+      "inventory": {
+        "file": "<LOCAL_APP>/analysis/message_semantics/msg_type_mapping.json",
+        "sha256": "571c4c5b97a527726e991625fb2ac438016884efcc7f0aa1e97e6b9f56703573"
+      },
+      "meaning": "Recipient splits content on | and uses segment0 for Devices.serial_no matching. Segment1 meaning and full sender schema remain unconfirmed. The prior first-list-item gap label concerns unavailable sender definition, not absence of this recovered recipient use."
+    },
+    {
+      "id": "server_device_runtime_contract",
+      "state": "not_dynamically_verified",
+      "meaning": "Backend full schemas/enums, device constraints, actual reconnect/auth/WS102 scheduling and delivery are not proven by static branches."
+    },
+    {
+      "id": "original_source",
+      "state": "not_recovered",
+      "meaning": "Tree-shaken/inlined/shared entry original methods cannot be enumerated from exported snapshots; original editable sources are not fully reconstructed."
+    }
+  ],
+  "interpretation": "Inventory completeness is separated from semantic completeness; every residual category has scope/evidence, no percentages imply source recovery.",
+  "_public_copy": {
+    "historical_audit": true,
+    "path_redaction": "Local APP/workspace paths replaced with <LOCAL_APP>/<LOCAL_WORKSPACE>.",
+    "original_sha256": "3da17a2ba384e9e6d7ed0cd6fdb59c681bfc3e728916b0380e11a8b1fa802770",
+    "source_reconstruction_claim": "The original source has not been completely recovered."
+  }
+}

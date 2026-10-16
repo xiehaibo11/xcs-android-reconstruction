@@ -1,0 +1,156 @@
+1303:   int parseNumber(int char, int position) {
+1304:     // Also called on any unexpected character.
+1305:     // Format:
+1306:     //  '-'?('0'|[1-9][0-9]*)('.'[0-9]+)?([eE][+-]?[0-9]+)?
+1307:     int start = position;
+1308:     int length = chunkEnd;
+1309:     // Collects an int value while parsing. Used for both an integer literal,
+1310:     // and the exponent part of a double literal.
+1311:     // Stored as negative to ensure we can represent -2^63.
+1312:     int intValue = 0;
+1313:     double doubleValue = 0.0; // Collect double value while parsing.
+1314:     // 1 if there is no leading -, -1 if there is.
+1315:     int sign = 1;
+1316:     bool isDouble = false;
+1317:     // Break this block when the end of the number literal is reached.
+1318:     // At that time, position points to the next character, and isDouble
+1319:     // is set if the literal contains a decimal point or an exponential.
+1320:     if (char == MINUS) {
+1321:       sign = -1;
+1322:       position++;
+1323:       if (position == length) return beginChunkNumber(NUM_SIGN, start);
+1324:       char = getChar(position);
+1325:     }
+1326:     int digit = char ^ CHAR_0;
+1327:     if (digit > 9) {
+1328:       if (sign < 0) {
+1329:         fail(position, "Missing expected digit");
+1330:       } else {
+1331:         // If it doesn't even start out as a numeral.
+1332:         fail(position);
+1333:       }
+1334:     }
+1335:     if (digit == 0) {
+1336:       position++;
+1337:       if (position == length) return beginChunkNumber(NUM_ZERO, start);
+1338:       char = getChar(position);
+1339:       digit = char ^ CHAR_0;
+1340:       // If starting with zero, next character must not be digit.
+1341:       if (digit <= 9) fail(position);
+1342:     } else {
+1343:       int digitCount = 0;
+1344:       do {
+1345:         if (digitCount >= 18) {
+1346:           // Check for overflow.
+1347:           // Is 1 if digit is 8 or 9 and sign == 0, or digit is 9 and sign < 0;
+1348:           int highDigit = digit >> 3;
+1349:           if (sign < 0) highDigit &= digit;
+1350:           if (digitCount == 19 || intValue - highDigit < -922337203685477580) {
+1351:             isDouble = true;
+1352:             // Big value that we know is not trusted to be exact later,
+1353:             // forcing reparsing using `double.parse`.
+1354:             doubleValue = 9223372036854775808.0;
+1355:           }
+1356:         }
+1357:         intValue = 10 * intValue - digit;
+1358:         digitCount++;
+1359:         position++;
+1360:         if (position == length) return beginChunkNumber(NUM_DIGIT, start);
+1361:         char = getChar(position);
+1362:         digit = char ^ CHAR_0;
+1363:       } while (digit <= 9);
+1364:     }
+1365:     if (char == DECIMALPOINT) {
+1366:       if (!isDouble) {
+1367:         isDouble = true;
+1368:         doubleValue = (intValue == 0) ? 0.0 : -intValue.toDouble();
+1369:       }
+1370:       intValue = 0;
+1371:       position++;
+1372:       if (position == length) return beginChunkNumber(NUM_DOT, start);
+1373:       char = getChar(position);
+1374:       digit = char ^ CHAR_0;
+1375:       if (digit > 9) fail(position);
+1376:       do {
+1377:         doubleValue = 10.0 * doubleValue + digit;
+1378:         intValue -= 1;
+1379:         position++;
+1380:         if (position == length) return beginChunkNumber(NUM_DOT_DIGIT, start);
+1381:         char = getChar(position);
+1382:         digit = char ^ CHAR_0;
+1383:       } while (digit <= 9);
+1384:     }
+1385:     if ((char | 0x20) == CHAR_e) {
+1386:       if (!isDouble) {
+1387:         isDouble = true;
+1388:         doubleValue = (intValue == 0) ? 0.0 : -intValue.toDouble();
+1389:         intValue = 0;
+1390:       }
+1391:       position++;
+1392:       if (position == length) return beginChunkNumber(NUM_E, start);
+1393:       char = getChar(position);
+1394:       int expSign = 1;
+1395:       int exponent = 0;
+1396:       if (((char + 1) | 2) == 0x2e /*+ or -*/) {
+1397:         expSign = 0x2C - char; // -1 for MINUS, +1 for PLUS
+1398:         position++;
+1399:         if (position == length) return beginChunkNumber(NUM_E_SIGN, start);
+1400:         char = getChar(position);
+1401:       }
+1402:       digit = char ^ CHAR_0;
+1403:       if (digit > 9) {
+1404:         fail(position, "Missing expected digit");
+1405:       }
+1406:       bool exponentOverflow = false;
+1407:       do {
+1408:         exponent = 10 * exponent + digit;
+1409:         if (exponent > 400) exponentOverflow = true;
+1410:         position++;
+1411:         if (position == length) return beginChunkNumber(NUM_E_DIGIT, start);
+1412:         char = getChar(position);
+1413:         digit = char ^ CHAR_0;
+1414:       } while (digit <= 9);
+1415:       if (exponentOverflow) {
+1416:         if (doubleValue == 0.0 || expSign < 0) {
+1417:           listener.handleNumber(sign < 0 ? -0.0 : 0.0);
+1418:         } else {
+1419:           listener.handleNumber(
+1420:               sign < 0 ? double.negativeInfinity : double.infinity);
+1421:         }
+1422:         return position;
+1423:       }
+1424:       intValue += expSign * exponent;
+1425:     }
+1426:     if (!isDouble) {
+1427:       int bitFlag = -(sign + 1) >> 1; // 0 if sign == -1, -1 if sign == 1
+1428:       // Negate if bitFlag is -1 by doing ~intValue + 1
+1429:       listener.handleNumber((intValue ^ bitFlag) - bitFlag);
+1430:       return position;
+1431:     }
+1432:     // Double values at or above this value (2 ** 53) may have lost precision.
+1433:     // Only trust results that are below this value.
+1434:     const double maxExactDouble = 9007199254740992.0;
+1435:     if (doubleValue < maxExactDouble) {
+1436:       int exponent = intValue;
+1437:       double signedMantissa = doubleValue * sign;
+1438:       if (exponent >= -22) {
+1439:         if (exponent < 0) {
+1440:           listener.handleNumber(signedMantissa / POWERS_OF_TEN[-exponent]);
+1441:           return position;
+1442:         }
+1443:         if (exponent == 0) {
+1444:           listener.handleNumber(signedMantissa);
+1445:           return position;
+1446:         }
+1447:         if (exponent <= 22) {
+1448:           listener.handleNumber(signedMantissa * POWERS_OF_TEN[exponent]);
+1449:           return position;
+1450:         }
+1451:       }
+1452:     }
+1453:     // If the value is outside the range +/-maxExactDouble or
+1454:     // exponent is outside the range +/-22, then we can't trust simple double
+1455:     // arithmetic to get the exact result, so we use the system double parsing.
+1456:     listener.handleNumber(parseDouble(start, position));
+1457:     return position;
+1458:   }

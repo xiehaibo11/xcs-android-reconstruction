@@ -1,0 +1,13 @@
+0x2ebda4: fd79bfa9 stp x29, x30, [x15, #-0x10]!
+0x2ebda8: fd030faa mov x29, x15
+0x2ebdac: 501f40f9 ldr x16, [x26, #0x38]
+0x2ebdb0: ff0110eb cmp x15, x16
+0x2ebdb4: e9000054 b.ls #0x2ebdd0
+0x2ebdb8: e5ffff97 bl #0x2ebd4c
+0x2ebdbc: e10300aa mov x1, x0
+0x2ebdc0: 06000094 bl #0x2ebdd8
+0x2ebdc4: ef031daa mov x15, x29
+0x2ebdc8: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x2ebdcc: c0035fd6 ret 
+0x2ebdd0: 4a381094 bl #0x6f9ef8
+0x2ebdd4: f9ffff17 b #0x2ebdb8

@@ -1,0 +1,43 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000059800 <.text>:
+   5b9c0: 48 89 44 24 08               	movq	%rax, 0x8(%rsp)
+   5b9c5: 31 d2                        	xorl	%edx, %edx
+   5b9c7: 31 f6                        	xorl	%esi, %esi
+   5b9c9: eb 15                        	jmp	0x5b9e0 <.text+0x21e0>
+   5b9cb: 0f b6 3c 10                  	movzbl	(%rax,%rdx), %edi
+   5b9cf: 4c 8d 46 01                  	leaq	0x1(%rsi), %r8
+   5b9d3: 48 ff c2                     	incq	%rdx
+   5b9d6: 40 38 cf                     	cmpb	%cl, %dil
+   5b9d9: 49 0f 44 f0                  	cmoveq	%r8, %rsi
+   5b9dd: 0f 1f 00                     	nopl	(%rax)
+   5b9e0: 48 39 d3                     	cmpq	%rdx, %rbx
+   5b9e3: 7f e6                        	jg	0x5b9cb <.text+0x21cb>
+   5b9e5: 48 89 f0                     	movq	%rsi, %rax
+   5b9e8: c3                           	retq
+   5b9e9: cc                           	int3
+   5b9ea: cc                           	int3
+   5b9eb: cc                           	int3
+   5b9ec: cc                           	int3
+   5b9ed: cc                           	int3
+   5b9ee: cc                           	int3
+   5b9ef: cc                           	int3
+   5b9f0: cc                           	int3
+   5b9f1: cc                           	int3
+   5b9f2: cc                           	int3
+   5b9f3: cc                           	int3
+   5b9f4: cc                           	int3
+   5b9f5: cc                           	int3
+   5b9f6: cc                           	int3
+   5b9f7: cc                           	int3
+   5b9f8: cc                           	int3
+   5b9f9: cc                           	int3
+   5b9fa: cc                           	int3
+   5b9fb: cc                           	int3
+   5b9fc: cc                           	int3
+   5b9fd: cc                           	int3
+   5b9fe: cc                           	int3
+   5b9ff: cc                           	int3

@@ -1,0 +1,103 @@
+{
+  "build": "PASS",
+  "source_kind": "new Java reconstruction; not original Dart/Rust/Go source",
+  "source_files": 20,
+  "apk": "dist/xcs-source-rebuild-debug.apk",
+  "apk_sha256": "98d6e34ace252cfcb73122dd1bea4c989fb150b1cab94fbe5f9f5de839e3d1ca",
+  "min_sdk": 26,
+  "target_sdk": 28,
+  "compile_sdk": 35,
+  "compiler": "javac --release 8 + D8 + AAPT2",
+  "original_source_recovered": false,
+  "complete_behavioral_equivalence": false,
+  "sources": [
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/MainActivity.java",
+      "sha256": "37f21fb28a28ea037264383aa768073af2781724737911db8c4446c4289ac5dd"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/ApiContract.java",
+      "sha256": "f7eea172f4ab151685f9e898a2de18e2512142bb89ef609bace3a5485c6469be"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/CachedImageLoader.java",
+      "sha256": "a7d0eac6a7dcab8cbae97a0c746587240c7565fc3dabcb399dc6b09f69135986"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/DartConversions.java",
+      "sha256": "2260d89ac4ea1bf011b992ae311c9913eeec6b4d4d8525e8cdedbda8c5188216"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/DartDateTime.java",
+      "sha256": "e1e52d12c572084e2be067289f07821d4370ec7554ca47ea664913b2a7bba0d0"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/DartIntegers.java",
+      "sha256": "f7f6e7cd2f46df3369dbae2a5bdc34417e683e3e89fe2b9a3705e65c3d62bc45"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/GoBytePrimitives.java",
+      "sha256": "2b2061c38fe2ea83ba5767cb5b269dec5c955721c2b0deb5e4c4f8c1a7fea3e5"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/JsonCodec.java",
+      "sha256": "1ea03024863ee825881ec5684d0014983bcbef9434906ac5344c7d026328c97a"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/JsonHttpTransport.java",
+      "sha256": "d3447f87596d607ac0332df4ebf9b0ac19c8f151b54ba92624ec023a53577a68"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/LocalConfig.java",
+      "sha256": "8813e9b0a5fcff2987587af37c12dd66b6a7a70d29348bc8afd259f80de0a77c"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/LoginFlow.java",
+      "sha256": "9289490da5e077dee31fb856b8aa7fdcab75eec2470f9c49f25b0682455ed97b"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/MessageEngine.java",
+      "sha256": "02e786a543b2baa27445f8c949b902861beebde78f6504a62f5aabb3b327a911"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/Models.java",
+      "sha256": "ed93f237a2ee0c423b0cd71e49d4b00d3084d566e7a89c0875a8bea07c5ff9e2"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/ResultRules.java",
+      "sha256": "6e4ce2bc3b8869dc5597d8dcaf1da8a7ab75b8d5eb90d67ac10823fce0a4db47"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/SessionState.java",
+      "sha256": "cead6c7b13906535ebfd5b7012af681e0cf02178abd7d1f395e1036cb07505ac"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/SettingsLogic.java",
+      "sha256": "b02dd8e53ffe8b6adb6a77eefab6936e8e993f4237ca220e2161944338488dec"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/net/WsSession.java",
+      "sha256": "8edda21490ec98c2576e1c5964ac0888b1739927539e647ac496b2bee111e268"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/net/WsWire.java",
+      "sha256": "40cb12ad08b85534b3b74745b62bd6c68d21fd9c5ff010a8491f845e38525c03"
+    },
+    {
+      "path": "app/src/androidTest/java/com/re/xcs/rebuild/LiveLoginChecks.java",
+      "sha256": "6c62b09ad277f27af08c25611117b82955ec99015f65c47dd274716c0a16fc8e"
+    },
+    {
+      "path": "app/src/androidTest/java/com/re/xcs/rebuild/RuntimeChecks.java",
+      "sha256": "5ce4430e21391acb93f840801d1ed10d8f76e7a728e546303c4b6a33c345fd81"
+    }
+  ],
+  "public_build": true,
+  "development_rsa_assets": {
+    "status": "READY",
+    "generated": false,
+    "scope": "local fixture assets; excluded from source distribution"
+  },
+  "non_key_asset_files": 70,
+  "android_build_tools": "37.0.0"
+}

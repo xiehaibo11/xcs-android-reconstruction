@@ -1,0 +1,723 @@
+{
+  "scope": "Source-only historical reverse-engineering tools and reports; no original APK, embedded production keys, SDK or generated decompilation trees.",
+  "copies": [
+    {
+      "source_relative_to_APP": "scripts/DeepRustAnalysis.java",
+      "public_path": "scripts/DeepRustAnalysis.java",
+      "source_sha256": "9db695768f5c0f6e88310298757fdf0a640c786ba2e8821225ede63fb4a57040",
+      "public_sha256": "9db695768f5c0f6e88310298757fdf0a640c786ba2e8821225ede63fb4a57040",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "scripts/ExportNativeAnalysis.java",
+      "public_path": "scripts/ExportNativeAnalysis.java",
+      "source_sha256": "642bd56b9d3205e3f4c39f8e48b37ef395fe1bb7d6110adb2ebe4e35c891082e",
+      "public_sha256": "642bd56b9d3205e3f4c39f8e48b37ef395fe1bb7d6110adb2ebe4e35c891082e",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "scripts/android_completeness_audit.py",
+      "public_path": "scripts/android_completeness_audit.py",
+      "source_sha256": "1a98cb63d45b066478450328b5cbc57f3fa0bf7f4b70097ae94f7ff0c337417d",
+      "public_sha256": "533e384594890561fb6e38eee796306d4fbd0020e76543ca93fb68e9c4405acc",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/android_extract_surface.py",
+      "public_path": "scripts/android_extract_surface.py",
+      "source_sha256": "0c3a2b899883df38f6fcff20f7b0bf520975eb68c595a6a34267f2efaf10b594",
+      "public_sha256": "ce241200d2af9895c072cb8fa0dbaca58b0cd1e17ceb2fd165296bd8277e03cd",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/aot_function_index.py",
+      "public_path": "scripts/aot_function_index.py",
+      "source_sha256": "78fd42fc79fd439dbe89301848465f51283880417f4d36d54fd842881078520c",
+      "public_sha256": "c2041f537ce7b972dd94a15a64dd81c05062d2204d209ef7576771af9ee1dc77",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/assemble_protocol_report.py",
+      "public_path": "scripts/assemble_protocol_report.py",
+      "source_sha256": "6541581b0f6d3a5b8735b2b6109d3039a71f46802e214ea9ced9a1e88b3fbad6",
+      "public_sha256": "85364a610d5798b065780184c6b129eef454c7bff9a295ab6ef7805289b967af",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/authentication_failure_extract.py",
+      "public_path": "scripts/authentication_failure_extract.py",
+      "source_sha256": "77f3c98afe020f2a003cd78ddaa814c14cd2e4b63ba1946dd5f6efc56cfbcb30",
+      "public_sha256": "10d0c3feb53d4e573f80a694adc1e4bcc167186297492cce3cd5504647aac0ea",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/completeness_evidence_audit.py",
+      "public_path": "scripts/completeness_evidence_audit.py",
+      "source_sha256": "b0f55a6ffab90fd1e14581dbfd33f9fd454ef25173aa39d59eb398e1b5ba71d8",
+      "public_sha256": "c0110c54aa3180d66d05f96fdb0fd218101cf166c39ce515800325c710104709",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/connection_preview_stream_extract.py",
+      "public_path": "scripts/connection_preview_stream_extract.py",
+      "source_sha256": "a52675498b9e1b3706f8653f81473fe449434df552fceaba4f9db233301b2dfc",
+      "public_sha256": "c3629b70a495ea6294c4215ebfa73cc33f5efb08b9e42d167831e453d2a09a6d",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/connection_state_audit.py",
+      "public_path": "scripts/connection_state_audit.py",
+      "source_sha256": "70377d374114e6ae362427a523f8146ec492684f10661485e811e889670421d0",
+      "public_sha256": "d2d958ffeb566aad0c1fc52f3a8fd7cfd9d343dc54560b52b8185663ce6e6250",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/dart_http_failure_extract.py",
+      "public_path": "scripts/dart_http_failure_extract.py",
+      "source_sha256": "a19ab3caeb29ef7f347530c47509f2da9bc2461c7df7bf58cc29eac4eb979526",
+      "public_sha256": "536a52b148d3ef8ea281a32f26336de992182e031f8ab327f62dcd184aaa0049",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/device_lifecycle_extract.py",
+      "public_path": "scripts/device_lifecycle_extract.py",
+      "source_sha256": "2ef84a108c1863049df54a3f5615f05397595dcc82286377b9a88b06382a434a",
+      "public_sha256": "d1c8b0aab7726bed3f6c421f6484ecef6cf11ebd9d394c764b25fc0bbc30824c",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/end_preview_closure_extract.py",
+      "public_path": "scripts/end_preview_closure_extract.py",
+      "source_sha256": "8955cd3a046fc2ab58bfc956e7441a78ee059c403300a4885cea509c48ff2b86",
+      "public_sha256": "2cfeb53b678330a65f6f001908f4e91ea84f1db4f886094a58c4119810e774b2",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/extract_snapshot_strings.py",
+      "public_path": "scripts/extract_snapshot_strings.py",
+      "source_sha256": "172934cee03b44f65f6977f09a9a39d060ced766f957df9dda5586d978fab134",
+      "public_sha256": "a88ca133b9e2af8c7445fe8e0f28adf714ffa562d28f28651b9669530b2d0636",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/flutter_completeness_audit.py",
+      "public_path": "scripts/flutter_completeness_audit.py",
+      "source_sha256": "4897a5433f966573d796d09cf033824ce129a737e7b1e692cd4a0030c9ed27d6",
+      "public_sha256": "76b112cfb876689a9a35066829cba8c3f88d44e25f30bf4d4eeb2bb5ed833c4c",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/flutter_deep_catalog.py",
+      "public_path": "scripts/flutter_deep_catalog.py",
+      "source_sha256": "486ebbb40be56d5f6baeaef0b3ef5e5080113265f3d4cb43079ff3f289e44c70",
+      "public_sha256": "a933e2abe58d6a2cb2458a318a59286553b44d161e34be89e82a3a5a5450029b",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/flutter_http_contracts.py",
+      "public_path": "scripts/flutter_http_contracts.py",
+      "source_sha256": "1add6f767c753f6ad94b8d845e2b0285068e74bbebb4ed492e7af9af0d4421d4",
+      "public_sha256": "e95277301f13b4dc60aebc2dcefdc75596a07c839b9ef7750ecdb3ff434f9e99",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/flutter_identify_runtime.py",
+      "public_path": "scripts/flutter_identify_runtime.py",
+      "source_sha256": "cb7fc26bb301a0d9c741d788bf5d946ac6d392966b4a3a00642df592014c3177",
+      "public_sha256": "e024264e384f247c43708bc6e85207c3efbfabe8c8e0a1504481fa3e34cbb449",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/flutter_verify_http_contracts.py",
+      "public_path": "scripts/flutter_verify_http_contracts.py",
+      "source_sha256": "60c1d392d280ed7f8e2ae1c3e2c2a16d5088c36c48414f04c77cfa7ede44dae0",
+      "public_sha256": "7016c8a66ef98257d1d2c235576d9e47d50090f90b37a344dd03b87cbfd2c6c2",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/flutter_verify_rust_uri.py",
+      "public_path": "scripts/flutter_verify_rust_uri.py",
+      "source_sha256": "eb4f9b010b5d685bdd16e5b287e9321654c35eafc4b680e739bfe811740a5c67",
+      "public_sha256": "c61d19d2a9018058c9897d2c76355087ac058aaca0af27455c358d1217ed0a26",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/image_codec_extract.py",
+      "public_path": "scripts/image_codec_extract.py",
+      "source_sha256": "4586508a8e100fb776fc5f9122c285204eca8e4f1924533841c6fd5e175e19bb",
+      "public_sha256": "8a38c2068d798e04efd368c645bc458cce858885a2b52464cc826d801ffecbac",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/is_content_ws_extract.py",
+      "public_path": "scripts/is_content_ws_extract.py",
+      "source_sha256": "6a3bb8350f2efa68f9bd5bb9c9ae78f95a91dd55d7886ca98e9c12010a5b2a63",
+      "public_sha256": "2a31a2575ab803197a2a75bbda0936d53ce408c9eed17e87fc0939a84b769afa",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/local_state_extract.py",
+      "public_path": "scripts/local_state_extract.py",
+      "source_sha256": "1efa61f3886ba52dc59ea0a4ce197c9b7f6fc3a24230212a1507b41ee78603d7",
+      "public_sha256": "c0823ec07326d4081a00eb3296eb3e12f9e715316c521789af3bc46bddbbd767",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/message_aot_semantics.py",
+      "public_path": "scripts/message_aot_semantics.py",
+      "source_sha256": "95bfa358c68c5f42369b5db645f7a1c32871392fd17eb7de524efc26f702e50f",
+      "public_sha256": "8b83e931d07380d1e95a005d375fbe5ef111d65b43de6b4bf9ac46b86faee281",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/message_cross_project.py",
+      "public_path": "scripts/message_cross_project.py",
+      "source_sha256": "2e088c821e8632f80f34440756946ecbcb6c4ad8f254473370496aeed98a4efb",
+      "public_sha256": "13c587039be93af453e7d369ca28c6df03f9268894654a39609c62d0248159f6",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/model_completeness_audit.py",
+      "public_path": "scripts/model_completeness_audit.py",
+      "source_sha256": "68bad8f03863811165d6fdeb1ae42b12c6fccc75dbd64f91d74df1ddbb4bdb13",
+      "public_sha256": "8ad7d1f62ede2c3b9247ddc4630882d5b711b4954a5278b9bf412a8693cd3246",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/native_completeness_audit.py",
+      "public_path": "scripts/native_completeness_audit.py",
+      "source_sha256": "57baa738cdb117d4db334220c8784bc8e7cc1910a4e070e9167d5865c0f10dac",
+      "public_sha256": "75c626a3be49c7af7eb731902d24f0f2d94a53c630d1c1af0cb08e692473bbc7",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/open_source_inventory.py",
+      "public_path": "scripts/open_source_inventory.py",
+      "source_sha256": "60f1d4d660655d39328a2854e6a36d3b52c4ec7eaf446d0f009baa102f36baf6",
+      "public_sha256": "70f1346661d60f9ec6f8088ca39f9a41e10cb5a32f555be40d67560787a003ef",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/preview_failure_extract.py",
+      "public_path": "scripts/preview_failure_extract.py",
+      "source_sha256": "33c776678cf71051a81fe5dcd0099cb015591d7811d1670394035549d9fdf475",
+      "public_sha256": "aed0b5271155f7f9275024471be3b1ef974cda95f9e92afe73c19e016c6f9c4e",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/reconnect_flow_extract.py",
+      "public_path": "scripts/reconnect_flow_extract.py",
+      "source_sha256": "de04e6236e1638699ff39b1307d962ce1ee1ac1a9d5590784d2a50aa60834c23",
+      "public_sha256": "5fc7f69f10e6b22e5a20ab756b51ce32c0caeb6633ac4c0a4761b1c39783785a",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/recover_login_flow.py",
+      "public_path": "scripts/recover_login_flow.py",
+      "source_sha256": "b5a9f00ae290639710f8107e0ad5563600ec7c6e311af2f0e6c7ee8fc65198b9",
+      "public_sha256": "262b9f36e12f893db25f86d5285bb0621aa4f1192086891871c7d63b51aa9cb7",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/result_pipeline_extract.py",
+      "public_path": "scripts/result_pipeline_extract.py",
+      "source_sha256": "ddbf4476a5238d8cce00a67129234fd3c9c60612a0cab45a738260d9f2b8ede1",
+      "public_sha256": "ba4a2cea051a996dc0fc66e8ab91aa974229965f9fe3c52658dbfe65b3cc9411",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/rsa_enrich_evidence.py",
+      "public_path": "scripts/rsa_enrich_evidence.py",
+      "source_sha256": "233ef899d0a093a24a41b007b4ea56f838b227a033cfa4515fff18282530f3df",
+      "public_sha256": "7179b6f4ac4278bd36cbddc7dd8a1973d770af71f451561dac2b09bb0f22f51f",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/rsa_extract_go.py",
+      "public_path": "scripts/rsa_extract_go.py",
+      "source_sha256": "7639ad910179975985239d22e107d337fe5e0d3197a5c44e4002a10085746104",
+      "public_sha256": "0c877c80c7fd6d22150b5aa2f715ffca66d81302c71e17d0378f75af17a45e69",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/rust_protocol_catalog.py",
+      "public_path": "scripts/rust_protocol_catalog.py",
+      "source_sha256": "eff3485ec86ae1d5698962e4f5b680c740815aa7fc61c158e6b3db4d1876ead9",
+      "public_sha256": "00db54f14c49c8a5d90ae8a89d5156b6c136aa0d2cdb75d5d7544fa1a2fc8302",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/verify_completeness_audit.py",
+      "public_path": "scripts/verify_completeness_audit.py",
+      "source_sha256": "929206e8af3cecd7cae33b8061dde716726415fe3648e11a458206d0b4f5241d",
+      "public_sha256": "24d94895b40ac39618f51bf69acdb665e3c172a59d741bdaa48a193453ae8482",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/verify_connection_preview_closure.py",
+      "public_path": "scripts/verify_connection_preview_closure.py",
+      "source_sha256": "b1b768a10c73eba7cfe6fad58f45bba2c7c8136964d7e4f42b13cda731cc00c4",
+      "public_sha256": "08c04d521269a2f73378d63ffd527a3093986284521b34910b75135db6e52d67",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/verify_deep_extract.py",
+      "public_path": "scripts/verify_deep_extract.py",
+      "source_sha256": "d80e18c3649abefd41813565de97958c583e9894e77ad50cb6b77a46abaece5e",
+      "public_sha256": "55f12d9ce1342a01b0ee8f487e495e48bd294e1aac981f8d026ba1d6932582cc",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/verify_protocol_reconstruction.py",
+      "public_path": "scripts/verify_protocol_reconstruction.py",
+      "source_sha256": "f538c12a16be6bfed371644e20649b981dd24c86a775642230a00114bead44a7",
+      "public_sha256": "56ce20113f9a52a9293f75e48cef561657d694fc833391bf6854f3000707e174",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/verify_reconnect_preview_failure.py",
+      "public_path": "scripts/verify_reconnect_preview_failure.py",
+      "source_sha256": "87672df9bc807b56aea4ed2f9f574a720394272fdc7d34da2c9ec7f1c6d5552f",
+      "public_sha256": "3d503074fe0c88c0d89373ac957b3b329d3f75fa15c1286bf1848a077bf82ffc",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/verify_runtime_reconstruction.py",
+      "public_path": "scripts/verify_runtime_reconstruction.py",
+      "source_sha256": "34b75122844716f8f5ec984b25f504a3e417f2e6fa0b3f31ccad6d3211f601ae",
+      "public_sha256": "75ede226e125f01c212071c4b79e5abe3533a7753c575ad19d088ef957e9b296",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/verify_ws_result_reconstruction.py",
+      "public_path": "scripts/verify_ws_result_reconstruction.py",
+      "source_sha256": "265e8eba8b1cd39d774efd083f5261a2a657a81d9f791bfba48860b29054021a",
+      "public_sha256": "ea4d14b54f6b18677bf38226ad2689a110f516de2dd17e8b6c583e18a0289650",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/ws_event_contract_extract.py",
+      "public_path": "scripts/ws_event_contract_extract.py",
+      "source_sha256": "38d0a79a553dfca54cb19ad0a65ee009bc20f606e27276578f8af5e4e4086cdb",
+      "public_sha256": "ad0e157d9566042b53df05a1480c87870990437976b0451118ba4910b97d31e5",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/ws_heartbeat_extract.py",
+      "public_path": "scripts/ws_heartbeat_extract.py",
+      "source_sha256": "c3d1a3c03daabfb9882d47f8640bea826a91ed10c1d194f0097b9be3d125e22a",
+      "public_sha256": "3e858421f98026af5f8775c890f447aaadd22ca62f5255aa18f34fca934a73ff",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/ws_protocol_extract.py",
+      "public_path": "scripts/ws_protocol_extract.py",
+      "source_sha256": "03574133964be5cafbfc6bf545f5ded83a41349c01d2f3085b4bfd9a66012312",
+      "public_sha256": "81761857fbde6ee09b578018629ccbbb535989d99475c56ce23374c586a1f048",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "scripts/ws_result_cross_layer.py",
+      "public_path": "scripts/ws_result_cross_layer.py",
+      "source_sha256": "6aecbd1be601981cfe5a87540abefcdc961c1d6be9bd3af85e458e3eb142c91f",
+      "public_sha256": "748487a5c7fa46920738806f76f1f319403c6064e810fd6a6ce386a67a4041af",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "README.txt",
+      "public_path": "reports/README.txt",
+      "source_sha256": "1b16110a0cff47ab1d97806da28e27211ccb8359215bf1e8ea6810d7b9f8cdca",
+      "public_sha256": "a00401ad2429506919f3a5fe854b58f27f1972b411e3de838c28c595fd1e0736",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "WebSocket与识别上传流程还原报告.txt",
+      "public_path": "reports/WebSocket与识别上传流程还原报告.txt",
+      "source_sha256": "feae95eea0e2c3c55b618c893087af4a8f91c3c1e3fe21de9d8682bdfb1ed063",
+      "public_sha256": "26d7567b76f153532a7058266de40e8d9f38666010b951d526532afec31adf26",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "开源项目查找报告.txt",
+      "public_path": "reports/开源项目查找报告.txt",
+      "source_sha256": "a24bcbe85934a7de928eb3da81be944518da1c7931a5b4f7edb3fc197621f221",
+      "public_sha256": "4908198598f53b77ed0344b124a841d798d3deae43d5f6253e6b38e656c07e76",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "断线重连与预览失败恢复还原报告.txt",
+      "public_path": "reports/断线重连与预览失败恢复还原报告.txt",
+      "source_sha256": "4f7f216b31d2010f0c36974e4bc534c6f7924e78d3316c93effbc73e9b59128b",
+      "public_sha256": "668727fa2bd4cfdf1af1c450f368dcaa5c62d5c46dfaeb960e56f76469350b4f",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "深度提取报告.txt",
+      "public_path": "reports/深度提取报告.txt",
+      "source_sha256": "0821fbc62454d9c0eda2d11f6b0bb45b30f8d6c657c2da6d6301b32bf3d96185",
+      "public_sha256": "ee82ebdedcb00b3430451e6f944c5bd1a103adc82d08f9a1be5dc0077b39bb65",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "登录与业务协议还原报告.txt",
+      "public_path": "reports/登录与业务协议还原报告.txt",
+      "source_sha256": "d451d8d158d72220c7be9f510c32ac988be9b29a057098e0f038e8c08a42d074",
+      "public_sha256": "55743ad163543c6b03d6fac5a591c94d3171b27145fe1f22a0667cd43c1b3494",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "运行状态与设备控制深度还原报告.txt",
+      "public_path": "reports/运行状态与设备控制深度还原报告.txt",
+      "source_sha256": "1320b51346296a0adf3ed5d78f3eca22fc3a5da090337f94fbe2ad36acb25101",
+      "public_sha256": "5e4b05efe647e34c060a6c814cd324d97c890837455f8ee0a0a6358f0140a8f5",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "连接判定与预览退出补全报告.txt",
+      "public_path": "reports/连接判定与预览退出补全报告.txt",
+      "source_sha256": "455e5516fa7e3fec8d0739f1c61d59cb03b708a557f923e2990518a46560dfd5",
+      "public_sha256": "19eda4904cf7834ce98f1fb6a86bcf9406d0294f14e3fabdf06ee6d398634107",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "逆向分析报告.txt",
+      "public_path": "reports/逆向分析报告.txt",
+      "source_sha256": "c2cafede54e1f3fd0c9adc371654420da462b2878631075e29855cecd3aa8818",
+      "public_sha256": "f85d53749206a72b0f78cb4c3d222b7825eb88c7e55e209538a8471b763e5bbb",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "逆向完整性审计与补齐报告.txt",
+      "public_path": "reports/逆向完整性审计与补齐报告.txt",
+      "source_sha256": "9a591416dd71b87cac29eda49468c08957e652dbfe5e45d63f9b6d63380a3b58",
+      "public_sha256": "ced3316e436350e5395021a4ed19e1d4db20a62afc394f1a3de23305458832c4",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/completeness_audit/coverage_ledger.json",
+      "public_path": "reports/coverage_ledger.historical.json",
+      "source_sha256": "3da17a2ba384e9e6d7ed0cd6fdb59c681bfc3e728916b0380e11a8b1fa802770",
+      "public_sha256": "a70e243c08ccb25dcb6910d3d072c9ec4f7334d8a12fae1f2b44d87fa7e4b5dc",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round/logic/build_logic_contracts.py",
+      "public_path": "round_tools/reconstruction_round/logic/build_logic_contracts.py",
+      "source_sha256": "c7742cdc246d4383118b1adb137d1877e4d80372f6855094f7cb730a0f0e465c",
+      "public_sha256": "1be274e21034981c93b11278ce7553bb9f4842330be6e1774198330f61dc9cab",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round/logic/run_settings_tests.py",
+      "public_path": "round_tools/reconstruction_round/logic/run_settings_tests.py",
+      "source_sha256": "e022bd2d90c2b46748505c53ba844a841471951dc934bd2c3aca6a775cb8b149",
+      "public_sha256": "5f36bfb35f9a3759cd75e56d73e4799074d0680b63c6e20b773dd7a33607bc1f",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round/native/RetryNativeGaps.java",
+      "public_path": "round_tools/reconstruction_round/native/RetryNativeGaps.java",
+      "source_sha256": "bbad018563e1d0c19e9b93c105eb171d8e902dad5bba912a0b92bcd171b29f66",
+      "public_sha256": "bbad018563e1d0c19e9b93c105eb171d8e902dad5bba912a0b92bcd171b29f66",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round2/callbacks/build_callback_contracts.py",
+      "public_path": "round_tools/reconstruction_round2/callbacks/build_callback_contracts.py",
+      "source_sha256": "22c92e3485623dde8e1e653c56fb3ad037f4fe6cb63c78f49f5e790a12e28d67",
+      "public_sha256": "c6c232b687f1ff84ff8cc810968439370df498e8801431cadb3c5d1601598511",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round2/callbacks/snapshot_callback_targets.cpp",
+      "public_path": "round_tools/reconstruction_round2/callbacks/snapshot_callback_targets.cpp",
+      "source_sha256": "7857e7e8a3188a4474e5102013a6d2f2260dc7c3eb74e7ef9edfbd4b8ae8e336",
+      "public_sha256": "7857e7e8a3188a4474e5102013a6d2f2260dc7c3eb74e7ef9edfbd4b8ae8e336",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round2/delivery/finalize_reports.py",
+      "public_path": "round_tools/reconstruction_round2/delivery/finalize_reports.py",
+      "source_sha256": "681532bf1c8435f63bf78ada191a048f047f7f8badb3601942e138c90921e46b",
+      "public_sha256": "efa3f260b9619200725a233d590dd6f09cdfb268a1649e3280c4e37e3cf38e8d",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round2/models/double_oracle.cpp",
+      "public_path": "round_tools/reconstruction_round2/models/double_oracle.cpp",
+      "source_sha256": "4b5d64ff8921ef3f8e027807d336ef8e5630234e7f9d2601dd3727a1ce32ef9c",
+      "public_sha256": "4b5d64ff8921ef3f8e027807d336ef8e5630234e7f9d2601dd3727a1ce32ef9c",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round2/models/snapshot_model_targets.cpp",
+      "public_path": "round_tools/reconstruction_round2/models/snapshot_model_targets.cpp",
+      "source_sha256": "34fd8c37ebc605f9b30bb60d2b5e91b46a58c9ddb31016d5af541d402a6331b8",
+      "public_sha256": "34fd8c37ebc605f9b30bb60d2b5e91b46a58c9ddb31016d5af541d402a6331b8",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round2/models/verify_model_conversions.py",
+      "public_path": "round_tools/reconstruction_round2/models/verify_model_conversions.py",
+      "source_sha256": "1e552e850f7549ac842cc37c17d7b6c715828fe9d1867b3cc6ae53c9b5dfc5bc",
+      "public_sha256": "fb47d1f18f1f4bab67ce0819e8ebe6a94c313e54a0c8d2eeae41c1dab781b210",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round2/native/DiagnoseBytealg.java",
+      "public_path": "round_tools/reconstruction_round2/native/DiagnoseBytealg.java",
+      "source_sha256": "8a0a5dd0804225c08863d70b9f69078ce2ad96edafe7027db673a7f2f891c70c",
+      "public_sha256": "8a0a5dd0804225c08863d70b9f69078ce2ad96edafe7027db673a7f2f891c70c",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round2/native/build_report.py",
+      "public_path": "round_tools/reconstruction_round2/native/build_report.py",
+      "source_sha256": "a851606c856a2e1e4ae2c634ea4ca186d816eb2b02f614de45536b26aee356e8",
+      "public_sha256": "c0c3b2614b82ce27087f7e5a3a8fc9bd113bf532b8d0e48f263ae4596ac1c8e9",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round2/native/emulate_native_gaps.py",
+      "public_path": "round_tools/reconstruction_round2/native/emulate_native_gaps.py",
+      "source_sha256": "5fbb2addc6b6fba454e833a72f743e341033578103352dbefdb9372dfd29be8c",
+      "public_sha256": "ba69b21e86f1130d7d78f1b7c1b42bee85eb13c62bc5367a15f2bf9475234104",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round2/native/extract_native_gaps.py",
+      "public_path": "round_tools/reconstruction_round2/native/extract_native_gaps.py",
+      "source_sha256": "55b334638178725f4aa5f8158713c816ad4b7ae26ec91ac9e6256beda836d6f1",
+      "public_sha256": "2d8d9c88dc63e5fe422ae968c613eebd5defc0f561e5ef5c5a6d2bbce2c72057",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round2/native/reproduce.sh",
+      "public_path": "round_tools/reconstruction_round2/native/reproduce.sh",
+      "source_sha256": "9e78de856d3795ac9c4c34413d0921018097cbd26eaf128c52196615a14d6a8d",
+      "public_sha256": "10adec812a64c8c569640c8ce3622e2775e12513711eb7c1e737608b3bacd0cf",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round2/native/verify_evidence.py",
+      "public_path": "round_tools/reconstruction_round2/native/verify_evidence.py",
+      "source_sha256": "b15eeb6282f14251c7ca34b4cf0173afef9b3ff6441b294b17ea7baa1287adb7",
+      "public_sha256": "ef9101adfa91bf717fb3bc8a37d5df862cba8b9c18229e05e0b2eeb0e7d25aef",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/datetime/build_contracts.py",
+      "public_path": "round_tools/reconstruction_round3/datetime/build_contracts.py",
+      "source_sha256": "20790e8dc3e3bc459c44d7da0d4001239a236a245728e4383a984f04df9a80da",
+      "public_sha256": "6630bd693877b08a44e69706bb2a29976e2a631947d493b313681cce6c748d77",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/datetime/emulate_arithmetic.py",
+      "public_path": "round_tools/reconstruction_round3/datetime/emulate_arithmetic.py",
+      "source_sha256": "b9a1dc0a472a25d73b31945aacdf4c26c56f4bc7c6142d0fdd60cc0ca65b5c2a",
+      "public_sha256": "daa5e78463ec9db7252a76eb5894f3e0ea9516df1b2f34309834c5bf4f808180",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/datetime/minimum_edge.dart",
+      "public_path": "round_tools/reconstruction_round3/datetime/minimum_edge.dart",
+      "source_sha256": "ac0d0489dd639fd6a36b80c6d668d9724c084e4d3c6e217757139769fcb877b1",
+      "public_sha256": "ac0d0489dd639fd6a36b80c6d668d9724c084e4d3c6e217757139769fcb877b1",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/datetime/package_reference_fixtures.py",
+      "public_path": "round_tools/reconstruction_round3/datetime/package_reference_fixtures.py",
+      "source_sha256": "49deea9d5f68ec0a15e25adaf32dc32aed34148fe6c55f0f503773e12b6c741f",
+      "public_sha256": "6e86927bdb8f77eb6268992a092c39b99d5dda46758353149b8d68d7701bef8e",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/datetime/reference_oracle.dart",
+      "public_path": "round_tools/reconstruction_round3/datetime/reference_oracle.dart",
+      "source_sha256": "9a8c96c465ccc543539d07f13861ee458d132cfe721089193b2392b081fc4316",
+      "public_sha256": "9a8c96c465ccc543539d07f13861ee458d132cfe721089193b2392b081fc4316",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/datetime/snapshot_datetime_targets.cpp",
+      "public_path": "round_tools/reconstruction_round3/datetime/snapshot_datetime_targets.cpp",
+      "source_sha256": "d2d3ff7a504b87a6cb85db9f32882e1e853885c0a38c20549ff1b91ac7ade824",
+      "public_sha256": "d2d3ff7a504b87a6cb85db9f32882e1e853885c0a38c20549ff1b91ac7ade824",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/datetime/verify_reference.py",
+      "public_path": "round_tools/reconstruction_round3/datetime/verify_reference.py",
+      "source_sha256": "a9b08c482e507ec166b53d5616afbd88432eb358c1d56320fbb4d3a9fa042dc2",
+      "public_sha256": "56296052ca1dae4a7b3b28d40856ae02924b583d9bc3fc1c6ea994231382076d",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/delivery/finalize_reports.py",
+      "public_path": "round_tools/reconstruction_round3/delivery/finalize_reports.py",
+      "source_sha256": "995fdcbfdf000611b0a19da20ddf4f7d70762575b31e58e217b629e149d38a46",
+      "public_sha256": "e5ae491638d0f944472f7534ed8bc7a0638f8684597ea035baf7900c3f2d5e70",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/delivery/verify_delivery.py",
+      "public_path": "round_tools/reconstruction_round3/delivery/verify_delivery.py",
+      "source_sha256": "98c4b7f77a96bbc4220121fb397f85fc9afefbbc04562c0503914757f962c2ea",
+      "public_sha256": "a70aeea9e330113f00e187c8e8d33427a3325c0828359069c5f0ef25105d9040",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/delivery/write_readme.py",
+      "public_path": "round_tools/reconstruction_round3/delivery/write_readme.py",
+      "source_sha256": "47ae07313b6b10bfc720fc085b67c35588d85b9500dd6cf3e2ec4faa3622ea14",
+      "public_sha256": "1d5dc417697e683acf3fa77db1432a4fd3de2c1b4209847fb142dddc254be531",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/mint/build_contracts.py",
+      "public_path": "round_tools/reconstruction_round3/mint/build_contracts.py",
+      "source_sha256": "7b8d7b0faa21809be99dbf5e638e5f24091a593b0299973bc832ceb73a0e8773",
+      "public_sha256": "2d57b988e2b8d90c34ba54a62d45f5c14638621d4805fd127b227b4cc56a321d",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/mint/mint_oracle.cpp",
+      "public_path": "round_tools/reconstruction_round3/mint/mint_oracle.cpp",
+      "source_sha256": "9d1243ae45c716174481d49ae6932047c0aa8019dbc5480b150503265824cbdf",
+      "public_sha256": "9d1243ae45c716174481d49ae6932047c0aa8019dbc5480b150503265824cbdf",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/mint/verify_mint.py",
+      "public_path": "round_tools/reconstruction_round3/mint/verify_mint.py",
+      "source_sha256": "1b64cc47afc908ae38ac46087f382cd6ad8201669f270b128ed13f0c6a753eb7",
+      "public_sha256": "37b19565281e22f761f8b96dcfca4d4594d5de052cfcaa6c8a89e9ad21ae1a05",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/numeric_json/build_contracts.py",
+      "public_path": "round_tools/reconstruction_round3/numeric_json/build_contracts.py",
+      "source_sha256": "656397ef80ed47e9f9ac9d6080dc308514fd60644b419b28990d08750018f6cb",
+      "public_sha256": "e945a8983208faf4924d48162f6d0442da753b745c793dbcbef8212aff713500",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/numeric_json/generate_cases.py",
+      "public_path": "round_tools/reconstruction_round3/numeric_json/generate_cases.py",
+      "source_sha256": "e37316b6a14ed3055c2acdfbdfdcf4051c18ba0169600f9c8e0aef9508132896",
+      "public_sha256": "46c49c5a9ec4255f35c95a80469644c00663c104083bb5294bb43eb543267537",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/numeric_json/reference.dart",
+      "public_path": "round_tools/reconstruction_round3/numeric_json/reference.dart",
+      "source_sha256": "a65a7f8c4a2c1272dc9a702eb5ba630662f28daa92a0139c967ea0ab42b7e77d",
+      "public_sha256": "a65a7f8c4a2c1272dc9a702eb5ba630662f28daa92a0139c967ea0ab42b7e77d",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/numeric_json/snapshot_numeric_targets.cpp",
+      "public_path": "round_tools/reconstruction_round3/numeric_json/snapshot_numeric_targets.cpp",
+      "source_sha256": "712f85edfc505b940d70a281e23253ae839b045b42a868ea3ee6ec5914653fa6",
+      "public_sha256": "712f85edfc505b940d70a281e23253ae839b045b42a868ea3ee6ec5914653fa6",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/numeric_json/verify_numeric_json.py",
+      "public_path": "round_tools/reconstruction_round3/numeric_json/verify_numeric_json.py",
+      "source_sha256": "1dc7446d75d62c4e1c7a72e779e71bc7a6a8dbfc99c9ad0db61fc5d015c0b0bd",
+      "public_sha256": "e09a0aff709d4c89b291e4dc1c9cca7049ce246237350307eeb60818d7736a15",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/simd/DiagnoseSimd.java",
+      "public_path": "round_tools/reconstruction_round3/simd/DiagnoseSimd.java",
+      "source_sha256": "58b4d50f48765ab35ed4175774074210b9a833c1f3f15f08b3a7a4c7db3b6717",
+      "public_sha256": "58b4d50f48765ab35ed4175774074210b9a833c1f3f15f08b3a7a4c7db3b6717",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/simd/GoBytePrimitivesProbe.java",
+      "public_path": "round_tools/reconstruction_round3/simd/GoBytePrimitivesProbe.java",
+      "source_sha256": "d2e0d62890617b83a6b920136d4a90a2e0b824cc1eadbd7639e193407715b389",
+      "public_sha256": "d2e0d62890617b83a6b920136d4a90a2e0b824cc1eadbd7639e193407715b389",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/simd/PortablePrimitiveTest.java",
+      "public_path": "round_tools/reconstruction_round3/simd/PortablePrimitiveTest.java",
+      "source_sha256": "0e2b12d07b74fde650b8185cd1f0750f058b03e237137be91f67c418e24ed557",
+      "public_sha256": "0e2b12d07b74fde650b8185cd1f0750f058b03e237137be91f67c418e24ed557",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/simd/differential_test.py",
+      "public_path": "round_tools/reconstruction_round3/simd/differential_test.py",
+      "source_sha256": "0ea2cabe9d0382f6eb602d5055b53c9f87a858721e09439bb7b6d0020a488b51",
+      "public_sha256": "46a7f1685477653584e65db6fd4d18231ff82502d5fc1b184287643b86021929",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/simd/go_byte_primitives.c",
+      "public_path": "round_tools/reconstruction_round3/simd/go_byte_primitives.c",
+      "source_sha256": "25458cc0faa3ef50980188f4539fa150c28a7aaa8ea7840292dfea519e1b068c",
+      "public_sha256": "25458cc0faa3ef50980188f4539fa150c28a7aaa8ea7840292dfea519e1b068c",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/simd/go_byte_primitives.h",
+      "public_path": "round_tools/reconstruction_round3/simd/go_byte_primitives.h",
+      "source_sha256": "47668a79e3c4220d3d7e8ad5f7625b9ed31f8a54aabd1105d5e3e82a9e3f892d",
+      "public_sha256": "47668a79e3c4220d3d7e8ad5f7625b9ed31f8a54aabd1105d5e3e82a9e3f892d",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/simd/native_boundaries.c",
+      "public_path": "round_tools/reconstruction_round3/simd/native_boundaries.c",
+      "source_sha256": "916a2c4480491211e36cb2a6b2553febc39bae8d26246cf192f9b260c21fc2b4",
+      "public_sha256": "916a2c4480491211e36cb2a6b2553febc39bae8d26246cf192f9b260c21fc2b4",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/simd/portable_native_test.c",
+      "public_path": "round_tools/reconstruction_round3/simd/portable_native_test.c",
+      "source_sha256": "1aacf6add744b7ba553e033b26662b68840c1480e90cbe3707f38e1a08091449",
+      "public_sha256": "1aacf6add744b7ba553e033b26662b68840c1480e90cbe3707f38e1a08091449",
+      "changed_for_publication": false
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/simd/publish_evidence.py",
+      "public_path": "round_tools/reconstruction_round3/simd/publish_evidence.py",
+      "source_sha256": "c5f71ea9afc22764ad6452552fb24177db503e8fe18999239e633a5be921a866",
+      "public_sha256": "4794a58478a1c55c201d3bf007075a4f7d459e382bbe9e2961d9790830ef1ef3",
+      "changed_for_publication": true
+    },
+    {
+      "source_relative_to_APP": "analysis/reconstruction_round3/simd/run_tests.sh",
+      "public_path": "round_tools/reconstruction_round3/simd/run_tests.sh",
+      "source_sha256": "dfcefb8574ac931de31102d42947960e6fe9cb1cb26588b9ca73fa9dae73861c",
+      "public_sha256": "519b10ff9fa71d128d0d5bec30dd7a365774de595e44930b08ac934ce623e39c",
+      "changed_for_publication": true
+    }
+  ],
+  "publication_support_files": [
+    {
+      "public_path": "README.md",
+      "sha256": "7a3026ff984dafe7b6f33e057a5108c9598e35c17c030cdfaf0fd142720cf752"
+    },
+    {
+      "public_path": ".gitignore",
+      "sha256": "b1c4f0bf2436fc547f2c1d1535eee5e8aacef7c8b7d6c539a75e860164c505c9"
+    },
+    {
+      "public_path": "scripts/_paths.py",
+      "sha256": "d2129d0b35f9888d0379287ffe212e306b53860dd9cab3a2191cfad76d63e681"
+    },
+    {
+      "public_path": "publication-validation.json",
+      "sha256": "41543d96d4772538a0934d836b6d314cf52935db837eb1f9f2d79dbb0ea5d78b"
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+公开副本说明：本文件为历史分析报告，具体本机路径已脱敏为 <LOCAL_APP> 或 <LOCAL_WORKSPACE>；报告中的历史完成状态不代表完整原始源码已恢复。
+
+断线重连、认证失败与预览失败恢复还原报告
+
+对象：app_xcs(新).apk.1.1；com.re.xcs；Manifest版本2.1.6/code39。
+范围：ARM64 Flutter AOT、Rust异步任务及Dio错误链的静态还原。
+原APK和原生库保持不变；未运行目标APK/快照/原生库，未请求业务服务器。
+本报告扩展上一轮“连接判定与预览退出补全报告.txt”，将通知、排队、实际传输和服务器结果分开。
+
+1. 三条通知通道及首次连接失败
+
+Rust地址采用Ghidra VA，转换为原ELF VA时减0x100000；Dart地址直接采用ELF VA。
+1a51f0：initWs连接通知monitor；true构造Flutter event10，false只日志，channel closed时退出。
+1a556c：保存JWT的等待连接monitor；true调用1eb278发送types6，false只日志，closed时释放JWT退出。
+1a5430：认证成功后建立的内部断线monitor；收到bool值即调用1eab5c，不区分true/false，closed退出。
+它们不是同一个事件流。event10表示传输连接成功；不表示types50/code0认证成功。
+Main收到event10后调用wsLogin(Utils.jwt).then；完成回调52a398不读int结果，只打印成功日志。
+初始initWs的catchError52af54也只打印错误并返回null，没有在Dart回调中启动重试。
+Main stream.listen仅传onData，没有在该调用注册onError/onDone重连处理。
+
+网络连接poll1a5ec8的握手失败分支清理请求资源和该连接任务的临时出站Message通道后返回Ready，
+没有走运行中socket收发任务终止的内部断线通知链。因此首次连接失败且没有旧重登timer时，
+不能声称一定会自动重连。已经存在的周期重登timer则可以在后续tick再次尝试。
+失败分支没有e9794撤SDK保存的一次性bool通知sender，等待monitor未必closed，通常仍Pending；
+后续重登安装新sender、e9794清理或full stop才可能使旧通道关闭。不能把连接任务Ready
+等同于通知monitor也已退出，或把释放该monitor捕获JWT误写成清SDK保存JWT。
+
+2. 运行中断线、心跳超时与自动重登
+
+已建立socket的收发任务终止会清连接标志SDK+0x2a5，撤连接通知sender并停心跳。
+若认证成功时建立的内部断线通道仍存在，再向它发送bool通知，由1a5430调用1eab5c。
+1eab5c清连接标志、撤内部断线sender，调用受连接标志门控的close helper，
+停止心跳、QoS收发及旧重登任务，再启动新的周期重登并保存join handle于SDK+0xf8。
+此处先清连接标志再调用close helper，不能把这次调用无条件解释为发送Close帧。
+reader包装将WouldBlock变为Pending，不能当作断线；终止/EOF与其他读错误才进入收尾。
+部分错误先返回一次并标fused，下次读EOF；forward或reader结束使transport select进入统一清理。
+停止QoS任务本身未清其map，不能把停止任务等同于清空所有待确认消息。
+
+心跳认证成功后启动：发送立即执行，此后默认30秒；检查每2秒，
+now_epoch_seconds-last_response >= send_period+5时超时，默认阈值35秒。
+超时1e1270→1e1e9c停止两keepalive任务并通过内部bool通道触发同一断线恢复链。
+心跳停止1e13c8还将last-heartbeat SDK+0x48重置0。
+这覆盖并废弃前轮heartbeat_lifecycle.json的stale_heartbeat_after_relogin推断：
+旧推断遗漏了完整e13c8尾部的e207c(SDK,0)，不能再认为重登必然沿用旧心跳时间戳。
+认证失败的直接分支本身没有执行这套心跳/QoS清理，不能与断线恢复混同。
+
+自动重登：首轮立即执行，后续使用SDK+0xe8非零配置，0时默认3秒；
+已审查poll没有指数退避或总重试次数上限。
+每次1ec068先调用gated close，再克隆SDK+0x110保存的JWT交给1eaf88。
+该路径不刷新JWT，也不调用HTTP登录接口。
+1eaf88按当时连接标志选择：连接为真则直接发送types6；为假则建立连接并等待连接通知后发送。
+close是排队动作而非等待完成，所以每tick并不保证先关完旧socket再握手。
+新连接future也仅spawn、不await；若握手跨后续tick且transport仍false，后续tick可再启动尝试。
+所审查gate没有独立inflight锁，可能多次连接尝试在途；这是条件性时序推导，未观测运行实例。
+正常认证code0和非0响应都会停止当时的旧重登timer，后续是否又启动须按异步通知时序判断。
+
+3. Close辅助函数的实际网络行为
+
+1e8b4c同时检查连接标志与出站WebSocket Message channel Option。
+条件满足才经1b3bf8排队variant4；forward链
+1adca8→1b770c/1b7488/1b7204→1af590→1e4eec→1e49e0(None)
+构造FIN=1、opcode=8、payload长度0的WebSocket Close帧，确定首字节0x88；
+编码core+0xf8==1的客户端路径附带4字节mask，
+后续存在write/flush尝试。条件不满足则不执行该排队链。
+这补齐了前轮close helper尚未闭合的帧格式；不等于已证明排队消息被消费、Close送达或对端回应。
+认证失败在清连接标志前调用close，可以排队；断线清理先清标志再调用则可能被门控跳过。
+
+4. 认证失败的状态与重试条件
+
+服务端有效types50/code!=0直接分支，在锁和helper正常返回时：
+gated close → stop autorelogin → transport flag=false。
+Close队列发送失败的unwrap可panic，在后续停timer/清标志前中断；这不是必然完成的finally清理。
+它不直接清保存JWT，不清历史认证标志SDK+0x2b1；没有在该分支直接停止keepalive/QoS，
+也没有清认证成功阶段建立的内部断线sender。
+所审查拒绝分支没有直接构造Dart错误事件或登录页导航；不能将HTTP401的清token/导航行为
+移植到原生认证拒绝。isContentWs仅反映transport标志，也不能由false区分认证拒绝与其他断线。
+因此“认证失败停止计时器”不能写成“此后永远不重试”：如果此前成功认证创建的内部
+channel仍未被清除，或已经排队的内部通知尚可消费，则排队Close等导致
+socket worker结束后，仍可能经内部通知→1eab5c重新启动重登timer。
+首次认证拒绝尚未建立该内部monitor时，不具备同一条自动恢复条件。
+常规断线恢复已经撤销旧内部sender；重连后在再次code0成功前不会重建。
+所以正常断线→重连→认证拒绝的路径，停timer后通常没有新的内部通知来继续重试。
+通道关闭、任务取消及实际异步先后会影响后续执行，静态分支不保证某条时序一定发生。
+
+本地wsLogin返回int是本地连接/发送状态，不是服务端认证code：
+0可仅表示等待连接通知任务与连接任务已启动，或已连接时登录文本被本地队列接受；
+203为底层发送首次检查transport=false，可出现于两次连接检查之间的状态变化；
+3为序列化/发送等最终错误，内部500/501合并为3。返回前已保存输入JWT，失败不回滚。
+types50.data_content内层对象要求code:i32、user_id:String、data:String；
+Serde visitor还可解析序列[code,user_id,data]，但未证明服务端实际使用数组。
+qos=true的认证预解析失败可panic，qos=false解析失败为日志/drop；不等于正常code!=0拒绝。
+认证成功将连接/认证标志设1，启动心跳/QoS、建立内部断线monitor并停止重登。
+普通断线可能保留历史认证标志；full stop清两个标志并停止相关任务。
+主动wsLogout还清原生保存JWT；types54的full stop与主动logout的JWT清除动作不同。
+
+5. HTTP失败：普通包装、异步抛错与特殊401等待
+
+HttpClient.post42c230/get457e8c await Dio后调用handleResponse42cc54。
+只捕获Exception并返回HttpResponse(ok=false, exception=...)，data保持默认null；
+非Exception rethrow，异常解析本身的动态类型错误也不保证成功包装。
+HTTP 2xx被包装为ok=true，不以body.success为条件；业务代码须自行检查。
+
+ResponseInterceptors.onError67f850的特殊分支要求HTTP status401且data['code']==401，
+比较采用Dart相等运算，字符串“401”不满足。
+此分支清空Dart Utils.jwt，然后offAll(LoginPage)，直接返回而未完成Dio handler。
+错误wrapper42ede4创建未完成handler、调用拦截器，然后返回handler.completer.future；
+普通next67f76c会completeError，特殊401则跳过。
+在导航等操作正常返回的条件下，请求在所列链中可保持pending，不能一律归为ok=false或reject。
+GET/POST未传CancelToken，所列等待链没有总超时或补偿完成；不排除范围外机制。
+HTTP清的是Dart JWT，未显式调用wsLogout或原生token setter；Main.dispose也未显式logout。
+后续HTTP使用当前Dart JWT构造Bearer头；原生重登可以仍克隆自己的旧JWT。
+Dart JWT恢复的明确入口是登录响应48f830中48fa8c写入；业务53文件精确字段标注库存
+仅找到登录响应写入和特殊401清空两处，此有限扫描不覆盖其他别名或初始化快照。
+
+6. endPreview失败之后没有业务恢复
+
+endPreview461014先将PreviewService.currentDeviceId清0，再发POST end_preview/{id}。
+2xx业务success=false仍可能ok=true；普通网络失败返回ok=false；非Exception可能reject；
+匹配特殊401可能pending。所有这些情形都没有在endPreview恢复设备ID或重新发end。
+保存并关闭的成功回调只挂(_) => null，然后立即pop，不等待end结果；
+父路由完成回调只在currentDeviceId!=0时发送end，也不处理其返回结果。
+空then不会处理Future error；普通ok=false会作为正常值被空回调丢弃。
+业务链没有结束失败提示、状态回滚或按响应重试，服务器是否结束须由外部运行证据确认。
+
+savePreviewParams同样在POST前清currentDeviceId，而且save此前已更新所选Devices的19项缓存字段。
+进入服务并写入/清零已发生后，close=false、保存失败或响应阶段data['success']索引/bool
+类型错误没有ID/缓存恢复分支；查设备、构参数、数值转换等前置错误或未匹配设备，
+不能推定ID已清零/19项均已写入。之后普通返回可能跳过end。
+close=true且保存成功使用捕获设备ID显式发end；不是结束成功才关闭页面。
+
+7. 晚到WS102的过滤、错误与再次进入窗口
+
+Main事件listener继续归Main页面所有，预览路由关闭不取消它。
+WS102带deviceId|前缀：split→int.parse首段→与MainService.previewDeviceId比较，
+不匹配则本次不写Rx；匹配则处理图像。无前缀旧格式不按device ID过滤。
+该分支没有检查PreviewService.currentDeviceId、预览路由是否可见或请求世代号。
+结束时保留MainService.previewDeviceId和共享RxString，因此晚到旧帧在条件满足时可更新Rx。
+非法int.parse、数组边界或decode_data错误发生在Rx setter前；该条消息不会成功写入新值，
+该分支没有清旧值或自动修复，但其他并发路径仍可能修改它。
+正常含|字符串split至少有两段，编译器bounds分支不代表普通消息一定越界。
+102此处只写图片字符串；真正base64Decode/JPG解码在Obx绘图回调，
+若绘图解码失败，新的Rx值已写入，没有旧值回滚。200ms渐隐动画不是恢复或重试计时器。
+
+再次进入预览initState先清共享RxString，不清MainService.previewDeviceId；
+startPreview先写PreviewService.currentDeviceId，响应正常完成后才写MainService的过滤ID。
+响应回调不检查ok/success，因此普通ok=false也可推进过滤ID；reject/pending不执行onValue。
+新请求响应前仍保留旧过滤ID，晚到旧设备前缀帧可以在此窗口通过；
+换设备且新响应已写新ID后，旧设备有前缀帧会被过滤，无前缀格式仍没有设备过滤。
+同设备旧帧仅凭ID无法与新预览会话区分；没有观察到序号/epoch门控或自动补发end/start。
+切换设备更新参数后直接start，不先end旧设备、不清共享Rx。
+多个start请求若乱序完成，最后执行的onValue决定Main过滤ID；回调没有当前设备/方向或
+请求世代校验，而PreviewService ID在发起时已写，两者可能暂时或最终不同。
+保存并关闭的回调若晚于预览State卸载，仍先调用捕获ID的end，随后读取空element可抛错；
+该回调没有mounted检查，不能将页面销毁等同于取消尚未返回的HTTP回调。
+
+全业务导出中startPreview/savePreviewParams/endPreview直接调用点仅4处。
+已审查event10、wsLogin完成回调及设备轮询链没有调用这三个预览方法；
+不能把WebSocket重连或重新认证成功描述为自动恢复预览/补发结束请求。
+这是一组直接调用及完整方法的有限结论，不排除未知间接调用或服务器自行恢复。
+
+8. 图片异步与页面销毁边界
+
+msg101的saveImg不同于msg102即时Rx更新：它只await临时目录，发起图片GET后把then Future丢弃。
+图片onValue529164不检查HttpResponse.ok，直接data as String，再decode/base64并同步写文件。
+普通GET失败data=null可在该then回调抛类型错误；外层saveImg Future已经可能正常完成。
+因此共享空then既不能确认图片下载成功，也没有接管这个被丢弃下载Future的错误。
+所审查图片回调没有Main mounted/取消token/会话世代门控；关闭Main未取消已发HTTP请求。
+Main.dispose发起缓存删除链并取消WS/Timer，与已经发出的下载回调可能交错；
+del_cache_img也丢弃临时目录和Directory.delete的Future，因此删除完成时间同样不由dispose等待。
+若晚到回调仍正常取得有效图像、路径存在且写出成功，可能在清理后再创建图片文件。
+这是条件推导，不是已观测竞态；保存失败、路径错误等可阻止写出。
+图片回调完成时读取当前channels并向当时匹配serial_number的结果列表追加；
+没有请求世代/重复抑制/按number排序，多笔GET的返回顺序可以影响追加顺序，旧回调可能落入新列表。
+本release setState先执行闭包再读取State.element，Main卸载后的回调可能先写盘/append，
+随后因element=null抛错；不能把setState错误解释成已阻止所有副作用。
+
+预览Obx卸载取消自身观察订阅，不清共享Rx、不取消Main WS。
+Main.dispose才清Dart事件订阅、timer，并发起图片缓存清理/Wakelock关闭；
+这些异步清理的实际完成未由dispose等待，FRB worker收尾关闭本地接收port。
+这些Dart资源清理不证明原生socket/JWT/full stop同步完成。
+
+9. 证据与复现
+
+analysis/reconnect_preview_failure/reconnect/：网络worker、三通道、重登时序及Close帧写出链。
+analysis/reconnect_preview_failure/authentication/：拒绝分支、本地int、心跳恢复及字段矩阵。
+analysis/reconnect_preview_failure/preview/：预览错误、WS102、重新进入/换设备及图片Future竞态。
+analysis/reconnect_preview_failure/dart_http/：完整HTTP包装/401 pending、JWT字段及Main观察者。
+统一检查：python3 scripts/verify_reconnect_preview_failure.py（在APP目录执行）。
+检查结果：analysis/reconnect_preview_failure_verification.json。
+
+所有伪代码属于分析重建，不是恢复出的可编译原始源码。
+静态异步条件可说明“可能发生”的状态变化，不能确定运行中必然采用某条任务顺序，
+也不能验证服务器实际认证结果、Close帧送达、晚到帧或设备停止效果。

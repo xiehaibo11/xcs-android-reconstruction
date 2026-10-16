@@ -1,0 +1,106 @@
+公开副本说明：本文件为历史分析报告，具体本机路径已脱敏为 <LOCAL_APP> 或 <LOCAL_WORKSPACE>；报告中的历史完成状态不代表完整原始源码已恢复。
+
+鑫财神 APP 第二轮静态深度提取报告
+
+分析对象：app_xcs(新).apk.1.1
+应用：鑫财神 / com.re.xcs / 2.1.6（versionCode 39）
+工作目录：<LOCAL_APP>
+日期：2026-10-13
+
+本轮结果
+本轮继续分析现有解包产物，恢复 Rust 通信协议和桥接参数，重建 Go RSA 桥接库的函数目录及请求表，并细化 Flutter 业务符号和 Android 平台接口。
+新增的是控制流确认的协议与结构化证据。没有恢复完整可编辑的 Dart 工程，也没有将全部字符串计为新增源码。
+原始 APK、工作副本 SHA-256 仍应为 8fd060966759990ab5ef90639e3376a2b6aea209f3f545d768a2fdc668dfeaa9；最终复核记录见 analysis/deep_verification.json。
+
+一、Rust WebSocket 协议：已从序列化与解析函数确认
+URI 模板：ws://{运行时地址}:18889。
+两个构造点的格式片段均通过 ELF 节映射和 R_AARCH64_RELATIVE 重定位恢复，精确为 ws://、一个运行时字符串、:18889。模板本身没有附加路径或查询参数；运行时服务器地址未恢复，也未访问。
+
+外层 JSON 的六个字段：
+  types        有符号 32 位整数
+  data_content 字符串，可包含第二层 JSON
+  from         字符串
+  to           字符串
+  fp           字符串
+  qos          布尔值
+发送总是输出 types/qos，其余四个字符串为空时省略。接收缺少字段时按 types=0、qos=false、字符串为空处理。
+上述说明来自原生序列化、解析控制流，已分开保存发送/接收 JSON Schema，不能把字符串 data_content 直接替换为 JSON 对象。
+
+已确认的外层类型分支：
+  2   接收业务消息
+  4   QoS ACK，含发送构造器及接收移除等待队列逻辑
+  6   发送登录
+  50  接收登录响应
+  51  接收 Keep Alive 心跳响应，更新保存的时间
+  52  服务端错误响应分支，日志 on_server_response_error
+  54  接收被踢下线指令并调用断开处理
+只列出了已审查分支，不是完整协议枚举。52 分支未确认向界面转发错误内容。
+
+登录响应 types=50 的 data_content 内层要求：
+  code: i32；user_id: String；data: String。
+三个命名字段都有缺失错误路径；code=0 进入成功分支，非零进入失败分支。
+登录请求的 data_content 具体内容暂未恢复；已确认发送器把收到的字符串装入 types=6 的 Protocol。
+
+业务消息 types=2 的 data_content 解为 JSON，读取独立的 msg_type。
+msg_type 为 101、102、113、114、115、116、117 时，原 data_content 字符串进入 Rust -> Flutter 事件转发函数。
+其它值没有走这个已检查处理器的同一转发路径；各值的业务名称与剩余 payload 字段仍未确认，不能直接冠以“图片”“设备状态”等名称。
+
+ACK 构造器：types=4，qos=false；data_content=收到的 fp；交换 from/to；生成新的 UUID fp。
+init_ws、ws_login 的 FRB wire 参数解码器各读取一个 UTF-8 String，前面是 4 字节小端 i32 长度。它属于本地 FFI 参数格式。
+该业务事件的字节顺序为：u8(0) + 4 字节小端事件整数(4) + 第一字符串的 4 字节长度与 UTF-8 + 第二字符串的 4 字节长度与 UTF-8。
+第一字符串为空，第二字符串保留原 data_content；总长为 13 + data_content 的 UTF-8 字节数。外层以 Dart_CObject 外部 Uint8 数据发送到 Dart port。
+转发结构的整数值 4 是事件字段，不应直接理解为 enum variant。独立指令复核见 analysis/deep_rust/flutter_event_encoding.json；原始字段名未绑定。
+
+Rust 本轮三次导出共 243 个函数记录，去重后 203 个函数，均完成 Ghidra 伪代码导出。导出成功不等于 C 类型推断完全正确；伪代码、地址、证据行和源码哈希均保留。
+主要产物：
+  analysis/deep_rust/protocol_outbound.schema.json
+  analysis/deep_rust/protocol_inbound.schema.json
+  analysis/deep_rust/login_response.schema.json
+  analysis/deep_rust/message_types.json
+  analysis/deep_rust/business_message_forwarding.json
+  analysis/deep_rust/qos_ack_construction.json
+  analysis/deep_rust/frb_wire_parameters.json
+  analysis/deep_rust/uri_format_evidence.json
+
+二、Flutter 业务符号：字符串证据与字段定义分开
+逐条复核既有 23,484 条字符串与 arm64 libapp.so 字节一致。本轮新增原始字符串为 0。
+新增结构目录包括：73 个应用类/构造符号条目、24 个私有库身份分组（74 个名称）、71 个业务方法名称候选、75 个模型/参数名称候选、12 个结果打印标签、107 条业务中文文案。
+53 条应用源码路径按入口、service、model、pages、widgets、common、src 分组。
+LoginService、ConfigService、PreviewService、MainService 等私有库簇可通过 Dart 私有符号 @ 后缀同库身份交叉核对；不能按字符串相邻顺序推断调用链。
+
+图像/识别配置候选：cap_exposure、cap_saturation、cap_hue、cap_brightness、cap_contrast、cap_gain、cap_fps、img_rotation、upload_img_clarity、ai_precision、gk_min/gk_max。
+中文文案覆盖光控、电机、裁切画框、延迟发送等设置。
+结果标签包含 result180JD、resultJD、result180Img、uploadImg、shiBie、mahjongNumber；没有把它们全部归到 ChannelResult。
+这些提供功能与模型定位线索，但还不能确认所属类、JSON 类型、接口请求参数和数值范围。HTTP 21 个接口路径仍是字符串证据，未恢复完整请求体。
+主要产物：analysis/deep_flutter/Flutter深度提取说明.txt 与其同目录 JSON。
+
+三、Go RSA 桥接库：恢复通用能力和二进制请求结构
+librsa_bridge.so 保留 Go 1.21.0 pclntab 和构建信息。本轮恢复 4,221 个函数条目，包含 191 个 jerson/rsa-mobile 相关函数。
+分发器恢复 34 个操作，均以 ARM64 比较常量/完整字面量独立核对操作名称。
+请求使用 FlatBuffers，构建信息中的依赖版本为 v2.0.6。恢复 28 张请求表、76 个字段的名称、顺序、vtable 偏移和访问器地址，另恢复 11 张响应/值表及 4 个 Go 返回结构的 RTTI。
+能力包括 RSA OAEP、PKCS1v15 加解密，PSS/PKCS1v15 签名验证，字符串/字节版本，生成密钥、密钥信息、哈希/Base64、JWK/PKCS/PKIX 转换。
+重建 .fbs 是分析产物，命名空间与源格式不是原始源码；部分整数的 enum 别名、signedness 及 String/byte-vector 区别保留推断说明。
+枚举初始化指令还确认 Hash 的 MD5/SHA1/SHA224/SHA256/SHA384/SHA512、Cipher 的 DES/D3DES/AES128/AES192/AES256 与 SaltLength 的 AUTO/EQUALS_HASH 编号，见 enum_values.json。
+RSABridgeCall C ABI 接受 method 指针、request 指针与 int32 长度，返回 malloc(24) 的结构指针（+0 数据指针、+8 长度、+16 原生错误指针）。FlatBuffers 响应的 slot 1 还可承载运算错误；调用方释放策略尚未恢复。
+这些是随包库能力。尚未证明 Dart 登录、设备控制或本地私钥实际调用其中某个操作。不能把可用 OAEP/PSS 能力直接当作业务所选填充方式。
+fast_rsa Java 通道处理器返回 notImplemented 形式的空回复。三个架构的 Dart AOT 多编码字面量检索未命中 RSA 专用导出/库名/操作名，不能因此排除动态构造或 FFI 调用；详细证据见 actual_invocation_evidence.json。
+主要产物：analysis/deep_rsa/go_functions.tsv、operation_request_response.tsv、operations.json、request_models.json、request_models_reconstructed.fbs、response_models_reconstructed.fbs、dispatch_literal_checks.json、go_response_structs.json、native_bridge_contract.json、深入RSA分析说明.txt。
+
+四、Android 平台接口：精确参数、返回与存储格式
+目标范围内提取 22 个平台通道，涵盖自定义后台返回、OTA、WiFi 扫描、PhotoManager、PathProvider、SharedPreferences；不是全 APK 通道统计。
+核对 14 个插件注册映射、36 个相册方法分发、5 个 Manifest 组件。
+OTA listen 参数：url、JSON 字符串 headers、filename、可选 SHA-256 checksum、androidProviderAuthority。下载保存到应用内部 files/ota_update/，随后启动系统安装界面。
+WiFi 插件只提供扫描和取结果，结果含 14 个字段。Smali 核对证明权限处理中 -1 是内部状态，不返回 Dart，也不重复回复。
+SharedPreferences 路径为 <dataDir>/shared_prefs/FlutterSharedPreferences.xml；列表是特殊前缀加 Java 序列化 Base64，double 是特殊前缀加十进制字符串。
+APK 未包含实际运行时偏好文件或用户配置。插件方法存在不等于所有方法均由当前 Dart 业务调用。
+主要产物：analysis/deep_android/android_channels.json、storage_schema.json、component_surface.json 与 Android平台接口提取说明.txt。
+
+五、当前边界与后续可用基础
+当前已经具备静态协议、业务符号、Android 参数以及 RSA 请求表的证据目录和可复现提取脚本。
+完整 Dart AOT 对象/函数调用图、HTTP 端点参数、真实服务器地址、msg_type 各业务定义、登录请求 payload、加密实际调用链仍未恢复。
+未安装 APK、执行原生库或 Hook；未连接模拟器/手机；未请求业务后端。所有网络模板和消息结构来自本地编译产物。
+本机逆向工具清单仍见 analysis/local_tools.json；本轮使用现有 Ghidra、LLVM 和 Python，没有安装新的逆向工具。
+
+报告修正
+旧报告的版本字段曾因元数据未填充显示 None，本轮按 aapt_badging.txt 修正为 2.1.6 / 39。
+旧报告中 WebSocket 18889“组合线索”已升级为经重定位确认的 URI 模板；旧的 Go 2863 数量是 Ghidra 自动识别函数数，本轮 4221 是 pclntab 完整函数索引数，统计口径不同。

@@ -1,0 +1,43 @@
+
+<LOCAL_APP>/unpacked/lib/x86/librsa_bridge.so:	file format elf32-i386
+
+Disassembly of section .text:
+
+0001d8f0 <.text>:
+   6c860: e8 5b 11 fb ff               	calll	0x1d9c0 <.text+0xd0>
+   6c865: 8b 89 db 4c 39 00            	movl	0x394cdb(%ecx), %ecx
+   6c86b: 65 8b 09                     	movl	%gs:(%ecx), %ecx
+   6c86e: 3b 61 08                     	cmpl	0x8(%ecx), %esp
+   6c871: 76 63                        	jbe	0x6c8d6 <.text+0x4efe6>
+   6c873: 83 ec 08                     	subl	$0x8, %esp
+   6c876: 8b 44 24 0c                  	movl	0xc(%esp), %eax
+   6c87a: e8 41 11 fb ff               	calll	0x1d9c0 <.text+0xd0>
+   6c87f: 8d 89 35 2d 3d 00            	leal	0x3d2d35(%ecx), %ecx
+   6c885: 89 01                        	movl	%eax, (%ecx)
+   6c887: e8 34 11 fb ff               	calll	0x1d9c0 <.text+0xd0>
+   6c88c: 8d 89 24 30 3d 00            	leal	0x3d3024(%ecx), %ecx
+   6c892: 8b 09                        	movl	(%ecx), %ecx
+   6c894: 85 c9                        	testl	%ecx, %ecx
+   6c896: 75 11                        	jne	0x6c8a9 <.text+0x4efb9>
+   6c898: 8b 4c 24 10                  	movl	0x10(%esp), %ecx
+   6c89c: e8 2f 11 fb ff               	calll	0x1d9d0 <.text+0xe0>
+   6c8a1: 8d 92 4b fc 3b 00            	leal	0x3bfc4b(%edx), %edx
+   6c8a7: eb 1b                        	jmp	0x6c8c4 <.text+0x4efd4>
+   6c8a9: e8 a2 26 02 00               	calll	0x8ef50 <_cgo_topofstack+0x90>
+   6c8ae: 8b 4c 24 10                  	movl	0x10(%esp), %ecx
+   6c8b2: 89 0f                        	movl	%ecx, (%edi)
+   6c8b4: e8 17 11 fb ff               	calll	0x1d9d0 <.text+0xe0>
+   6c8b9: 8d 92 33 fc 3b 00            	leal	0x3bfc33(%edx), %edx
+   6c8bf: 8b 1a                        	movl	(%edx), %ebx
+   6c8c1: 89 5f 04                     	movl	%ebx, 0x4(%edi)
+   6c8c4: 89 0a                        	movl	%ecx, (%edx)
+   6c8c6: 89 04 24                     	movl	%eax, (%esp)
+   6c8c9: 89 4c 24 04                  	movl	%ecx, 0x4(%esp)
+   6c8cd: e8 4e 91 fe ff               	calll	0x55a20 <.text+0x38130>
+   6c8d2: 83 c4 08                     	addl	$0x8, %esp
+   6c8d5: c3                           	retl
+   6c8d6: e8 f5 10 02 00               	calll	0x8d9d0 <.text+0x700e0>
+   6c8db: eb 83                        	jmp	0x6c860 <.text+0x4ef70>
+   6c8dd: cc                           	int3
+   6c8de: cc                           	int3
+   6c8df: cc                           	int3

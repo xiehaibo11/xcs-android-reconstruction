@@ -1,0 +1,61 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000059800 <.text>:
+   be0a0: 48 8b 0d 61 55 35 00         	movq	0x355561(%rip), %rcx    # 0x413608
+   be0a7: 64 48 8b 19                  	movq	%fs:(%rcx), %rbx
+   be0ab: 48 8b 5b 30                  	movq	0x30(%rbx), %rbx
+   be0af: 48 8b 33                     	movq	(%rbx), %rsi
+   be0b2: 64 48 39 31                  	cmpq	%rsi, %fs:(%rcx)
+   be0b6: 75 0a                        	jne	0xbe0c2 <.text+0x648c2>
+   be0b8: e8 23 46 00 00               	callq	0xc26e0 <_cgo_topofstack+0x2720>
+   be0bd: e8 5e 1d 00 00               	callq	0xbfe20 <.text+0x66620>
+   be0c2: 48 8b 73 50                  	movq	0x50(%rbx), %rsi
+   be0c6: 64 48 39 31                  	cmpq	%rsi, %fs:(%rcx)
+   be0ca: 75 0a                        	jne	0xbe0d6 <.text+0x648d6>
+   be0cc: e8 2f 46 00 00               	callq	0xc2700 <_cgo_topofstack+0x2740>
+   be0d1: e8 4a 1d 00 00               	callq	0xbfe20 <.text+0x66620>
+   be0d6: 48 8b 44 24 08               	movq	0x8(%rsp), %rax
+   be0db: 48 89 43 10                  	movq	%rax, 0x10(%rbx)
+   be0df: 48 8d 44 24 10               	leaq	0x10(%rsp), %rax
+   be0e4: 48 89 43 08                  	movq	%rax, 0x8(%rbx)
+   be0e8: 48 8b 0d 19 55 35 00         	movq	0x355519(%rip), %rcx    # 0x413608
+   be0ef: 64 48 8b 31                  	movq	%fs:(%rcx), %rsi
+   be0f3: 48 89 73 18                  	movq	%rsi, 0x18(%rbx)
+   be0f7: 48 8b 04 24                  	movq	(%rsp), %rax
+   be0fb: 48 89 46 40                  	movq	%rax, 0x40(%rsi)
+   be0ff: 48 8d 44 24 08               	leaq	0x8(%rsp), %rax
+   be104: 48 89 46 38                  	movq	%rax, 0x38(%rsi)
+   be108: 48 89 6e 68                  	movq	%rbp, 0x68(%rsi)
+   be10c: 48 89 56 50                  	movq	%rdx, 0x50(%rsi)
+   be110: 48 8b 1b                     	movq	(%rbx), %rbx
+   be113: 64 48 89 19                  	movq	%rbx, %fs:(%rcx)
+   be117: 48 8b 63 38                  	movq	0x38(%rbx), %rsp
+   be11b: 48 8b 6b 68                  	movq	0x68(%rbx), %rbp
+   be11f: e8 1c 47 00 00               	callq	0xc2840 <_cgo_topofstack+0x2880>
+   be124: e8 f7 1c 00 00               	callq	0xbfe20 <.text+0x66620>
+   be129: c3                           	retq
+   be12a: cc                           	int3
+   be12b: cc                           	int3
+   be12c: cc                           	int3
+   be12d: cc                           	int3
+   be12e: cc                           	int3
+   be12f: cc                           	int3
+   be130: cc                           	int3
+   be131: cc                           	int3
+   be132: cc                           	int3
+   be133: cc                           	int3
+   be134: cc                           	int3
+   be135: cc                           	int3
+   be136: cc                           	int3
+   be137: cc                           	int3
+   be138: cc                           	int3
+   be139: cc                           	int3
+   be13a: cc                           	int3
+   be13b: cc                           	int3
+   be13c: cc                           	int3
+   be13d: cc                           	int3
+   be13e: cc                           	int3
+   be13f: cc                           	int3

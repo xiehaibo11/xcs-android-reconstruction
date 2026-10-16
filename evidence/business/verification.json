@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "scope": "Java8 compile and 64 deterministic local business tests only",
+  "checks": 64,
+  "business_server_contacted": false,
+  "original_app_executed": false,
+  "rsa_fixture_only": true,
+  "original_source_restored": false,
+  "test_file_sha256": "1b08cdfa1cf3a81e1676e46efb3a602b75c376733f6d303ec78d3a789d34a8b5",
+  "recorded_at_utc": "2026-10-14T18:01:32.882128+00:00",
+  "sources": [
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/ApiContract.java",
+      "sha256": "f7eea172f4ab151685f9e898a2de18e2512142bb89ef609bace3a5485c6469be"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/CachedImageLoader.java",
+      "sha256": "a7d0eac6a7dcab8cbae97a0c746587240c7565fc3dabcb399dc6b09f69135986"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/DartConversions.java",
+      "sha256": "54de99a2f863cda3be9a434c7ff2b614e622dd8d3e8886fa1688778eebb35eee"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/JsonCodec.java",
+      "sha256": "868bc3895edb77e1be3777a72029e1629bc9a7cc5bd673c8378628d037b80744"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/JsonHttpTransport.java",
+      "sha256": "d3447f87596d607ac0332df4ebf9b0ac19c8f151b54ba92624ec023a53577a68"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/LocalConfig.java",
+      "sha256": "8813e9b0a5fcff2987587af37c12dd66b6a7a70d29348bc8afd259f80de0a77c"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/LoginFlow.java",
+      "sha256": "9289490da5e077dee31fb856b8aa7fdcab75eec2470f9c49f25b0682455ed97b"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/MessageEngine.java",
+      "sha256": "02e786a543b2baa27445f8c949b902861beebde78f6504a62f5aabb3b327a911"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/Models.java",
+      "sha256": "ac6f2f17cc9b5faedb29ee26645093a885065b28d0cbf85cfbf759d306ecbf77"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/ResultRules.java",
+      "sha256": "6e4ce2bc3b8869dc5597d8dcaf1da8a7ab75b8d5eb90d67ac10823fce0a4db47"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/SessionState.java",
+      "sha256": "cead6c7b13906535ebfd5b7012af681e0cf02178abd7d1f395e1036cb07505ac"
+    },
+    {
+      "path": "app/src/main/java/com/re/xcs/rebuild/core/SettingsLogic.java",
+      "sha256": "b02dd8e53ffe8b6adb6a77eefab6936e8e993f4237ca220e2161944338488dec"
+    }
+  ]
+}

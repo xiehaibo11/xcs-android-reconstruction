@@ -1,0 +1,14 @@
+0x6f791c: fd79bfa9 stp x29, x30, [x15, #-0x10]!
+0x6f7920: fd030faa mov x29, x15
+0x6f7924: ef4100d1 sub x15, x15, #0x10
+0x6f7928: 501f40f9 ldr x16, [x26, #0x38]
+0x6f792c: ff0110eb cmp x15, x16
+0x6f7930: e9000054 b.ls #0x6f794c
+0x6f7934: b00b40f9 ldr x16, [x29, #0x10]
+0x6f7938: f05900a9 stp x16, x22, [x15]
+0x6f793c: d6d0ef97 bl #0x2ebc94
+0x6f7940: ef031daa mov x15, x29
+0x6f7944: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x6f7948: c0035fd6 ret 
+0x6f794c: 6b090094 bl #0x6f9ef8
+0x6f7950: f9ffff17 b #0x6f7934

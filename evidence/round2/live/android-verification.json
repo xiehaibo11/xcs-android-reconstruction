@@ -1,0 +1,74 @@
+{
+  "requests": [
+    {
+      "method": "POST",
+      "path": "/api/login/login/distinguish",
+      "status": 200,
+      "success": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/server/get_server_addr",
+      "status": 200,
+      "success": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/app/check_update",
+      "status": 200,
+      "success": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/mj/get_config",
+      "status": 200,
+      "success": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/config/get_config",
+      "status": 200,
+      "success": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/zhuo/device_status_all",
+      "status": 200,
+      "success": true
+    }
+  ],
+  "checks": [
+    "Android HTTP login, JWT propagation and RSA server config decrypt",
+    "Live device versions pass confirmed numeric conversion",
+    "Read-only palette load",
+    "Live configuration passes typed model converters",
+    "Read-only device status load",
+    "Android WebSocket upgrade and authentication"
+  ],
+  "credentials_saved": false,
+  "raw_responses_saved": false,
+  "device_mutation_requests_allowed": false,
+  "device_count": 4,
+  "model_unresolved": [
+    "create_time retained as String; Dart DateTime.parse and toIso8601String behavior not ported"
+  ],
+  "palette_count": 50,
+  "status_device_count": 4,
+  "ws_states": [
+    {
+      "connected": true,
+      "authenticated": false
+    },
+    {
+      "connected": true,
+      "authenticated": true
+    }
+  ],
+  "status": "PASS_READ_ONLY_LIVE_LOGIN",
+  "apk_sha256": "4b2578d8308239148d6354c6dfade5e26f4219141502a653f5df27b729128623",
+  "android_api": "35",
+  "real_backend_contacted": true,
+  "credentials_recorded": false,
+  "original_source_recovered": false,
+  "complete_behavioral_equivalence": false
+}

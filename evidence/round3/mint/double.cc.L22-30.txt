@@ -1,0 +1,9 @@
+22: DEFINE_NATIVE_ENTRY(Double_doubleFromInteger, 0, 2) {
+23:   ASSERT(
+24:       TypeArguments::CheckedHandle(zone, arguments->NativeArgAt(0)).IsNull());
+25:   GET_NON_NULL_NATIVE_ARGUMENT(Integer, value, arguments->NativeArgAt(1));
+26:   if (FLAG_trace_intrinsified_natives) {
+27:     OS::PrintErr("Double_doubleFromInteger %s\n", value.ToCString());
+28:   }
+29:   return Double::New(value.AsDoubleValue());
+30: }

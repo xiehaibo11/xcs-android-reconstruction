@@ -1,0 +1,47 @@
+1253:   /// Returns chunkEnd to allow easy one-line bailout tests.
+1254:   int beginChunkNumber(int state, int start) {
+1255:     int end = chunkEnd;
+1256:     int length = end - start;
+1257:     var buffer = new _NumberBuffer(length);
+1258:     copyCharsToList(start, end, buffer.list, 0);
+1259:     buffer.length = length;
+1260:     this.buffer = buffer;
+1261:     this.partialState = PARTIAL_NUMERAL | state;
+1262:     return end;
+1263:   }
+1264: 
+1265:   void addNumberChunk(_NumberBuffer buffer, int start, int end, int overhead) {
+1266:     int length = end - start;
+1267:     int count = buffer.length;
+1268:     int newCount = count + length;
+1269:     int newCapacity = newCount + overhead;
+1270:     buffer.ensureCapacity(newCapacity);
+1271:     copyCharsToList(start, end, buffer.list, count);
+1272:     buffer.length = newCount;
+1273:   }
+1274: 
+1275:   // Continues an already chunked number across an entire chunk.
+1276:   int continueChunkNumber(int state, int start, _NumberBuffer buffer) {
+1277:     int end = chunkEnd;
+1278:     addNumberChunk(buffer, start, end, _NumberBuffer.defaultOverhead);
+1279:     this.buffer = buffer;
+1280:     this.partialState = PARTIAL_NUMERAL | state;
+1281:     return end;
+1282:   }
+1283: 
+1284:   int finishChunkNumber(int state, int start, int end, _NumberBuffer buffer) {
+1285:     if (state == NUM_ZERO) {
+1286:       listener.handleNumber(0);
+1287:       return end;
+1288:     }
+1289:     if (end > start) {
+1290:       addNumberChunk(buffer, start, end, 0);
+1291:     }
+1292:     if (state == NUM_DIGIT) {
+1293:       num value = buffer.parseNum();
+1294:       listener.handleNumber(value);
+1295:     } else if (state == NUM_DOT_DIGIT || state == NUM_E_DIGIT) {
+1296:       listener.handleNumber(buffer.parseDouble());
+1297:     } else {
+1298:       fail(chunkEnd, "Unterminated number literal");
+1299:     }

@@ -1,0 +1,206 @@
+公开副本说明：本文件为历史分析报告，具体本机路径已脱敏为 <LOCAL_APP> 或 <LOCAL_WORKSPACE>；报告中的历史完成状态不代表完整原始源码已恢复。
+
+鑫财神 APK：运行状态与设备控制深度还原报告
+样本：<LOCAL_WORKSPACE>/app_xcs(新).apk.1.1
+分析方式：静态 AOT/ARM64/Android Java/原生桥接交叉还原。
+本文是这份构建的行为说明与分析伪代码，不是恢复出的原始 Dart/Rust 源码。
+
+本轮继续闭合四条链：启动和本地配置、设备及预览控制、图片文本还原、原生 WebSocket 事件到界面。
+前轮消息格式、心跳/QoS、识别结果校验和上传，仍见 WebSocket与识别上传流程还原报告.txt。
+前轮登录、RSA 配置解密和 HTTP 参数，仍见 登录与业务协议还原报告.txt。
+
+一、启动与本地配置
+
+1. 启动顺序
+main 0x6fc7d0 → Flutter 初始化 → RustLib 尚未初始化时 await init → ViewSettingService.initConfig → runApp。
+initConfig 0x6fd320 又直接调用 _dbRead 并返回，没有等待它完成。
+因此 UI 启动不等待 view_setting.conf 读取。MyApp 的 GetMaterialApp.home 是 LoginPage。
+这些调用次序均已对照 libapp.so 的直接 BL；完整片段保存在 analysis/local_state/evidence。
+
+2. 三个文件均使用 Android 应用私有 files 目录
+业务调用 getApplicationSupportDirectory，经 Dart PathProviderApi、Pigeon 通道和 Android 插件：
+  getApplicationSupportPath → n5.j.h() → n5.j.i() → r5.c.d(context)
+最终返回 Context.getFilesDir()；若为空，回退 dataDir/files。
+这里还原的是逻辑路径，没有连接手机，也没有读取任何真实安装账户数据。
+
+app_config.conf：登录配置 JSON 文本。
+  ip               当前 IP 输入文本
+  username         当前用户名输入文本
+  password         rememberPassword 为 true 时保存当前密码文本，否则保存 ""
+  rememberPassword bool
+Utils.loginConfDbWrite 0x48f2ac 最终 writeAsStringSync；所选保存路径没有加密处理。
+保存触发点之一是 server_addr 配置成功回调 0x49221c；LoginPage.save_config 0x48f1a4 没有 await 真正的写盘函数。
+
+view_setting.conf：当前 ViewSetting 的 8 个属性经 toJson/jsonEncode 写为文本。
+inlet_pwd.conf：KeyFormPage 拒绝空串及字面保留值6666；通过校验的口令经 UTF8→MD5→HashDigest.toString 写为文本。
+后者只闭合了写入链；其读取、校验和导航入口尚未证实，不能把它当作服务端登录凭据。
+
+3. 登录配置恢复和内存密码是两条状态路径
+LoginPage.initState 0x51d9d4 先用 Utils 的内存用户名 bb8、密码 bbc 填表，再异步 read_config。
+app_config.conf 存在时，读取函数直接从 JSON 取三个 String 和一个 bool。
+读取 password 时没有根据 rememberPassword 再过滤；正常 writer 在关闭记住密码时已保存空字符串。
+没有文件则保留前面的内存值。所选方法没有局部 catch，JSON 格式、字段类型或 IO 错误可能中断恢复。
+登录成功回调 0x48f830 会把当前输入用户名、密码写入 bb8/bbc，写内存不受 rememberPassword 开关控制。
+“不记住密码”在此构建表示不把密码文本写入 app_config.conf，不能据此推断应用内存中没有密码。
+
+登录重置 0x48f0bc 先立即 setState(field_33=true)，清空三个输入并保存配置；一秒后执行表单 saveAndValidate。
+该方法没有删除 app_config.conf，没有清除 Dart JWT，也没有重置 rememberPassword(field_2f)。
+field_33 是独立字段，本文保留字段名，避免把它混同为记住密码开关。
+
+4. ViewSetting 读取存在明确的值丢失
+ViewSetting.fromJson 0x6fd4a8 执行 8 次 Map getter，但是返回的 r0 均被后续操作覆盖，没有用于对象赋值。
+最后在 0x6fd5c0 分配新对象，依次写入固定默认值：
+  orientationMjHeight 3.0
+  orientationMjWidth  1.9
+  orientationHeight  640.0
+  validMjWidth       34.0
+  validMjHeight      70.0
+  editMjWidth        60.0
+  editMjHeight       64.0
+  orientationAiVis   true
+此结论已独立核对 factory 的 92 条原始 ARM64 指令及 8 个 getter 返回值覆盖位置。
+正常 getter 返回时，JSON 字段值不会恢复到新 ViewSetting 对象。
+仍然会执行 getter；JSON 解码、Map cast 或 getter 抛错时，不保证返回默认对象。
+另一个状态边界是设置保存按钮：调用 writeDb 后立即显示“保存成功”，没有等待实际写盘完成。
+
+5. 密码修改与 HTTP 401 的会话清理边界
+修改密码成功回调 0x455208 提示“修改密码成功”并 offAll(LoginPage)。
+该回调不重写登录配置文件，不更新内存密码 bbc，也不清空 Dart JWT ba4。
+HTTP 错误拦截器 0x67f850 仅在 statusCode==401 且 response.data.code==401 时清空 ba4 并回到 LoginPage。
+其它错误交给 handler.next。该拦截器也不删除配置文件或清空内存 username/password。
+ARM64 中出现的 0x322 是 Dart Smi 编码：802>>1=401，不能解释成业务码 802。
+原生 JWT 与 Dart ba4 是不同存储，需分层理解；上述导航动作未证明原生 wsLogout 被调用。
+
+二、设备和预览控制
+
+本节覆盖 14 个既有接口模板、18 条操作链、32 条结论和 91 个完整方法，未把这些接口另计为新增接口。
+
+1. 主页面设备初始化与五秒轮询
+Main.initState 0x51f028 从登录设备列表构造 Channel；Channel 引用同一个 Devices 对象。
+初始清空 lighting_switch，结果列表为空、移除偏移为0。先发起牌字典请求，建好通道后立即查设备状态，
+再创建五秒 Timer.periodic 并订阅 Rust 事件流。字典回调 data.success 强制 bool 后成功才 initWs。
+设备状态 GET /api/zhuo/device_status_all 需 response.ok 且 success as bool 为 true 才处理。
+按 serial_no 匹配已有通道，更新九个字段：
+  ip:String?、online:int?、delay:double?、connected_at:String?、ver:String?、
+  client_wifi:String?、client_ip:String?、run_time:String?、up_time:String?。
+轮询不增删通道，不匹配则保留旧值；响应中同序列号重复记录会继续覆盖。
+旧 online=1 变为 online=0 才播放 offline_error.wav。
+此轮询不更新 direction、mj_count、lighting_switch 或 status，不能与 WS 状态变更混同。
+WS117设lighting_switch=1，114设0；115同时设online=0和lighting_switch=0，116设online=1。
+lighting_switch(field_1f) 与 status(field_47) 是不同字段。
+每五秒查询不等待上次 HTTP 完成；Main.dispose 取消计时器、事件订阅并清图片缓存、禁用 Wakelock，
+所审查方法不取消已发 HTTP，也不等待这些清理 Future。
+
+2. 牌局控制的请求与状态时序
+开始：GET /api/zhuo/start_games，无 body/query。
+  0x4aac98 执行 server_url 的 substring(7) 和 :8081 截取，但丢弃截取结果；实际调用 isContentWs() 无业务参数。
+  返回 true 则直接请求；false 则等 wsLogin(JWT) Future 完成后请求，忽略其返回整数。
+  后续补证闭合 worker/getter，正常 bool 仅读取 SDK+0x2a5 连接标志，不读认证标志或比较地址；详见《连接判定与预览退出补全报告.txt》。
+  HTTP 回调不先检查 ok，直接 success as bool；true 仅提示“指令下发成功”，不直接启动倒计时或清结果。
+  后续实际接收进度仍由 WS113/101/114 等推进，见前轮 result_pipeline。
+结束：GET /api/zhuo/end_games，无 body/query。
+  同样不先检查 ok；success as bool 为 true 时提示、倒计时清0并取消 Timer，状态改“未开始游戏”。
+  不清识别结果或移除偏移，Timer 引用也未置 null。
+重置：GET /api/zhuo/zhuo_reset_games，无 body/query。
+  发请求、挂 then 后立即清空所有 live Channel.result 并刷新；响应前已发生清空。
+  回调要求 ok && (success as bool)==true 才提示；失败未恢复结果，也不重置移除偏移/倒计时/主状态。
+重启：GET /api/zhuo/restart_device，无设备 id。
+  页面称“重启所有设备”；要求 ok 且 success!=false，成功先 pop，再实际调用 showErr 显示成功文字。
+  客户端未批量把 online 置0；服务器是否重启硬件未经验证。
+上述 success as bool 与 success!=false 是不同条件；缺失或错误类型的字段不能一律当成 false。
+
+3. 方向数量及数据配置
+设置页拿到主页面同一个 channels 列表；GET /api/config/get_config 后更新 OnlineConfig。
+填表 fallback 为每方26、timeout=60、delay=5，data_send/count_type/upload_img_clarity 各1；这不是已证服务端默认。
+POST /api/config/set_number 参数 east/south/west/north 来自四个控制器 int.parse，方法内未见范围/总数校验。
+成功回调按设备 direction=1/2/3/4，从回调时的 live 文本重新 parse 写 mj_count，未使用请求快照。
+它不修改 direction，也不能被当作单设备升降开关。lighting_config 虽解析，所审查页面未闭合其提交链。
+POST /api/config/set_data_config 发送 data_send、timeout、delay、count_type、upload_img_clarity。
+请求前就更新 loginUser.timeout，失败未回滚；其它字段是否控制上传仍以 result_pipeline 的实际读取证据为准。
+POST /api/config/set_wifi 的两处保存支线已核对：选择页先检查 SSID/密码非空，普通设置页保存方法未做该检查；
+成功仅提示保存，不自动重启或更新本地 WifiConfig。Wi-Fi 扫描与标定没有在本轮扩展。
+
+4. 预览、框选和参数保存
+预览页 initState 只清 Rx 图片；选择方向后找第一个匹配设备，加载参数、绘框，再发起：
+  GET /api/preview/start_preview/{device_id}
+请求前写 PreviewService.currentDeviceId；响应回调没有 ok/success 判断，就写 MainService.previewDeviceId=id??0。
+切换方向在这些方法中未先 end 旧设备。无匹配设备则不请求。
+WS102 带 deviceId|编码图串时需 id 匹配 MainService.previewDeviceId；旧无前缀格式直接接收。
+还原后写 Rx，界面执行 Base64→JPEG→绘红框→PNG→显示，未额外走取图 HTTP。
+框的 x2=left+right、y2=top+bottom，故本地 right/bottom 用作宽高；服务端解释仍未知。
+
+更新预览图像调用 save(false)，保存配置调用 save(true)，均发送：
+  POST /api/preview/set_params_v2/{device_id}
+19个键为 left、top、right、bottom、brightness、motor、cap_brightness、cap_exposure、cap_hue、
+cap_saturation、cap_contrast、cap_gain、img_rotation、img_min_hreshold、cap_fps、bate、img_add_num、gk_min、gk_max。
+原拼写 img_min_hreshold/bate 保留；设备模型序列化则用 beta。
+前四框值和 motor 请求转 int，brightness 使用当前 UI double，其余13项为 int。
+请求前即修改共享 Devices 缓存；失败无回滚。明确的缓存差异是 brightness 固定写75.0，HTTP却发送当前UI值。
+savePreviewParams服务入口也在HTTP前把PreviewService.currentDeviceId清0，与close标志及保存结果无关。
+回调要求 ok && (success as bool)==true；失败无专门提示。
+close=false 保持页面；close=true 调 endPreview、挂 then 后立即 pop(true)，不等待结束响应。
+endPreview 入口清 currentDeviceId=0，再 POST /api/preview/end_preview/{device_id}。
+主页面路由结束回调若 id!=0 才发 end，忽略返回 bool 和响应；正常 save(true) 已清0，避免再发同一 end。
+更新图像或保存失败也会因savePreviewParams先清0而使随后普通返回跳过end；除非期间再startPreview重写ID。
+已审查入口和路由回调未清 MainService.previewDeviceId 或 Rx 图片；后续补证发现共享回调 0x6f2a58
+仅有 mov x0,x22;ret 两条指令，返回 null，没有其它清理。Obx UI订阅随页面销毁解绑，但主页面WS订阅保留。
+图像类型选择先更新 UI 类型=参数??0，再向全部当前方向设备发送：
+  POST /api/preview/set_preview_img_type/{device_id}/{参数??1}
+逐个丢弃 Future，无 then/await/响应提示；UI 与请求的 nullable fallback 不同。
+
+以上时序来自列出的完整客户端方法。服务端接受条件、真实设备动作、实际响应格式和最终执行顺序均未验证。
+
+三、图片文本还原
+
+Utils.decode_data 0x528074 按 rules.split('|') 的顺序处理每段。
+每段 split(',') 后，pair[1] 是搜索文本，pair[0] 是替换文本；执行字面 replaceAll。
+匹配为字面且不重叠，前一条替换的结果会成为后一条的输入。rules 只作分隔字符串，没有二次 JSON 解析。
+多余的逗号字段忽略；没有 pair[1] 的段会越界，空 rules 也会形成这样的错误段。
+HTTP 图片路径把替换后的文本作 Base64 解码，所得字节直接写入 .png 路径。
+WebSocket msg_type=102 预览路径则先将字节按 JPEG 解码，再编码 PNG，并更新预览图片状态。
+因此 HTTP 缓存名以 .png 结尾，不能单凭扩展名证明其字节已经转换为 PNG。
+离线重建算法、合成示例与 Dart 字符串/Base64 语义来源，见 analysis/image_codec。
+实际 rules 来自登录 server_addr 的 RSA 解密结果第二项；未获取真实服务端下发规则或图片响应。
+临时缓存命名为 cacheImg/<year><month><day>/<Random.nextInt(1000000)>.png，日期和随机数均不补零。
+没有观察到重名避让；FileMode.writeOnly 会覆盖同名文件。
+算法语义参考固定 Dart 3.5.2 源码，URL/快照 SHA 见 image_codec/standard_reference/retrieval.json。
+合成验证：24条规则边界、25条Base64边界、4条URL案例和1个自行生成PNG往返，全部通过；均非线上数据。
+
+四、WebSocket 事件与认证状态
+
+已闭合的 Rust→Dart 事件：
+  event 10：传输连接建立；两个 String 为空；Dart 收到后调用 wsLogin(JWT)。
+  event 4 ：业务消息；第一个 String 为空，第二个为原始 data_content 内层 JSON；Dart jsonDecode 后分派。
+上述桥接整数加两个 String 是 FRB 事件格式，与 WebSocket 外层 JSON 是不同的编码层。
+细化的 FRB 字节序列是 action byte 0 → u32小端事件整数 → u32 UTF8长度+String1字节 → u32 UTF8长度+String2字节。
+例如 event10 两个空串的13字节合成编码是 000a0000000000000000000000；不是实测流量。
+有效且未被 QoS 去重丢弃的 types=50、code=0 响应负责启动原生心跳和 QoS 等任务；该分支也未构造 WsEvent，不能用 event10 替代它。
+在已审查的认证失败、types52 错误和 types54 踢下线分支中，未见调用这条 Dart 事件发送器。
+传输初始失败或 socket worker 结束会清传输标志、停止心跳，并通过内部 bool 通道触发清理/自动重登；
+这条内部通道不是 FRB WsEvent 流。false/closed 的 event10 监视器分支未构造已知 WsEvent。
+init_app 没有 SDK 周期参数；init_ws 仅一个地址 String；ws_login 仅一个 JWT String；ws_logout 无业务参数。
+wsLogin Future<int> 表示本地发送/排队状态，不能解释成服务器 types50.code。
+后续状态字段审计：普通认证失败/断线清连接标志，可能保留历史认证标志；主动wsLogout和types54完整停止才清两者。
+isContentWs无业务参数，正常返回只读连接标志。原ELF/异步vtable及预览退出补证见analysis/connection_preview_closure。
+心跳周期原始字段默认0，getter回退30秒；重登周期原始字段默认0，getter回退3秒。
+已审查 init/login/logout 入口未见周期写入参数；仍不排除其它路径改变周期。
+对 Rust 可执行 PT_LOAD 的1,124,500文件字节、281,125对齐字做直接 B/BL 扫描：
+精确 WsEvent 发送器入口只有3处 BL，来自事件10和事件4构造点；3,540项RELA无精确入口目标。
+扫描不能穷尽 BR/BLR、计算指针、内联、其它序列化器或指向函数内部的重定位。
+完整扫描和关闭门控边界、45段来源片段、96项原始指令检查、19段LLVM快照，见 analysis/ws_event_contract。
+未发现通知调用不等于已证明所有可能的间接行为不存在；UI 的最终运行表现仍须运行日志或抓包确认。
+
+五、交付与验证边界
+
+本地状态：analysis/local_state/local_state.json、中文说明.txt、reconstructed_local_state.dart。
+设备控制：analysis/device_lifecycle/。
+图片算法：analysis/image_codec/，其中 reconstructed_codec.py 是人工静态重建的离线工具。
+原生事件：analysis/ws_event_contract/。
+每条主要结论对应原始反汇编/伪代码文件、精确行号或完整方法片段，并记录 SHA256。
+统一验证脚本：scripts/verify_runtime_reconstruction.py。
+验证结果：analysis/runtime_reconstruction_verification.json；包含APK/原库哈希、精确来源片段、直接调用、
+LLVM机器字、原生扫描/RELA复核与离线codec合成案例。
+另补充对设备91个方法的1,708处直接BL目标独立解码核对；这是统一验证的补充，区别于该目录自身的来源校验。
+
+执行的是分析脚本和反汇编工具，没有执行 APK 或目标原生库，没有访问 APP 业务服务器。
+没有得到真实 JWT、设备响应、服务端实现或运行时流量。本报告可用于阅读和核对客户端逻辑，不能代替端到端运行验证。

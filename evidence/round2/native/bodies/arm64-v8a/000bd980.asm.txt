@@ -1,0 +1,64 @@
+
+<LOCAL_APP>/unpacked/lib/arm64-v8a/librsa_bridge.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000059010 <.text>:
+   bd980: f81f0ffe     	str	x30, [sp, #-0x10]!
+   bd984: f81f83fd     	stur	x29, [sp, #-0x8]
+   bd988: d10023fd     	sub	x29, sp, #0x8
+   bd98c: d10083ff     	sub	sp, sp, #0x20
+   bd990: b9000be0     	str	w0, [sp, #0x8]
+   bd994: f9000be1     	str	x1, [sp, #0x10]
+   bd998: f0001a9c     	adrp	x28, 0x410000
+   bd99c: 913d839c     	add	x28, x28, #0xf60
+   bd9a0: 910003e7     	mov	x7, sp
+   bd9a4: d14040e0     	sub	x0, x7, #0x10, lsl #12  // =0x10000
+   bd9a8: f9000b80     	str	x0, [x28, #0x10]
+   bd9ac: f9000f80     	str	x0, [x28, #0x18]
+   bd9b0: f9000380     	str	x0, [x28]
+   bd9b4: f9000787     	str	x7, [x28, #0x8]
+   bd9b8: f000191b     	adrp	x27, 0x3e0000
+   bd9bc: f940ef6c     	ldr	x12, [x27, #0x1d8]
+   bd9c0: b400016c     	cbz	x12, 0xbd9ec <.text+0x649dc>
+   bd9c4: d53bd040     	mrs	x0, TPIDR_EL0
+   bd9c8: aa0003e3     	mov	x3, x0
+   bd9cc: d0001942     	adrp	x2, 0x3e7000
+   bd9d0: 913b8042     	add	x2, x2, #0xee0
+   bd9d4: 90000001     	adrp	x1, 0xbd000 <.text+0x63ff0>
+   bd9d8: 910d4021     	add	x1, x1, #0x350
+   bd9dc: aa1c03e0     	mov	x0, x28
+   bd9e0: d10043ff     	sub	sp, sp, #0x10
+   bd9e4: d63f0180     	blr	x12
+   bd9e8: 910043ff     	add	sp, sp, #0x10
+   bd9ec: 94000f81     	bl	0xc17f0 <_cgo_topofstack+0x1760>
+   bd9f0: f9400380     	ldr	x0, [x28]
+   bd9f4: 910e8000     	add	x0, x0, #0x3a0
+   bd9f8: f9000b80     	str	x0, [x28, #0x10]
+   bd9fc: f9000f80     	str	x0, [x28, #0x18]
+   bda00: 90001aa0     	adrp	x0, 0x411000
+   bda04: 910f0000     	add	x0, x0, #0x3c0
+   bda08: f900001c     	str	x28, [x0]
+   bda0c: f9001b80     	str	x0, [x28, #0x30]
+   bda10: 9400113c     	bl	0xc1f00 <_cgo_topofstack+0x1e70>
+   bda14: b9800be0     	ldrsw	x0, [sp, #0x8]
+   bda18: b81f83e0     	stur	w0, [sp, #-0x8]
+   bda1c: f9400be0     	ldr	x0, [sp, #0x10]
+   bda20: f90003e0     	str	x0, [sp]
+   bda24: 9400112b     	bl	0xc1ed0 <_cgo_topofstack+0x1e40>
+   bda28: 940010e2     	bl	0xc1db0 <_cgo_topofstack+0x1d20>
+   bda2c: 9400110d     	bl	0xc1e60 <_cgo_topofstack+0x1dd0>
+   bda30: d0001000     	adrp	x0, 0x2bf000
+   bda34: 911cc000     	add	x0, x0, #0x730
+   bda38: d10043ff     	sub	sp, sp, #0x10
+   bda3c: f90007e0     	str	x0, [sp, #0x8]
+   bda40: f90003ff     	str	xzr, [sp]
+   bda44: 9400111b     	bl	0xc1eb0 <_cgo_topofstack+0x1e20>
+   bda48: 910043ff     	add	sp, sp, #0x10
+   bda4c: 9400000d     	bl	0xbda80 <.text+0x64a70>
+   bda50: f0000000     	adrp	x0, 0xc0000 <.text+0x66ff0>
+   bda54: 91068000     	add	x0, x0, #0x1a0
+   bda58: aa1f03e0     	mov	x0, xzr
+   bda5c: f9000000     	str	x0, [x0]
+   bda60: bea71700     	<unknown>
+		...

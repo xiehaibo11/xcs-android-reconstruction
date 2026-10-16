@@ -1,0 +1,45 @@
+本轮实现范围与证据边界
+
+SettingsLogic.java 是根据已核对 ARM64 AOT 方法重新编写的 Java 源码，不是原始 Dart 源码。
+logic_contracts.json 保存 9 组行为合同以及对应完整函数证据。verification.json 核对
+69 个完整方法证据文件与原 ELF 中的 9,441 个机器指令字节记录；这只证明证据一致性，
+不将引用一个地址或运行一个测试等同于完整函数闭合。
+
+可执行实现：
+1. 修改密码：旧密码至少 6 个 UTF-16 单元；新密码非空；重复密码非空且相等。
+   不对密码做 trim 或哈希。普通保存回调只有 success == false 才判业务失败。
+   修改密码成功产生 LOGIN_CLEAR_STACK 导航结果；没有凭空清除 token 或重做登录。
+2. 在线设置：加载 4 个必需嵌套配置映射，缺省数量 26、超时 60、延时 5、三个枚举 1。
+   get_config 回填保留手动 WiFi 文本。data_config 请求构造成功后、实际网络请求前写
+   user.timeout；请求失败不回滚，也不写 user.data_send / user.delay。
+3. 数量保存：发送时构造 east/south/west/north；成功响应时重新读取当时表单字符串，
+   direction 1..4 对应上述四方向写 device.mj_count，未知方向保留。不添加原代码没有的刷新。
+4. WiFi：手动配置允许空字符串；扫描页要求 SSID 和密码非空；选中列表项时清空密码。
+   get_default_wifi.success 必须是 bool；仅 true 时回填。WiFi 列表回调检查 HTTP ok，
+   不检查 body.success。解析两种已确认字符串格式、dBm 五档阈值与转义 UTF-8 SSID。
+5. WiFi 生命周期：初始化发起两次 deviceUp；3 秒定时 getList，15 秒定时 deviceUp。
+   deviceUp 回调无论 ok/success 都再 getList；close 只取消两个计时器，已经发出的请求
+   及晚到回调不会被该 core 隐式取消。这是原代码观察，不代表建议 UI 忽略生命周期。
+6. 通道倒序：偶数 id-1，奇数 id+1；常规顺序保留。重启设备成功产生 POP 导航并保留
+   showErr 帮助函数调用和 black 日志语义；各错误分支区分网络失败、业务失败与日志颜色。
+
+必须保留的限制：
+- 原 WiFi 排序比较回调在第一项信号更强时返回 0，否则返回 1。该函数不满足 Java
+  Comparator 契约。实现暴露 originalWifiCompare，但不冒充降序排序；多项结果保留
+  输入顺序并返回 orderingRecovered=false 与解释。原 Dart 排序整体效果尚未恢复。
+- WiFi 原 catch/恢复路径、data 为非 String 的动态转换未闭合。遇到这些输入明确抛错，
+  不伪造一份解析结果。
+- 设置整数的宿主适配只支持有符号十进制和 Java int 范围；原 Dart int.parse 的其他
+  格式及 64 位范围尚未移植。动态 toString 目前仅支持 null/String/bool/整数。
+- 此文件不声称恢复 Flutter 全部控件树、完整原导航/绘制行为或全部 App 业务。
+- msg117 接收端只使用按 | 分割的第一段匹配 serial_no；第二段在该方法没有读者。
+  不能由此声称发送端第二段协议不存在或已经完整还原。
+- inlet_pwd.conf 在有界静态检索内只找到写入链，没有找到读取链；这不是全局不存在
+  读取行为的证明，也不应添加猜测的自动登录或密码恢复功能。
+
+可重复验证：
+python3 APP/analysis/reconstruction_round/logic/run_settings_tests.py
+结果见 settings_test_result.json 和 settings_test.log。测试使用 JDK --release 8，无网络、
+不执行原 APK/so。102 个断言覆盖请求前写、失败不回滚、回调时读取、严格布尔差异、
+轮询时序/晚到回调、WiFi 格式边界与显式未恢复路径。这是有界行为验证，不是原程序
+动态等价证明。

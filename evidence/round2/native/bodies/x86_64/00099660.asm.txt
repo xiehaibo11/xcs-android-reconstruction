@@ -1,0 +1,48 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000059800 <.text>:
+   99660: 49 3b 66 10                  	cmpq	0x10(%r14), %rsp
+   99664: 76 5b                        	jbe	0x996c1 <.text+0x3fec1>
+   99666: 55                           	pushq	%rbp
+   99667: 48 89 e5                     	movq	%rsp, %rbp
+   9966a: 48 83 ec 28                  	subq	$0x28, %rsp
+   9966e: 44 0f 11 7c 24 08            	movups	%xmm15, 0x8(%rsp)
+   99674: 44 0f 11 7c 24 18            	movups	%xmm15, 0x18(%rsp)
+   9967a: 48 8d 0d 5f 00 00 00         	leaq	0x5f(%rip), %rcx        # 0x996e0 <.text+0x3fee0>
+   99681: 48 89 4c 24 08               	movq	%rcx, 0x8(%rsp)
+   99686: 48 89 44 24 10               	movq	%rax, 0x10(%rsp)
+   9968b: 4c 89 f0                     	movq	%r14, %rax
+   9968e: 48 89 44 24 18               	movq	%rax, 0x18(%rsp)
+   99693: 48 8b 44 24 30               	movq	0x30(%rsp), %rax
+   99698: 48 89 44 24 20               	movq	%rax, 0x20(%rsp)
+   9969d: 48 8d 44 24 08               	leaq	0x8(%rsp), %rax
+   996a2: 48 89 04 24                  	movq	%rax, (%rsp)
+   996a6: e8 55 49 02 00               	callq	0xbe000 <.text+0x64800>
+   996ab: 45 0f 57 ff                  	xorps	%xmm15, %xmm15
+   996af: 4c 8b 35 52 9f 37 00         	movq	0x379f52(%rip), %r14    # 0x413608
+   996b6: 64 4d 8b 36                  	movq	%fs:(%r14), %r14
+   996ba: 48 83 c4 28                  	addq	$0x28, %rsp
+   996be: 5d                           	popq	%rbp
+   996bf: 90                           	nop
+   996c0: c3                           	retq
+   996c1: 48 89 44 24 08               	movq	%rax, 0x8(%rsp)
+   996c6: e8 75 4a 02 00               	callq	0xbe140 <.text+0x64940>
+   996cb: 48 8b 44 24 08               	movq	0x8(%rsp), %rax
+   996d0: eb 8e                        	jmp	0x99660 <.text+0x3fe60>
+   996d2: cc                           	int3
+   996d3: cc                           	int3
+   996d4: cc                           	int3
+   996d5: cc                           	int3
+   996d6: cc                           	int3
+   996d7: cc                           	int3
+   996d8: cc                           	int3
+   996d9: cc                           	int3
+   996da: cc                           	int3
+   996db: cc                           	int3
+   996dc: cc                           	int3
+   996dd: cc                           	int3
+   996de: cc                           	int3
+   996df: cc                           	int3

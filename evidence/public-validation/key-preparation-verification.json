@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "script_sha256": "44ede6c36eb1bd9cb62175b3de9f35ebed3ec6ae1efcb2e736f0eb5115132189",
+  "concurrent_first_invocations": 6,
+  "fresh_pairs_generated": 1,
+  "repeat_keeps_existing_pair": true,
+  "incomplete_pair_rejected": true,
+  "mismatched_pair_rejected": true,
+  "test_material": "temporary, independently generated RSA fixture pairs; removed after test"
+}

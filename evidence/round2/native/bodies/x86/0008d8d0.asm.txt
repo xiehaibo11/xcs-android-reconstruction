@@ -1,0 +1,49 @@
+
+<LOCAL_APP>/unpacked/lib/x86/librsa_bridge.so:	file format elf32-i386
+
+Disassembly of section .text:
+
+0001d8f0 <.text>:
+   8d8d0: 8b 7c 24 04                  	movl	0x4(%esp), %edi
+   8d8d4: e8 e7 00 f9 ff               	calll	0x1d9c0 <.text+0xd0>
+   8d8d9: 8b 89 67 3c 37 00            	movl	0x373c67(%ecx), %ecx
+   8d8df: 65 8b 01                     	movl	%gs:(%ecx), %eax
+   8d8e2: 8b 58 18                     	movl	0x18(%eax), %ebx
+   8d8e5: 3b 43 30                     	cmpl	0x30(%ebx), %eax
+   8d8e8: 74 4b                        	je	0x8d935 <.text+0x70045>
+   8d8ea: 8b 13                        	movl	(%ebx), %edx
+   8d8ec: 39 d0                        	cmpl	%edx, %eax
+   8d8ee: 74 45                        	je	0x8d935 <.text+0x70045>
+   8d8f0: 3b 43 6c                     	cmpl	0x6c(%ebx), %eax
+   8d8f3: 75 46                        	jne	0x8d93b <.text+0x7004b>
+   8d8f5: e8 06 f9 ff ff               	calll	0x8d200 <.text+0x6f910>
+   8d8fa: e8 c1 00 f9 ff               	calll	0x1d9c0 <.text+0xd0>
+   8d8ff: 8b 89 41 3c 37 00            	movl	0x373c41(%ecx), %ecx
+   8d905: 65 89 11                     	movl	%edx, %gs:(%ecx)
+   8d908: 8b 5a 1c                     	movl	0x1c(%edx), %ebx
+   8d90b: 89 dc                        	movl	%ebx, %esp
+   8d90d: 89 fa                        	movl	%edi, %edx
+   8d90f: 8b 3f                        	movl	(%edi), %edi
+   8d911: ff d7                        	calll	*%edi
+   8d913: e8 a8 00 f9 ff               	calll	0x1d9c0 <.text+0xd0>
+   8d918: 8b 89 28 3c 37 00            	movl	0x373c28(%ecx), %ecx
+   8d91e: 65 8b 01                     	movl	%gs:(%ecx), %eax
+   8d921: 8b 58 18                     	movl	0x18(%eax), %ebx
+   8d924: 8b 43 6c                     	movl	0x6c(%ebx), %eax
+   8d927: 65 89 01                     	movl	%eax, %gs:(%ecx)
+   8d92a: 8b 60 1c                     	movl	0x1c(%eax), %esp
+   8d92d: c7 40 1c 00 00 00 00         	movl	$0x0, 0x1c(%eax)
+   8d934: c3                           	retl
+   8d935: 89 fa                        	movl	%edi, %edx
+   8d937: 8b 3f                        	movl	(%edi), %edi
+   8d939: ff e7                        	jmpl	*%edi
+   8d93b: e8 70 00 f9 ff               	calll	0x1d9b0 <.text+0xc0>
+   8d940: 8d 80 10 ad fe ff            	leal	-0x152f0(%eax), %eax
+   8d946: ff d0                        	calll	*%eax
+   8d948: cd 03                        	int	$0x3
+   8d94a: cc                           	int3
+   8d94b: cc                           	int3
+   8d94c: cc                           	int3
+   8d94d: cc                           	int3
+   8d94e: cc                           	int3
+   8d94f: cc                           	int3

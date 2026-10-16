@@ -1,0 +1,178 @@
+
+<LOCAL_APP>/unpacked/lib/arm64-v8a/librsa_bridge.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000059010 <.text>:
+   911a0: f9400b90     	ldr	x16, [x28, #0x10]
+   911a4: eb3063ff     	cmp	sp, x16
+   911a8: 540014c9     	b.ls	0x91440 <.text+0x38430>
+   911ac: f81b0ffe     	str	x30, [sp, #-0x50]!
+   911b0: f81f83fd     	stur	x29, [sp, #-0x8]
+   911b4: d10023fd     	sub	x29, sp, #0x8
+   911b8: f90023fc     	str	x28, [sp, #0x40]
+   911bc: d284e201     	mov	x1, #0x2710             // =10000
+   911c0: 90001c1b     	adrp	x27, 0x411000
+   911c4: b907fb61     	str	w1, [x27, #0x7f8]
+   911c8: d0001ac0     	adrp	x0, 0x3eb000
+   911cc: 913a8000     	add	x0, x0, #0xea0
+   911d0: 14000005     	b	0x911e4 <.text+0x381d4>
+   911d4: f9001fe0     	str	x0, [sp, #0x38]
+   911d8: 9400677e     	bl	0xaafd0 <.text+0x51fc0>
+   911dc: f9401fe1     	ldr	x1, [sp, #0x38]
+   911e0: f9412420     	ldr	x0, [x1, #0x248]
+   911e4: b5ffff80     	cbnz	x0, 0x911d4 <.text+0x381c4>
+   911e8: aa1f03e0     	mov	x0, xzr
+   911ec: 14000006     	b	0x91204 <.text+0x381f4>
+   911f0: b0001da1     	adrp	x1, 0x446000
+   911f4: 91208021     	add	x1, x1, #0x820
+   911f8: 8b001c22     	add	x2, x1, x0, lsl #7
+   911fc: 91000400     	add	x0, x0, #0x1
+   91200: a900fc5f     	stp	xzr, xzr, [x2, #0x8]
+   91204: f100101f     	cmp	x0, #0x4
+   91208: 54ffff4b     	b.lt	0x911f0 <.text+0x381e0>
+   9120c: aa1f03e0     	mov	x0, xzr
+   91210: 14000008     	b	0x91230 <.text+0x38220>
+   91214: d37cec01     	lsl	x1, x0, #4
+   91218: b0001da2     	adrp	x2, 0x446000
+   9121c: 91312042     	add	x2, x2, #0xc48
+   91220: 8b001043     	add	x3, x2, x0, lsl #4
+   91224: 91000400     	add	x0, x0, #0x1
+   91228: f821685f     	str	xzr, [x2, x1]
+   9122c: f900047f     	str	xzr, [x3, #0x8]
+   91230: f1008c1f     	cmp	x0, #0x23
+   91234: 54ffff0b     	b.lt	0x91214 <.text+0x38204>
+   91238: 97ff4b56     	bl	0x63f90 <.text+0xaf80>
+   9123c: d503201f     	nop
+   91240: aa1f03e0     	mov	x0, xzr
+   91244: aa1f03e1     	mov	x1, xzr
+   91248: 97ff227e     	bl	0x59c40 <.text+0xc30>
+   9124c: b0001dbb     	adrp	x27, 0x446000
+   91250: 39459b60     	ldrb	w0, [x27, #0x166]
+   91254: 90001dbb     	adrp	x27, 0x445000
+   91258: 390d3360     	strb	w0, [x27, #0x34c]
+   9125c: 97ff2c29     	bl	0x5c300 <.text+0x32f0>
+   91260: d503201f     	nop
+   91264: 90001da0     	adrp	x0, 0x445000
+   91268: 91138000     	add	x0, x0, #0x4e0
+   9126c: b27d03e1     	orr	x1, xzr, #0x8
+   91270: aa0103e2     	mov	x2, x1
+   91274: 97ffe68f     	bl	0x8acb0 <.text+0x31ca0>
+   91278: f94023e0     	ldr	x0, [sp, #0x40]
+   9127c: f9401801     	ldr	x1, [x0, #0x30]
+   91280: aa0103e0     	mov	x0, x1
+   91284: 92800001     	mov	x1, #-0x1               // =-1
+   91288: 940000be     	bl	0x91580 <.text+0x38570>
+   9128c: 940066c1     	bl	0xaad90 <.text+0x51d80>
+   91290: 9400912c     	bl	0xb5740 <.text+0x5c730>
+   91294: 97ff4647     	bl	0x62bb0 <.text+0x9ba0>
+   91298: 94005f46     	bl	0xa8fb0 <.text+0x4ffa0>
+   9129c: f94023e0     	ldr	x0, [sp, #0x40]
+   912a0: f9401801     	ldr	x1, [x0, #0x30]
+   912a4: 3980003b     	ldrsb	x27, [x1]
+   912a8: 91020021     	add	x1, x1, #0x80
+   912ac: d503201f     	nop
+   912b0: b27f03e2     	orr	x2, xzr, #0x2
+   912b4: b9000be2     	str	w2, [sp, #0x8]
+   912b8: f9000bff     	str	xzr, [sp, #0x10]
+   912bc: f9000fe1     	str	x1, [sp, #0x18]
+   912c0: b27d03e1     	orr	x1, xzr, #0x8
+   912c4: b90023e1     	str	w1, [sp, #0x20]
+   912c8: 9400c006     	bl	0xc12e0 <_cgo_topofstack+0x1250>
+   912cc: f94023e0     	ldr	x0, [sp, #0x40]
+   912d0: f9401800     	ldr	x0, [x0, #0x30]
+   912d4: f9404000     	ldr	x0, [x0, #0x80]
+   912d8: 90001dbb     	adrp	x27, 0x445000
+   912dc: f9026760     	str	x0, [x27, #0x4c8]
+   912e0: 940036cc     	bl	0x9ee10 <.text+0x45e00>
+   912e4: d503201f     	nop
+   912e8: 9400371a     	bl	0x9ef50 <.text+0x45f40>
+   912ec: 94003bcd     	bl	0xa0220 <.text+0x47210>
+   912f0: 9400392c     	bl	0x9f7a0 <.text+0x46790>
+   912f4: 97ff805f     	bl	0x71470 <.text+0x18460>
+   912f8: f0001a7b     	adrp	x27, 0x3e0000
+   912fc: 39400360     	ldrb	w0, [x27]
+   91300: 36000060     	tbz	w0, #0x0, 0x9130c <.text+0x382fc>
+   91304: d0001abb     	adrp	x27, 0x3e7000
+   91308: f907077f     	str	xzr, [x27, #0xe08]
+   9130c: d503201f     	nop
+   91310: d503201f     	nop
+   91314: 90001c00     	adrp	x0, 0x411000
+   91318: 911f6000     	add	x0, x0, #0x7d8
+   9131c: 97ff4929     	bl	0x637c0 <.text+0xa7b0>
+   91320: d503201f     	nop
+   91324: 9400bfb7     	bl	0xc1200 <_cgo_topofstack+0x1170>
+   91328: f94007e1     	ldr	x1, [sp, #0x8]
+   9132c: d503201f     	nop
+   91330: 90001c02     	adrp	x2, 0x411000
+   91334: 911f2042     	add	x2, x2, #0x7c8
+   91338: c89ffc41     	stlr	x1, [x2]
+   9133c: 90001dbb     	adrp	x27, 0x445000
+   91340: b983af61     	ldrsw	x1, [x27, #0x3ac]
+   91344: b90037e1     	str	w1, [sp, #0x34]
+   91348: b0000b60     	adrp	x0, 0x1fe000
+   9134c: 9123b000     	add	x0, x0, #0x8ec
+   91350: d2800141     	mov	x1, #0xa                // =10
+   91354: 97ff3bcf     	bl	0x60290 <.text+0x7280>
+   91358: 9400634e     	bl	0xaa090 <.text+0x51080>
+   9135c: 93407c02     	sxtw	x2, w0
+   91360: eb02001f     	cmp	x0, x2
+   91364: 9a9f17e2     	cset	x2, eq
+   91368: 8a010041     	and	x1, x2, x1
+   9136c: 36000081     	tbz	w1, #0x0, 0x9137c <.text+0x3836c>
+   91370: 9a9f0001     	csel	x1, x0, xzr, eq
+   91374: 7100003f     	cmp	w1, #0x0
+   91378: 5400004c     	b.gt	0x91380 <.text+0x38370>
+   9137c: b98037e1     	ldrsw	x1, [sp, #0x34]
+   91380: aa0103e0     	mov	x0, x1
+   91384: 9400264b     	bl	0x9acb0 <.text+0x41ca0>
+   91388: b5000520     	cbnz	x0, 0x9142c <.text+0x3841c>
+   9138c: d503201f     	nop
+   91390: d503201f     	nop
+   91394: 90001c00     	adrp	x0, 0x411000
+   91398: 911f6000     	add	x0, x0, #0x7d8
+   9139c: 97ff49a1     	bl	0x63a20 <.text+0xaa10>
+   913a0: f0001a7b     	adrp	x27, 0x3e0000
+   913a4: f9413f61     	ldr	x1, [x27, #0x278]
+   913a8: b50001e1     	cbnz	x1, 0x913e4 <.text+0x383d4>
+   913ac: b2400be0     	orr	x0, xzr, #0x7
+   913b0: f0001a7b     	adrp	x27, 0x3e0000
+   913b4: f9013f60     	str	x0, [x27, #0x278]
+   913b8: 90001dbb     	adrp	x27, 0x445000
+   913bc: b9476360     	ldr	w0, [x27, #0x760]
+   913c0: 340000a0     	cbz	w0, 0x913d4 <.text+0x383c4>
+   913c4: f0001a7b     	adrp	x27, 0x3e0000
+   913c8: f9413b60     	ldr	x0, [x27, #0x270]
+   913cc: 9400bb59     	bl	0xc0130 <_cgo_topofstack+0xa0>
+   913d0: f9000320     	str	x0, [x25]
+   913d4: 90000b60     	adrp	x0, 0x1fd000 <x_cgo_mmap>
+   913d8: 913c6800     	add	x0, x0, #0xf1a
+   913dc: f0001a7b     	adrp	x27, 0x3e0000
+   913e0: f9013b60     	str	x0, [x27, #0x270]
+   913e4: f0001a7b     	adrp	x27, 0x3e0000
+   913e8: f9419f60     	ldr	x0, [x27, #0x338]
+   913ec: f100041f     	cmp	x0, #0x1
+   913f0: 54000181     	b.ne	0x91420 <.text+0x38410>
+   913f4: f0001a7b     	adrp	x27, 0x3e0000
+   913f8: f9019f7f     	str	xzr, [x27, #0x338]
+   913fc: 90001dbb     	adrp	x27, 0x445000
+   91400: b9476360     	ldr	w0, [x27, #0x760]
+   91404: 340000a0     	cbz	w0, 0x91418 <.text+0x38408>
+   91408: f0001a7b     	adrp	x27, 0x3e0000
+   9140c: f9419b60     	ldr	x0, [x27, #0x330]
+   91410: 9400bb48     	bl	0xc0130 <_cgo_topofstack+0xa0>
+   91414: f9000320     	str	x0, [x25]
+   91418: f0001a7b     	adrp	x27, 0x3e0000
+   9141c: f9019b7f     	str	xzr, [x27, #0x330]
+   91420: a97ffbfd     	ldp	x29, x30, [sp, #-0x8]
+   91424: 910143ff     	add	sp, sp, #0x50
+   91428: d65f03c0     	ret
+   9142c: 90000bc0     	adrp	x0, 0x209000
+   91430: 9124c000     	add	x0, x0, #0x930
+   91434: d2800561     	mov	x1, #0x2b               // =43
+   91438: 97fff146     	bl	0x8d950 <.text+0x34940>
+   9143c: d503201f     	nop
+   91440: aa1e03e3     	mov	x3, x30
+   91444: 9400b207     	bl	0xbdc60 <.text+0x64c50>
+   91448: 17ffff56     	b	0x911a0 <.text+0x38190>
+   9144c: 00000000     	udf	#0x0

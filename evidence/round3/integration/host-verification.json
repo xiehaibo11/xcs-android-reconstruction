@@ -1,0 +1,339 @@
+{
+  "status": "PASS",
+  "suites": {
+    "business": {
+      "command": [
+        "sh",
+        "evidence/business/run_tests.sh"
+      ],
+      "exit_code": 0,
+      "summaries": [
+        "PASS 64 local behavior checks; no network calls; RSA used local synthetic ciphertext only."
+      ],
+      "suite_results": []
+    },
+    "settings": {
+      "command": [
+        "sh",
+        "evidence/logic/run_tests.sh"
+      ],
+      "exit_code": 0,
+      "summaries": [
+        "PASS SettingsLogicTest: 102 assertions; original_source_recovered=false; full_behavior_equivalence=false"
+      ],
+      "suite_results": []
+    },
+    "callbacks": {
+      "command": [
+        "sh",
+        "evidence/round2/callbacks/run_tests.sh"
+      ],
+      "exit_code": 0,
+      "summaries": [],
+      "suite_results": [
+        {
+          "status": "PASS",
+          "assertion_count": 124,
+          "checks": [
+            "initial service ID is zero [0]",
+            "initial filter is minus one [-1]",
+            "initial frame empty []",
+            "original main status default [未开始游戏]",
+            "first equal Rx empty value emits [1]",
+            "subsequent equal Rx empty suppressed [1]",
+            "start method [GET]",
+            "start path [/api/preview/start_preview/7]",
+            "start writes service before response [7]",
+            "start does not synchronously change filter [-1]",
+            "prefixed early new device rejected before start value []",
+            "normal HTTP failure value still sets filter [7]",
+            "frame reads only split index one [frame]",
+            "duplicate decoded frame notification suppressed [2]",
+            "equal distinct String object is suppressed [2]",
+            "other device ignored [frame]",
+            "invalid prefix parse throws",
+            "parse failure preserves prior frame [frame]",
+            "decode rule failure throws",
+            "decode failure preserves old frame [frame]",
+            "Rx writes before external renderer validates image [not-base64]",
+            "end path [/api/preview/end_preview/7]",
+            "end clears service before response [0]",
+            "end keeps filter [7]",
+            "end keeps frame [not-base64]",
+            "shared failed end value returns null [null]",
+            "shared failure no filter recovery [7]",
+            "shared failure no service rollback [0]",
+            "late matching WS102 still updates after end [late]",
+            "unprefixed late WS102 still accepted [late-any-device]",
+            "reenter clears frame []",
+            "reenter retains filter [7]",
+            "old-device frame accepted in reentry window [old-session]",
+            "second start request sets new service ID [8]",
+            "second pending start leaves old filter [7]",
+            "disconnect does not reset preview filter [7]",
+            "disconnect does not clear request ID [8]",
+            "reconnect/auth state does not change filter [7]",
+            "out-of-order completion last value wins [7]",
+            "start response does not rewind service ID [8]",
+            "start callback reads captured device live ID [9]",
+            "route ends current service ID not current filter [/api/preview/end_preview/8]",
+            "second route return zero skips end [null]",
+            "nullable start ID preserved [/api/preview/start_preview/null]",
+            "service can hold null [null]",
+            "null callback ID defaults filter zero [0]",
+            "route null differs from zero and ends null [/api/preview/end_preview/null]",
+            "save clears service regardless close mode [0]",
+            "HTTP failure save no end/no pop",
+            "failed save leaves zero so route cleanup skips end [null]",
+            "business false save no end/no pop",
+            "save-only success leaves page",
+            "missing success is type failure",
+            "string success is type failure",
+            "integer success is type failure",
+            "accepted close requests immediate pop",
+            "accepted close uses device live ID [/api/preview/end_preview/10]",
+            "close clears service before caller submits end/pop [0]",
+            "pop continuation avoids second end [null]",
+            "bad reconstruction params rejected",
+            "service clear precedes parameter validation [0]",
+            "new Main engine keeps singleton filter [8]",
+            "new Main engine keeps singleton frame [persist]",
+            "new Main page mode reset [1]",
+            "new Main display default [2]",
+            "reconstruction closed engine intentionally rejects receiver dispatch",
+            "Rx first equal emits in isolation",
+            "Rx later equal does not emit",
+            "Rx changed value emits",
+            "closed framework stream ignores setter",
+            "closed framework stream does not update value [x]",
+            "explicit framework stream close visible",
+            "HTTP numeric equality accepts Long",
+            "matching numeric 401 clears JWT []",
+            "HTTP numeric equality accepts Integer",
+            "matching numeric 401 clears JWT []",
+            "HTTP numeric equality accepts Double",
+            "matching numeric 401 clears JWT []",
+            "nonmatching code rejected 401",
+            "nonmatching code preserves JWT [fixture]",
+            "nonmatching code rejected 400",
+            "nonmatching code preserves JWT [fixture]",
+            "nonmatching code rejected 401.5",
+            "nonmatching code preserves JWT [fixture]",
+            "nonmatching code rejected null",
+            "nonmatching code preserves JWT [fixture]",
+            "code401 with HTTP200 does not clear",
+            "page default 1 [1]",
+            "display default 2 [2]",
+            "initial palette/selection",
+            "open edit sets2 [2]",
+            "close from2 sets1 [1]",
+            "close from1 sets0 [0]",
+            "close from0 sets1 [1]",
+            "result click captures object and opens palette",
+            "display2 becomes1 [1]",
+            "display toggle retains palette/selection",
+            "main selects config id rather than number [11]",
+            "main selection updates image [asset11]",
+            "display1 selection leaves palette",
+            "display1 becomes2 [2]",
+            "display2 selection hides but retains selected object",
+            "cancel clears selected only, caller pops",
+            "no selected tile means selection no-op",
+            "close palette false",
+            "empty channels upload leaves page mode [2]",
+            "empty channels upload leaves palette",
+            "upload replaces list identity",
+            "old list reference retains old result [1]",
+            "accepted upload clears live results [0]",
+            "nonempty channels upload sets page1 [1]",
+            "display2 upload hides palette",
+            "upload retains selected object",
+            "upload retains removed offset [3]",
+            "display1 upload leaves palette visible",
+            "recognition callback sees already-open edit page [2]",
+            "recognition completeness reaches validation callback [1]",
+            "recognition opens edit page [2]",
+            "new round replaces list identity",
+            "new round leaves old list snapshot intact [1]",
+            "new round installs empty live list [0]",
+            "late image appends to current new-round list [1]",
+            "late image keeps captured sequence [2]",
+            "reconstruction close intentionally suppresses late image after disposal [1]"
+          ],
+          "business_server_contacted": false,
+          "original_apk_executed": false,
+          "scope": "Executable reconstructed callback state only; not dynamic equivalence of original Flutter framework or server"
+        }
+      ]
+    },
+    "models": {
+      "command": [
+        "sh",
+        "evidence/round2/models/run_tests.sh"
+      ],
+      "exit_code": 0,
+      "summaries": [
+        "PASS 38 model conversion assertions"
+      ],
+      "suite_results": []
+    },
+    "integration": {
+      "command": [
+        "sh",
+        "evidence/round3/integration/run_tests.sh"
+      ],
+      "exit_code": 0,
+      "summaries": [
+        "PASS 33 round3 integration assertions"
+      ],
+      "suite_results": []
+    },
+    "mint": {
+      "command": [
+        "sh",
+        "evidence/round3/mint/run_tests.sh"
+      ],
+      "exit_code": 0,
+      "summaries": [],
+      "suite_results": [
+        {
+          "status": "PASS",
+          "boundary_assertions": 52,
+          "differential_cases": 20856,
+          "smi_cases": 394,
+          "mint_cases": 20462,
+          "differences": 0
+        }
+      ]
+    },
+    "datetime": {
+      "command": [
+        "sh",
+        "evidence/round3/datetime/run_tests.sh"
+      ],
+      "exit_code": 0,
+      "summaries": [
+        "PASS 62 DateTime assertions",
+        "PASS 37224 saved Dart 3.5.2 reference comparisons (host timezone database)"
+      ],
+      "suite_results": []
+    },
+    "simd": {
+      "command": [
+        "sh",
+        "evidence/round3/simd/run_tests.sh"
+      ],
+      "exit_code": 0,
+      "summaries": [],
+      "suite_results": [
+        {
+          "java_status": "PASS",
+          "fixture_inputs": 16160,
+          "result_checks": 64640,
+          "boundary_checks": 36
+        },
+        {
+          "c_status": "PASS",
+          "backend": "arm64-neon",
+          "fixture_inputs": 16160,
+          "result_checks": 48480
+        },
+        {
+          "c_status": "PASS",
+          "backend": "portable-c",
+          "fixture_inputs": 16160,
+          "result_checks": 48480
+        }
+      ]
+    },
+    "numeric_json": {
+      "command": [
+        "sh",
+        "evidence/round3/numeric_json/run_tests.sh"
+      ],
+      "exit_code": 0,
+      "summaries": [],
+      "suite_results": [
+        {
+          "status": "PASS",
+          "boundary_assertions": 29,
+          "differential_cases": 52778,
+          "parser_modes_checked": 2,
+          "integer_cases": 16372,
+          "double_cases": 36276,
+          "malformed_cases": 130,
+          "nonfinite_cases": 8034,
+          "differences": 0
+        }
+      ]
+    }
+  },
+  "source_sha256": {
+    "app/src/main/java/com/re/xcs/rebuild/MainActivity.java": "37f21fb28a28ea037264383aa768073af2781724737911db8c4446c4289ac5dd",
+    "app/src/main/java/com/re/xcs/rebuild/core/ApiContract.java": "f7eea172f4ab151685f9e898a2de18e2512142bb89ef609bace3a5485c6469be",
+    "app/src/main/java/com/re/xcs/rebuild/core/CachedImageLoader.java": "a7d0eac6a7dcab8cbae97a0c746587240c7565fc3dabcb399dc6b09f69135986",
+    "app/src/main/java/com/re/xcs/rebuild/core/DartConversions.java": "2260d89ac4ea1bf011b992ae311c9913eeec6b4d4d8525e8cdedbda8c5188216",
+    "app/src/main/java/com/re/xcs/rebuild/core/DartDateTime.java": "e1e52d12c572084e2be067289f07821d4370ec7554ca47ea664913b2a7bba0d0",
+    "app/src/main/java/com/re/xcs/rebuild/core/DartIntegers.java": "f7f6e7cd2f46df3369dbae2a5bdc34417e683e3e89fe2b9a3705e65c3d62bc45",
+    "app/src/main/java/com/re/xcs/rebuild/core/GoBytePrimitives.java": "2b2061c38fe2ea83ba5767cb5b269dec5c955721c2b0deb5e4c4f8c1a7fea3e5",
+    "app/src/main/java/com/re/xcs/rebuild/core/JsonCodec.java": "1ea03024863ee825881ec5684d0014983bcbef9434906ac5344c7d026328c97a",
+    "app/src/main/java/com/re/xcs/rebuild/core/JsonHttpTransport.java": "d3447f87596d607ac0332df4ebf9b0ac19c8f151b54ba92624ec023a53577a68",
+    "app/src/main/java/com/re/xcs/rebuild/core/LocalConfig.java": "8813e9b0a5fcff2987587af37c12dd66b6a7a70d29348bc8afd259f80de0a77c",
+    "app/src/main/java/com/re/xcs/rebuild/core/LoginFlow.java": "9289490da5e077dee31fb856b8aa7fdcab75eec2470f9c49f25b0682455ed97b",
+    "app/src/main/java/com/re/xcs/rebuild/core/MessageEngine.java": "02e786a543b2baa27445f8c949b902861beebde78f6504a62f5aabb3b327a911",
+    "app/src/main/java/com/re/xcs/rebuild/core/Models.java": "ed93f237a2ee0c423b0cd71e49d4b00d3084d566e7a89c0875a8bea07c5ff9e2",
+    "app/src/main/java/com/re/xcs/rebuild/core/ResultRules.java": "6e4ce2bc3b8869dc5597d8dcaf1da8a7ab75b8d5eb90d67ac10823fce0a4db47",
+    "app/src/main/java/com/re/xcs/rebuild/core/SessionState.java": "cead6c7b13906535ebfd5b7012af681e0cf02178abd7d1f395e1036cb07505ac",
+    "app/src/main/java/com/re/xcs/rebuild/core/SettingsLogic.java": "b02dd8e53ffe8b6adb6a77eefab6936e8e993f4237ca220e2161944338488dec",
+    "app/src/main/java/com/re/xcs/rebuild/net/WsSession.java": "8edda21490ec98c2576e1c5964ac0888b1739927539e647ac496b2bee111e268",
+    "app/src/main/java/com/re/xcs/rebuild/net/WsWire.java": "40cb12ad08b85534b3b74745b62bd6c68d21fd9c5ff010a8491f845e38525c03",
+    "evidence/business/BusinessCoreTest.java": "100424dbed5fbc5480b1f971ed66cdc7722ab2bf2bcd64278c3922ca30ed699e",
+    "evidence/business/run_tests.sh": "7caa5d2fd796885ae136917c0d1ea040fe36574a90f5387469300618cff0a27d",
+    "evidence/logic/SettingsLogicTest.java": "edca1f4637ddf3b98ad0e4230efaf1b42cd468c93a7eba8200cd8e0cdba54920",
+    "evidence/logic/run_tests.sh": "adc32fc3dd7eba3311701ee35569348431b47432b24a3315d656f7122de47e89",
+    "evidence/round2/callbacks/CallbackStateTest.java": "7e0abcb6877819c42081ed1e35acb29f8f1549902c509c27efe0a00dc3377fb2",
+    "evidence/round2/callbacks/run_tests.sh": "7a9393431a63c27793ce0d9e3dab32393c00fc7b3096e60a2d1697eeb52ecd14",
+    "evidence/round2/callbacks/snapshot_targets.tsv": "af8ebccb09a5e566a7deb184f208f785e5ec7ac43b52152bd263620a1d3804e2",
+    "evidence/round2/live/LiveLoginProbe.java": "91e35e31ced27be0277193744c0ec6330abe91298ee41624500c79ec845683f0",
+    "evidence/round2/models/ModelConversionTest.java": "800d737fcd2e77ccbf49a2c905987a8770aa60c06ee0a559b22354979d8ca334",
+    "evidence/round2/models/run_tests.sh": "b7a92130d07a9089a26b810a66ba7997ef04b1f01d3c75ca68a62526f5826f8c",
+    "evidence/round2/native/DiagnoseBytealg.java": "8a0a5dd0804225c08863d70b9f69078ce2ad96edafe7027db673a7f2f891c70c",
+    "evidence/round2/native/ghidra_diagnosis/explicit_tail_calls-15af40.c": "575d38a1debab9670ef6843164af4ef5171c340e6fc149c258e902ba2fa0c98c",
+    "evidence/round2/native/ghidra_diagnosis/explicit_tail_calls-15b400.c": "f944ecb418312cb2c5b3601d1dfd9dd2b5e30e7a4ea8cac061685139f7ff4670",
+    "evidence/round2/native/ghidra_diagnosis/explicit_tail_calls-15b420.c": "71ae1519ff5938efc8e90ad4b641f6ab3ae5181b6b774b818530e97886250a6e",
+    "evidence/round2/native/ghidra_diagnosis/status.tsv": "903e0d0ddb6a6936198449cf7648c5e7027f4dee5e171b86e92ea29919020bfe",
+    "evidence/round2/native/reproduce.sh": "9e78de856d3795ac9c4c34413d0921018097cbd26eaf128c52196615a14d6a8d",
+    "evidence/round3/datetime/DateTimeTest.java": "a152c819d6c0c8116e164f78b3b67a2c700c199f474d039c797c30300408eefc",
+    "evidence/round3/datetime/reference-fixtures.zip": "85fd04be548aa6fdc060220f4d5a49d823d9567fbc59b9d19ebd8cf66fb8a7c4",
+    "evidence/round3/datetime/run_tests.sh": "35bf0b63812f13237f8e35aa0c41fb2c9d3299a7ec9985505a2cbbd0c883244a",
+    "evidence/round3/integration/Round3IntegrationTest.java": "10f2f3499d6ce3915e5f078cfca7bcd7845459f4a3367fdd7879c3c5baa33255",
+    "evidence/round3/integration/run_tests.sh": "15403c7ebf69ea7996570d2dc2ec73e5d026392fea2759a3628c5d6f1d5de56b",
+    "evidence/round3/mint/MintConversionTest.java": "ff312f50d849cb234cc695a0a9150aa489bdebccb00e3f49686286aa9e8c85e0",
+    "evidence/round3/mint/reference.tsv": "34fc4110716e7886eb813f838ea524a62651d6b642ea82d3fed38697cc5b4c3e",
+    "evidence/round3/mint/run_tests.sh": "87b81e5073f9b7b064bd4f4030e8a4aa3831683184834c1e3dcc6948f14b62da",
+    "evidence/round3/numeric_json/NumericJsonTest.java": "9eaff3a93dedef275a502c1b04b2f875fd1042b592c554c5d208f3fa800179b0",
+    "evidence/round3/numeric_json/reference.tsv": "71556caf55ce3aa7f19dfbd72f97aaa82cfe3e138ab11d895ca9232a273e39b8",
+    "evidence/round3/numeric_json/run_tests.sh": "a636d07b6c0917de2e9be08a4021f5ee76b4a40545e8112021145b441f362a76",
+    "evidence/round3/numeric_json/snapshot_metadata.tsv": "ec4f660e37df9a654413af01acd9b6ceaa0130447c41150f37059f8aac2ee694",
+    "evidence/round3/simd/DiagnoseSimd.java": "58b4d50f48765ab35ed4175774074210b9a833c1f3f15f08b3a7a4c7db3b6717",
+    "evidence/round3/simd/GoBytePrimitivesProbe.java": "d2e0d62890617b83a6b920136d4a90a2e0b824cc1eadbd7639e193407715b389",
+    "evidence/round3/simd/PortablePrimitiveTest.java": "0e2b12d07b74fde650b8185cd1f0750f058b03e237137be91f67c418e24ed557",
+    "evidence/round3/simd/ghidra/all_neon_nop_15ae90.c": "df24b9741a6e99805a273b550118ea5722de44c03927edfd341ffab1f3bf8325",
+    "evidence/round3/simd/ghidra/all_neon_nop_15b310.c": "4ef30004477ae0ea31d267f54e575d62a16b4eb05a48526b9cd811f35ffa9e13",
+    "evidence/round3/simd/ghidra/equivalent_ldp_15ae90.c": "d849b53e277e92527bc43b5e09a84220a3e7704d6954fb4730535ba00972f4aa",
+    "evidence/round3/simd/ghidra/equivalent_ldp_15b310.c": "8ef050da8b884ef982a7f0fd76c8affb5c2ee0f69aedddb0e2a0166bd7e2cc5b",
+    "evidence/round3/simd/ghidra/status.tsv": "8aca1eb25e747f23eb19050a36064f3391dbcbdad8cc18ce137df1bee0e5cf4d",
+    "evidence/round3/simd/go_byte_primitives.c": "25458cc0faa3ef50980188f4539fa150c28a7aaa8ea7840292dfea519e1b068c",
+    "evidence/round3/simd/go_byte_primitives.h": "47668a79e3c4220d3d7e8ad5f7625b9ed31f8a54aabd1105d5e3e82a9e3f892d",
+    "evidence/round3/simd/native_boundaries.c": "916a2c4480491211e36cb2a6b2553febc39bae8d26246cf192f9b260c21fc2b4",
+    "evidence/round3/simd/original_arm64_cases.bin.gz": "b4e3ae9ce654fdd2758b25cacca9d4b74c46e3eefeaf2d2d16b58e5fcf4ea5f2",
+    "evidence/round3/simd/portable_native_test.c": "1aacf6add744b7ba553e033b26662b68840c1480e90cbe3707f38e1a08091449",
+    "evidence/round3/simd/run_tests.sh": "dfcefb8574ac931de31102d42947960e6fe9cb1cb26588b9ca73fa9dae73861c",
+    "evidence/transport/WsNetworkProbe.java": "f7f4796654cc88fac1bc321b2782114fd93b326f0b8115b7c0c3e466575d24a0"
+  },
+  "business_server_contacted": false,
+  "original_apk_executed": false,
+  "original_source_recovered": false,
+  "complete_behavioral_equivalence": false,
+  "scope": "Portable host regression and recorded reference fixtures; original-machine-code execution and reference generation have separate reports."
+}

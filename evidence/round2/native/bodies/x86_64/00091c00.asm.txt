@@ -1,0 +1,44 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000059800 <.text>:
+   91c00: 55                           	pushq	%rbp
+   91c01: 48 89 e5                     	movq	%rsp, %rbp
+   91c04: 48 83 ec 18                  	subq	$0x18, %rsp
+   91c08: 90                           	nop
+   91c09: b8 02 00 00 00               	movl	$0x2, %eax
+   91c0e: 48 8d 1d 96 92 19 00         	leaq	0x199296(%rip), %rbx    # 0x22aeab
+   91c15: b9 17 00 00 00               	movl	$0x17, %ecx
+   91c1a: e8 21 d8 01 00               	callq	0xaf440 <.text+0x55c40>
+   91c1f: 48 83 c4 18                  	addq	$0x18, %rsp
+   91c23: 5d                           	popq	%rbp
+   91c24: c3                           	retq
+   91c25: cc                           	int3
+   91c26: cc                           	int3
+   91c27: cc                           	int3
+   91c28: cc                           	int3
+   91c29: cc                           	int3
+   91c2a: cc                           	int3
+   91c2b: cc                           	int3
+   91c2c: cc                           	int3
+   91c2d: cc                           	int3
+   91c2e: cc                           	int3
+   91c2f: cc                           	int3
+   91c30: cc                           	int3
+   91c31: cc                           	int3
+   91c32: cc                           	int3
+   91c33: cc                           	int3
+   91c34: cc                           	int3
+   91c35: cc                           	int3
+   91c36: cc                           	int3
+   91c37: cc                           	int3
+   91c38: cc                           	int3
+   91c39: cc                           	int3
+   91c3a: cc                           	int3
+   91c3b: cc                           	int3
+   91c3c: cc                           	int3
+   91c3d: cc                           	int3
+   91c3e: cc                           	int3
+   91c3f: cc                           	int3

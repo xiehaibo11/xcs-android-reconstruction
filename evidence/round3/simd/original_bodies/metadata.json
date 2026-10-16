@@ -1,0 +1,59 @@
+{
+  "library_sha256": "1691fb0b7e241d8afdd8ae2d5b8b97ed4aadf70ab3ca6f31a7d4f9df2043f705",
+  "functions": [
+    {
+      "name": "countbytebody",
+      "entry": "0x5ae90",
+      "end_exclusive": "0x5af40",
+      "bytes": 176,
+      "elf_file_offset": 372368,
+      "raw_sha256": "0e55df30846b491508b22a952045266e0a08e8504d2c2bbb062b152241e507b3",
+      "raw_file": "bodies/arm64-v8a/0005ae90.bin",
+      "llvm_file": "bodies/arm64-v8a/0005ae90.asm.txt",
+      "llvm_sha256": "862963f759865118d49eee3bf87c547faabd26cfc5c79395089bc6ffc0883d94",
+      "metadata_record": {
+        "address": "0x5ae90",
+        "end_exclusive": "0x5af40",
+        "bytes": 176,
+        "name": "countbytebody",
+        "metadata_file_offset": 3706600,
+        "name_file_offset": 2907413,
+        "source_file": "/opt/hostedtoolcache/go/1.21.0/x64/src/internal/bytealg/count_arm64.s",
+        "start_line": 27,
+        "classification": "unknown",
+        "classification_basis": "pclntab first pcfile source path; not a claim that function is irrelevant",
+        "ghidra_exact_entry_present": false,
+        "c_status": "no_exact_ghidra_function_entry",
+        "machine_code_coverage": "Full LLVM executable-section listing, all raw bytes independently verified"
+      },
+      "direct_control_transfers": []
+    },
+    {
+      "name": "indexbytebody",
+      "entry": "0x5b310",
+      "end_exclusive": "0x5b400",
+      "bytes": 240,
+      "elf_file_offset": 373520,
+      "raw_sha256": "5ac46873c102d28b4ea1faf5ffe3f8ccd777959068d47821c23d7607a335af7e",
+      "raw_file": "bodies/arm64-v8a/0005b310.bin",
+      "llvm_file": "bodies/arm64-v8a/0005b310.asm.txt",
+      "llvm_sha256": "f277526bd8974c3062db81b76ff656cec9ea55922f8dd2dc995d8cc331fe1134",
+      "metadata_record": {
+        "address": "0x5b310",
+        "end_exclusive": "0x5b400",
+        "bytes": 240,
+        "name": "indexbytebody",
+        "metadata_file_offset": 3707056,
+        "name_file_offset": 2907569,
+        "source_file": "/opt/hostedtoolcache/go/1.21.0/x64/src/internal/bytealg/indexbyte_arm64.s",
+        "start_line": 26,
+        "classification": "unknown",
+        "classification_basis": "pclntab first pcfile source path; not a claim that function is irrelevant",
+        "ghidra_exact_entry_present": false,
+        "c_status": "no_exact_ghidra_function_entry",
+        "machine_code_coverage": "Full LLVM executable-section listing, all raw bytes independently verified"
+      },
+      "direct_control_transfers": []
+    }
+  ]
+}

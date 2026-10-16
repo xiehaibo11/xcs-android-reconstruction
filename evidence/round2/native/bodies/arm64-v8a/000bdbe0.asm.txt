@@ -1,0 +1,36 @@
+
+<LOCAL_APP>/unpacked/lib/arm64-v8a/librsa_bridge.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000059010 <.text>:
+   bdbe0: f9401b88     	ldr	x8, [x28, #0x30]
+   bdbe4: f9400104     	ldr	x4, [x8]
+   bdbe8: eb1c009f     	cmp	x4, x28
+   bdbec: 54000061     	b.ne	0xbdbf8 <.text+0x64be8>
+   bdbf0: 94001094     	bl	0xc1e40 <_cgo_topofstack+0x1db0>
+   bdbf4: 1400093f     	b	0xc00f0 <_cgo_topofstack+0x60>
+   bdbf8: f9402904     	ldr	x4, [x8, #0x50]
+   bdbfc: eb1c009f     	cmp	x4, x28
+   bdc00: 54000061     	b.ne	0xbdc0c <.text+0x64bfc>
+   bdc04: 94001093     	bl	0xc1e50 <_cgo_topofstack+0x1dc0>
+   bdc08: 1400093a     	b	0xc00f0 <_cgo_topofstack+0x60>
+   bdc0c: 910003e0     	mov	x0, sp
+   bdc10: f9001f80     	str	x0, [x28, #0x38]
+   bdc14: f900379d     	str	x29, [x28, #0x68]
+   bdc18: f900239e     	str	x30, [x28, #0x40]
+   bdc1c: f9003383     	str	x3, [x28, #0x60]
+   bdc20: f9002b9a     	str	x26, [x28, #0x50]
+   bdc24: f9000903     	str	x3, [x8, #0x10]
+   bdc28: 910003e0     	mov	x0, sp
+   bdc2c: f9000500     	str	x0, [x8, #0x8]
+   bdc30: f9000d1c     	str	x28, [x8, #0x18]
+   bdc34: f940011c     	ldr	x28, [x8]
+   bdc38: 94000eee     	bl	0xc17f0 <_cgo_topofstack+0x1760>
+   bdc3c: f9401f80     	ldr	x0, [x28, #0x38]
+   bdc40: 9100001f     	mov	sp, x0
+   bdc44: f940379d     	ldr	x29, [x28, #0x68]
+   bdc48: f81f0fff     	str	xzr, [sp, #-0x10]!
+   bdc4c: 940010b1     	bl	0xc1f10 <_cgo_topofstack+0x1e80>
+   bdc50: bea71700     	<unknown>
+		...

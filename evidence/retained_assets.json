@@ -1,0 +1,352 @@
+[
+  {
+    "apk_entry": "assets/flutter_assets/assets/Bing.png",
+    "path": "app/src/main/assets/assets/Bing.png",
+    "sha256": "f0a3438ec9accd854802b7a9619b7d950443f146dbe668b3eac95892494428ee"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/assets/baidu.png",
+    "path": "app/src/main/assets/assets/baidu.png",
+    "sha256": "fcfffc034d89c5907ba306d63a9328bedaf5293ec307e873e3b0a13d8f5d78f8"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/assets/douyin.png",
+    "path": "app/src/main/assets/assets/douyin.png",
+    "sha256": "f6e4bdafaac5f390c1072cfe74fb0ef682900f6ecc458004682b5c9f14de5d66"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/assets/error.mp3",
+    "path": "app/src/main/assets/assets/error.mp3",
+    "sha256": "67545eaa23165135cd25e3efb4ff4c25de9fee033da46cf85386de557c9d7f16"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/assets/hot.png",
+    "path": "app/src/main/assets/assets/hot.png",
+    "sha256": "7e97e4b6ae2e0f1fd0a9bbc53526f6e5fd91b3e5dc8977e681946a0a9e4d9996"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/assets/not_error.mp3",
+    "path": "app/src/main/assets/assets/not_error.mp3",
+    "sha256": "e96896e11fd9a516975dca9d6013aabd381fd051b8e355fdfc62b9a09d3f7cc7"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/assets/number_error.wav",
+    "path": "app/src/main/assets/assets/number_error.wav",
+    "sha256": "3f90ae333ae1b1e225b5ab29069c92f140e2dc628d709db579e442254270a4a0"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/assets/offline_error.wav",
+    "path": "app/src/main/assets/assets/offline_error.wav",
+    "sha256": "d77c17ce800df5660f8804fdedde0b7edf2d66519939b3095cde74a128d4e863"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/assets/receive_sound.mp3",
+    "path": "app/src/main/assets/assets/receive_sound.mp3",
+    "sha256": "d35c6ae9cb1c1fb6274d8602f4b6f1e52b262e0c77b56fa8630b7252d7fac3dc"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/assets/shop/help_ad.png",
+    "path": "app/src/main/assets/assets/shop/help_ad.png",
+    "sha256": "0f029f2138981a5eda7d0b87f62ac219437b6a25381adc0730078d18944ce202"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/assets/shop/index_ad_1.png",
+    "path": "app/src/main/assets/assets/shop/index_ad_1.png",
+    "sha256": "3c74fc05f9a9d49dbacab69830d6d67c12dd0ab4c9e8968a48f9e1e54d4eff3f"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/assets/shop/index_safe.png",
+    "path": "app/src/main/assets/assets/shop/index_safe.png",
+    "sha256": "517977dcb5a543bf5efc2a0eb25d12da936357783141a534c980ca164ee61ef4"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/assets/shop/invited.jpg",
+    "path": "app/src/main/assets/assets/shop/invited.jpg",
+    "sha256": "96e0c234c65b33a89abe47e9a7e315582868988ed5d25abd8e5afb7f038b60af"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/assets/shop/wallet_create_bg.png",
+    "path": "app/src/main/assets/assets/shop/wallet_create_bg.png",
+    "sha256": "e9da6ac2d42aaaf46ee6204fb2fb7822f1d76b4d698410d8511fdc421279de9e"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/assets/toutiao.png",
+    "path": "app/src/main/assets/assets/toutiao.png",
+    "sha256": "7ea56365def87555dabadd9b0660fdba1f349224f7d51b7ff4878fe35dab8ad1"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/01/login_bg_01.jpg",
+    "path": "app/src/main/assets/images/01/login_bg_01.jpg",
+    "sha256": "1d594e12acc9edda931ee796b621bb3003666a763599c38cc0420ef66dcd80ac"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/01/login_bg_02.jpg",
+    "path": "app/src/main/assets/images/01/login_bg_02.jpg",
+    "sha256": "4232be9fd3a271f13950b93bbea23c1a1eb7dc6551e8853e16545602314084c2"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/home/charging_station.png",
+    "path": "app/src/main/assets/images/home/charging_station.png",
+    "sha256": "ab0530eaf2fc190f928833a876c59586e18736d801d82e9ec65e230b62c0828e"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/other/empty.jpg",
+    "path": "app/src/main/assets/images/other/empty.jpg",
+    "sha256": "405204c9a3cd9ddb606299ff4c68b8b60013ad4045ee3e289678d39e0d3aee40"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/other/x.jpg",
+    "path": "app/src/main/assets/images/other/x.jpg",
+    "sha256": "ca40f01322792a08927d477f0b4e61381f81bf4452866b27e3b4e68da1877b1d"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/50/1.png",
+    "path": "app/src/main/assets/images/sucai/50/1.png",
+    "sha256": "87e92f586d49fdc8e4078f577c21061f2a3cf0cc51a1728ca96f8cad400f89ea"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/50/2.png",
+    "path": "app/src/main/assets/images/sucai/50/2.png",
+    "sha256": "71b08d5b2cab6e46ac36451765e3d3dcd9acb6a7f29b0207c5980a32822189d5"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/50/3.png",
+    "path": "app/src/main/assets/images/sucai/50/3.png",
+    "sha256": "6edc7fd5bb992742048ad07910a1d646b65a8a339469bd0c1337b867fd7fa071"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/50/4.png",
+    "path": "app/src/main/assets/images/sucai/50/4.png",
+    "sha256": "1e84f2024dd9fe079cda2f1e53972e29c898f69f7ef5075ed597b1f040b6bf43"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/50/5.png",
+    "path": "app/src/main/assets/images/sucai/50/5.png",
+    "sha256": "f5d35d704072320eab2ff182930db67431384d27538d7fb39667f32b91dc7d9b"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/50/6.png",
+    "path": "app/src/main/assets/images/sucai/50/6.png",
+    "sha256": "46deb18fd94b1d2fdd9f5d0b212cdf09cd78570d82931f60e307f79493b67275"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/50/7.png",
+    "path": "app/src/main/assets/images/sucai/50/7.png",
+    "sha256": "9d2e8f6e8557ebfed27168f2dfe6bcf710592cd342be3077eeef47bdee93fe11"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/50/8.png",
+    "path": "app/src/main/assets/images/sucai/50/8.png",
+    "sha256": "5c2808797d117eb3d4aa681080ae9e8e2540c078522a4495c616dbd0c3b92fb5"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/hua/1.png",
+    "path": "app/src/main/assets/images/sucai/hua/1.png",
+    "sha256": "5ede4369284cc957a61ca77e05a0e173f7d3700977dd3aa37ad647727fa883b5"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/hua/2.png",
+    "path": "app/src/main/assets/images/sucai/hua/2.png",
+    "sha256": "79599f97db28b592ff9b4352e089acc3446fa3c0b384c7241c1cd060cf4018b1"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/hua/3.png",
+    "path": "app/src/main/assets/images/sucai/hua/3.png",
+    "sha256": "13827a670387c1a2b8a0970108c67d2e708ea7967eaf40302dbe94055f4f1c36"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/hua/4.png",
+    "path": "app/src/main/assets/images/sucai/hua/4.png",
+    "sha256": "bf9fadc5007abe2cde7be7ae8f05c757a78a6eece7a22ff075819a3c2e3daf04"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/hua/5.png",
+    "path": "app/src/main/assets/images/sucai/hua/5.png",
+    "sha256": "71767163846a9ea2900903f472cdaf9d3ddd5239ceec08d31194953c3f6aba04"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/hua/6.png",
+    "path": "app/src/main/assets/images/sucai/hua/6.png",
+    "sha256": "06529f8b678d6c98092eca38f6c2a5192c538b9da4f5602c48da3ecf67561869"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/hua/7.png",
+    "path": "app/src/main/assets/images/sucai/hua/7.png",
+    "sha256": "8d42a6c191398d1308e94a0fe0859afc7680592c99a2cd290cbc468e1c22a31e"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/hua/8.png",
+    "path": "app/src/main/assets/images/sucai/hua/8.png",
+    "sha256": "e23170ad22ad14f7e17c6c6a98f1ac4049058ac93ccb1a263e58c992efc92b03"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tiao/1.png",
+    "path": "app/src/main/assets/images/sucai/tiao/1.png",
+    "sha256": "e4e62c9cadad5a73400709b5b74630a495f5aa23e56a5380b2b67fe03c67c65e"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tiao/2.png",
+    "path": "app/src/main/assets/images/sucai/tiao/2.png",
+    "sha256": "d755f4dc6e665182a480026ab2453b082173b7f1aa1836c5331a8f18ca5d93a9"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tiao/3.png",
+    "path": "app/src/main/assets/images/sucai/tiao/3.png",
+    "sha256": "d4d59e8b94dfae710832828325129c0b0225a9f2a4274a1e85e570db687ea4e4"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tiao/4.png",
+    "path": "app/src/main/assets/images/sucai/tiao/4.png",
+    "sha256": "ab49e90ccfca811b63c2ac454cfe1cace66a7b20fc66ac99cc3ea60d8c9134ec"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tiao/5.png",
+    "path": "app/src/main/assets/images/sucai/tiao/5.png",
+    "sha256": "72f5d5fcc907d72ac5aa3a16c5e46883d2f68bb95ac040796cca1434fc891499"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tiao/6.png",
+    "path": "app/src/main/assets/images/sucai/tiao/6.png",
+    "sha256": "f4ad35c5dc4c49020de8f192381de0fc96aaaf5c33d659ac4b6425fa5ccc04ca"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tiao/7.png",
+    "path": "app/src/main/assets/images/sucai/tiao/7.png",
+    "sha256": "16ba5f7f759856eef2e96e8cb5e80c4629c70d54e4ac93ba470ebeff45421c82"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tiao/8.png",
+    "path": "app/src/main/assets/images/sucai/tiao/8.png",
+    "sha256": "5085c69a128d822a76999e6ae5c18226af7d7b05a9d42ba3d0078500508e746f"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tiao/9.png",
+    "path": "app/src/main/assets/images/sucai/tiao/9.png",
+    "sha256": "2e981fe01d3feca61a5c693423998f09063369920593aa8828a8e7ca07b40003"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tong/1.png",
+    "path": "app/src/main/assets/images/sucai/tong/1.png",
+    "sha256": "494f9f0d4e0517c4effd744211e8770e51c80e337566a20e58d9aa13ac7e5379"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tong/2.png",
+    "path": "app/src/main/assets/images/sucai/tong/2.png",
+    "sha256": "ff76ca32626a089b1196375ca56b42412730df8ca2e6fbe8cc0c96dafd2b1b0f"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tong/3.png",
+    "path": "app/src/main/assets/images/sucai/tong/3.png",
+    "sha256": "0e91aef71a548ebd4cff3dfb3354a0bf6b11dd4cd3a0ec847d1ec7b78dfc6884"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tong/4.png",
+    "path": "app/src/main/assets/images/sucai/tong/4.png",
+    "sha256": "5243f4efaa74cc33574dce0500e193eddc9e151c4223468914294d087cf49687"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tong/5.png",
+    "path": "app/src/main/assets/images/sucai/tong/5.png",
+    "sha256": "5905aa44d6980f183b328fe1bcbffc7a928b08f5860a671e12bfc7a32aa5ab0a"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tong/6.png",
+    "path": "app/src/main/assets/images/sucai/tong/6.png",
+    "sha256": "cee3800c157c47e56636620af811b0c8d2c48da58b28f277f84ae5f1fc8e1944"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tong/7.png",
+    "path": "app/src/main/assets/images/sucai/tong/7.png",
+    "sha256": "182cdc686c7cd69e9c90d66a7ac879e7366142db360031a3a008e917616fafb2"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tong/8.png",
+    "path": "app/src/main/assets/images/sucai/tong/8.png",
+    "sha256": "ad2bab008e8357c467aec9c0213b307673557fb1fac989c564a9d9fe97393c2b"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/tong/9.png",
+    "path": "app/src/main/assets/images/sucai/tong/9.png",
+    "sha256": "ec820840e8301ea271357f911c8be15a8528a8b2ee2f12517f0443aa7fb28ff9"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/wan/1.png",
+    "path": "app/src/main/assets/images/sucai/wan/1.png",
+    "sha256": "4679cc94328f9426d5955c6234c83d59807ef3aedb8426997171f143596a44ea"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/wan/2.png",
+    "path": "app/src/main/assets/images/sucai/wan/2.png",
+    "sha256": "d53c10b75fb4bf3923252b709b7c55c7043ca62579014a025117a6fa915b9ead"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/wan/3.png",
+    "path": "app/src/main/assets/images/sucai/wan/3.png",
+    "sha256": "fdb56b350829e732c83d4dba8fc55a8185f19d1308de853ffbd97f069e2220e0"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/wan/4.png",
+    "path": "app/src/main/assets/images/sucai/wan/4.png",
+    "sha256": "14d45a90e18641d7faea52bf5707aec42cc3ba40f47d935fc8f205bbd0014b57"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/wan/5.png",
+    "path": "app/src/main/assets/images/sucai/wan/5.png",
+    "sha256": "5ab185d334ab74354c61533b7040175a445043c0f7c6230974e89694b0c695b5"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/wan/6.png",
+    "path": "app/src/main/assets/images/sucai/wan/6.png",
+    "sha256": "b33ab6768533586323e4783bd437ee4e73a6b2409683e67f4e5938f744c762b2"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/wan/7.png",
+    "path": "app/src/main/assets/images/sucai/wan/7.png",
+    "sha256": "ee06b4cd17e5021e02c2b6aabee099cac1d3fc82faea261062c387cf19c1d1bf"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/wan/8.png",
+    "path": "app/src/main/assets/images/sucai/wan/8.png",
+    "sha256": "f0d1180cd0802048845f86ece9d7491c3e712f3bf8a8eb499a9e62438ed21821"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/wan/9.png",
+    "path": "app/src/main/assets/images/sucai/wan/9.png",
+    "sha256": "1ae7c47684c050464750d63a56dc641c099b7490c390f6aaf37a4ea324f81193"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/zi/1.png",
+    "path": "app/src/main/assets/images/sucai/zi/1.png",
+    "sha256": "45f3dae2a55004c2936f55e02df81a4081268465f2fcea847e0b57a85e04eb92"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/zi/2.png",
+    "path": "app/src/main/assets/images/sucai/zi/2.png",
+    "sha256": "97fd9fd2899db88aa2f068b4682d511c0135e48e449741d5dee82cc73316edff"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/zi/3.png",
+    "path": "app/src/main/assets/images/sucai/zi/3.png",
+    "sha256": "c17e1b4738f39a3736e7bb783ebbbf05ade5a3b3792b545aca89700a3a0c6516"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/zi/4.png",
+    "path": "app/src/main/assets/images/sucai/zi/4.png",
+    "sha256": "1b94c2af9a15b928869479113b8dc986ba19c51e2cba74ebf37927964b1d1c0e"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/zi/5.png",
+    "path": "app/src/main/assets/images/sucai/zi/5.png",
+    "sha256": "8906fca6297638d02e76ac036e2f855b0b874368fc828f0cab518b81929a4791"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/zi/6.png",
+    "path": "app/src/main/assets/images/sucai/zi/6.png",
+    "sha256": "0f5d186efc64760474aec996e9546d3bb1b68d5f222dfa888a64f68da0c42467"
+  },
+  {
+    "apk_entry": "assets/flutter_assets/images/sucai/zi/7.png",
+    "path": "app/src/main/assets/images/sucai/zi/7.png",
+    "sha256": "bffd1addb65e5dbb9d5e8b906a33e26dc5e638cbd4e3c570291ab6d343749f82"
+  }
+]

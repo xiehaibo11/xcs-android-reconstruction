@@ -1,0 +1,57 @@
+
+<LOCAL_APP>/unpacked/lib/armeabi-v7a/librsa_bridge.so:	file format elf32-littlearm
+
+Disassembly of section .text:
+
+0001d7ec <.text>:
+   96988: e59fc0b0     	ldr	r12, [pc, #0xb0]        @ 0x96a40 <.text+0x79254>
+   9698c: e24dd040     	sub	sp, sp, #64
+   96990: e3e0b007     	mvn	r11, #7
+   96994: e00dd00b     	and	sp, sp, r11
+   96998: e58d003c     	str	r0, [sp, #0x3c]
+   9699c: e58d1040     	str	r1, [sp, #0x40]
+   969a0: e59fa09c     	ldr	r10, [pc, #0x9c]        @ 0x96a44 <.text+0x79258>
+   969a4: e08fa00a     	add	r10, pc, r10
+   969a8: e59f8098     	ldr	r8, [pc, #0x98]         @ 0x96a48 <.text+0x7925c>
+   969ac: e08f8008     	add	r8, pc, r8
+   969b0: e588a000     	str	r10, [r8]
+   969b4: e58a8018     	str	r8, [r10, #0x18]
+   969b8: e59fb08c     	ldr	r11, [pc, #0x8c]        @ 0x96a4c <.text+0x79260>
+   969bc: e08d000b     	add	r0, sp, r11
+   969c0: e58a0008     	str	r0, [r10, #0x8]
+   969c4: e58a000c     	str	r0, [r10, #0xc]
+   969c8: e58a0000     	str	r0, [r10]
+   969cc: e58ad004     	str	sp, [r10, #0x4]
+   969d0: eb00075c     	bl	0x98748 <.text+0x7af5c> @ imm = #0x1d70
+   969d4: eb000c4e     	bl	0x99b14 <_cgo_topofstack+0x1318> @ imm = #0x3138
+   969d8: e59a0000     	ldr	r0, [r10]
+   969dc: e2800e3a     	add	r0, r0, #928
+   969e0: e58a0008     	str	r0, [r10, #0x8]
+   969e4: e58a000c     	str	r0, [r10, #0xc]
+   969e8: ebff748a     	bl	0x73c18 <.text+0x5642c> @ imm = #-0x22dd8
+   969ec: e59d003c     	ldr	r0, [sp, #0x3c]
+   969f0: e58d0004     	str	r0, [sp, #0x4]
+   969f4: e59d1040     	ldr	r1, [sp, #0x40]
+   969f8: e58d1008     	str	r1, [sp, #0x8]
+   969fc: ebff7264     	bl	0x73394 <.text+0x55ba8> @ imm = #-0x23670
+   96a00: ebff1295     	bl	0x5b45c <.text+0x3dc70> @ imm = #-0x3b5ac
+   96a04: ebff0ed1     	bl	0x5a550 <.text+0x3cd64> @ imm = #-0x3c4bc
+   96a08: ebff2ebc     	bl	0x62500 <.text+0x44d14> @ imm = #-0x34510
+   96a0c: e24dd008     	sub	sp, sp, #8
+   96a10: e59f0038     	ldr	r0, [pc, #0x38]         @ 0x96a50 <.text+0x79264>
+   96a14: e08f0000     	add	r0, pc, r0
+   96a18: e58d0004     	str	r0, [sp, #0x4]
+   96a1c: e3a00000     	mov	r0, #0
+   96a20: e58d0000     	str	r0, [sp]
+   96a24: ebff5457     	bl	0x6bb88 <.text+0x4e39c> @ imm = #-0x2aea4
+   96a28: e28dd008     	add	sp, sp, #8
+   96a2c: eb000013     	bl	0x96a80 <.text+0x79294> @ imm = #0x4c
+   96a30: e30004d2     	movw	r0, #0x4d2
+   96a34: e3a01ffa     	mov	r1, #1000
+   96a38: e5810000     	str	r0, [r1]
+   96a3c: eafffffe     	b	0x96a3c <.text+0x79250> @ imm = #-0x8
+   96a40: cafebabe     	bgt	0x45540 <.text+0x27d54> @ imm = #-0x51508
+   96a44: 00387d1c     	eorseq	r7, r8, r12, lsl sp
+   96a48: 00387fac     	eorseq	r7, r8, r12, lsr #31
+   96a4c: ffff0068     	<unknown>
+   96a50: 00249bf4     	<unknown>

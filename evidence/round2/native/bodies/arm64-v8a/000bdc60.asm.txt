@@ -1,0 +1,10 @@
+
+<LOCAL_APP>/unpacked/lib/arm64-v8a/librsa_bridge.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000059010 <.text>:
+   bdc60: 910003ff     	mov	sp, sp
+   bdc64: 2a1f03fa     	mov	w26, wzr
+   bdc68: 17ffffde     	b	0xbdbe0 <.text+0x64bd0>
+   bdc6c: 00000000     	udf	#0x0

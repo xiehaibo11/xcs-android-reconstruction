@@ -1,0 +1,3 @@
+23257: double Smi::AsDoubleValue() const {
+23258:   return static_cast<double>(this->Value());
+23259: }

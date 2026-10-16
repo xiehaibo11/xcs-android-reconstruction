@@ -1,0 +1,54 @@
+{
+  "format": 1,
+  "status": "PASS",
+  "validated_at_utc": "2026-10-16T12:23:03.055509+00:00",
+  "scope": "Public-source SDK and Gradle builds, offline host tests and independent source rebuild. No production server contacted and no emulator execution of the public-key adaptation.",
+  "sdk_build": {
+    "status": "PASS",
+    "java_inputs": 20,
+    "non_key_assets": 70,
+    "build_tools": "37.0.0",
+    "apk_sha256": "98d6e34ace252cfcb73122dd1bea4c989fb150b1cab94fbe5f9f5de839e3d1ca",
+    "report": "evidence/public-validation/sdk-build.json"
+  },
+  "gradle_build": {
+    "status": "PASS",
+    "report": "evidence/public-validation/gradle-verification.json"
+  },
+  "host_tests": {
+    "status": "PASS",
+    "suite_count": 9,
+    "all_exit_codes_zero": true,
+    "suites": [
+      "business",
+      "settings",
+      "callbacks",
+      "models",
+      "integration",
+      "mint",
+      "datetime",
+      "simd",
+      "numeric_json"
+    ],
+    "report": "evidence/public-validation/host-verification.json"
+  },
+  "development_key_preparation": {
+    "status": "PASS",
+    "report": "evidence/public-validation/key-preparation-verification.json"
+  },
+  "independent_source_build": {
+    "status": "PASS",
+    "all_dex_identical": true,
+    "all_non_key_assets_identical": true,
+    "fresh_rsa_pair_generated": true,
+    "source_archive_contains_keys": false,
+    "report": "evidence/public-validation/standalone-build-verification.json"
+  },
+  "reverse_tools": {
+    "report": "reverse/publication-validation.json"
+  },
+  "original_source_recovered": false,
+  "complete_behavioral_equivalence": false,
+  "production_server_contacted": false,
+  "public_adaptation_executed_on_emulator": false
+}

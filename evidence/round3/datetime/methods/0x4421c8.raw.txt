@@ -1,0 +1,33 @@
+[dart:core] DateTime::_timeZoneOffsetInSecondsForClampedSeconds
+0x4421c8: fd79bfa9 stp x29, x30, [x15, #-0x10]!
+0x4421cc: fd030faa mov x29, x15
+0x4421d0: ef6100d1 sub x15, x15, #0x18
+0x4421d4: b00b40f9 ldr x16, [x29, #0x10]
+0x4421d8: f64100a9 stp x22, x16, [x15]
+0x4421dc: e2210091 add x2, x15, #8
+0x4421e0: 210080d2 mov x1, #1
+0x4421e4: 65374091 add x5, x27, #0xd, lsl #12
+0x4421e8: a5e842f9 ldr x5, [x5, #0x5d0]
+0x4421ec: 7e374091 add x30, x27, #0xd, lsl #12
+0x4421f0: deef42f9 ldr x30, [x30, #0x5d8]
+0x4421f4: de7340f8 ldur x30, [x30, #7]
+0x4421f8: c0033fd6 blr x30
+0x4421fc: e00140f9 ldr x0, [x15]
+0x442200: e30300aa mov x3, x0
+0x442204: e20316aa mov x2, x22
+0x442208: e10316aa mov x1, x22
+0x44220c: a3831ff8 stur x3, [x29, #-8]
+0x442210: 40010036 tbz w0, #0, #0x442238
+0x442214: 04f05ff8 ldur x4, [x0, #-1]
+0x442218: 847c4cd3 ubfx x4, x4, #0xc, #0x14
+0x44221c: 84ec00d1 sub x4, x4, #0x3b
+0x442220: 9f0400f1 cmp x4, #1
+0x442224: a9000054 b.ls #0x442238
+0x442228: 683349f9 ldr x8, [x27, #0x1260]
+0x44222c: 63374091 add x3, x27, #0xd, lsl #12
+0x442230: 63f042f9 ldr x3, [x3, #0x5e0]
+0x442234: c7f60a94 bl #0x6ffd50
+0x442238: a0835ff8 ldur x0, [x29, #-8]
+0x44223c: ef031daa mov x15, x29
+0x442240: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x442244: c0035fd6 ret 

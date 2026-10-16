@@ -1,0 +1,109 @@
+本轮针对 librsa_bridge.so 的 8 项 Go 反编译缺口，补齐了逐指令语义、跨 ABI 函数边界和隔离执行证据。
+“语义已确定”限定为这些函数本体及明确列出的调用边界；本轮恢复原作者源码的数量仍是 0。
+
+输入与可复核入口
+
+原 APK：APP/input/app_xcs.apk
+SHA-256：8fd060966759990ab5ef90639e3376a2b6aea209f3f545d768a2fdc668dfeaa9
+ARM64 原始库：APP/unpacked/lib/arm64-v8a/librsa_bridge.so
+SHA-256：1691fb0b7e241d8afdd8ae2d5b8b97ed4aadf70ab3ca6f31a7d4f9df2043f705
+Go 元数据记录构建版本为 go1.21.0、GOOS=android、c-shared。
+
+go_gap_resolution.json：8 项逐项结论、地址对应、ABI 参数、测试与剩余限制。
+native_gap_bodies.json：4 种 ABI 的原 pclntab 记录、函数区间、文件偏移、原始字节及反汇编哈希。
+bodies/：103 个目标/支持函数区间的原始 .bin 和 LLVM .asm.txt；区间保留 pclntab 边界内的填充。
+emulation_verification.json：22,854 个字节算法用例与 16 个 runtime 分支/故障边界测试。
+ghidra_diagnosis/status.tsv：基线、元数据边界修正、显式尾调用三个阶段的实际工具结果。
+APP/reconstruction/evidence/round2/native/：本目录证据副本及 evidence_manifest.json 哈希清单。
+
+8 项实际行为
+
+1. ELF 0x5af40 / internal/bytealg.CountString
+   Go ABI0 参数位于 SP+8 数据、SP+16 长度、SP+24 目标字节；结果写 SP+32。
+   尾跳 0x5ae90 的共享实现。先处理零长度/短串，再处理 32 字节对齐前缀、NEON 批量计数及尾部。
+   计数单位是字节，不是 Unicode 字符；空串可使用空指针并返回 0。
+
+2. ELF 0x5b400 / internal/bytealg.IndexByte
+   []byte 参数为 SP+8 数据、SP+16 长度、SP+24 容量、SP+32 目标字节；结果写 SP+40。
+   容量不参与搜索。尾跳 0x5b310；命中返回从输入起点计算的首个字节偏移，未命中/空串返回 -1。
+   NEON 以 32 字节对齐块读取，允许读到逻辑区间外的同一对齐块，但首尾位掩码排除区间外匹配。
+   因此不能把它描述为完全不越过逻辑切片边界的逐字节读取；实际调用仍依赖 Go 合法内存约束。
+
+3. ELF 0x5b420 / internal/bytealg.IndexByteString
+   string 入口没有容量槽，目标字节位于 SP+24、结果位于 SP+32。
+   与 IndexByte 使用相同的 0x5b310 共享机器码。位图经 RBIT/CLZ 定位首个匹配。
+
+4. ELF 0xbd980 / runtime.rt0_go
+   初始化 g0 栈范围、栈保护值；按可选 _cgo_init 指针准备 Android TLS 参数。
+   保存 g、连接 m0/g0，然后依次调用 check、args、osinit、schedinit、newproc、mstart。
+   newproc 使用 0x2bf730 的函数值，原始值及 RELA 均指向 runtime.main 0x90080。
+   mstart 意外返回后，0xbda5c 故意写零地址，0xbda60 的 0xbea71700 是非法指令后备终点。
+
+5. ELF 0xbdb30 / runtime.systemstack
+   已在 g0/gsignal：恢复调用者栈帧，直接尾调用传入函数值的代码指针。
+   位于 m.curg：保存 goroutine 上下文，切到 g0 SP/BP 并执行函数值，之后恢复 curg/SP/BP/TLS，
+   清零原 goroutine 的 sched.sp(+0x38) 与 sched.bp(+0x68)。
+   其他 g：进入 badsystemstack，若其返回则 abort。保存前发现 sched.ctxt 非零也会 abort。
+   0xbdbd4 的 BR 是函数值尾调用，并非遗漏的业务跳转表。
+
+6. ELF 0xbdbe0 / runtime.morestack
+   拒绝 g0/gsignal 扩栈；普通 goroutine 保存 SP、BP、PC、调用者 LR、闭包上下文及 m.morebuf。
+   切到 g0，必要时写 TLS，用 g0 栈构造空返回帧并调用 newstack。
+   0xbdc50 的 0xbea71700 确保 newstack 意外返回时陷阱终止；不是丢失的后续业务逻辑。
+
+7. ELF 0xbdc60 / runtime.morestack_noctxt
+   MOV SP,SP 保留栈写入标记，清零 x26 闭包上下文，尾跳 morestack。
+   元数据区间末尾 0xbdc6c 的零字是对齐填充。
+
+8. ELF 0xc00f0 / runtime.abort
+   清零 x0，0xc00f4 从零地址读内存并故障；后跟 0xbea71700 非法指令后备终点及填充。
+
+反编译失败原因与仍未解决的部分
+
+3 个 bytealg wrapper 原来都报告 “Unable to find unique hash for varnode”。
+原数据库把共享 NEON 函数体混入部分 wrapper；独立补全 pclntab 函数边界后，错误仍存在。
+在只读、回滚事务中把末尾直接分支标为 CALL_RETURN 后，3 个 wrapper 可输出诊断 C；
+但 countbytebody 与 indexbytebody 两个独立 SIMD 共享体仍报相同错误。
+因此已定位尾调用处理和 SIMD 共享体的工具问题边界，尚未证明 Ghidra 内部具体算法缺陷。
+产生的三个 C 文件只是 wrapper，不能当作完整算法实现、原始源码或可编译工程源文件。
+
+5 个 runtime 的截断均能对应到原始非法指令、非返回故障终点，或 systemstack 函数值尾调用。
+所有原始字节均已保留；该结论解除“此处必然缺失业务代码”的误解，不等于恢复原始汇编文件。
+ARM32 的独立标量字节算法与 ARM64 结果一致；x86_64 与 x86 保存静态边界作为交叉证据。
+x86 元数据中没有 exact name 的 CountString 项，此处明确记录缺席，未伪造函数或推断已经丢失。
+
+执行验证边界
+
+原机器码通过本机缓存 Unicorn 2.1.4 运行，未启动 APK、未执行 JNI/系统调用，也未联系业务服务器。
+ARM64 与 ARM32 各 11,427 个测试，三个字节函数各含 3,809 个用例。
+覆盖全部 32 种起始对齐、长度 0/1/2/15/16/17/31/32/33/63/64/65/127/128/129/255/256/257/1023、
+不匹配/全匹配/随机/首中尾匹配、全部 256 种目标字节，以及零长度空指针。
+逻辑输入前后的字节特意设为匹配值，以验证掩码没有误计入或误返回区间外数据。
+独立 oracle 是 Python bytes.count 与 bytes.find，未以同一 SIMD 算法重写期望结果。
+
+16 个 runtime 测试真实执行本体、gosave 和 save_g 指令；外部 runtime callee 或在入口停止，
+或明确模拟返回。函数值回调只是 RET；cgo_init 模拟调整 stack.lo。
+实际 newstack、调度器、信号、panic/unwind、OS 初始化及真实回调不在验证范围内。
+原 ELF 在进程中的完整重定位及任意并发行为也不由这些测试证明。
+
+对重建 App 的影响
+
+这 8 项属于 Go 字节算法与 runtime 基础设施，不能据此推导 RSA 填充、分块或密钥解析行为。
+本轮没有证实 LoginFlow 的 JCA 替代实现存在具体缺陷，因此未改 LoginFlow/MainActivity，
+也未添加无实际调用依据的 RsaCompat.java。fast_rsa 桥是否被登录路径调用须由上层调用证据判断。
+本轮不改变“完整原始 Dart/Go/Rust 源码尚未恢复”的结论。
+
+复核命令（从 <LOCAL_WORKSPACE> 执行）
+
+python3 APP/analysis/reconstruction_round2/native/extract_native_gaps.py
+python3 -u -X faulthandler APP/analysis/reconstruction_round2/native/emulate_native_gaps.py
+python3 APP/analysis/reconstruction_round2/native/build_report.py
+
+Ghidra 诊断实际使用只读模式，脚本结束回滚所有数据库注释；未修改 ELF 或原数据库。
+完整命令保存在 reproduce.sh。所需 Python 依赖为 pyelftools、已有本机缓存 Unicorn；脚本不下载软件。
+在当前 macOS 沙箱内 Unicorn 读取 hw.cachelinesize 失败会触发其自身 CTR_EL0 后备路径并 SIGILL；
+经批准移出沙箱运行同一离线脚本后成功。该宿主工具初始化故障与 APK 原始代码无关。
+
+公开上游辅助核对：
+https://raw.githubusercontent.com/golang/go/go1.21.0/src/runtime/asm_arm64.s
+用于辅助确认 runtime 命名和非返回边界；上述详细结论以本地原包机器码、元数据及测试为证据。

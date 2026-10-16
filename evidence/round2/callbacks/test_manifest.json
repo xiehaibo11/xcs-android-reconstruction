@@ -1,0 +1,30 @@
+{
+  "runtime": "Android Studio bundled OpenJDK, javac --release 8",
+  "network_called": false,
+  "files": [
+    {
+      "path": "evidence/round2/callbacks/CallbackStateTest.java",
+      "sha256": "7e0abcb6877819c42081ed1e35acb29f8f1549902c509c27efe0a00dc3377fb2"
+    },
+    {
+      "path": "evidence/round2/callbacks/run_tests.sh",
+      "sha256": "7a9393431a63c27793ce0d9e3dab32393c00fc7b3096e60a2d1697eeb52ecd14"
+    },
+    {
+      "path": "evidence/round2/callbacks/test_results.json",
+      "sha256": "8ca1fa0be627eda041ba60895c42c8a5bd0ed30fd2f1b6250fd6d6823df59bdd"
+    },
+    {
+      "path": "evidence/round2/callbacks/callback_contracts.json",
+      "sha256": "4cf6226faf5adf55c263ba89d893d658e40b5eecc92a6ea23f7da67fbded86fb"
+    },
+    {
+      "path": "evidence/round2/callbacks/verification.json",
+      "sha256": "b45b5f2fdc3b2589b24156e3f2cf87fc7b22254b97f2edd5ed7cbea8a3d889c1"
+    },
+    {
+      "path": "evidence/round2/callbacks/README.txt",
+      "sha256": "2e11d9485fe3a1445c2f6258918a4a0f0d3fc1370780291d12cd85c70c2900fd"
+    }
+  ]
+}

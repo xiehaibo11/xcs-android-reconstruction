@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "boundary_assertions": 52,
+  "differential_cases": 20856,
+  "smi_cases": 394,
+  "mint_cases": 20462,
+  "differences": 0,
+  "reference": "Local Dart VM3.5.2 linked C++ implementation, loaded with original APK snapshot; Integer::New, Instance::ToCString and Integer::AsDoubleValue executed directly. Original APK target entrypoints and libflutter native methods were not invoked.",
+  "source_manifest": [
+    {
+      "path": "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/DartIntegers.java",
+      "sha256": "f7f6e7cd2f46df3369dbae2a5bdc34417e683e3e89fe2b9a3705e65c3d62bc45"
+    },
+    {
+      "path": "reconstruction/evidence/round3/mint/MintConversionTest.java",
+      "sha256": "ff312f50d849cb234cc695a0a9150aa489bdebccb00e3f49686286aa9e8c85e0"
+    },
+    {
+      "path": "reconstruction/evidence/round3/mint/run_tests.sh",
+      "sha256": "87b81e5073f9b7b064bd4f4030e8a4aa3831683184834c1e3dcc6948f14b62da"
+    },
+    {
+      "path": "reconstruction/evidence/round3/mint/reference.tsv",
+      "sha256": "34fc4110716e7886eb813f838ea524a62651d6b642ea82d3fed38697cc5b4c3e"
+    }
+  ],
+  "original_apk_runtime_executed": false,
+  "business_server_contacted": false,
+  "original_source_recovered": false
+}

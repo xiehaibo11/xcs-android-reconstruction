@@ -1,0 +1,9 @@
+external/
+__pycache__/
+*.pyc
+*.class
+*.bin
+*.bin.gz
+*.log
+*.zip
+ghidra_diagnosis/

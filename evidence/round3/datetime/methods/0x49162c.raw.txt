@@ -1,0 +1,35 @@
+[dart:core] DateTime::_finishParse
+0x49162c: fd79bfa9 stp x29, x30, [x15, #-0x10]!
+0x491630: fd030faa mov x29, x15
+0x491634: efa100d1 sub x15, x15, #0x28
+0x491638: 501f40f9 ldr x16, [x26, #0x38]
+0x49163c: ff0110eb cmp x15, x16
+0x491640: 69030054 b.ls #0x4916ac
+0x491644: a01340f9 ldr x0, [x29, #0x20]
+0x491648: e00900f9 str x0, [x15, #0x10]
+0x49164c: a00f40f9 ldr x0, [x29, #0x18]
+0x491650: b00b40f9 ldr x16, [x29, #0x10]
+0x491654: f00100a9 stp x16, x0, [x15]
+0x491658: a2000094 bl #0x4918e0
+0x49165c: 1f00166b cmp w0, w22
+0x491660: a1000054 b.ne #0x491674
+0x491664: e00316aa mov x0, x22
+0x491668: ef031daa mov x15, x29
+0x49166c: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x491670: c0035fd6 ret 
+0x491674: 027c4193 sbfx x2, x0, #1, #0x1f
+0x491678: 40000036 tbz w0, #0, #0x491680
+0x49167c: 027040f8 ldur x2, [x0, #7]
+0x491680: a2831ff8 stur x2, [x29, #-8]
+0x491684: 278bfe97 bl #0x434320
+0x491688: e10300aa mov x1, x0
+0x49168c: a2835ff8 ldur x2, [x29, #-8]
+0x491690: a30b40f9 ldr x3, [x29, #0x10]
+0x491694: a0031ff8 stur x0, [x29, #-0x10]
+0x491698: 07000094 bl #0x4916b4
+0x49169c: a0035ff8 ldur x0, [x29, #-0x10]
+0x4916a0: ef031daa mov x15, x29
+0x4916a4: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x4916a8: c0035fd6 ret 
+0x4916ac: 13a20994 bl #0x6f9ef8
+0x4916b0: e5ffff17 b #0x491644

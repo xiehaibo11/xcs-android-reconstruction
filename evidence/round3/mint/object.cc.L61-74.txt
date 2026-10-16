@@ -1,0 +1,14 @@
+61: DEFINE_NATIVE_ENTRY(Object_toString, 0, 1) {
+62:   const Instance& instance =
+63:       Instance::CheckedHandle(zone, arguments->NativeArgAt(0));
+64:   if (instance.IsString()) {
+65:     return instance.ptr();
+66:   }
+67:   if (instance.IsAbstractType()) {
+68:     return AbstractType::Cast(instance).UserVisibleName();
+69:   }
+70:   const char* c_str = instance.ToCString();
+71:   return String::New(c_str);
+72: }
+73: 
+74: DEFINE_NATIVE_ENTRY(Object_runtimeType, 0, 1) {

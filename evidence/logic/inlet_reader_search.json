@@ -1,0 +1,58 @@
+{
+  "pattern": "inlet.?pwd",
+  "case_insensitive": true,
+  "meaning": "Bounded text search, not proof of absence from all runtime paths.",
+  "scans": [
+    {
+      "directory": "analysis/aot_dump/asm",
+      "scanned_files": 874,
+      "hits": [
+        {
+          "file": "analysis/aot_dump/asm/distinguish/common/utils.dart",
+          "line": 47,
+          "text": "static void inletPwdDbWrite(String) async {"
+        },
+        {
+          "file": "analysis/aot_dump/asm/distinguish/common/utils.dart",
+          "line": 75,
+          "text": "// 0x48c900: r16 = \"/inlet_pwd.conf\""
+        },
+        {
+          "file": "analysis/aot_dump/asm/distinguish/common/utils.dart",
+          "line": 76,
+          "text": "//     0x48c900: add             x16, PP, #0x24, lsl #12  ; [pp+0x24728] \"/inlet_pwd.conf\""
+        },
+        {
+          "file": "analysis/aot_dump/asm/distinguish/pages/key/key_form_page.dart",
+          "line": 759,
+          "text": "// 0x48c8a8: r0 = inletPwdDbWrite()"
+        },
+        {
+          "file": "analysis/aot_dump/asm/distinguish/pages/key/key_form_page.dart",
+          "line": 760,
+          "text": "//     0x48c8a8: bl              #0x48c8bc  ; [package:distinguish/common/utils.dart] Utils::inletPwdDbWrite"
+        }
+      ]
+    },
+    {
+      "directory": "jadx/sources",
+      "scanned_files": 2508,
+      "hits": []
+    },
+    {
+      "directory": "jadx_fallback",
+      "scanned_files": 8,
+      "hits": []
+    },
+    {
+      "directory": "analysis/completeness_audit/native/ghidra_rust/functions",
+      "scanned_files": 2885,
+      "hits": []
+    },
+    {
+      "directory": "analysis/completeness_audit/native/ghidra_rsa/functions",
+      "scanned_files": 2723,
+      "hits": []
+    }
+  ]
+}

@@ -1,0 +1,302 @@
+公开副本说明：本文件为历史分析报告，具体本机路径已脱敏为 <LOCAL_APP> 或 <LOCAL_WORKSPACE>；报告中的历史完成状态不代表完整原始源码已恢复。
+
+鑫财神 APP 登录与业务协议还原报告
+分析日期：2026-10-13
+工作目录：<LOCAL_APP>
+
+本轮已成功解析 Dart 3.5.2 的 ARM64 AOT 快照，从 53 个应用模块恢复
+612 个方法、闭包及初始化器的带符号汇编。登录和消息业务含义依据
+调用、寄存器参数、模型转换和 UI 消费者还原。这里的汇编及伪代码
+不等于完整的原始 Dart 源码，不能据此直接编译出原 APP。
+
+原始 APK 为 app_xcs(新).apk.1.1，应用包 com.re.xcs，名称“鑫财神”，
+Manifest 版本 2.1.6，versionCode 39。原文件 SHA-256：
+8fd060966759990ab5ef90639e3376a2b6aea209f3f545d768a2fdc668dfeaa9
+本轮分析没有启动 APK、执行目标业务函数或访问业务服务器。
+
+业务架构已串联为：Flutter 页面 → Dart Service/HttpClient/Dio 发起 HTTP；
+登录后 Flutter Rust Bridge → Rust SDK 管理 WebSocket、登录、心跳和重登；
+业务 JSON 经 Rust 转发到 Dart 监听器，再按 msg_type 更新设备、图像和页面。
+当前登录配置解密明确使用 Dart encrypt + PointyCastle，不是由存在于包内的
+Go RSA bridge 完成。Go 桥是否有其他实际调用仍按前轮边界记录。
+
+登录过程
+
+登录页初始化通过 PackageInfo.fromPlatform 获取实际版本；Utils.version 的
+初始硬编码“2.0.6”会在 read_config 中被覆盖，不能把它直接当成本 APK
+发出的版本。配置文件存在时读取并填回服务器 IP、用户名、密码和记住密码项。
+
+提交登录前调用 saveAndValidate，随后生成入口地址：
+    http://{登录页IP输入}:8081/
+并设置 HttpClient 的 baseUri。登录请求为：
+    POST /api/login/login/distinguish?app_name=xcs
+    Content-Type: application/json
+    {"username": "账号输入", "password": "密码输入", "devicetype": 1}
+这段参数构造没有观察到密码先做哈希或 RSA 加密。此处的 JSON 为参数
+结构示例，账号、密码均为说明性占位，不是真实凭证。
+
+登录回调先检查 HttpResponse.ok。传输异常显示 HttpException.message；
+服务端 data.success==false 时显示 data.msg 并退出。其余分支读取：
+    jwt: String
+    loginUser: User.fromJson(Map<String,dynamic>)
+    devices: 遍历并调用 Devices.fromJson
+其中 jwt 写入静态槽 0xba4，供 HTTP 和 WebSocket 共用。用户名、密码还
+分别写入内存槽 0xbb8、0xbbc。User 模型读取 id、username、token、login_type、
+exp、nbf、data_send、timeout、delay；除两个 String? 外其余为 int?。
+仅字段名 exp/nbf 不足以证明其时间单位；登录用户对象内的 token 也不能
+擅自与顶层 jwt 视为相同值。
+
+接着读取资产 key/pub_key.pem，构造第二个请求：
+    POST /api/server/get_server_addr
+    {"client_type": 1, "key": base64Encode(公钥PEM.codeUnits)}
+此时公共拦截器已经携带刚取得的 JWT。
+
+当响应 data.success 为 true 时，以 data.msg 为 Base64 密文：
+    Base64 解码 → APK 的 key/private_key.pem → RSA 私钥解密
+    → UTF-8 解码（allowMalformed:true）→ jsonDecode
+构造器的实际指令分配 RSAEngine 和 PKCS1Encoding，因此填充方式已确认
+为 PKCS#1 v1.5。资产中的公私钥为配对 RSA 2048 位，密钥正文未放入本报告。
+解密结果实际消费的两个元素为：
+    [0] String：业务服务器主机
+    [1] String：图像编码数据替换规则
+第一个元素设置业务 baseUri=http://{业务主机}:8081/；第二个元素供
+Utils.decode_data 使用，不能称为 WebSocket 用户 ID。
+
+替换规则按“|”分组，每组按“,”分成两项，按原顺序连续执行：
+    s = s.replaceAll(pair[1], pair[0])
+即第二项替换为第一项。该函数本身没有 gzip 或 RSA 解密行为。
+实际业务主机、替换规则内容由服务器响应给出，APK 静态快照中没有其
+当前值，本轮没有编造响应或请求服务器来获取。
+
+之后设备按 direction 排序，保存登录设置，检查应用更新。
+更新响应成功时跳转 UpdateAppPage；其他观察到的分支进入 MainPage。
+主页面订阅 Rust 事件流；getMjConfigReq 的业务成功分支从当前 HTTP
+baseUri 提取主机并调用 initWs。Rust 构造 ws://{业务主机}:18889。
+连接建立事件整数10到达后，Dart 调用 wsLogin(jwt)。它是 Future<int>，
+返回的桥接/发送状态与服务端登录验证结果必须分别理解。
+
+本地登录设置保存到 getApplicationSupportDirectory()/app_config.conf：
+    ip: 登录入口IP输入（不是解密后的业务主机）
+    username: 用户名输入
+    password: 勾选记住密码时为密码输入，否则为空字符串
+    rememberPassword: bool
+调用链是 jsonEncode → File.writeAsStringSync，没有加密调用。
+
+HTTP 请求公共行为
+
+AppDio 使用 BaseOptions(contentType:application/json,responseType:json)。
+Dio 的 DefaultTransformer 对 JSON MIME 的非 String Map/List 调用
+JsonCodec.encode；当前 HttpClient.post 封装未暴露额外 options 参数。
+因此上面的登录参数会按 JSON 请求体编码。
+
+RequestInterceptors 在现有 headers 上设置：
+    clienttype: android
+    Authorization: Bearer {静态槽0xba4中的JWT}
+    deviceId: 静态槽0xbcc
+此外 AppDio 构造时会设置 clientversion=当时的 Utils.version。这个值在
+构造时写入基础 headers，不是上述拦截器每次重新读取；正常登录页初始化
+会先刷新版本，实际构造时序未做运行验证。
+快照初始 JWT 与 deviceId 均为空字符串；初次登录因此仍可带“Bearer ”
+前缀。完整汇编中暂未找到对 deviceId 槽的写入，不能把它推定为实际设备
+硬件 ID。更新接口 app_name 读取的槽 0xb28，其快照值已直接确认为 xcs。
+
+HttpResponse.ok 仅依据 HTTP 状态200～299；业务 success 由各页面分别
+判断。错误拦截器需要 HTTP statusCode==401 且 JSON code==401，才清空
+JWT 并返回登录页，其他情况交给 handler.next。不能只看其中一项便断言
+应用必然跳转。CookieManager 使用临时目录的 FileStorage/PersistCookieJar。
+
+完整接口表及逐字段来源在本文件末尾，并保存为结构化 HTTP 合约。
+
+消息业务含义
+
+这里有三个层级：外层 Rust Protocol.types=2 是业务协议消息；
+它被转发成 WsEvent 的事件整数4；Dart 再解析 data_content 中的
+msg_type 与 msg_content。它们不是同一个枚举。
+
+msg_type=101：单张牌图像及识别信息。
+msg_content 为 Map，读取 serial_number:String?、mahjong_number:int?、
+img:String?、ai_val:int?、ai_precision:double?。按 serial_number 匹配
+Devices.serial_no。img="x"时添加空图占位；其他路径经 getImgUrl 处理，
+获取响应字符串，替换规则解码后 Base64 解码并写入临时缓存。
+ai_val 与 MjConfig.number 对应，结果记录牌编码、配置牌图和置信度。
+非空识别结果总数达到设备 mj_count 总和时，取消倒计时，显示“等待数据
+发送中...”，打开改牌页面并调用 onValidDataAndSendData。占位路径没有
+进入同一完成检查。
+
+msg_type=102：实时预览 JPEG 图像帧。
+内容转换为字符串；形式可以是纯图像编码，或“设备ID|图像编码”。
+有设备ID前缀时，仅当前预览 Devices.id 匹配才更新。随后执行替换规则
+解码并写响应式图像值。预览页面实际消费链为 Base64→decodeJpg→
+encodePng→Image.memory，所以不能将它写成识别结果集合。
+
+msg_type=113：开始一轮数据接收。
+当前倒计时大于0时忽略，否则清空各 Channel 结果，读取 loginUser.timeout
+（缺省60秒），显示“数据接收中...(N秒)”，启动1秒周期计时。
+本分支不读取 msg_content。倒计时归零取消计时器；该回调未见自动提交。
+
+msg_type=114：一个设备数据接收完成。
+msg_content 转字符串后直接匹配 serial_no，置 lighting_switch=0。
+当所有 Channel 设备都不再 lighting_switch==1 时总体收尾，取消 timer、
+倒计时置0，显示“接受完成，等待下轮数据...”。5秒后检查结果数量，
+少于 mj_count 总和时播放 number_error.wav。
+
+msg_type=115：设备离线。
+msg_content 转字符串后直接匹配 serial_no，置 online=0、lighting_switch=0。
+该分支本身没有直接 setState/markNeedsBuild 调用。
+
+msg_type=116：设备在线。
+msg_content 转字符串后直接匹配 serial_no，置 online=1。
+该分支本身没有直接 setState/markNeedsBuild 调用。
+
+msg_type=117：升降牌打开，等待洗牌。
+msg_content 转字符串后按“|”分隔，以第0项匹配 serial_no，置
+lighting_switch=1 并刷新，显示“升降牌打开，等待洗牌中...”。
+第1项没有在该分支使用，含义暂未确认。lighting_switch 与 Devices.status
+是两个不同字段，本报告依据 toJson 对象字段映射确认。
+
+实际分发顺序为101→102→117→115→116→114→113；当前监听器对其余
+msg_type 不执行以上业务动作。语义名称是分析描述，原始枚举成员名没有
+恢复。模型 JSON Schema 描述客户端消费类型，不保证服务器验证规则。
+
+证据与产物
+
+analysis/aot_dump/asm/distinguish/：53个应用模块的带符号 AOT 汇编。
+analysis/aot_dump/pp.txt、objs.txt：对象池与对象信息。
+analysis/aot_runtime/function_index.json：612个方法项及直接调用索引。
+analysis/aot_runtime/direct_call_verification.json：5642条直接 BL 调用已逐条
+从原始 ELF 解码 imm26 校验，无不匹配；不表示所有动态 GDT 调用已命名。
+analysis/aot_runtime/blutter_provenance.json 与 blutter_local_changes.patch：
+工具源码版本、构建信息及本地改动。上游为 https://github.com/worawit/blutter。
+analysis/aot_static_defaults/static_field_defaults.txt：直接读取的快照静态默认值。
+analysis/login_flow/dart_login_flow.json：登录步骤、参数、状态和解密结果。
+analysis/login_flow/dart_login_evidence.json：89个关键地址及源行校验值。
+analysis/login_flow/login_flow.pseudocode.txt：可读登录流程伪代码。
+analysis/login_flow/login_response.schema.json、server_config_plaintext.schema.json：
+客户端实际消费的成功响应与配置形状。
+analysis/login_flow/native_login_flow.json、中文说明.txt：原生发送、认证和重登链。
+analysis/http_endpoints_all.json：整合全部22个固定接口及动态图片GET。
+analysis/http_contract/endpoint_contracts.json、parameter_schemas.json、中文说明.txt：
+非登录接口的详细参数类型、来源、HTTP封装与响应处理证据。
+analysis/message_semantics/msg_type_mapping.json：7类消息的分支、参数和动作。
+analysis/message_semantics/payload_models.json、payload.schema.json：消息与本地模型。
+analysis/message_semantics/reconstructed_dispatch.dart：可读业务分发重建。
+analysis/message_semantics/消息业务语义说明.txt：包含图像流水线和模型边界的细节。
+analysis/protocol_reconstruction_verification.json：本轮统一完整性验证。
+
+方法数包含闭包和初始化器；反汇编文件扩展名虽为 .dart，内容仍是带注释的
+ARM64 汇编。Dart 的 tagged Smi 常量必须解标签：Map 中原始立即数2代表
+整数1；消息分支0xca代表101。原生未装箱字段和 Duration 的微秒数不能
+用同一规则一律除2。
+
+尚不能从这些静态证据确认的事项包括当前可用服务器地址、真实 JWT/
+账号响应、服务器端鉴权与验证、服务端原始枚举名，以及未经观察的异常
+响应形态。完整原始 Dart 源码及可重编译工程没有恢复。原生连接成功、
+协议登录成功和 Flutter 消息事件的具体区别见原生登录补充记录。
+
+完整 HTTP 接口附录（自动整合）
+
+确认 22 个固定模板：11 GET、11 POST；43 个不同 body/query 字段名。
+以下“无”表示观察到的调用没有传 data/query，不表示服务端禁止传参。
+参数必填、取值范围和服务端默认值没有由客户端静态分析证明。
+
+01. POST /api/login/login/distinguish
+    实际请求路径：/api/login/login/distinguish?app_name=xcs
+    查询：app_name:String=xcs
+    JSON Map<String,Object>: username:String, password:String, devicetype:int=1
+
+02. POST /api/server/get_server_addr
+    JSON Map<String,Object>: client_type:int=1, key:String
+
+03. POST /api/config/set_wifi
+    JSON Map<String,String>: ssid:String, pwd:String
+
+04. POST /api/config/set_data_config
+    JSON Map<String,int>: data_send:int, timeout:int, delay:int, count_type:int, upload_img_clarity:int
+
+05. POST /api/config/set_number
+    JSON Map<String,int>: east:int, south:int, west:int, north:int
+
+06. POST /api/config/get_default_wifi
+    data/query：无
+
+07. GET /api/config/wifi_device_up
+    data/query：无
+
+08. GET /api/config/get_device_wifi_list
+    data/query：无
+
+09. GET /api/mj/get_config
+    data/query：无
+
+10. GET /api/config/get_config
+    data/query：无
+
+11. GET /api/preview/start_preview/{device_id}
+    路径 device_id: int? (Devices.id)
+    data/query：无
+
+12. POST /api/preview/set_params_v2/{device_id}
+    路径 device_id: int? (Devices.id)
+    JSON Map<String,num>: left:int, top:int, right:int, bottom:int, brightness:double, motor:int, cap_brightness:int, cap_exposure:int, cap_hue:int, cap_saturation:int, cap_contrast:int, cap_gain:int, img_rotation:int, img_min_hreshold:int, cap_fps:int, bate:int, img_add_num:int, gk_min:int, gk_max:int
+
+13. POST /api/preview/end_preview/{device_id}
+    路径 device_id: int? (Devices.id)
+    data/query：无
+
+14. POST /api/preview/set_preview_img_type/{device_id}/{img_type}
+    路径 device_id: int? (Devices.id)
+    路径 img_type: int? input; sent as integer string；客户端空值回退 1
+    data/query：无
+
+15. POST /api/zhuo/add
+    JSON List<Map<String,num?>>: mahjong_number:int, serial_number:num, direction:int?, result:int
+
+16. GET /api/zhuo/zhuo_reset_games
+    data/query：无
+
+17. GET /api/zhuo/end_games
+    data/query：无
+
+18. GET /api/zhuo/start_games
+    data/query：无
+
+19. GET /api/zhuo/restart_device
+    data/query：无
+
+20. GET /api/zhuo/device_status_all
+    data/query：无
+
+21. GET /api/app/check_update
+    查询：type:int, version:String (normal caller), app_name:String
+
+22. POST /account/edit/pwd
+    JSON Map<String,String>: old_password:String, password:String
+
+预览保存字段保留实际拼写 bate、img_min_hreshold。brightness 为 double，其他18项为 int；不要修正拼写后当作真实字段。
+预览 device_id 取 Devices.id，不是 direction；img_type 空值回退1，但枚举业务名字没有确认。
+/api/zhuo/add 提交 JSON 数组，每项4个字段；serial_number 通过 num.tryParse，空序列号回退文本0，格式错误会抛异常。
+/api/app/check_update 查询固定 type=1、app_name=xcs，version 来自 PackageInfo.fromPlatform().version。
+改密码请求中的确认密码只用于本地比较，未作为独立字段发送。
+
+动态图片 GET 独立记录：
+    101消息 img 若以 http:// 或 https:// 开头则原样作为 URL；否则拼接 http://{业务主机}/{img}。
+    此图片相对路径拼接没有硬编码 :8081，业务接口baseUri与图片URL不能合并推断。
+    请求通过公共 HttpClient.get，响应消费为字符串，经替换规则、Base64解码后写本地缓存。
+    缓存名为 .png 不证明网络直接传 PNG 二进制；img=x 走本地占位图且不发 GET。
+
+原生登录补充：
+    wsLogin(JWT) 原始字符串被保存于 SDK 内存，自动重登录复用同一内容。
+    types=6 的 data_content 为该 JWT String；from/to 默认空且省略，qos=false，fp 为生成的指纹。
+    types=50 内层要求 code:i32、user_id:String、data:String；code=0 才进入认证成功分支并启动心跳/QoS。
+    调用 Future<int> 返回0/3/203分别属于连接启动/发送本地结果，不能替代服务端 code 判断。
+    types=54 负责被踢后的通道、心跳/QoS和状态清理。
+    已审查路径没有确认认证成功/失败/被踢对应的 Flutter 事件整数；user_id/data 也未确认写入SDK全局。
+    连接事件10发生在认证前，两个String为空，随后Dart才发送JWT登录。
+
+脚本入口：
+    scripts/aot_function_index.py：方法索引与原始ELF直接调用验证。
+    scripts/recover_login_flow.py：登录结构与89个关键地址的证据记录。
+    scripts/assemble_protocol_report.py：22个接口合并及本附录。
+    scripts/verify_protocol_reconstruction.py：原APK、证据行、源哈希、68个HTTP方法摘录与7个消息分支的统一检查。
+    scripts/message_aot_semantics.py：消息语义与模型提取。
+    scripts/flutter_http_contracts.py、flutter_verify_http_contracts.py：HTTP合约提取与方法摘录验证。

@@ -1,0 +1,58 @@
+0x52a2a4: fd79bfa9 stp x29, x30, [x15, #-0x10]!
+0x52a2a8: fd030faa mov x29, x15
+0x52a2ac: ef8100d1 sub x15, x15, #0x20
+0x52a2b0: e00301aa mov x0, x1
+0x52a2b4: a1831ff8 stur x1, [x29, #-8]
+0x52a2b8: 501f40f9 ldr x16, [x26, #0x38]
+0x52a2bc: ff0110eb cmp x15, x16
+0x52a2c0: 29060054 b.ls #0x52a384
+0x52a2c4: e10316aa mov x1, x22
+0x52a2c8: 020180d2 mov x2, #8
+0x52a2cc: c93e0794 bl #0x6f9df0
+0x52a2d0: e10300aa mov x1, x0
+0x52a2d4: a1031ff8 stur x1, [x29, #-0x10]
+0x52a2d8: 70534091 add x16, x27, #0x14, lsl #12
+0x52a2dc: 10ce47f9 ldr x16, [x16, #0xf98]
+0x52a2e0: 30f000b8 stur w16, [x1, #0xf]
+0x52a2e4: a0835ff8 ldur x0, [x29, #-8]
+0x52a2e8: 027040b8 ldur w2, [x0, #7]
+0x52a2ec: 42801c8b add x2, x2, x28, lsl #32
+0x52a2f0: 223001b8 stur w2, [x1, #0x13]
+0x52a2f4: 70534091 add x16, x27, #0x14, lsl #12
+0x52a2f8: 10da47f9 ldr x16, [x16, #0xfb0]
+0x52a2fc: 307001b8 stur w16, [x1, #0x17]
+0x52a300: 02b040b8 ldur w2, [x0, #0xb]
+0x52a304: 42801c8b add x2, x2, x28, lsl #32
+0x52a308: 5f00166b cmp w2, w22
+0x52a30c: 61000054 b.ne #0x52a318
+0x52a310: e00316aa mov x0, x22
+0x52a314: 0b000014 b #0x52a340
+0x52a318: 600780d2 mov x0, #0x3b
+0x52a31c: 62000036 tbz w2, #0, #0x52a328
+0x52a320: 40f05ff8 ldur x0, [x2, #-1]
+0x52a324: 007c4cd3 ubfx x0, x0, #0xc, #0x14
+0x52a328: e20100f9 str x2, [x15]
+0x52a32c: 64d341f9 ldr x4, [x27, #0x3a0]
+0x52a330: 31a98dd2 mov x17, #0x6d49
+0x52a334: 1e00118b add x30, x0, x17
+0x52a338: be7a7ef8 ldr x30, [x21, x30, lsl #3]
+0x52a33c: c0033fd6 blr x30
+0x52a340: a1035ff8 ldur x1, [x29, #-0x10]
+0x52a344: 396c0091 add x25, x1, #0x1b
+0x52a348: 200300b9 str w0, [x25]
+0x52a34c: e0000036 tbz w0, #0, #0x52a368
+0x52a350: 30f05f38 ldurb w16, [x1, #-1]
+0x52a354: 11f05f38 ldurb w17, [x0, #-1]
+0x52a358: 300a508a and x16, x17, x16, lsr #2
+0x52a35c: 1f825cea tst x16, x28, lsr #32
+0x52a360: 40000054 b.eq #0x52a368
+0x52a364: 18370794 bl #0x6f7fc4
+0x52a368: 703b46f9 ldr x16, [x27, #0xc70]
+0x52a36c: be035ff8 ldur x30, [x29, #-0x10]
+0x52a370: fe4100a9 stp x30, x16, [x15]
+0x52a374: 057bf697 bl #0x2c8f88
+0x52a378: ef031daa mov x15, x29
+0x52a37c: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x52a380: c0035fd6 ret 
+0x52a384: dd3e0794 bl #0x6f9ef8
+0x52a388: cfffff17 b #0x52a2c4

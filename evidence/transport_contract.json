@@ -1,0 +1,19 @@
+{
+  "artifact_kind": "executable_java_reconstruction_contract_and_local_test_scope",
+  "original_source_recovered": false,
+  "rust_concurrency_equivalent": false,
+  "production_transport": {"scheme": "ws", "port": 18889, "path": "/"},
+  "timers_seconds": {"heartbeat": 30, "heartbeat_expiry": 35, "expiry_poll": 2, "reconnect_authentication_retry": 3},
+  "implementation_policy": [
+    "State transitions are serialized in the Java session; original Rust task races are not reproduced.",
+    "A replaced connection's reader is discarded by generation.",
+    "Repeated start is rejected; callers create a new session to change host/token.",
+    "Malformed inner business messages report an error without terminating the transport.",
+    "TLS, extensions and binary messages fail explicitly; complete QoS sender retransmission is not implemented."
+  ],
+  "test_port_injection": "A package-private constructor is used only by the host test probe; the public production constructor selects 18889.",
+  "tests": "transport/run_network_tests.py",
+  "verification": "transport/network_verification.json",
+  "scope_notes": "transport/README.txt",
+  "original_static_reports": ["../../WebSocket与识别上传流程还原报告.txt", "../../断线重连与预览失败恢复还原报告.txt"]
+}

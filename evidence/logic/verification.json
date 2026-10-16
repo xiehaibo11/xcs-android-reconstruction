@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "scope": "Proof-byte consistency only; does not assert recovered original source or dynamic equivalence.",
+  "claim_count": 9,
+  "reviewed_method_evidence_count": 69,
+  "selected_methods_without_prior_explicit_association": 33,
+  "checked_raw_instruction_words": 9441,
+  "failures": [],
+  "original_source_recovered": false,
+  "full_app_behavior_completed": false,
+  "frozen_audit_modified": false
+}

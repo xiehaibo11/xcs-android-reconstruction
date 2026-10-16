@@ -1,0 +1,22 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+00000000000bffc0 <_cgo_topofstack>:
+   c2700: 45 0f 57 ff                  	xorps	%xmm15, %xmm15
+   c2704: 4c 8b 35 fd 0e 35 00         	movq	0x350efd(%rip), %r14    # 0x413608
+   c270b: 64 4d 8b 36                  	movq	%fs:(%r14), %r14
+   c270f: e9 2c f5 fc ff               	jmp	0x91c40 <.text+0x38440>
+   c2714: cc                           	int3
+   c2715: cc                           	int3
+   c2716: cc                           	int3
+   c2717: cc                           	int3
+   c2718: cc                           	int3
+   c2719: cc                           	int3
+   c271a: cc                           	int3
+   c271b: cc                           	int3
+   c271c: cc                           	int3
+   c271d: cc                           	int3
+   c271e: cc                           	int3
+   c271f: cc                           	int3

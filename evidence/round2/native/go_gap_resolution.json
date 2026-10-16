@@ -1,0 +1,992 @@
+{
+  "scope": "Eight previously failed/truncated Go functions in the original librsa_bridge.so. Semantics and tooling causes, not original-source restoration.",
+  "requested_gap_count": 8,
+  "bounded_semantics_established": 8,
+  "original_source_recovered_count": 0,
+  "application_source_changes": [],
+  "jca_replacement_defect_established": false,
+  "apk_sha256": "8fd060966759990ab5ef90639e3376a2b6aea209f3f545d768a2fdc668dfeaa9",
+  "go_build_info": {
+    "file": "analysis/deep_rsa/go_build_info.txt",
+    "sha256": "a111ce20706a953cf4820f38ebad8db9658a81d2c8bea41d40e05ff3004898fb"
+  },
+  "startup_main_function_value": {
+    "virtual_address": "0x2bf730",
+    "elf_file_offset": 2877232,
+    "raw_bytes": "8000090000000000",
+    "value": "0x90080",
+    "target_go_name": "runtime.main",
+    "rela_dyn_records": [
+      {
+        "r_offset": 2881328,
+        "r_info": 1027,
+        "r_info_sym": 0,
+        "r_info_type": 1027,
+        "r_addend": 589952
+      }
+    ]
+  },
+  "business_relevance": "The eight entries are Go byte primitives and runtime assembly. They neither establish RSA padding/key-format behavior nor prove the fast_rsa bridge is invoked by login. No LoginFlow/JCA modification is justified by these eight functions alone.",
+  "emulation": {
+    "report": "emulation_verification.json",
+    "status": "PASS",
+    "bytealg_cases": 22854,
+    "runtime_boundary_cases": 16,
+    "original_binary_execution": "Unicorn isolated fragments only",
+    "full_go_runtime_execution": false,
+    "server_contacted": false
+  },
+  "decompiler_diagnosis": {
+    "experiment": "DiagnoseBytealg.java",
+    "results": "ghidra_diagnosis/status.tsv",
+    "original_database_modified": false,
+    "observed": [
+      "Baseline three wrappers fail with Unable to find unique hash for varnode.",
+      "Pclntab boundary repair and separate shared-body functions alone do not fix the error.",
+      "Adding explicit CALL_RETURN flow annotation at the wrapper tail branches produces diagnostic C for all three wrappers.",
+      "Both isolated SIMD shared bodies still fail. This localizes the remaining defect to decompilation inside those bodies; it does not prove the exact Ghidra internal bug.",
+      "Five runtime truncations point to intentional invalid instructions and/or an indirect function-value tail call. The original bytes are present and isolated execution reaches the expected boundaries."
+    ],
+    "remaining_helper_decompiler_errors": [
+      "countbytebody at 0x5ae90",
+      "indexbytebody at 0x5b310"
+    ],
+    "wrapper_c_is_complete_algorithm": false,
+    "diagnostic_rows": [
+      {
+        "phase": "baseline",
+        "address": "15af40",
+        "complete": "false",
+        "calling_convention": "unknown",
+        "signature": "undefined FUN_0015af40(void)",
+        "body": "[[0015ae90, 0015af3b] [0015af40, 0015af53]]",
+        "error": " Recoverable Error: Unable to find unique hash for varnode"
+      },
+      {
+        "phase": "baseline",
+        "address": "15b400",
+        "complete": "false",
+        "calling_convention": "unknown",
+        "signature": "undefined FUN_0015b400(void)",
+        "body": "[[0015b400, 0015b413]]",
+        "error": " Recoverable Error: Unable to find unique hash for varnode"
+      },
+      {
+        "phase": "baseline",
+        "address": "15b420",
+        "complete": "false",
+        "calling_convention": "unknown",
+        "signature": "undefined FUN_0015b420(void)",
+        "body": "[[0015b310, 0015b3f3] [0015b420, 0015b433]]",
+        "error": " Recoverable Error: Unable to find unique hash for varnode"
+      },
+      {
+        "phase": "baseline",
+        "address": "15ae90",
+        "complete": "absent",
+        "calling_convention": null,
+        "signature": null,
+        "body": null,
+        "error": null
+      },
+      {
+        "phase": "baseline",
+        "address": "15b310",
+        "complete": "absent",
+        "calling_convention": null,
+        "signature": null,
+        "body": null,
+        "error": null
+      },
+      {
+        "phase": "metadata_boundaries",
+        "address": "15af40",
+        "complete": "false",
+        "calling_convention": "unknown",
+        "signature": "undefined FUN_0015af40(void)",
+        "body": "[[0015af40, 0015af53]]",
+        "error": " Recoverable Error: Unable to find unique hash for varnode"
+      },
+      {
+        "phase": "metadata_boundaries",
+        "address": "15b400",
+        "complete": "false",
+        "calling_convention": "unknown",
+        "signature": "undefined FUN_0015b400(void)",
+        "body": "[[0015b400, 0015b413]]",
+        "error": " Recoverable Error: Unable to find unique hash for varnode"
+      },
+      {
+        "phase": "metadata_boundaries",
+        "address": "15b420",
+        "complete": "false",
+        "calling_convention": "unknown",
+        "signature": "undefined FUN_0015b420(void)",
+        "body": "[[0015b420, 0015b433]]",
+        "error": " Recoverable Error: Unable to find unique hash for varnode"
+      },
+      {
+        "phase": "metadata_boundaries",
+        "address": "15ae90",
+        "complete": "false",
+        "calling_convention": "unknown",
+        "signature": "undefined diagnostic_15ae90(void)",
+        "body": "[[0015ae90, 0015af3b]]",
+        "error": " Recoverable Error: Unable to find unique hash for varnode"
+      },
+      {
+        "phase": "metadata_boundaries",
+        "address": "15b310",
+        "complete": "false",
+        "calling_convention": "unknown",
+        "signature": "undefined diagnostic_15b310(void)",
+        "body": "[[0015b310, 0015b3f3]]",
+        "error": " Recoverable Error: Unable to find unique hash for varnode"
+      },
+      {
+        "phase": "explicit_tail_calls",
+        "address": "15af40",
+        "complete": "true",
+        "calling_convention": "unknown",
+        "signature": "undefined FUN_0015af40(void)",
+        "body": "[[0015af40, 0015af53]]",
+        "error": ""
+      },
+      {
+        "phase": "explicit_tail_calls",
+        "address": "15b400",
+        "complete": "true",
+        "calling_convention": "unknown",
+        "signature": "undefined FUN_0015b400(void)",
+        "body": "[[0015b400, 0015b413]]",
+        "error": ""
+      },
+      {
+        "phase": "explicit_tail_calls",
+        "address": "15b420",
+        "complete": "true",
+        "calling_convention": "unknown",
+        "signature": "undefined FUN_0015b420(void)",
+        "body": "[[0015b420, 0015b433]]",
+        "error": ""
+      },
+      {
+        "phase": "explicit_tail_calls",
+        "address": "15ae90",
+        "complete": "false",
+        "calling_convention": "unknown",
+        "signature": "undefined diagnostic_15ae90(void)",
+        "body": "[[0015ae90, 0015af3b]]",
+        "error": " Recoverable Error: Unable to find unique hash for varnode"
+      },
+      {
+        "phase": "explicit_tail_calls",
+        "address": "15b310",
+        "complete": "false",
+        "calling_convention": "unknown",
+        "signature": "undefined diagnostic_15b310(void)",
+        "body": "[[0015b310, 0015b3f3]]",
+        "error": " Recoverable Error: Unable to find unique hash for varnode"
+      }
+    ]
+  },
+  "upstream_corroboration": [
+    {
+      "url": "https://raw.githubusercontent.com/golang/go/go1.21.0/src/runtime/asm_arm64.s",
+      "use": "Corroborates runtime function names and intentional non-return boundaries; local machine-code and emulator evidence are primary."
+    }
+  ],
+  "rows": [
+    {
+      "name": "internal/bytealg.CountString",
+      "elf_entry": "0x5af40",
+      "ghidra_entry": "0x15af40",
+      "status": "bounded_function_semantics_established",
+      "original_source_recovered": false,
+      "baseline_tool_status": "decompile_failed_or_deferred",
+      "metadata_record": {
+        "address": "0x5af40",
+        "end_exclusive": "0x5af60",
+        "bytes": 32,
+        "name": "internal/bytealg.CountString",
+        "metadata_file_offset": 3706648,
+        "name_file_offset": 2907427,
+        "source_file": "/opt/hostedtoolcache/go/1.21.0/x64/src/internal/bytealg/count_arm64.s",
+        "start_line": 15,
+        "classification": "unknown",
+        "classification_basis": "pclntab first pcfile source path; not a claim that function is irrelevant",
+        "ghidra_exact_entry_present": true,
+        "c_status": "decompile_failed_or_deferred",
+        "ghidra_body_ranges_end_exclusive": [
+          [
+            "0x5ae90",
+            "0x5af3c"
+          ],
+          [
+            "0x5af40",
+            "0x5af54"
+          ]
+        ],
+        "machine_code_coverage": "Full LLVM executable-section listing, all raw bytes independently verified"
+      },
+      "machine_code_file": "bodies/arm64-v8a/0005af40.bin",
+      "machine_code_sha256": "463b050e789c1baa5402d25a19f3f6bd64a446e97594067b41526e396022f073",
+      "assembly_file": "bodies/arm64-v8a/0005af40.asm.txt",
+      "cross_abi_entries": {
+        "arm64-v8a": [
+          {
+            "entry": "0x5af40",
+            "end_exclusive": "0x5af60",
+            "raw_file": "bodies/arm64-v8a/0005af40.bin",
+            "raw_sha256": "463b050e789c1baa5402d25a19f3f6bd64a446e97594067b41526e396022f073"
+          }
+        ],
+        "armeabi-v7a": [
+          {
+            "entry": "0x200d4",
+            "end_exclusive": "0x200e8",
+            "raw_file": "bodies/armeabi-v7a/000200d4.bin",
+            "raw_sha256": "6093c771669acbce67b0cdc281fca03fc9aa47472bcef4ba59a49042c1124b10"
+          }
+        ],
+        "x86": [],
+        "x86_64": [
+          {
+            "entry": "0x5be40",
+            "end_exclusive": "0x5be80",
+            "raw_file": "bodies/x86_64/0005be40.bin",
+            "raw_sha256": "96b2cebcb2c86fd12eae7e31644084a33f341eb5cf4652aea42b5b12a27107c2"
+          }
+        ]
+      },
+      "semantics": "Count occurrences of an unsigned byte in a Go string; byte-oriented, not Unicode/rune-oriented. Empty input returns 0 without dereferencing the data pointer.",
+      "abi": {
+        "data": "SP+8",
+        "length": "SP+16",
+        "target_byte": "SP+24",
+        "result_int64": "SP+32",
+        "shared_body_registers": "x0=data, x1=byte, x2=length, x8=result address"
+      },
+      "machine_code": [
+        {
+          "start": "0x5af40",
+          "end_exclusive": "0x5af54",
+          "fact": "ABI0 stack loads and tail branch to countbytebody"
+        },
+        {
+          "start": "0x5ae90",
+          "end_exclusive": "0x5aea0",
+          "fact": "zero length and short-input branches"
+        },
+        {
+          "start": "0x5aea0",
+          "end_exclusive": "0x5aec8",
+          "fact": "scalar prefix to 32-byte alignment"
+        },
+        {
+          "start": "0x5aec8",
+          "end_exclusive": "0x5af20",
+          "fact": "32-byte NEON chunks; compare, mask to ones, pairwise/reduction count, 64-bit accumulation"
+        },
+        {
+          "start": "0x5af20",
+          "end_exclusive": "0x5af3c",
+          "fact": "scalar remainder; store count and return"
+        }
+      ],
+      "tests": "3809 cases per ABI, ARM64 and ARM32; total 7618",
+      "remaining": [
+        "SIMD helper still triggers Ghidra unique-varnode-hash failure after boundary repair. Executed machine code establishes tested behavior; diagnostic C is incomplete."
+      ]
+    },
+    {
+      "name": "internal/bytealg.IndexByte",
+      "elf_entry": "0x5b400",
+      "ghidra_entry": "0x15b400",
+      "status": "bounded_function_semantics_established",
+      "original_source_recovered": false,
+      "baseline_tool_status": "decompile_failed_or_deferred",
+      "metadata_record": {
+        "address": "0x5b400",
+        "end_exclusive": "0x5b420",
+        "bytes": 32,
+        "name": "internal/bytealg.IndexByte",
+        "metadata_file_offset": 3707104,
+        "name_file_offset": 2907583,
+        "source_file": "/opt/hostedtoolcache/go/1.21.0/x64/src/internal/bytealg/indexbyte_arm64.s",
+        "start_line": 7,
+        "classification": "unknown",
+        "classification_basis": "pclntab first pcfile source path; not a claim that function is irrelevant",
+        "ghidra_exact_entry_present": true,
+        "c_status": "decompile_failed_or_deferred",
+        "ghidra_body_ranges_end_exclusive": [
+          [
+            "0x5b400",
+            "0x5b414"
+          ]
+        ],
+        "machine_code_coverage": "Full LLVM executable-section listing, all raw bytes independently verified"
+      },
+      "machine_code_file": "bodies/arm64-v8a/0005b400.bin",
+      "machine_code_sha256": "707fa3ec5ab549498817553de3c3dbbb230849cd6aa80c3a87ba0be1b4834f8f",
+      "assembly_file": "bodies/arm64-v8a/0005b400.asm.txt",
+      "cross_abi_entries": {
+        "arm64-v8a": [
+          {
+            "entry": "0x5b400",
+            "end_exclusive": "0x5b420",
+            "raw_file": "bodies/arm64-v8a/0005b400.bin",
+            "raw_sha256": "707fa3ec5ab549498817553de3c3dbbb230849cd6aa80c3a87ba0be1b4834f8f"
+          }
+        ],
+        "armeabi-v7a": [
+          {
+            "entry": "0x20214",
+            "end_exclusive": "0x20228",
+            "raw_file": "bodies/armeabi-v7a/00020214.bin",
+            "raw_sha256": "f05facbc6d2e9cdc61a7d33f59e4a68351ce99b8892786b8e763519b3ba46e45"
+          }
+        ],
+        "x86": [
+          {
+            "entry": "0x20050",
+            "end_exclusive": "0x20080",
+            "raw_file": "bodies/x86/00020050.bin",
+            "raw_sha256": "ca49f0ed4bfad1f4931c05c8a582826d1741400e374f9471f0eb3091a1f6aecb"
+          }
+        ],
+        "x86_64": [
+          {
+            "entry": "0x5c4a0",
+            "end_exclusive": "0x5c4c0",
+            "raw_file": "bodies/x86_64/0005c4a0.bin",
+            "raw_sha256": "590dc36916770e68cec184f7634f22d4af291d2a2fbd7a90c4082151d7171bd4"
+          }
+        ]
+      },
+      "semantics": "Return first byte index in a Go []byte, or -1 if absent. Capacity is not consulted. Empty input returns -1 without dereferencing its pointer.",
+      "abi": {
+        "data": "SP+8",
+        "length": "SP+16",
+        "capacity": "SP+24 (unused)",
+        "target_byte": "SP+32",
+        "result_int64": "SP+40",
+        "shared_body_registers": "x0=data, x1=byte, x2=length, x8=result address"
+      },
+      "machine_code": [
+        {
+          "start": "0x5b400",
+          "end_exclusive": "0x5b414",
+          "fact": "ABI0 slice wrapper; tail branch to indexbytebody"
+        },
+        {
+          "start": "0x5b310",
+          "end_exclusive": "0x5b338",
+          "fact": "zero length, saved original pointer, 32-byte alignment and weighted byte mask initialization"
+        },
+        {
+          "start": "0x5b338",
+          "end_exclusive": "0x5b374",
+          "fact": "first unaligned 32-byte load; discard bits before the logical start"
+        },
+        {
+          "start": "0x5b374",
+          "end_exclusive": "0x5b3c8",
+          "fact": "vector scan and final-block mask after the logical end"
+        },
+        {
+          "start": "0x5b3c8",
+          "end_exclusive": "0x5b3f4",
+          "fact": "RBIT+CLZ selects earliest matching byte; compute original-relative index or -1"
+        }
+      ],
+      "tests": "3809 cases per ABI, ARM64 and ARM32; total 7618",
+      "remaining": [
+        "SIMD loads may read outside the logical slice within aligned 32-byte blocks. Bit masks exclude those bytes; callers still need valid Go memory/page invariants.",
+        "SIMD helper C decompilation remains a Ghidra failure."
+      ]
+    },
+    {
+      "name": "internal/bytealg.IndexByteString",
+      "elf_entry": "0x5b420",
+      "ghidra_entry": "0x15b420",
+      "status": "bounded_function_semantics_established",
+      "original_source_recovered": false,
+      "baseline_tool_status": "decompile_failed_or_deferred",
+      "metadata_record": {
+        "address": "0x5b420",
+        "end_exclusive": "0x5b440",
+        "bytes": 32,
+        "name": "internal/bytealg.IndexByteString",
+        "metadata_file_offset": 3707176,
+        "name_file_offset": 2907610,
+        "source_file": "/opt/hostedtoolcache/go/1.21.0/x64/src/internal/bytealg/indexbyte_arm64.s",
+        "start_line": 14,
+        "classification": "unknown",
+        "classification_basis": "pclntab first pcfile source path; not a claim that function is irrelevant",
+        "ghidra_exact_entry_present": true,
+        "c_status": "decompile_failed_or_deferred",
+        "ghidra_body_ranges_end_exclusive": [
+          [
+            "0x5b310",
+            "0x5b3f4"
+          ],
+          [
+            "0x5b420",
+            "0x5b434"
+          ]
+        ],
+        "machine_code_coverage": "Full LLVM executable-section listing, all raw bytes independently verified"
+      },
+      "machine_code_file": "bodies/arm64-v8a/0005b420.bin",
+      "machine_code_sha256": "7714bad94e915cd2da494de5daf8e832374f0ec041d5dda7ba063146a49db7dc",
+      "assembly_file": "bodies/arm64-v8a/0005b420.asm.txt",
+      "cross_abi_entries": {
+        "arm64-v8a": [
+          {
+            "entry": "0x5b420",
+            "end_exclusive": "0x5b440",
+            "raw_file": "bodies/arm64-v8a/0005b420.bin",
+            "raw_sha256": "7714bad94e915cd2da494de5daf8e832374f0ec041d5dda7ba063146a49db7dc"
+          }
+        ],
+        "armeabi-v7a": [
+          {
+            "entry": "0x20228",
+            "end_exclusive": "0x2023c",
+            "raw_file": "bodies/armeabi-v7a/00020228.bin",
+            "raw_sha256": "efc842c04834382cf9efa3f1bbfcae190fd1ac5a0acaebed250535f0d87bc6b8"
+          }
+        ],
+        "x86": [
+          {
+            "entry": "0x20080",
+            "end_exclusive": "0x200b0",
+            "raw_file": "bodies/x86/00020080.bin",
+            "raw_sha256": "445f517a8b696c05935134b0324eeba6b94d2f21e03f284f511cc2bfcd3af773"
+          }
+        ],
+        "x86_64": [
+          {
+            "entry": "0x5c4c0",
+            "end_exclusive": "0x5c4e0",
+            "raw_file": "bodies/x86_64/0005c4c0.bin",
+            "raw_sha256": "65318e6e7602b7ad1820cccb4e302974262e599ce763b9d2da3b7ee81a947729"
+          }
+        ]
+      },
+      "semantics": "Return first byte index in a Go string, or -1 if absent; same shared machine code as IndexByte with different ABI0 stack layout.",
+      "abi": {
+        "data": "SP+8",
+        "length": "SP+16",
+        "target_byte": "SP+24",
+        "result_int64": "SP+32",
+        "shared_body_registers": "x0=data, x1=byte, x2=length, x8=result address"
+      },
+      "machine_code": [
+        {
+          "start": "0x5b420",
+          "end_exclusive": "0x5b434",
+          "fact": "ABI0 string wrapper; tail branch to the same indexbytebody at 0x5b310"
+        },
+        {
+          "start": "0x5b310",
+          "end_exclusive": "0x5b3f4",
+          "fact": "identical shared implementation described for IndexByte"
+        }
+      ],
+      "tests": "3809 cases per ABI, ARM64 and ARM32; total 7618",
+      "remaining": [
+        "Same bounded vector over-read and Ghidra helper limitation as IndexByte."
+      ]
+    },
+    {
+      "name": "runtime.rt0_go",
+      "elf_entry": "0xbd980",
+      "ghidra_entry": "0x1bd980",
+      "status": "bounded_function_semantics_established",
+      "original_source_recovered": false,
+      "baseline_tool_status": "complete_tool_output_with_control_flow_gap",
+      "metadata_record": {
+        "address": "0xbd980",
+        "end_exclusive": "0xbda70",
+        "bytes": 240,
+        "name": "runtime.rt0_go",
+        "metadata_file_offset": 3804000,
+        "name_file_offset": 2954198,
+        "source_file": "/opt/hostedtoolcache/go/1.21.0/x64/src/runtime/asm_arm64.s",
+        "start_line": 11,
+        "classification": "unknown",
+        "classification_basis": "pclntab first pcfile source path; not a claim that function is irrelevant",
+        "ghidra_exact_entry_present": true,
+        "c_status": "complete_tool_output_with_control_flow_gap",
+        "ghidra_body_ranges_end_exclusive": [
+          [
+            "0xbd980",
+            "0xbda60"
+          ]
+        ],
+        "machine_code_coverage": "Full LLVM executable-section listing, all raw bytes independently verified"
+      },
+      "machine_code_file": "bodies/arm64-v8a/000bd980.bin",
+      "machine_code_sha256": "13e33086cac81d6afe2b979e22c523740e0abf4a01e2b6d93a6c5255740ebce8",
+      "assembly_file": "bodies/arm64-v8a/000bd980.asm.txt",
+      "cross_abi_entries": {
+        "arm64-v8a": [
+          {
+            "entry": "0xbd980",
+            "end_exclusive": "0xbda70",
+            "raw_file": "bodies/arm64-v8a/000bd980.bin",
+            "raw_sha256": "13e33086cac81d6afe2b979e22c523740e0abf4a01e2b6d93a6c5255740ebce8"
+          }
+        ],
+        "armeabi-v7a": [
+          {
+            "entry": "0x96988",
+            "end_exclusive": "0x96a54",
+            "raw_file": "bodies/armeabi-v7a/00096988.bin",
+            "raw_sha256": "e3068b6dbbe734031464681b39f02b3b606d04c257a7a7709f232343da84be8a"
+          }
+        ],
+        "x86": [
+          {
+            "entry": "0x8d660",
+            "end_exclusive": "0x8d830",
+            "raw_file": "bodies/x86/0008d660.bin",
+            "raw_sha256": "2e61da9559e67b9d4129ca1e6d1eac32fc941e531b8a70909d0beb7f86c4a809"
+          }
+        ],
+        "x86_64": [
+          {
+            "entry": "0xbdd80",
+            "end_exclusive": "0xbdf20",
+            "raw_file": "bodies/x86_64/000bdd80.bin",
+            "raw_sha256": "53d98239f94cc812f66862ee91a1fdcd4f2ed1560201d6f3c9154984cfb32677"
+          }
+        ]
+      },
+      "semantics": "Go runtime bootstrap: initialize g0 stack and guards, optionally call cgo_init with Android TLS arguments, publish g/TLS, link g0 and m0, initialize runtime, schedule runtime.main and enter mstart. It is a runtime entry, not an RSA operation.",
+      "machine_code": [
+        {
+          "start": "0xbd980",
+          "end_exclusive": "0xbd9b8",
+          "fact": "save argc/argv; g0=0x410f60; stack low=SP-65536, stack high=SP, initial guards=low"
+        },
+        {
+          "start": "0xbd9b8",
+          "end_exclusive": "0xbd9ec",
+          "fact": "optional indirect cgo_init; x0=g0, x1=setg_gcc 0xbd350, x2=tls_g storage 0x3e7ee0, x3=TPIDR_EL0"
+        },
+        {
+          "start": "0xbd9ec",
+          "end_exclusive": "0xbda10",
+          "fact": "save_g; guard0=guard1=stack.lo+0x3a0; m0 at 0x4113c0 links g0"
+        },
+        {
+          "start": "0xbda10",
+          "end_exclusive": "0xbda50",
+          "fact": "check -> args -> osinit -> schedinit -> newproc -> mstart; newproc argument funcval at 0x2bf730 points to runtime.main at 0x90080"
+        },
+        {
+          "start": "0xbda50",
+          "end_exclusive": "0xbda64",
+          "fact": "unexpected mstart return: null store at 0xbda5c, followed by invalid word 0xbea71700 at 0xbda60"
+        }
+      ],
+      "tests": "Two startup branches with modeled callees; unexpected mstart return faults at the original null store.",
+      "remaining": [
+        "cgo_init, check, args, osinit, schedinit and newproc internals are explicitly modeled; mstart boundary is stopped. This does not establish complete Go initialization or OS interaction.",
+        "ELF loader relocation behavior and full runtime startup are outside this isolated-fragment test."
+      ]
+    },
+    {
+      "name": "runtime.systemstack",
+      "elf_entry": "0xbdb30",
+      "ghidra_entry": "0x1bdb30",
+      "status": "bounded_function_semantics_established",
+      "original_source_recovered": false,
+      "baseline_tool_status": "complete_tool_output_with_control_flow_gap",
+      "metadata_record": {
+        "address": "0xbdb30",
+        "end_exclusive": "0xbdbe0",
+        "bytes": 176,
+        "name": "runtime.systemstack",
+        "metadata_file_offset": 3804288,
+        "name_file_offset": 2954298,
+        "source_file": "/opt/hostedtoolcache/go/1.21.0/x64/src/runtime/asm_arm64.s",
+        "start_line": 206,
+        "classification": "unknown",
+        "classification_basis": "pclntab first pcfile source path; not a claim that function is irrelevant",
+        "ghidra_exact_entry_present": true,
+        "c_status": "complete_tool_output_with_control_flow_gap",
+        "ghidra_body_ranges_end_exclusive": [
+          [
+            "0xbdb30",
+            "0xbdbd8"
+          ]
+        ],
+        "machine_code_coverage": "Full LLVM executable-section listing, all raw bytes independently verified"
+      },
+      "machine_code_file": "bodies/arm64-v8a/000bdb30.bin",
+      "machine_code_sha256": "a10f9179d114963307c4a500ff36870f9444a8efeac767cfd60f89e81ff1a278",
+      "assembly_file": "bodies/arm64-v8a/000bdb30.asm.txt",
+      "cross_abi_entries": {
+        "arm64-v8a": [
+          {
+            "entry": "0xbdb30",
+            "end_exclusive": "0xbdbe0",
+            "raw_file": "bodies/arm64-v8a/000bdb30.bin",
+            "raw_sha256": "a10f9179d114963307c4a500ff36870f9444a8efeac767cfd60f89e81ff1a278"
+          }
+        ],
+        "armeabi-v7a": [
+          {
+            "entry": "0x96b00",
+            "end_exclusive": "0x96b98",
+            "raw_file": "bodies/armeabi-v7a/00096b00.bin",
+            "raw_sha256": "94d2769199de115d556d08a98237ec48ed9e14db21b67ca2f0e4333bb413962a"
+          }
+        ],
+        "x86": [
+          {
+            "entry": "0x8d8d0",
+            "end_exclusive": "0x8d950",
+            "raw_file": "bodies/x86/0008d8d0.bin",
+            "raw_sha256": "d4039de5fb79b32676d29eec4219a72158741faf19de9d9f63eac6d4114ac519"
+          }
+        ],
+        "x86_64": [
+          {
+            "entry": "0xbe000",
+            "end_exclusive": "0xbe0a0",
+            "raw_file": "bodies/x86_64/000be000.bin",
+            "raw_sha256": "7cbbb574fa5fcb6b67e1feb1df55daef99ad675234644934d2409ec8993f27be"
+          }
+        ]
+      },
+      "semantics": "Run a function value on the system stack: direct tail call on g0/gsignal, save curg and switch to g0 otherwise, then restore current g/SP/BP/TLS and clear saved SP/BP. An unexpected g calls badsystemstack then abort.",
+      "machine_code": [
+        {
+          "start": "0xbdb30",
+          "end_exclusive": "0xbdb6c",
+          "fact": "function value from caller SP+8; compare g against m.gsignal, m.g0, then m.curg"
+        },
+        {
+          "start": "0xbdb6c",
+          "end_exclusive": "0xbdb7c",
+          "fact": "unexpected g: badsystemstack ABI0 wrapper 0xc1f30, then abort"
+        },
+        {
+          "start": "0xbdb7c",
+          "end_exclusive": "0xbdb9c",
+          "fact": "gosave_systemstack_switch; switch g to g0, save_g, restore g0 SP/BP, call closure code pointer"
+        },
+        {
+          "start": "0xbdb9c",
+          "end_exclusive": "0xbdbc8",
+          "fact": "restore m.curg/TLS and saved SP/BP; clear g.sched.sp at +0x38 and bp at +0x68"
+        },
+        {
+          "start": "0xbdbc8",
+          "end_exclusive": "0xbdbd8",
+          "fact": "g0/gsignal path restores caller LR/SP and tail-branches to closure code pointer; not a jump table"
+        },
+        {
+          "start": "0xbd310",
+          "end_exclusive": "0xbd344",
+          "fact": "save helper stores resume PC/SP/BP, zeroes sched.lr/ret, aborts if sched.ctxt is nonzero"
+        },
+        {
+          "start": "0xc17f0",
+          "end_exclusive": "0xc1810",
+          "fact": "save_g writes g to TPIDR_EL0 + tls_g only if iscgo is nonzero"
+        }
+      ],
+      "tests": "g0 direct; gsignal direct; curg switch and restore; invalid g; invalid saved context; iscgo TLS restore.",
+      "remaining": [
+        "Callback is a synthetic immediate return; this does not model arbitrary callback execution, panic/unwind, scheduler concurrency or OS signals.",
+        "badsystemstack is modeled as returning solely to reach the original fallback abort."
+      ]
+    },
+    {
+      "name": "runtime.morestack",
+      "elf_entry": "0xbdbe0",
+      "ghidra_entry": "0x1bdbe0",
+      "status": "bounded_function_semantics_established",
+      "original_source_recovered": false,
+      "baseline_tool_status": "complete_tool_output_with_control_flow_gap",
+      "metadata_record": {
+        "address": "0xbdbe0",
+        "end_exclusive": "0xbdc60",
+        "bytes": 128,
+        "name": "runtime.morestack",
+        "metadata_file_offset": 3804336,
+        "name_file_offset": 2954318,
+        "source_file": "/opt/hostedtoolcache/go/1.21.0/x64/src/runtime/asm_arm64.s",
+        "start_line": 277,
+        "classification": "unknown",
+        "classification_basis": "pclntab first pcfile source path; not a claim that function is irrelevant",
+        "ghidra_exact_entry_present": true,
+        "c_status": "complete_tool_output_with_control_flow_gap",
+        "ghidra_body_ranges_end_exclusive": [
+          [
+            "0xbdbe0",
+            "0xbdc50"
+          ]
+        ],
+        "machine_code_coverage": "Full LLVM executable-section listing, all raw bytes independently verified"
+      },
+      "machine_code_file": "bodies/arm64-v8a/000bdbe0.bin",
+      "machine_code_sha256": "e9417de1f32b05193d7a7729145d9772504fd1e40a0098a54d64a2fe971d49cc",
+      "assembly_file": "bodies/arm64-v8a/000bdbe0.asm.txt",
+      "cross_abi_entries": {
+        "arm64-v8a": [
+          {
+            "entry": "0xbdbe0",
+            "end_exclusive": "0xbdc60",
+            "raw_file": "bodies/arm64-v8a/000bdbe0.bin",
+            "raw_sha256": "e9417de1f32b05193d7a7729145d9772504fd1e40a0098a54d64a2fe971d49cc"
+          }
+        ],
+        "armeabi-v7a": [
+          {
+            "entry": "0x96b98",
+            "end_exclusive": "0x96bfc",
+            "raw_file": "bodies/armeabi-v7a/00096b98.bin",
+            "raw_sha256": "612379ec756b86dc740a3bcd0ffc94e5df352922fa10b6639b55c2d2ffe7b570"
+          }
+        ],
+        "x86": [
+          {
+            "entry": "0x8d950",
+            "end_exclusive": "0x8d9d0",
+            "raw_file": "bodies/x86/0008d950.bin",
+            "raw_sha256": "cbc6a6e4be59f6ca35a9f6790b578d66bd96cab15711653de69de1f71030eb48"
+          }
+        ],
+        "x86_64": [
+          {
+            "entry": "0xbe0a0",
+            "end_exclusive": "0xbe140",
+            "raw_file": "bodies/x86_64/000be0a0.bin",
+            "raw_sha256": "9a9269cfa67c34129d9460a15bfd0992739c12ff43f08009037b3c7660dd8819"
+          }
+        ]
+      },
+      "semantics": "Save an ordinary goroutine caller state, save m.morebuf, switch to g0 and transfer to newstack. Growing g0 or gsignal is prohibited. newstack is expected not to return.",
+      "machine_code": [
+        {
+          "start": "0xbdbe0",
+          "end_exclusive": "0xbdc0c",
+          "fact": "reject g0/gsignal via badmorestack helpers and abort"
+        },
+        {
+          "start": "0xbdc0c",
+          "end_exclusive": "0xbdc34",
+          "fact": "save g.sched SP/BP/PC/LR/context and m.morebuf SP/PC/g"
+        },
+        {
+          "start": "0xbdc34",
+          "end_exclusive": "0xbdc50",
+          "fact": "switch to g0 and publish TLS; use g0 SP/BP; create dummy frame; call newstack ABI0 0xc1f10"
+        },
+        {
+          "start": "0xbdc50",
+          "end_exclusive": "0xbdc54",
+          "fact": "invalid word 0xbea71700 is a non-return sentinel, not missing business instructions"
+        }
+      ],
+      "state_offsets": {
+        "g.sched.sp": "+0x38",
+        "g.sched.pc": "+0x40",
+        "g.sched.ctxt": "+0x50",
+        "g.sched.lr": "+0x60",
+        "g.sched.bp": "+0x68",
+        "m.morebuf.sp": "+0x08",
+        "m.morebuf.pc": "+0x10",
+        "m.morebuf.g": "+0x18"
+      },
+      "tests": "normal handoff; rejects g0 and gsignal; modeled newstack return traps at 0xbdc50; iscgo TLS publication.",
+      "remaining": [
+        "newstack allocator/copy/unwind/scheduler implementation is stopped at its ABI0 entry; only handoff state is verified."
+      ]
+    },
+    {
+      "name": "runtime.morestack_noctxt",
+      "elf_entry": "0xbdc60",
+      "ghidra_entry": "0x1bdc60",
+      "status": "bounded_function_semantics_established",
+      "original_source_recovered": false,
+      "baseline_tool_status": "complete_tool_output_with_control_flow_gap",
+      "metadata_record": {
+        "address": "0xbdc60",
+        "end_exclusive": "0xbdc70",
+        "bytes": 16,
+        "name": "runtime.morestack_noctxt",
+        "metadata_file_offset": 3804384,
+        "name_file_offset": 2954336,
+        "source_file": "/opt/hostedtoolcache/go/1.21.0/x64/src/runtime/asm_arm64.s",
+        "start_line": 322,
+        "classification": "unknown",
+        "classification_basis": "pclntab first pcfile source path; not a claim that function is irrelevant",
+        "ghidra_exact_entry_present": true,
+        "c_status": "complete_tool_output_with_control_flow_gap",
+        "ghidra_body_ranges_end_exclusive": [
+          [
+            "0xbdc60",
+            "0xbdc6c"
+          ]
+        ],
+        "machine_code_coverage": "Full LLVM executable-section listing, all raw bytes independently verified"
+      },
+      "machine_code_file": "bodies/arm64-v8a/000bdc60.bin",
+      "machine_code_sha256": "9b576366390eb7aaae1cfa4cb6fc71af3b0b4daedc0405c947c9ca3d7a280ab8",
+      "assembly_file": "bodies/arm64-v8a/000bdc60.asm.txt",
+      "cross_abi_entries": {
+        "arm64-v8a": [
+          {
+            "entry": "0xbdc60",
+            "end_exclusive": "0xbdc70",
+            "raw_file": "bodies/arm64-v8a/000bdc60.bin",
+            "raw_sha256": "9b576366390eb7aaae1cfa4cb6fc71af3b0b4daedc0405c947c9ca3d7a280ab8"
+          }
+        ],
+        "armeabi-v7a": [
+          {
+            "entry": "0x96bfc",
+            "end_exclusive": "0x96c0c",
+            "raw_file": "bodies/armeabi-v7a/00096bfc.bin",
+            "raw_sha256": "9e677aa0da119227f03e0f91c051ec7053a2cf2c0dcc1a839afb5cba8016278c"
+          }
+        ],
+        "x86": [
+          {
+            "entry": "0x8d9d0",
+            "end_exclusive": "0x8d9e0",
+            "raw_file": "bodies/x86/0008d9d0.bin",
+            "raw_sha256": "0900712c32a9f216d554b4a6f7c419e5b6af80ea27376259c32e710f555ea21d"
+          }
+        ],
+        "x86_64": [
+          {
+            "entry": "0xbe140",
+            "end_exclusive": "0xbe160",
+            "raw_file": "bodies/x86_64/000be140.bin",
+            "raw_sha256": "b90e82b80d5bd81c0cc87e4924f36940d640d20ecfa589f52189777805ba441a"
+          }
+        ]
+      },
+      "semantics": "Context-free stack-growth entry: MOV SP,SP keeps the unwinder stack-write marker, clear closure context x26, then tail branch to morestack.",
+      "machine_code": [
+        {
+          "start": "0xbdc60",
+          "end_exclusive": "0xbdc6c",
+          "fact": "MOV SP,SP; zero x26; B 0xbdbe0"
+        },
+        {
+          "start": "0xbdc6c",
+          "end_exclusive": "0xbdc70",
+          "fact": "alignment padding word 0; not required executable behavior"
+        }
+      ],
+      "tests": "Actual tail transfer verifies saved context becomes 0 and all morestack handoff fields are populated.",
+      "remaining": [
+        "Inherits morestack runtime-callee boundary; no standalone missing algorithm."
+      ]
+    },
+    {
+      "name": "runtime.abort",
+      "elf_entry": "0xc00f0",
+      "ghidra_entry": "0x1c00f0",
+      "status": "bounded_function_semantics_established",
+      "original_source_recovered": false,
+      "baseline_tool_status": "complete_tool_output_with_control_flow_gap",
+      "metadata_record": {
+        "address": "0xc00f0",
+        "end_exclusive": "0xc0100",
+        "bytes": 16,
+        "name": "runtime.abort",
+        "metadata_file_offset": 3807288,
+        "name_file_offset": 2955077,
+        "source_file": "/opt/hostedtoolcache/go/1.21.0/x64/src/runtime/asm_arm64.s",
+        "start_line": 1185,
+        "classification": "unknown",
+        "classification_basis": "pclntab first pcfile source path; not a claim that function is irrelevant",
+        "ghidra_exact_entry_present": true,
+        "c_status": "complete_tool_output_with_control_flow_gap",
+        "ghidra_body_ranges_end_exclusive": [
+          [
+            "0xc00f0",
+            "0xc00f8"
+          ]
+        ],
+        "machine_code_coverage": "Full LLVM executable-section listing, all raw bytes independently verified"
+      },
+      "machine_code_file": "bodies/arm64-v8a/000c00f0.bin",
+      "machine_code_sha256": "c4baa5e45fe035916b47691922282763489de2a570911c3abdc2f1a18c77cd79",
+      "assembly_file": "bodies/arm64-v8a/000c00f0.asm.txt",
+      "cross_abi_entries": {
+        "arm64-v8a": [
+          {
+            "entry": "0xc00f0",
+            "end_exclusive": "0xc0100",
+            "raw_file": "bodies/arm64-v8a/000c00f0.bin",
+            "raw_sha256": "c4baa5e45fe035916b47691922282763489de2a570911c3abdc2f1a18c77cd79"
+          }
+        ],
+        "armeabi-v7a": [
+          {
+            "entry": "0x98758",
+            "end_exclusive": "0x98768",
+            "raw_file": "bodies/armeabi-v7a/00098758.bin",
+            "raw_sha256": "0c4a7514273dc91d8f68124ca7edf1aa05e883904a47bddc227133ff94495e46"
+          }
+        ],
+        "x86": [
+          {
+            "entry": "0x8ecd0",
+            "end_exclusive": "0x8ece0",
+            "raw_file": "bodies/x86/0008ecd0.bin",
+            "raw_sha256": "5dcce38c5bf2b905dbc87fe099ad2f696d8e7028ef509d7a332d1a7c58c57751"
+          }
+        ],
+        "x86_64": [
+          {
+            "entry": "0xbfe20",
+            "end_exclusive": "0xbfe40",
+            "raw_file": "bodies/x86_64/000bfe20.bin",
+            "raw_sha256": "258e1da15f229f0cf979b6a8b92a21305df6a9ca1941c96adb69ffeeb826ec4b"
+          }
+        ]
+      },
+      "semantics": "Deliberately terminate execution: set x0=0, load from null, then an invalid-instruction fallback word. No return value or RSA logic.",
+      "machine_code": [
+        {
+          "start": "0xc00f0",
+          "end_exclusive": "0xc00f8",
+          "fact": "zero x0 then load at address 0; emulator faults at 0xc00f4"
+        },
+        {
+          "start": "0xc00f8",
+          "end_exclusive": "0xc00fc",
+          "fact": "0xbea71700 invalid-instruction fallback"
+        },
+        {
+          "start": "0xc00fc",
+          "end_exclusive": "0xc0100",
+          "fact": "alignment padding"
+        }
+      ],
+      "tests": "Direct invocation and all tested abort paths stop on the same original null read.",
+      "remaining": [
+        "Actual Android signal/abort handling after the hardware fault is not executed."
+      ]
+    }
+  ],
+  "global_limits": [
+    "No original Dart/Go/Rust authoring source recovered by this round.",
+    "A bounded emulator fixture cannot prove full application, runtime, scheduler, signal or concurrency equivalence.",
+    "Ghidra-generated C is diagnostic output with manually supplied flow annotations; it is not buildable recovered original source.",
+    "Public upstream source was read for corroboration; no business server, credential or external account was used."
+  ]
+}

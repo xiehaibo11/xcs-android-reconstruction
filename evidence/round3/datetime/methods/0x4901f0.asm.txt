@@ -1,0 +1,1532 @@
+  factory _ Devices.fromJson(/* No info */) {
+    // ** addr: 0x4901f0, size: 0x1068
+    // 0x4901f0: EnterFrame
+    //     0x4901f0: stp             fp, lr, [SP, #-0x10]!
+    //     0x4901f4: mov             fp, SP
+    // 0x4901f8: AllocStack(0x158)
+    //     0x4901f8: sub             SP, SP, #0x158
+    // 0x4901fc: SetupParameters(dynamic _ /* r2 => r3, fp-0x8 */)
+    //     0x4901fc: mov             x3, x2
+    //     0x490200: stur            x2, [fp, #-8]
+    // 0x490204: CheckStackOverflow
+    //     0x490204: ldr             x16, [THR, #0x38]  ; THR::stack_limit
+    //     0x490208: cmp             SP, x16
+    //     0x49020c: b.ls            #0x491250
+    // 0x490210: r0 = LoadClassIdInstr(r3)
+    //     0x490210: ldur            x0, [x3, #-1]
+    //     0x490214: ubfx            x0, x0, #0xc, #0x14
+    // 0x490218: mov             x1, x3
+    // 0x49021c: r2 = "id"
+    //     0x49021c: add             x2, PP, #0xb, lsl #12  ; [pp+0xb548] "id"
+    //     0x490220: ldr             x2, [x2, #0x548]
+    // 0x490224: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490224: sub             lr, x0, #0x134
+    //     0x490228: ldr             lr, [x21, lr, lsl #3]
+    //     0x49022c: blr             lr
+    // 0x490230: mov             x3, x0
+    // 0x490234: r2 = Null
+    //     0x490234: mov             x2, NULL
+    // 0x490238: r1 = Null
+    //     0x490238: mov             x1, NULL
+    // 0x49023c: stur            x3, [fp, #-0x10]
+    // 0x490240: branchIfSmi(r0, 0x490268)
+    //     0x490240: tbz             w0, #0, #0x490268
+    // 0x490244: r4 = LoadClassIdInstr(r0)
+    //     0x490244: ldur            x4, [x0, #-1]
+    //     0x490248: ubfx            x4, x4, #0xc, #0x14
+    // 0x49024c: sub             x4, x4, #0x3b
+    // 0x490250: cmp             x4, #1
+    // 0x490254: b.ls            #0x490268
+    // 0x490258: r8 = int?
+    //     0x490258: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x49025c: r3 = Null
+    //     0x49025c: add             x3, PP, #0x10, lsl #12  ; [pp+0x10758] Null
+    //     0x490260: ldr             x3, [x3, #0x758]
+    // 0x490264: r0 = int?()
+    //     0x490264: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x490268: ldur            x3, [fp, #-8]
+    // 0x49026c: r0 = LoadClassIdInstr(r3)
+    //     0x49026c: ldur            x0, [x3, #-1]
+    //     0x490270: ubfx            x0, x0, #0xc, #0x14
+    // 0x490274: mov             x1, x3
+    // 0x490278: r2 = "user_id"
+    //     0x490278: add             x2, PP, #0x10, lsl #12  ; [pp+0x10768] "user_id"
+    //     0x49027c: ldr             x2, [x2, #0x768]
+    // 0x490280: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490280: sub             lr, x0, #0x134
+    //     0x490284: ldr             lr, [x21, lr, lsl #3]
+    //     0x490288: blr             lr
+    // 0x49028c: mov             x3, x0
+    // 0x490290: r2 = Null
+    //     0x490290: mov             x2, NULL
+    // 0x490294: r1 = Null
+    //     0x490294: mov             x1, NULL
+    // 0x490298: stur            x3, [fp, #-0x18]
+    // 0x49029c: branchIfSmi(r0, 0x4902c4)
+    //     0x49029c: tbz             w0, #0, #0x4902c4
+    // 0x4902a0: r4 = LoadClassIdInstr(r0)
+    //     0x4902a0: ldur            x4, [x0, #-1]
+    //     0x4902a4: ubfx            x4, x4, #0xc, #0x14
+    // 0x4902a8: sub             x4, x4, #0x3b
+    // 0x4902ac: cmp             x4, #1
+    // 0x4902b0: b.ls            #0x4902c4
+    // 0x4902b4: r8 = int?
+    //     0x4902b4: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x4902b8: r3 = Null
+    //     0x4902b8: add             x3, PP, #0x10, lsl #12  ; [pp+0x10770] Null
+    //     0x4902bc: ldr             x3, [x3, #0x770]
+    // 0x4902c0: r0 = int?()
+    //     0x4902c0: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x4902c4: ldur            x3, [fp, #-8]
+    // 0x4902c8: r0 = LoadClassIdInstr(r3)
+    //     0x4902c8: ldur            x0, [x3, #-1]
+    //     0x4902cc: ubfx            x0, x0, #0xc, #0x14
+    // 0x4902d0: mov             x1, x3
+    // 0x4902d4: r2 = "create_time"
+    //     0x4902d4: add             x2, PP, #0x10, lsl #12  ; [pp+0x10780] "create_time"
+    //     0x4902d8: ldr             x2, [x2, #0x780]
+    // 0x4902dc: r0 = GDT[cid_x0 + -0x134]()
+    //     0x4902dc: sub             lr, x0, #0x134
+    //     0x4902e0: ldr             lr, [x21, lr, lsl #3]
+    //     0x4902e4: blr             lr
+    // 0x4902e8: mov             x3, x0
+    // 0x4902ec: r2 = Null
+    //     0x4902ec: mov             x2, NULL
+    // 0x4902f0: r1 = Null
+    //     0x4902f0: mov             x1, NULL
+    // 0x4902f4: stur            x3, [fp, #-0x20]
+    // 0x4902f8: r4 = 59
+    //     0x4902f8: mov             x4, #0x3b
+    // 0x4902fc: branchIfSmi(r0, 0x490308)
+    //     0x4902fc: tbz             w0, #0, #0x490308
+    // 0x490300: r4 = LoadClassIdInstr(r0)
+    //     0x490300: ldur            x4, [x0, #-1]
+    //     0x490304: ubfx            x4, x4, #0xc, #0x14
+    // 0x490308: sub             x4, x4, #0x5d
+    // 0x49030c: cmp             x4, #1
+    // 0x490310: b.ls            #0x490324
+    // 0x490314: r8 = String
+    //     0x490314: ldr             x8, [PP, #0x2e8]  ; [pp+0x2e8] Type: String
+    // 0x490318: r3 = Null
+    //     0x490318: add             x3, PP, #0x10, lsl #12  ; [pp+0x10788] Null
+    //     0x49031c: ldr             x3, [x3, #0x788]
+    // 0x490320: r0 = String()
+    //     0x490320: bl              #0x6ff6c8  ; IsType_String_Stub
+    // 0x490324: ldur            x1, [fp, #-0x20]
+    // 0x490328: r0 = parse()
+    //     0x490328: bl              #0x491264  ; [dart:core] DateTime::parse
+    // 0x49032c: mov             x4, x0
+    // 0x490330: ldur            x3, [fp, #-8]
+    // 0x490334: stur            x4, [fp, #-0x20]
+    // 0x490338: r0 = LoadClassIdInstr(r3)
+    //     0x490338: ldur            x0, [x3, #-1]
+    //     0x49033c: ubfx            x0, x0, #0xc, #0x14
+    // 0x490340: mov             x1, x3
+    // 0x490344: r2 = "server_id"
+    //     0x490344: add             x2, PP, #0x10, lsl #12  ; [pp+0x10798] "server_id"
+    //     0x490348: ldr             x2, [x2, #0x798]
+    // 0x49034c: r0 = GDT[cid_x0 + -0x134]()
+    //     0x49034c: sub             lr, x0, #0x134
+    //     0x490350: ldr             lr, [x21, lr, lsl #3]
+    //     0x490354: blr             lr
+    // 0x490358: mov             x3, x0
+    // 0x49035c: r2 = Null
+    //     0x49035c: mov             x2, NULL
+    // 0x490360: r1 = Null
+    //     0x490360: mov             x1, NULL
+    // 0x490364: stur            x3, [fp, #-0x28]
+    // 0x490368: branchIfSmi(r0, 0x490390)
+    //     0x490368: tbz             w0, #0, #0x490390
+    // 0x49036c: r4 = LoadClassIdInstr(r0)
+    //     0x49036c: ldur            x4, [x0, #-1]
+    //     0x490370: ubfx            x4, x4, #0xc, #0x14
+    // 0x490374: sub             x4, x4, #0x3b
+    // 0x490378: cmp             x4, #1
+    // 0x49037c: b.ls            #0x490390
+    // 0x490380: r8 = int?
+    //     0x490380: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x490384: r3 = Null
+    //     0x490384: add             x3, PP, #0x10, lsl #12  ; [pp+0x107a0] Null
+    //     0x490388: ldr             x3, [x3, #0x7a0]
+    // 0x49038c: r0 = int?()
+    //     0x49038c: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x490390: ldur            x3, [fp, #-8]
+    // 0x490394: r0 = LoadClassIdInstr(r3)
+    //     0x490394: ldur            x0, [x3, #-1]
+    //     0x490398: ubfx            x0, x0, #0xc, #0x14
+    // 0x49039c: mov             x1, x3
+    // 0x4903a0: r2 = "agent_id"
+    //     0x4903a0: add             x2, PP, #0x10, lsl #12  ; [pp+0x107b0] "agent_id"
+    //     0x4903a4: ldr             x2, [x2, #0x7b0]
+    // 0x4903a8: r0 = GDT[cid_x0 + -0x134]()
+    //     0x4903a8: sub             lr, x0, #0x134
+    //     0x4903ac: ldr             lr, [x21, lr, lsl #3]
+    //     0x4903b0: blr             lr
+    // 0x4903b4: mov             x3, x0
+    // 0x4903b8: r2 = Null
+    //     0x4903b8: mov             x2, NULL
+    // 0x4903bc: r1 = Null
+    //     0x4903bc: mov             x1, NULL
+    // 0x4903c0: stur            x3, [fp, #-0x30]
+    // 0x4903c4: branchIfSmi(r0, 0x4903ec)
+    //     0x4903c4: tbz             w0, #0, #0x4903ec
+    // 0x4903c8: r4 = LoadClassIdInstr(r0)
+    //     0x4903c8: ldur            x4, [x0, #-1]
+    //     0x4903cc: ubfx            x4, x4, #0xc, #0x14
+    // 0x4903d0: sub             x4, x4, #0x3b
+    // 0x4903d4: cmp             x4, #1
+    // 0x4903d8: b.ls            #0x4903ec
+    // 0x4903dc: r8 = int?
+    //     0x4903dc: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x4903e0: r3 = Null
+    //     0x4903e0: add             x3, PP, #0x10, lsl #12  ; [pp+0x107b8] Null
+    //     0x4903e4: ldr             x3, [x3, #0x7b8]
+    // 0x4903e8: r0 = int?()
+    //     0x4903e8: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x4903ec: ldur            x3, [fp, #-8]
+    // 0x4903f0: r0 = LoadClassIdInstr(r3)
+    //     0x4903f0: ldur            x0, [x3, #-1]
+    //     0x4903f4: ubfx            x0, x0, #0xc, #0x14
+    // 0x4903f8: mov             x1, x3
+    // 0x4903fc: r2 = "working_time"
+    //     0x4903fc: add             x2, PP, #0x10, lsl #12  ; [pp+0x107c8] "working_time"
+    //     0x490400: ldr             x2, [x2, #0x7c8]
+    // 0x490404: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490404: sub             lr, x0, #0x134
+    //     0x490408: ldr             lr, [x21, lr, lsl #3]
+    //     0x49040c: blr             lr
+    // 0x490410: mov             x3, x0
+    // 0x490414: r2 = Null
+    //     0x490414: mov             x2, NULL
+    // 0x490418: r1 = Null
+    //     0x490418: mov             x1, NULL
+    // 0x49041c: stur            x3, [fp, #-0x38]
+    // 0x490420: branchIfSmi(r0, 0x490448)
+    //     0x490420: tbz             w0, #0, #0x490448
+    // 0x490424: r4 = LoadClassIdInstr(r0)
+    //     0x490424: ldur            x4, [x0, #-1]
+    //     0x490428: ubfx            x4, x4, #0xc, #0x14
+    // 0x49042c: sub             x4, x4, #0x3b
+    // 0x490430: cmp             x4, #1
+    // 0x490434: b.ls            #0x490448
+    // 0x490438: r8 = int?
+    //     0x490438: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x49043c: r3 = Null
+    //     0x49043c: add             x3, PP, #0x10, lsl #12  ; [pp+0x107d0] Null
+    //     0x490440: ldr             x3, [x3, #0x7d0]
+    // 0x490444: r0 = int?()
+    //     0x490444: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x490448: ldur            x3, [fp, #-8]
+    // 0x49044c: r0 = LoadClassIdInstr(r3)
+    //     0x49044c: ldur            x0, [x3, #-1]
+    //     0x490450: ubfx            x0, x0, #0xc, #0x14
+    // 0x490454: mov             x1, x3
+    // 0x490458: r2 = "lighting_switch"
+    //     0x490458: add             x2, PP, #0x10, lsl #12  ; [pp+0x107e0] "lighting_switch"
+    //     0x49045c: ldr             x2, [x2, #0x7e0]
+    // 0x490460: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490460: sub             lr, x0, #0x134
+    //     0x490464: ldr             lr, [x21, lr, lsl #3]
+    //     0x490468: blr             lr
+    // 0x49046c: mov             x3, x0
+    // 0x490470: r2 = Null
+    //     0x490470: mov             x2, NULL
+    // 0x490474: r1 = Null
+    //     0x490474: mov             x1, NULL
+    // 0x490478: stur            x3, [fp, #-0x40]
+    // 0x49047c: branchIfSmi(r0, 0x4904a4)
+    //     0x49047c: tbz             w0, #0, #0x4904a4
+    // 0x490480: r4 = LoadClassIdInstr(r0)
+    //     0x490480: ldur            x4, [x0, #-1]
+    //     0x490484: ubfx            x4, x4, #0xc, #0x14
+    // 0x490488: sub             x4, x4, #0x3b
+    // 0x49048c: cmp             x4, #1
+    // 0x490490: b.ls            #0x4904a4
+    // 0x490494: r8 = int?
+    //     0x490494: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x490498: r3 = Null
+    //     0x490498: add             x3, PP, #0x10, lsl #12  ; [pp+0x107e8] Null
+    //     0x49049c: ldr             x3, [x3, #0x7e8]
+    // 0x4904a0: r0 = int?()
+    //     0x4904a0: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x4904a4: ldur            x3, [fp, #-8]
+    // 0x4904a8: r0 = LoadClassIdInstr(r3)
+    //     0x4904a8: ldur            x0, [x3, #-1]
+    //     0x4904ac: ubfx            x0, x0, #0xc, #0x14
+    // 0x4904b0: mov             x1, x3
+    // 0x4904b4: r2 = "remarks"
+    //     0x4904b4: add             x2, PP, #0x10, lsl #12  ; [pp+0x107f8] "remarks"
+    //     0x4904b8: ldr             x2, [x2, #0x7f8]
+    // 0x4904bc: r0 = GDT[cid_x0 + -0x134]()
+    //     0x4904bc: sub             lr, x0, #0x134
+    //     0x4904c0: ldr             lr, [x21, lr, lsl #3]
+    //     0x4904c4: blr             lr
+    // 0x4904c8: mov             x3, x0
+    // 0x4904cc: r2 = Null
+    //     0x4904cc: mov             x2, NULL
+    // 0x4904d0: r1 = Null
+    //     0x4904d0: mov             x1, NULL
+    // 0x4904d4: stur            x3, [fp, #-0x48]
+    // 0x4904d8: r4 = 59
+    //     0x4904d8: mov             x4, #0x3b
+    // 0x4904dc: branchIfSmi(r0, 0x4904e8)
+    //     0x4904dc: tbz             w0, #0, #0x4904e8
+    // 0x4904e0: r4 = LoadClassIdInstr(r0)
+    //     0x4904e0: ldur            x4, [x0, #-1]
+    //     0x4904e4: ubfx            x4, x4, #0xc, #0x14
+    // 0x4904e8: sub             x4, x4, #0x5d
+    // 0x4904ec: cmp             x4, #1
+    // 0x4904f0: b.ls            #0x490504
+    // 0x4904f4: r8 = String?
+    //     0x4904f4: ldr             x8, [PP, #0xb38]  ; [pp+0xb38] Type: String?
+    // 0x4904f8: r3 = Null
+    //     0x4904f8: add             x3, PP, #0x10, lsl #12  ; [pp+0x10800] Null
+    //     0x4904fc: ldr             x3, [x3, #0x800]
+    // 0x490500: r0 = String?()
+    //     0x490500: bl              #0x2b8c44  ; IsType_String?_Stub
+    // 0x490504: ldur            x3, [fp, #-8]
+    // 0x490508: r0 = LoadClassIdInstr(r3)
+    //     0x490508: ldur            x0, [x3, #-1]
+    //     0x49050c: ubfx            x0, x0, #0xc, #0x14
+    // 0x490510: mov             x1, x3
+    // 0x490514: r2 = "first_time"
+    //     0x490514: add             x2, PP, #0x10, lsl #12  ; [pp+0x10810] "first_time"
+    //     0x490518: ldr             x2, [x2, #0x810]
+    // 0x49051c: r0 = GDT[cid_x0 + -0x134]()
+    //     0x49051c: sub             lr, x0, #0x134
+    //     0x490520: ldr             lr, [x21, lr, lsl #3]
+    //     0x490524: blr             lr
+    // 0x490528: mov             x4, x0
+    // 0x49052c: ldur            x3, [fp, #-8]
+    // 0x490530: stur            x4, [fp, #-0x50]
+    // 0x490534: r0 = LoadClassIdInstr(r3)
+    //     0x490534: ldur            x0, [x3, #-1]
+    //     0x490538: ubfx            x0, x0, #0xc, #0x14
+    // 0x49053c: mov             x1, x3
+    // 0x490540: r2 = "last_ip"
+    //     0x490540: add             x2, PP, #0x10, lsl #12  ; [pp+0x10818] "last_ip"
+    //     0x490544: ldr             x2, [x2, #0x818]
+    // 0x490548: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490548: sub             lr, x0, #0x134
+    //     0x49054c: ldr             lr, [x21, lr, lsl #3]
+    //     0x490550: blr             lr
+    // 0x490554: mov             x4, x0
+    // 0x490558: ldur            x3, [fp, #-8]
+    // 0x49055c: stur            x4, [fp, #-0x58]
+    // 0x490560: r0 = LoadClassIdInstr(r3)
+    //     0x490560: ldur            x0, [x3, #-1]
+    //     0x490564: ubfx            x0, x0, #0xc, #0x14
+    // 0x490568: mov             x1, x3
+    // 0x49056c: r2 = "last_time"
+    //     0x49056c: add             x2, PP, #0x10, lsl #12  ; [pp+0x10820] "last_time"
+    //     0x490570: ldr             x2, [x2, #0x820]
+    // 0x490574: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490574: sub             lr, x0, #0x134
+    //     0x490578: ldr             lr, [x21, lr, lsl #3]
+    //     0x49057c: blr             lr
+    // 0x490580: mov             x4, x0
+    // 0x490584: ldur            x3, [fp, #-8]
+    // 0x490588: stur            x4, [fp, #-0x60]
+    // 0x49058c: r0 = LoadClassIdInstr(r3)
+    //     0x49058c: ldur            x0, [x3, #-1]
+    //     0x490590: ubfx            x0, x0, #0xc, #0x14
+    // 0x490594: mov             x1, x3
+    // 0x490598: r2 = "create_id"
+    //     0x490598: add             x2, PP, #0x10, lsl #12  ; [pp+0x10828] "create_id"
+    //     0x49059c: ldr             x2, [x2, #0x828]
+    // 0x4905a0: r0 = GDT[cid_x0 + -0x134]()
+    //     0x4905a0: sub             lr, x0, #0x134
+    //     0x4905a4: ldr             lr, [x21, lr, lsl #3]
+    //     0x4905a8: blr             lr
+    // 0x4905ac: mov             x3, x0
+    // 0x4905b0: r2 = Null
+    //     0x4905b0: mov             x2, NULL
+    // 0x4905b4: r1 = Null
+    //     0x4905b4: mov             x1, NULL
+    // 0x4905b8: stur            x3, [fp, #-0x68]
+    // 0x4905bc: branchIfSmi(r0, 0x4905e4)
+    //     0x4905bc: tbz             w0, #0, #0x4905e4
+    // 0x4905c0: r4 = LoadClassIdInstr(r0)
+    //     0x4905c0: ldur            x4, [x0, #-1]
+    //     0x4905c4: ubfx            x4, x4, #0xc, #0x14
+    // 0x4905c8: sub             x4, x4, #0x3b
+    // 0x4905cc: cmp             x4, #1
+    // 0x4905d0: b.ls            #0x4905e4
+    // 0x4905d4: r8 = int?
+    //     0x4905d4: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x4905d8: r3 = Null
+    //     0x4905d8: add             x3, PP, #0x10, lsl #12  ; [pp+0x10830] Null
+    //     0x4905dc: ldr             x3, [x3, #0x830]
+    // 0x4905e0: r0 = int?()
+    //     0x4905e0: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x4905e4: ldur            x3, [fp, #-8]
+    // 0x4905e8: r0 = LoadClassIdInstr(r3)
+    //     0x4905e8: ldur            x0, [x3, #-1]
+    //     0x4905ec: ubfx            x0, x0, #0xc, #0x14
+    // 0x4905f0: mov             x1, x3
+    // 0x4905f4: r2 = "version"
+    //     0x4905f4: add             x2, PP, #0xe, lsl #12  ; [pp+0xe060] "version"
+    //     0x4905f8: ldr             x2, [x2, #0x60]
+    // 0x4905fc: r0 = GDT[cid_x0 + -0x134]()
+    //     0x4905fc: sub             lr, x0, #0x134
+    //     0x490600: ldr             lr, [x21, lr, lsl #3]
+    //     0x490604: blr             lr
+    // 0x490608: str             x0, [SP]
+    // 0x49060c: r4 = 0
+    //     0x49060c: mov             x4, #0
+    // 0x490610: ldr             x0, [SP]
+    // 0x490614: r16 = UnlinkedCall_0x2b3c2c
+    //     0x490614: add             x16, PP, #0x10, lsl #12  ; [pp+0x10840] UnlinkedCall: 0x2b3c2c - SwitchableCallMissStub
+    //     0x490618: add             x16, x16, #0x840
+    // 0x49061c: ldp             x5, lr, [x16]
+    // 0x490620: blr             lr
+    // 0x490624: mov             x4, x0
+    // 0x490628: ldur            x3, [fp, #-8]
+    // 0x49062c: stur            x4, [fp, #-0x70]
+    // 0x490630: r0 = LoadClassIdInstr(r3)
+    //     0x490630: ldur            x0, [x3, #-1]
+    //     0x490634: ubfx            x0, x0, #0xc, #0x14
+    // 0x490638: mov             x1, x3
+    // 0x49063c: r2 = "status"
+    //     0x49063c: add             x2, PP, #0x10, lsl #12  ; [pp+0x10850] "status"
+    //     0x490640: ldr             x2, [x2, #0x850]
+    // 0x490644: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490644: sub             lr, x0, #0x134
+    //     0x490648: ldr             lr, [x21, lr, lsl #3]
+    //     0x49064c: blr             lr
+    // 0x490650: mov             x3, x0
+    // 0x490654: r2 = Null
+    //     0x490654: mov             x2, NULL
+    // 0x490658: r1 = Null
+    //     0x490658: mov             x1, NULL
+    // 0x49065c: stur            x3, [fp, #-0x78]
+    // 0x490660: branchIfSmi(r0, 0x490688)
+    //     0x490660: tbz             w0, #0, #0x490688
+    // 0x490664: r4 = LoadClassIdInstr(r0)
+    //     0x490664: ldur            x4, [x0, #-1]
+    //     0x490668: ubfx            x4, x4, #0xc, #0x14
+    // 0x49066c: sub             x4, x4, #0x3b
+    // 0x490670: cmp             x4, #1
+    // 0x490674: b.ls            #0x490688
+    // 0x490678: r8 = int?
+    //     0x490678: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x49067c: r3 = Null
+    //     0x49067c: add             x3, PP, #0x10, lsl #12  ; [pp+0x10858] Null
+    //     0x490680: ldr             x3, [x3, #0x858]
+    // 0x490684: r0 = int?()
+    //     0x490684: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x490688: ldur            x3, [fp, #-8]
+    // 0x49068c: r0 = LoadClassIdInstr(r3)
+    //     0x49068c: ldur            x0, [x3, #-1]
+    //     0x490690: ubfx            x0, x0, #0xc, #0x14
+    // 0x490694: mov             x1, x3
+    // 0x490698: r2 = "direction"
+    //     0x490698: add             x2, PP, #0x10, lsl #12  ; [pp+0x10868] "direction"
+    //     0x49069c: ldr             x2, [x2, #0x868]
+    // 0x4906a0: r0 = GDT[cid_x0 + -0x134]()
+    //     0x4906a0: sub             lr, x0, #0x134
+    //     0x4906a4: ldr             lr, [x21, lr, lsl #3]
+    //     0x4906a8: blr             lr
+    // 0x4906ac: mov             x3, x0
+    // 0x4906b0: r2 = Null
+    //     0x4906b0: mov             x2, NULL
+    // 0x4906b4: r1 = Null
+    //     0x4906b4: mov             x1, NULL
+    // 0x4906b8: stur            x3, [fp, #-0x80]
+    // 0x4906bc: branchIfSmi(r0, 0x4906e4)
+    //     0x4906bc: tbz             w0, #0, #0x4906e4
+    // 0x4906c0: r4 = LoadClassIdInstr(r0)
+    //     0x4906c0: ldur            x4, [x0, #-1]
+    //     0x4906c4: ubfx            x4, x4, #0xc, #0x14
+    // 0x4906c8: sub             x4, x4, #0x3b
+    // 0x4906cc: cmp             x4, #1
+    // 0x4906d0: b.ls            #0x4906e4
+    // 0x4906d4: r8 = int?
+    //     0x4906d4: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x4906d8: r3 = Null
+    //     0x4906d8: add             x3, PP, #0x10, lsl #12  ; [pp+0x10870] Null
+    //     0x4906dc: ldr             x3, [x3, #0x870]
+    // 0x4906e0: r0 = int?()
+    //     0x4906e0: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x4906e4: ldur            x3, [fp, #-8]
+    // 0x4906e8: r0 = LoadClassIdInstr(r3)
+    //     0x4906e8: ldur            x0, [x3, #-1]
+    //     0x4906ec: ubfx            x0, x0, #0xc, #0x14
+    // 0x4906f0: mov             x1, x3
+    // 0x4906f4: r2 = "top"
+    //     0x4906f4: ldr             x2, [PP, #0x6560]  ; [pp+0x6560] "top"
+    // 0x4906f8: r0 = GDT[cid_x0 + -0x134]()
+    //     0x4906f8: sub             lr, x0, #0x134
+    //     0x4906fc: ldr             lr, [x21, lr, lsl #3]
+    //     0x490700: blr             lr
+    // 0x490704: mov             x3, x0
+    // 0x490708: r2 = Null
+    //     0x490708: mov             x2, NULL
+    // 0x49070c: r1 = Null
+    //     0x49070c: mov             x1, NULL
+    // 0x490710: stur            x3, [fp, #-0x88]
+    // 0x490714: r4 = 59
+    //     0x490714: mov             x4, #0x3b
+    // 0x490718: branchIfSmi(r0, 0x490724)
+    //     0x490718: tbz             w0, #0, #0x490724
+    // 0x49071c: r4 = LoadClassIdInstr(r0)
+    //     0x49071c: ldur            x4, [x0, #-1]
+    //     0x490720: ubfx            x4, x4, #0xc, #0x14
+    // 0x490724: cmp             x4, #0x3d
+    // 0x490728: b.eq            #0x49073c
+    // 0x49072c: r8 = double?
+    //     0x49072c: ldr             x8, [PP, #0xbc8]  ; [pp+0xbc8] Type: double?
+    // 0x490730: r3 = Null
+    //     0x490730: add             x3, PP, #0x10, lsl #12  ; [pp+0x10880] Null
+    //     0x490734: ldr             x3, [x3, #0x880]
+    // 0x490738: r0 = double?()
+    //     0x490738: bl              #0x6ff74c  ; IsType_double?_Stub
+    // 0x49073c: ldur            x3, [fp, #-8]
+    // 0x490740: r0 = LoadClassIdInstr(r3)
+    //     0x490740: ldur            x0, [x3, #-1]
+    //     0x490744: ubfx            x0, x0, #0xc, #0x14
+    // 0x490748: mov             x1, x3
+    // 0x49074c: r2 = "left"
+    //     0x49074c: ldr             x2, [PP, #0x6550]  ; [pp+0x6550] "left"
+    // 0x490750: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490750: sub             lr, x0, #0x134
+    //     0x490754: ldr             lr, [x21, lr, lsl #3]
+    //     0x490758: blr             lr
+    // 0x49075c: mov             x3, x0
+    // 0x490760: r2 = Null
+    //     0x490760: mov             x2, NULL
+    // 0x490764: r1 = Null
+    //     0x490764: mov             x1, NULL
+    // 0x490768: stur            x3, [fp, #-0x90]
+    // 0x49076c: r4 = 59
+    //     0x49076c: mov             x4, #0x3b
+    // 0x490770: branchIfSmi(r0, 0x49077c)
+    //     0x490770: tbz             w0, #0, #0x49077c
+    // 0x490774: r4 = LoadClassIdInstr(r0)
+    //     0x490774: ldur            x4, [x0, #-1]
+    //     0x490778: ubfx            x4, x4, #0xc, #0x14
+    // 0x49077c: cmp             x4, #0x3d
+    // 0x490780: b.eq            #0x490794
+    // 0x490784: r8 = double?
+    //     0x490784: ldr             x8, [PP, #0xbc8]  ; [pp+0xbc8] Type: double?
+    // 0x490788: r3 = Null
+    //     0x490788: add             x3, PP, #0x10, lsl #12  ; [pp+0x10890] Null
+    //     0x49078c: ldr             x3, [x3, #0x890]
+    // 0x490790: r0 = double?()
+    //     0x490790: bl              #0x6ff74c  ; IsType_double?_Stub
+    // 0x490794: ldur            x3, [fp, #-8]
+    // 0x490798: r0 = LoadClassIdInstr(r3)
+    //     0x490798: ldur            x0, [x3, #-1]
+    //     0x49079c: ubfx            x0, x0, #0xc, #0x14
+    // 0x4907a0: mov             x1, x3
+    // 0x4907a4: r2 = "right"
+    //     0x4907a4: ldr             x2, [PP, #0x6558]  ; [pp+0x6558] "right"
+    // 0x4907a8: r0 = GDT[cid_x0 + -0x134]()
+    //     0x4907a8: sub             lr, x0, #0x134
+    //     0x4907ac: ldr             lr, [x21, lr, lsl #3]
+    //     0x4907b0: blr             lr
+    // 0x4907b4: mov             x3, x0
+    // 0x4907b8: r2 = Null
+    //     0x4907b8: mov             x2, NULL
+    // 0x4907bc: r1 = Null
+    //     0x4907bc: mov             x1, NULL
+    // 0x4907c0: stur            x3, [fp, #-0x98]
+    // 0x4907c4: r4 = 59
+    //     0x4907c4: mov             x4, #0x3b
+    // 0x4907c8: branchIfSmi(r0, 0x4907d4)
+    //     0x4907c8: tbz             w0, #0, #0x4907d4
+    // 0x4907cc: r4 = LoadClassIdInstr(r0)
+    //     0x4907cc: ldur            x4, [x0, #-1]
+    //     0x4907d0: ubfx            x4, x4, #0xc, #0x14
+    // 0x4907d4: cmp             x4, #0x3d
+    // 0x4907d8: b.eq            #0x4907ec
+    // 0x4907dc: r8 = double?
+    //     0x4907dc: ldr             x8, [PP, #0xbc8]  ; [pp+0xbc8] Type: double?
+    // 0x4907e0: r3 = Null
+    //     0x4907e0: add             x3, PP, #0x10, lsl #12  ; [pp+0x108a0] Null
+    //     0x4907e4: ldr             x3, [x3, #0x8a0]
+    // 0x4907e8: r0 = double?()
+    //     0x4907e8: bl              #0x6ff74c  ; IsType_double?_Stub
+    // 0x4907ec: ldur            x3, [fp, #-8]
+    // 0x4907f0: r0 = LoadClassIdInstr(r3)
+    //     0x4907f0: ldur            x0, [x3, #-1]
+    //     0x4907f4: ubfx            x0, x0, #0xc, #0x14
+    // 0x4907f8: mov             x1, x3
+    // 0x4907fc: r2 = "bottom"
+    //     0x4907fc: ldr             x2, [PP, #0x6548]  ; [pp+0x6548] "bottom"
+    // 0x490800: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490800: sub             lr, x0, #0x134
+    //     0x490804: ldr             lr, [x21, lr, lsl #3]
+    //     0x490808: blr             lr
+    // 0x49080c: mov             x3, x0
+    // 0x490810: r2 = Null
+    //     0x490810: mov             x2, NULL
+    // 0x490814: r1 = Null
+    //     0x490814: mov             x1, NULL
+    // 0x490818: stur            x3, [fp, #-0xa0]
+    // 0x49081c: r4 = 59
+    //     0x49081c: mov             x4, #0x3b
+    // 0x490820: branchIfSmi(r0, 0x49082c)
+    //     0x490820: tbz             w0, #0, #0x49082c
+    // 0x490824: r4 = LoadClassIdInstr(r0)
+    //     0x490824: ldur            x4, [x0, #-1]
+    //     0x490828: ubfx            x4, x4, #0xc, #0x14
+    // 0x49082c: cmp             x4, #0x3d
+    // 0x490830: b.eq            #0x490844
+    // 0x490834: r8 = double?
+    //     0x490834: ldr             x8, [PP, #0xbc8]  ; [pp+0xbc8] Type: double?
+    // 0x490838: r3 = Null
+    //     0x490838: add             x3, PP, #0x10, lsl #12  ; [pp+0x108b0] Null
+    //     0x49083c: ldr             x3, [x3, #0x8b0]
+    // 0x490840: r0 = double?()
+    //     0x490840: bl              #0x6ff74c  ; IsType_double?_Stub
+    // 0x490844: ldur            x3, [fp, #-8]
+    // 0x490848: r0 = LoadClassIdInstr(r3)
+    //     0x490848: ldur            x0, [x3, #-1]
+    //     0x49084c: ubfx            x0, x0, #0xc, #0x14
+    // 0x490850: mov             x1, x3
+    // 0x490854: r2 = "mj_count"
+    //     0x490854: add             x2, PP, #0x10, lsl #12  ; [pp+0x108c0] "mj_count"
+    //     0x490858: ldr             x2, [x2, #0x8c0]
+    // 0x49085c: r0 = GDT[cid_x0 + -0x134]()
+    //     0x49085c: sub             lr, x0, #0x134
+    //     0x490860: ldr             lr, [x21, lr, lsl #3]
+    //     0x490864: blr             lr
+    // 0x490868: mov             x3, x0
+    // 0x49086c: r2 = Null
+    //     0x49086c: mov             x2, NULL
+    // 0x490870: r1 = Null
+    //     0x490870: mov             x1, NULL
+    // 0x490874: stur            x3, [fp, #-0xa8]
+    // 0x490878: branchIfSmi(r0, 0x4908a0)
+    //     0x490878: tbz             w0, #0, #0x4908a0
+    // 0x49087c: r4 = LoadClassIdInstr(r0)
+    //     0x49087c: ldur            x4, [x0, #-1]
+    //     0x490880: ubfx            x4, x4, #0xc, #0x14
+    // 0x490884: sub             x4, x4, #0x3b
+    // 0x490888: cmp             x4, #1
+    // 0x49088c: b.ls            #0x4908a0
+    // 0x490890: r8 = int?
+    //     0x490890: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x490894: r3 = Null
+    //     0x490894: add             x3, PP, #0x10, lsl #12  ; [pp+0x108c8] Null
+    //     0x490898: ldr             x3, [x3, #0x8c8]
+    // 0x49089c: r0 = int?()
+    //     0x49089c: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x4908a0: ldur            x3, [fp, #-8]
+    // 0x4908a4: r0 = LoadClassIdInstr(r3)
+    //     0x4908a4: ldur            x0, [x3, #-1]
+    //     0x4908a8: ubfx            x0, x0, #0xc, #0x14
+    // 0x4908ac: mov             x1, x3
+    // 0x4908b0: r2 = "serial_no"
+    //     0x4908b0: add             x2, PP, #0x10, lsl #12  ; [pp+0x108d8] "serial_no"
+    //     0x4908b4: ldr             x2, [x2, #0x8d8]
+    // 0x4908b8: r0 = GDT[cid_x0 + -0x134]()
+    //     0x4908b8: sub             lr, x0, #0x134
+    //     0x4908bc: ldr             lr, [x21, lr, lsl #3]
+    //     0x4908c0: blr             lr
+    // 0x4908c4: mov             x3, x0
+    // 0x4908c8: r2 = Null
+    //     0x4908c8: mov             x2, NULL
+    // 0x4908cc: r1 = Null
+    //     0x4908cc: mov             x1, NULL
+    // 0x4908d0: stur            x3, [fp, #-0xb0]
+    // 0x4908d4: r4 = 59
+    //     0x4908d4: mov             x4, #0x3b
+    // 0x4908d8: branchIfSmi(r0, 0x4908e4)
+    //     0x4908d8: tbz             w0, #0, #0x4908e4
+    // 0x4908dc: r4 = LoadClassIdInstr(r0)
+    //     0x4908dc: ldur            x4, [x0, #-1]
+    //     0x4908e0: ubfx            x4, x4, #0xc, #0x14
+    // 0x4908e4: sub             x4, x4, #0x5d
+    // 0x4908e8: cmp             x4, #1
+    // 0x4908ec: b.ls            #0x490900
+    // 0x4908f0: r8 = String?
+    //     0x4908f0: ldr             x8, [PP, #0xb38]  ; [pp+0xb38] Type: String?
+    // 0x4908f4: r3 = Null
+    //     0x4908f4: add             x3, PP, #0x10, lsl #12  ; [pp+0x108e0] Null
+    //     0x4908f8: ldr             x3, [x3, #0x8e0]
+    // 0x4908fc: r0 = String?()
+    //     0x4908fc: bl              #0x2b8c44  ; IsType_String?_Stub
+    // 0x490900: ldur            x3, [fp, #-8]
+    // 0x490904: r0 = LoadClassIdInstr(r3)
+    //     0x490904: ldur            x0, [x3, #-1]
+    //     0x490908: ubfx            x0, x0, #0xc, #0x14
+    // 0x49090c: mov             x1, x3
+    // 0x490910: r2 = "online"
+    //     0x490910: add             x2, PP, #0x10, lsl #12  ; [pp+0x108f0] "online"
+    //     0x490914: ldr             x2, [x2, #0x8f0]
+    // 0x490918: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490918: sub             lr, x0, #0x134
+    //     0x49091c: ldr             lr, [x21, lr, lsl #3]
+    //     0x490920: blr             lr
+    // 0x490924: mov             x3, x0
+    // 0x490928: r2 = Null
+    //     0x490928: mov             x2, NULL
+    // 0x49092c: r1 = Null
+    //     0x49092c: mov             x1, NULL
+    // 0x490930: stur            x3, [fp, #-0xb8]
+    // 0x490934: branchIfSmi(r0, 0x49095c)
+    //     0x490934: tbz             w0, #0, #0x49095c
+    // 0x490938: r4 = LoadClassIdInstr(r0)
+    //     0x490938: ldur            x4, [x0, #-1]
+    //     0x49093c: ubfx            x4, x4, #0xc, #0x14
+    // 0x490940: sub             x4, x4, #0x3b
+    // 0x490944: cmp             x4, #1
+    // 0x490948: b.ls            #0x49095c
+    // 0x49094c: r8 = int?
+    //     0x49094c: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x490950: r3 = Null
+    //     0x490950: add             x3, PP, #0x10, lsl #12  ; [pp+0x108f8] Null
+    //     0x490954: ldr             x3, [x3, #0x8f8]
+    // 0x490958: r0 = int?()
+    //     0x490958: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x49095c: ldur            x3, [fp, #-8]
+    // 0x490960: r0 = LoadClassIdInstr(r3)
+    //     0x490960: ldur            x0, [x3, #-1]
+    //     0x490964: ubfx            x0, x0, #0xc, #0x14
+    // 0x490968: mov             x1, x3
+    // 0x49096c: r2 = "ip"
+    //     0x49096c: add             x2, PP, #0xd, lsl #12  ; [pp+0xd968] "ip"
+    //     0x490970: ldr             x2, [x2, #0x968]
+    // 0x490974: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490974: sub             lr, x0, #0x134
+    //     0x490978: ldr             lr, [x21, lr, lsl #3]
+    //     0x49097c: blr             lr
+    // 0x490980: mov             x3, x0
+    // 0x490984: r2 = Null
+    //     0x490984: mov             x2, NULL
+    // 0x490988: r1 = Null
+    //     0x490988: mov             x1, NULL
+    // 0x49098c: stur            x3, [fp, #-0xc0]
+    // 0x490990: r4 = 59
+    //     0x490990: mov             x4, #0x3b
+    // 0x490994: branchIfSmi(r0, 0x4909a0)
+    //     0x490994: tbz             w0, #0, #0x4909a0
+    // 0x490998: r4 = LoadClassIdInstr(r0)
+    //     0x490998: ldur            x4, [x0, #-1]
+    //     0x49099c: ubfx            x4, x4, #0xc, #0x14
+    // 0x4909a0: sub             x4, x4, #0x5d
+    // 0x4909a4: cmp             x4, #1
+    // 0x4909a8: b.ls            #0x4909bc
+    // 0x4909ac: r8 = String?
+    //     0x4909ac: ldr             x8, [PP, #0xb38]  ; [pp+0xb38] Type: String?
+    // 0x4909b0: r3 = Null
+    //     0x4909b0: add             x3, PP, #0x10, lsl #12  ; [pp+0x10908] Null
+    //     0x4909b4: ldr             x3, [x3, #0x908]
+    // 0x4909b8: r0 = String?()
+    //     0x4909b8: bl              #0x2b8c44  ; IsType_String?_Stub
+    // 0x4909bc: ldur            x3, [fp, #-8]
+    // 0x4909c0: r0 = LoadClassIdInstr(r3)
+    //     0x4909c0: ldur            x0, [x3, #-1]
+    //     0x4909c4: ubfx            x0, x0, #0xc, #0x14
+    // 0x4909c8: mov             x1, x3
+    // 0x4909cc: r2 = "delay"
+    //     0x4909cc: add             x2, PP, #0x10, lsl #12  ; [pp+0x10918] "delay"
+    //     0x4909d0: ldr             x2, [x2, #0x918]
+    // 0x4909d4: r0 = GDT[cid_x0 + -0x134]()
+    //     0x4909d4: sub             lr, x0, #0x134
+    //     0x4909d8: ldr             lr, [x21, lr, lsl #3]
+    //     0x4909dc: blr             lr
+    // 0x4909e0: mov             x3, x0
+    // 0x4909e4: r2 = Null
+    //     0x4909e4: mov             x2, NULL
+    // 0x4909e8: r1 = Null
+    //     0x4909e8: mov             x1, NULL
+    // 0x4909ec: stur            x3, [fp, #-0xc8]
+    // 0x4909f0: r4 = 59
+    //     0x4909f0: mov             x4, #0x3b
+    // 0x4909f4: branchIfSmi(r0, 0x490a00)
+    //     0x4909f4: tbz             w0, #0, #0x490a00
+    // 0x4909f8: r4 = LoadClassIdInstr(r0)
+    //     0x4909f8: ldur            x4, [x0, #-1]
+    //     0x4909fc: ubfx            x4, x4, #0xc, #0x14
+    // 0x490a00: cmp             x4, #0x3d
+    // 0x490a04: b.eq            #0x490a18
+    // 0x490a08: r8 = double?
+    //     0x490a08: ldr             x8, [PP, #0xbc8]  ; [pp+0xbc8] Type: double?
+    // 0x490a0c: r3 = Null
+    //     0x490a0c: add             x3, PP, #0x10, lsl #12  ; [pp+0x10920] Null
+    //     0x490a10: ldr             x3, [x3, #0x920]
+    // 0x490a14: r0 = double?()
+    //     0x490a14: bl              #0x6ff74c  ; IsType_double?_Stub
+    // 0x490a18: ldur            x3, [fp, #-8]
+    // 0x490a1c: r0 = LoadClassIdInstr(r3)
+    //     0x490a1c: ldur            x0, [x3, #-1]
+    //     0x490a20: ubfx            x0, x0, #0xc, #0x14
+    // 0x490a24: mov             x1, x3
+    // 0x490a28: r2 = "motor"
+    //     0x490a28: add             x2, PP, #0x10, lsl #12  ; [pp+0x10930] "motor"
+    //     0x490a2c: ldr             x2, [x2, #0x930]
+    // 0x490a30: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490a30: sub             lr, x0, #0x134
+    //     0x490a34: ldr             lr, [x21, lr, lsl #3]
+    //     0x490a38: blr             lr
+    // 0x490a3c: mov             x3, x0
+    // 0x490a40: r2 = Null
+    //     0x490a40: mov             x2, NULL
+    // 0x490a44: r1 = Null
+    //     0x490a44: mov             x1, NULL
+    // 0x490a48: stur            x3, [fp, #-0xd0]
+    // 0x490a4c: branchIfSmi(r0, 0x490a74)
+    //     0x490a4c: tbz             w0, #0, #0x490a74
+    // 0x490a50: r4 = LoadClassIdInstr(r0)
+    //     0x490a50: ldur            x4, [x0, #-1]
+    //     0x490a54: ubfx            x4, x4, #0xc, #0x14
+    // 0x490a58: sub             x4, x4, #0x3b
+    // 0x490a5c: cmp             x4, #1
+    // 0x490a60: b.ls            #0x490a74
+    // 0x490a64: r8 = int?
+    //     0x490a64: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x490a68: r3 = Null
+    //     0x490a68: add             x3, PP, #0x10, lsl #12  ; [pp+0x10938] Null
+    //     0x490a6c: ldr             x3, [x3, #0x938]
+    // 0x490a70: r0 = int?()
+    //     0x490a70: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x490a74: ldur            x3, [fp, #-8]
+    // 0x490a78: r0 = LoadClassIdInstr(r3)
+    //     0x490a78: ldur            x0, [x3, #-1]
+    //     0x490a7c: ubfx            x0, x0, #0xc, #0x14
+    // 0x490a80: mov             x1, x3
+    // 0x490a84: r2 = "cap_brightness"
+    //     0x490a84: add             x2, PP, #0x10, lsl #12  ; [pp+0x10948] "cap_brightness"
+    //     0x490a88: ldr             x2, [x2, #0x948]
+    // 0x490a8c: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490a8c: sub             lr, x0, #0x134
+    //     0x490a90: ldr             lr, [x21, lr, lsl #3]
+    //     0x490a94: blr             lr
+    // 0x490a98: mov             x3, x0
+    // 0x490a9c: r2 = Null
+    //     0x490a9c: mov             x2, NULL
+    // 0x490aa0: r1 = Null
+    //     0x490aa0: mov             x1, NULL
+    // 0x490aa4: stur            x3, [fp, #-0xd8]
+    // 0x490aa8: branchIfSmi(r0, 0x490ad0)
+    //     0x490aa8: tbz             w0, #0, #0x490ad0
+    // 0x490aac: r4 = LoadClassIdInstr(r0)
+    //     0x490aac: ldur            x4, [x0, #-1]
+    //     0x490ab0: ubfx            x4, x4, #0xc, #0x14
+    // 0x490ab4: sub             x4, x4, #0x3b
+    // 0x490ab8: cmp             x4, #1
+    // 0x490abc: b.ls            #0x490ad0
+    // 0x490ac0: r8 = int?
+    //     0x490ac0: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x490ac4: r3 = Null
+    //     0x490ac4: add             x3, PP, #0x10, lsl #12  ; [pp+0x10950] Null
+    //     0x490ac8: ldr             x3, [x3, #0x950]
+    // 0x490acc: r0 = int?()
+    //     0x490acc: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x490ad0: ldur            x3, [fp, #-8]
+    // 0x490ad4: r0 = LoadClassIdInstr(r3)
+    //     0x490ad4: ldur            x0, [x3, #-1]
+    //     0x490ad8: ubfx            x0, x0, #0xc, #0x14
+    // 0x490adc: mov             x1, x3
+    // 0x490ae0: r2 = "cap_exposure"
+    //     0x490ae0: add             x2, PP, #0x10, lsl #12  ; [pp+0x10960] "cap_exposure"
+    //     0x490ae4: ldr             x2, [x2, #0x960]
+    // 0x490ae8: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490ae8: sub             lr, x0, #0x134
+    //     0x490aec: ldr             lr, [x21, lr, lsl #3]
+    //     0x490af0: blr             lr
+    // 0x490af4: mov             x3, x0
+    // 0x490af8: r2 = Null
+    //     0x490af8: mov             x2, NULL
+    // 0x490afc: r1 = Null
+    //     0x490afc: mov             x1, NULL
+    // 0x490b00: stur            x3, [fp, #-0xe0]
+    // 0x490b04: branchIfSmi(r0, 0x490b2c)
+    //     0x490b04: tbz             w0, #0, #0x490b2c
+    // 0x490b08: r4 = LoadClassIdInstr(r0)
+    //     0x490b08: ldur            x4, [x0, #-1]
+    //     0x490b0c: ubfx            x4, x4, #0xc, #0x14
+    // 0x490b10: sub             x4, x4, #0x3b
+    // 0x490b14: cmp             x4, #1
+    // 0x490b18: b.ls            #0x490b2c
+    // 0x490b1c: r8 = int?
+    //     0x490b1c: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x490b20: r3 = Null
+    //     0x490b20: add             x3, PP, #0x10, lsl #12  ; [pp+0x10968] Null
+    //     0x490b24: ldr             x3, [x3, #0x968]
+    // 0x490b28: r0 = int?()
+    //     0x490b28: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x490b2c: ldur            x3, [fp, #-8]
+    // 0x490b30: r0 = LoadClassIdInstr(r3)
+    //     0x490b30: ldur            x0, [x3, #-1]
+    //     0x490b34: ubfx            x0, x0, #0xc, #0x14
+    // 0x490b38: mov             x1, x3
+    // 0x490b3c: r2 = "cap_hue"
+    //     0x490b3c: add             x2, PP, #0x10, lsl #12  ; [pp+0x10978] "cap_hue"
+    //     0x490b40: ldr             x2, [x2, #0x978]
+    // 0x490b44: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490b44: sub             lr, x0, #0x134
+    //     0x490b48: ldr             lr, [x21, lr, lsl #3]
+    //     0x490b4c: blr             lr
+    // 0x490b50: mov             x3, x0
+    // 0x490b54: r2 = Null
+    //     0x490b54: mov             x2, NULL
+    // 0x490b58: r1 = Null
+    //     0x490b58: mov             x1, NULL
+    // 0x490b5c: stur            x3, [fp, #-0xe8]
+    // 0x490b60: branchIfSmi(r0, 0x490b88)
+    //     0x490b60: tbz             w0, #0, #0x490b88
+    // 0x490b64: r4 = LoadClassIdInstr(r0)
+    //     0x490b64: ldur            x4, [x0, #-1]
+    //     0x490b68: ubfx            x4, x4, #0xc, #0x14
+    // 0x490b6c: sub             x4, x4, #0x3b
+    // 0x490b70: cmp             x4, #1
+    // 0x490b74: b.ls            #0x490b88
+    // 0x490b78: r8 = int?
+    //     0x490b78: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x490b7c: r3 = Null
+    //     0x490b7c: add             x3, PP, #0x10, lsl #12  ; [pp+0x10980] Null
+    //     0x490b80: ldr             x3, [x3, #0x980]
+    // 0x490b84: r0 = int?()
+    //     0x490b84: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x490b88: ldur            x3, [fp, #-8]
+    // 0x490b8c: r0 = LoadClassIdInstr(r3)
+    //     0x490b8c: ldur            x0, [x3, #-1]
+    //     0x490b90: ubfx            x0, x0, #0xc, #0x14
+    // 0x490b94: mov             x1, x3
+    // 0x490b98: r2 = "cap_saturation"
+    //     0x490b98: add             x2, PP, #0x10, lsl #12  ; [pp+0x10990] "cap_saturation"
+    //     0x490b9c: ldr             x2, [x2, #0x990]
+    // 0x490ba0: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490ba0: sub             lr, x0, #0x134
+    //     0x490ba4: ldr             lr, [x21, lr, lsl #3]
+    //     0x490ba8: blr             lr
+    // 0x490bac: mov             x3, x0
+    // 0x490bb0: r2 = Null
+    //     0x490bb0: mov             x2, NULL
+    // 0x490bb4: r1 = Null
+    //     0x490bb4: mov             x1, NULL
+    // 0x490bb8: stur            x3, [fp, #-0xf0]
+    // 0x490bbc: branchIfSmi(r0, 0x490be4)
+    //     0x490bbc: tbz             w0, #0, #0x490be4
+    // 0x490bc0: r4 = LoadClassIdInstr(r0)
+    //     0x490bc0: ldur            x4, [x0, #-1]
+    //     0x490bc4: ubfx            x4, x4, #0xc, #0x14
+    // 0x490bc8: sub             x4, x4, #0x3b
+    // 0x490bcc: cmp             x4, #1
+    // 0x490bd0: b.ls            #0x490be4
+    // 0x490bd4: r8 = int?
+    //     0x490bd4: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x490bd8: r3 = Null
+    //     0x490bd8: add             x3, PP, #0x10, lsl #12  ; [pp+0x10998] Null
+    //     0x490bdc: ldr             x3, [x3, #0x998]
+    // 0x490be0: r0 = int?()
+    //     0x490be0: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x490be4: ldur            x3, [fp, #-8]
+    // 0x490be8: r0 = LoadClassIdInstr(r3)
+    //     0x490be8: ldur            x0, [x3, #-1]
+    //     0x490bec: ubfx            x0, x0, #0xc, #0x14
+    // 0x490bf0: mov             x1, x3
+    // 0x490bf4: r2 = "cap_contrast"
+    //     0x490bf4: add             x2, PP, #0x10, lsl #12  ; [pp+0x109a8] "cap_contrast"
+    //     0x490bf8: ldr             x2, [x2, #0x9a8]
+    // 0x490bfc: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490bfc: sub             lr, x0, #0x134
+    //     0x490c00: ldr             lr, [x21, lr, lsl #3]
+    //     0x490c04: blr             lr
+    // 0x490c08: mov             x3, x0
+    // 0x490c0c: r2 = Null
+    //     0x490c0c: mov             x2, NULL
+    // 0x490c10: r1 = Null
+    //     0x490c10: mov             x1, NULL
+    // 0x490c14: stur            x3, [fp, #-0xf8]
+    // 0x490c18: branchIfSmi(r0, 0x490c40)
+    //     0x490c18: tbz             w0, #0, #0x490c40
+    // 0x490c1c: r4 = LoadClassIdInstr(r0)
+    //     0x490c1c: ldur            x4, [x0, #-1]
+    //     0x490c20: ubfx            x4, x4, #0xc, #0x14
+    // 0x490c24: sub             x4, x4, #0x3b
+    // 0x490c28: cmp             x4, #1
+    // 0x490c2c: b.ls            #0x490c40
+    // 0x490c30: r8 = int?
+    //     0x490c30: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x490c34: r3 = Null
+    //     0x490c34: add             x3, PP, #0x10, lsl #12  ; [pp+0x109b0] Null
+    //     0x490c38: ldr             x3, [x3, #0x9b0]
+    // 0x490c3c: r0 = int?()
+    //     0x490c3c: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x490c40: ldur            x3, [fp, #-8]
+    // 0x490c44: r0 = LoadClassIdInstr(r3)
+    //     0x490c44: ldur            x0, [x3, #-1]
+    //     0x490c48: ubfx            x0, x0, #0xc, #0x14
+    // 0x490c4c: mov             x1, x3
+    // 0x490c50: r2 = "cap_gain"
+    //     0x490c50: add             x2, PP, #0x10, lsl #12  ; [pp+0x109c0] "cap_gain"
+    //     0x490c54: ldr             x2, [x2, #0x9c0]
+    // 0x490c58: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490c58: sub             lr, x0, #0x134
+    //     0x490c5c: ldr             lr, [x21, lr, lsl #3]
+    //     0x490c60: blr             lr
+    // 0x490c64: mov             x3, x0
+    // 0x490c68: r2 = Null
+    //     0x490c68: mov             x2, NULL
+    // 0x490c6c: r1 = Null
+    //     0x490c6c: mov             x1, NULL
+    // 0x490c70: stur            x3, [fp, #-0x100]
+    // 0x490c74: branchIfSmi(r0, 0x490c9c)
+    //     0x490c74: tbz             w0, #0, #0x490c9c
+    // 0x490c78: r4 = LoadClassIdInstr(r0)
+    //     0x490c78: ldur            x4, [x0, #-1]
+    //     0x490c7c: ubfx            x4, x4, #0xc, #0x14
+    // 0x490c80: sub             x4, x4, #0x3b
+    // 0x490c84: cmp             x4, #1
+    // 0x490c88: b.ls            #0x490c9c
+    // 0x490c8c: r8 = int?
+    //     0x490c8c: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x490c90: r3 = Null
+    //     0x490c90: add             x3, PP, #0x10, lsl #12  ; [pp+0x109c8] Null
+    //     0x490c94: ldr             x3, [x3, #0x9c8]
+    // 0x490c98: r0 = int?()
+    //     0x490c98: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x490c9c: ldur            x3, [fp, #-8]
+    // 0x490ca0: r0 = LoadClassIdInstr(r3)
+    //     0x490ca0: ldur            x0, [x3, #-1]
+    //     0x490ca4: ubfx            x0, x0, #0xc, #0x14
+    // 0x490ca8: mov             x1, x3
+    // 0x490cac: r2 = "img_rotation"
+    //     0x490cac: add             x2, PP, #0x10, lsl #12  ; [pp+0x109d8] "img_rotation"
+    //     0x490cb0: ldr             x2, [x2, #0x9d8]
+    // 0x490cb4: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490cb4: sub             lr, x0, #0x134
+    //     0x490cb8: ldr             lr, [x21, lr, lsl #3]
+    //     0x490cbc: blr             lr
+    // 0x490cc0: mov             x3, x0
+    // 0x490cc4: r2 = Null
+    //     0x490cc4: mov             x2, NULL
+    // 0x490cc8: r1 = Null
+    //     0x490cc8: mov             x1, NULL
+    // 0x490ccc: r17 = -264
+    //     0x490ccc: mov             x17, #-0x108
+    // 0x490cd0: str             x3, [fp, x17]
+    // 0x490cd4: branchIfSmi(r0, 0x490cfc)
+    //     0x490cd4: tbz             w0, #0, #0x490cfc
+    // 0x490cd8: r4 = LoadClassIdInstr(r0)
+    //     0x490cd8: ldur            x4, [x0, #-1]
+    //     0x490cdc: ubfx            x4, x4, #0xc, #0x14
+    // 0x490ce0: sub             x4, x4, #0x3b
+    // 0x490ce4: cmp             x4, #1
+    // 0x490ce8: b.ls            #0x490cfc
+    // 0x490cec: r8 = int?
+    //     0x490cec: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x490cf0: r3 = Null
+    //     0x490cf0: add             x3, PP, #0x10, lsl #12  ; [pp+0x109e0] Null
+    //     0x490cf4: ldr             x3, [x3, #0x9e0]
+    // 0x490cf8: r0 = int?()
+    //     0x490cf8: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x490cfc: ldur            x3, [fp, #-8]
+    // 0x490d00: r0 = LoadClassIdInstr(r3)
+    //     0x490d00: ldur            x0, [x3, #-1]
+    //     0x490d04: ubfx            x0, x0, #0xc, #0x14
+    // 0x490d08: mov             x1, x3
+    // 0x490d0c: r2 = "img_min_hreshold"
+    //     0x490d0c: add             x2, PP, #0x10, lsl #12  ; [pp+0x109f0] "img_min_hreshold"
+    //     0x490d10: ldr             x2, [x2, #0x9f0]
+    // 0x490d14: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490d14: sub             lr, x0, #0x134
+    //     0x490d18: ldr             lr, [x21, lr, lsl #3]
+    //     0x490d1c: blr             lr
+    // 0x490d20: mov             x3, x0
+    // 0x490d24: r2 = Null
+    //     0x490d24: mov             x2, NULL
+    // 0x490d28: r1 = Null
+    //     0x490d28: mov             x1, NULL
+    // 0x490d2c: r17 = -272
+    //     0x490d2c: mov             x17, #-0x110
+    // 0x490d30: str             x3, [fp, x17]
+    // 0x490d34: branchIfSmi(r0, 0x490d5c)
+    //     0x490d34: tbz             w0, #0, #0x490d5c
+    // 0x490d38: r4 = LoadClassIdInstr(r0)
+    //     0x490d38: ldur            x4, [x0, #-1]
+    //     0x490d3c: ubfx            x4, x4, #0xc, #0x14
+    // 0x490d40: sub             x4, x4, #0x3b
+    // 0x490d44: cmp             x4, #1
+    // 0x490d48: b.ls            #0x490d5c
+    // 0x490d4c: r8 = int?
+    //     0x490d4c: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x490d50: r3 = Null
+    //     0x490d50: add             x3, PP, #0x10, lsl #12  ; [pp+0x109f8] Null
+    //     0x490d54: ldr             x3, [x3, #0x9f8]
+    // 0x490d58: r0 = int?()
+    //     0x490d58: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x490d5c: ldur            x3, [fp, #-8]
+    // 0x490d60: r0 = LoadClassIdInstr(r3)
+    //     0x490d60: ldur            x0, [x3, #-1]
+    //     0x490d64: ubfx            x0, x0, #0xc, #0x14
+    // 0x490d68: mov             x1, x3
+    // 0x490d6c: r2 = "cap_fps"
+    //     0x490d6c: add             x2, PP, #0x10, lsl #12  ; [pp+0x10a08] "cap_fps"
+    //     0x490d70: ldr             x2, [x2, #0xa08]
+    // 0x490d74: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490d74: sub             lr, x0, #0x134
+    //     0x490d78: ldr             lr, [x21, lr, lsl #3]
+    //     0x490d7c: blr             lr
+    // 0x490d80: mov             x3, x0
+    // 0x490d84: r2 = Null
+    //     0x490d84: mov             x2, NULL
+    // 0x490d88: r1 = Null
+    //     0x490d88: mov             x1, NULL
+    // 0x490d8c: r17 = -280
+    //     0x490d8c: mov             x17, #-0x118
+    // 0x490d90: str             x3, [fp, x17]
+    // 0x490d94: branchIfSmi(r0, 0x490dbc)
+    //     0x490d94: tbz             w0, #0, #0x490dbc
+    // 0x490d98: r4 = LoadClassIdInstr(r0)
+    //     0x490d98: ldur            x4, [x0, #-1]
+    //     0x490d9c: ubfx            x4, x4, #0xc, #0x14
+    // 0x490da0: sub             x4, x4, #0x3b
+    // 0x490da4: cmp             x4, #1
+    // 0x490da8: b.ls            #0x490dbc
+    // 0x490dac: r8 = int?
+    //     0x490dac: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x490db0: r3 = Null
+    //     0x490db0: add             x3, PP, #0x10, lsl #12  ; [pp+0x10a10] Null
+    //     0x490db4: ldr             x3, [x3, #0xa10]
+    // 0x490db8: r0 = int?()
+    //     0x490db8: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x490dbc: ldur            x3, [fp, #-8]
+    // 0x490dc0: r0 = LoadClassIdInstr(r3)
+    //     0x490dc0: ldur            x0, [x3, #-1]
+    //     0x490dc4: ubfx            x0, x0, #0xc, #0x14
+    // 0x490dc8: mov             x1, x3
+    // 0x490dcc: r2 = "client_wifi"
+    //     0x490dcc: add             x2, PP, #0x10, lsl #12  ; [pp+0x10a20] "client_wifi"
+    //     0x490dd0: ldr             x2, [x2, #0xa20]
+    // 0x490dd4: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490dd4: sub             lr, x0, #0x134
+    //     0x490dd8: ldr             lr, [x21, lr, lsl #3]
+    //     0x490ddc: blr             lr
+    // 0x490de0: mov             x3, x0
+    // 0x490de4: r2 = Null
+    //     0x490de4: mov             x2, NULL
+    // 0x490de8: r1 = Null
+    //     0x490de8: mov             x1, NULL
+    // 0x490dec: r17 = -288
+    //     0x490dec: mov             x17, #-0x120
+    // 0x490df0: str             x3, [fp, x17]
+    // 0x490df4: r4 = 59
+    //     0x490df4: mov             x4, #0x3b
+    // 0x490df8: branchIfSmi(r0, 0x490e04)
+    //     0x490df8: tbz             w0, #0, #0x490e04
+    // 0x490dfc: r4 = LoadClassIdInstr(r0)
+    //     0x490dfc: ldur            x4, [x0, #-1]
+    //     0x490e00: ubfx            x4, x4, #0xc, #0x14
+    // 0x490e04: sub             x4, x4, #0x5d
+    // 0x490e08: cmp             x4, #1
+    // 0x490e0c: b.ls            #0x490e20
+    // 0x490e10: r8 = String?
+    //     0x490e10: ldr             x8, [PP, #0xb38]  ; [pp+0xb38] Type: String?
+    // 0x490e14: r3 = Null
+    //     0x490e14: add             x3, PP, #0x10, lsl #12  ; [pp+0x10a28] Null
+    //     0x490e18: ldr             x3, [x3, #0xa28]
+    // 0x490e1c: r0 = String?()
+    //     0x490e1c: bl              #0x2b8c44  ; IsType_String?_Stub
+    // 0x490e20: ldur            x3, [fp, #-8]
+    // 0x490e24: r0 = LoadClassIdInstr(r3)
+    //     0x490e24: ldur            x0, [x3, #-1]
+    //     0x490e28: ubfx            x0, x0, #0xc, #0x14
+    // 0x490e2c: mov             x1, x3
+    // 0x490e30: r2 = "client_ip"
+    //     0x490e30: add             x2, PP, #0x10, lsl #12  ; [pp+0x10a38] "client_ip"
+    //     0x490e34: ldr             x2, [x2, #0xa38]
+    // 0x490e38: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490e38: sub             lr, x0, #0x134
+    //     0x490e3c: ldr             lr, [x21, lr, lsl #3]
+    //     0x490e40: blr             lr
+    // 0x490e44: mov             x3, x0
+    // 0x490e48: r2 = Null
+    //     0x490e48: mov             x2, NULL
+    // 0x490e4c: r1 = Null
+    //     0x490e4c: mov             x1, NULL
+    // 0x490e50: r17 = -296
+    //     0x490e50: mov             x17, #-0x128
+    // 0x490e54: str             x3, [fp, x17]
+    // 0x490e58: r4 = 59
+    //     0x490e58: mov             x4, #0x3b
+    // 0x490e5c: branchIfSmi(r0, 0x490e68)
+    //     0x490e5c: tbz             w0, #0, #0x490e68
+    // 0x490e60: r4 = LoadClassIdInstr(r0)
+    //     0x490e60: ldur            x4, [x0, #-1]
+    //     0x490e64: ubfx            x4, x4, #0xc, #0x14
+    // 0x490e68: sub             x4, x4, #0x5d
+    // 0x490e6c: cmp             x4, #1
+    // 0x490e70: b.ls            #0x490e84
+    // 0x490e74: r8 = String?
+    //     0x490e74: ldr             x8, [PP, #0xb38]  ; [pp+0xb38] Type: String?
+    // 0x490e78: r3 = Null
+    //     0x490e78: add             x3, PP, #0x10, lsl #12  ; [pp+0x10a40] Null
+    //     0x490e7c: ldr             x3, [x3, #0xa40]
+    // 0x490e80: r0 = String?()
+    //     0x490e80: bl              #0x2b8c44  ; IsType_String?_Stub
+    // 0x490e84: ldur            x3, [fp, #-8]
+    // 0x490e88: r0 = LoadClassIdInstr(r3)
+    //     0x490e88: ldur            x0, [x3, #-1]
+    //     0x490e8c: ubfx            x0, x0, #0xc, #0x14
+    // 0x490e90: mov             x1, x3
+    // 0x490e94: r2 = "run_time"
+    //     0x490e94: add             x2, PP, #0x10, lsl #12  ; [pp+0x10a50] "run_time"
+    //     0x490e98: ldr             x2, [x2, #0xa50]
+    // 0x490e9c: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490e9c: sub             lr, x0, #0x134
+    //     0x490ea0: ldr             lr, [x21, lr, lsl #3]
+    //     0x490ea4: blr             lr
+    // 0x490ea8: mov             x3, x0
+    // 0x490eac: r2 = Null
+    //     0x490eac: mov             x2, NULL
+    // 0x490eb0: r1 = Null
+    //     0x490eb0: mov             x1, NULL
+    // 0x490eb4: r17 = -304
+    //     0x490eb4: mov             x17, #-0x130
+    // 0x490eb8: str             x3, [fp, x17]
+    // 0x490ebc: r4 = 59
+    //     0x490ebc: mov             x4, #0x3b
+    // 0x490ec0: branchIfSmi(r0, 0x490ecc)
+    //     0x490ec0: tbz             w0, #0, #0x490ecc
+    // 0x490ec4: r4 = LoadClassIdInstr(r0)
+    //     0x490ec4: ldur            x4, [x0, #-1]
+    //     0x490ec8: ubfx            x4, x4, #0xc, #0x14
+    // 0x490ecc: sub             x4, x4, #0x5d
+    // 0x490ed0: cmp             x4, #1
+    // 0x490ed4: b.ls            #0x490ee8
+    // 0x490ed8: r8 = String?
+    //     0x490ed8: ldr             x8, [PP, #0xb38]  ; [pp+0xb38] Type: String?
+    // 0x490edc: r3 = Null
+    //     0x490edc: add             x3, PP, #0x10, lsl #12  ; [pp+0x10a58] Null
+    //     0x490ee0: ldr             x3, [x3, #0xa58]
+    // 0x490ee4: r0 = String?()
+    //     0x490ee4: bl              #0x2b8c44  ; IsType_String?_Stub
+    // 0x490ee8: ldur            x3, [fp, #-8]
+    // 0x490eec: r0 = LoadClassIdInstr(r3)
+    //     0x490eec: ldur            x0, [x3, #-1]
+    //     0x490ef0: ubfx            x0, x0, #0xc, #0x14
+    // 0x490ef4: mov             x1, x3
+    // 0x490ef8: r2 = "up_time"
+    //     0x490ef8: add             x2, PP, #0x10, lsl #12  ; [pp+0x10a68] "up_time"
+    //     0x490efc: ldr             x2, [x2, #0xa68]
+    // 0x490f00: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490f00: sub             lr, x0, #0x134
+    //     0x490f04: ldr             lr, [x21, lr, lsl #3]
+    //     0x490f08: blr             lr
+    // 0x490f0c: mov             x3, x0
+    // 0x490f10: r2 = Null
+    //     0x490f10: mov             x2, NULL
+    // 0x490f14: r1 = Null
+    //     0x490f14: mov             x1, NULL
+    // 0x490f18: r17 = -312
+    //     0x490f18: mov             x17, #-0x138
+    // 0x490f1c: str             x3, [fp, x17]
+    // 0x490f20: r4 = 59
+    //     0x490f20: mov             x4, #0x3b
+    // 0x490f24: branchIfSmi(r0, 0x490f30)
+    //     0x490f24: tbz             w0, #0, #0x490f30
+    // 0x490f28: r4 = LoadClassIdInstr(r0)
+    //     0x490f28: ldur            x4, [x0, #-1]
+    //     0x490f2c: ubfx            x4, x4, #0xc, #0x14
+    // 0x490f30: sub             x4, x4, #0x5d
+    // 0x490f34: cmp             x4, #1
+    // 0x490f38: b.ls            #0x490f4c
+    // 0x490f3c: r8 = String?
+    //     0x490f3c: ldr             x8, [PP, #0xb38]  ; [pp+0xb38] Type: String?
+    // 0x490f40: r3 = Null
+    //     0x490f40: add             x3, PP, #0x10, lsl #12  ; [pp+0x10a70] Null
+    //     0x490f44: ldr             x3, [x3, #0xa70]
+    // 0x490f48: r0 = String?()
+    //     0x490f48: bl              #0x2b8c44  ; IsType_String?_Stub
+    // 0x490f4c: ldur            x3, [fp, #-8]
+    // 0x490f50: r0 = LoadClassIdInstr(r3)
+    //     0x490f50: ldur            x0, [x3, #-1]
+    //     0x490f54: ubfx            x0, x0, #0xc, #0x14
+    // 0x490f58: mov             x1, x3
+    // 0x490f5c: r2 = "beta"
+    //     0x490f5c: add             x2, PP, #0x10, lsl #12  ; [pp+0x10a80] "beta"
+    //     0x490f60: ldr             x2, [x2, #0xa80]
+    // 0x490f64: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490f64: sub             lr, x0, #0x134
+    //     0x490f68: ldr             lr, [x21, lr, lsl #3]
+    //     0x490f6c: blr             lr
+    // 0x490f70: mov             x3, x0
+    // 0x490f74: r2 = Null
+    //     0x490f74: mov             x2, NULL
+    // 0x490f78: r1 = Null
+    //     0x490f78: mov             x1, NULL
+    // 0x490f7c: r17 = -320
+    //     0x490f7c: mov             x17, #-0x140
+    // 0x490f80: str             x3, [fp, x17]
+    // 0x490f84: branchIfSmi(r0, 0x490fac)
+    //     0x490f84: tbz             w0, #0, #0x490fac
+    // 0x490f88: r4 = LoadClassIdInstr(r0)
+    //     0x490f88: ldur            x4, [x0, #-1]
+    //     0x490f8c: ubfx            x4, x4, #0xc, #0x14
+    // 0x490f90: sub             x4, x4, #0x3b
+    // 0x490f94: cmp             x4, #1
+    // 0x490f98: b.ls            #0x490fac
+    // 0x490f9c: r8 = int?
+    //     0x490f9c: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x490fa0: r3 = Null
+    //     0x490fa0: add             x3, PP, #0x10, lsl #12  ; [pp+0x10a88] Null
+    //     0x490fa4: ldr             x3, [x3, #0xa88]
+    // 0x490fa8: r0 = int?()
+    //     0x490fa8: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x490fac: ldur            x3, [fp, #-8]
+    // 0x490fb0: r0 = LoadClassIdInstr(r3)
+    //     0x490fb0: ldur            x0, [x3, #-1]
+    //     0x490fb4: ubfx            x0, x0, #0xc, #0x14
+    // 0x490fb8: mov             x1, x3
+    // 0x490fbc: r2 = "img_add_num"
+    //     0x490fbc: add             x2, PP, #0x10, lsl #12  ; [pp+0x10a98] "img_add_num"
+    //     0x490fc0: ldr             x2, [x2, #0xa98]
+    // 0x490fc4: r0 = GDT[cid_x0 + -0x134]()
+    //     0x490fc4: sub             lr, x0, #0x134
+    //     0x490fc8: ldr             lr, [x21, lr, lsl #3]
+    //     0x490fcc: blr             lr
+    // 0x490fd0: mov             x3, x0
+    // 0x490fd4: r2 = Null
+    //     0x490fd4: mov             x2, NULL
+    // 0x490fd8: r1 = Null
+    //     0x490fd8: mov             x1, NULL
+    // 0x490fdc: r17 = -328
+    //     0x490fdc: mov             x17, #-0x148
+    // 0x490fe0: str             x3, [fp, x17]
+    // 0x490fe4: branchIfSmi(r0, 0x49100c)
+    //     0x490fe4: tbz             w0, #0, #0x49100c
+    // 0x490fe8: r4 = LoadClassIdInstr(r0)
+    //     0x490fe8: ldur            x4, [x0, #-1]
+    //     0x490fec: ubfx            x4, x4, #0xc, #0x14
+    // 0x490ff0: sub             x4, x4, #0x3b
+    // 0x490ff4: cmp             x4, #1
+    // 0x490ff8: b.ls            #0x49100c
+    // 0x490ffc: r8 = int?
+    //     0x490ffc: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x491000: r3 = Null
+    //     0x491000: add             x3, PP, #0x10, lsl #12  ; [pp+0x10aa0] Null
+    //     0x491004: ldr             x3, [x3, #0xaa0]
+    // 0x491008: r0 = int?()
+    //     0x491008: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x49100c: ldur            x3, [fp, #-8]
+    // 0x491010: r0 = LoadClassIdInstr(r3)
+    //     0x491010: ldur            x0, [x3, #-1]
+    //     0x491014: ubfx            x0, x0, #0xc, #0x14
+    // 0x491018: mov             x1, x3
+    // 0x49101c: r2 = "gk_min"
+    //     0x49101c: add             x2, PP, #0x10, lsl #12  ; [pp+0x10ab0] "gk_min"
+    //     0x491020: ldr             x2, [x2, #0xab0]
+    // 0x491024: r0 = GDT[cid_x0 + -0x134]()
+    //     0x491024: sub             lr, x0, #0x134
+    //     0x491028: ldr             lr, [x21, lr, lsl #3]
+    //     0x49102c: blr             lr
+    // 0x491030: mov             x3, x0
+    // 0x491034: r2 = Null
+    //     0x491034: mov             x2, NULL
+    // 0x491038: r1 = Null
+    //     0x491038: mov             x1, NULL
+    // 0x49103c: r17 = -336
+    //     0x49103c: mov             x17, #-0x150
+    // 0x491040: str             x3, [fp, x17]
+    // 0x491044: branchIfSmi(r0, 0x49106c)
+    //     0x491044: tbz             w0, #0, #0x49106c
+    // 0x491048: r4 = LoadClassIdInstr(r0)
+    //     0x491048: ldur            x4, [x0, #-1]
+    //     0x49104c: ubfx            x4, x4, #0xc, #0x14
+    // 0x491050: sub             x4, x4, #0x3b
+    // 0x491054: cmp             x4, #1
+    // 0x491058: b.ls            #0x49106c
+    // 0x49105c: r8 = int?
+    //     0x49105c: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x491060: r3 = Null
+    //     0x491060: add             x3, PP, #0x10, lsl #12  ; [pp+0x10ab8] Null
+    //     0x491064: ldr             x3, [x3, #0xab8]
+    // 0x491068: r0 = int?()
+    //     0x491068: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x49106c: ldur            x1, [fp, #-8]
+    // 0x491070: r0 = LoadClassIdInstr(r1)
+    //     0x491070: ldur            x0, [x1, #-1]
+    //     0x491074: ubfx            x0, x0, #0xc, #0x14
+    // 0x491078: r2 = "gk_max"
+    //     0x491078: add             x2, PP, #0x10, lsl #12  ; [pp+0x10ac8] "gk_max"
+    //     0x49107c: ldr             x2, [x2, #0xac8]
+    // 0x491080: r0 = GDT[cid_x0 + -0x134]()
+    //     0x491080: sub             lr, x0, #0x134
+    //     0x491084: ldr             lr, [x21, lr, lsl #3]
+    //     0x491088: blr             lr
+    // 0x49108c: mov             x3, x0
+    // 0x491090: r2 = Null
+    //     0x491090: mov             x2, NULL
+    // 0x491094: r1 = Null
+    //     0x491094: mov             x1, NULL
+    // 0x491098: stur            x3, [fp, #-8]
+    // 0x49109c: branchIfSmi(r0, 0x4910c4)
+    //     0x49109c: tbz             w0, #0, #0x4910c4
+    // 0x4910a0: r4 = LoadClassIdInstr(r0)
+    //     0x4910a0: ldur            x4, [x0, #-1]
+    //     0x4910a4: ubfx            x4, x4, #0xc, #0x14
+    // 0x4910a8: sub             x4, x4, #0x3b
+    // 0x4910ac: cmp             x4, #1
+    // 0x4910b0: b.ls            #0x4910c4
+    // 0x4910b4: r8 = int?
+    //     0x4910b4: ldr             x8, [PP, #0xb50]  ; [pp+0xb50] Type: int?
+    // 0x4910b8: r3 = Null
+    //     0x4910b8: add             x3, PP, #0x10, lsl #12  ; [pp+0x10ad0] Null
+    //     0x4910bc: ldr             x3, [x3, #0xad0]
+    // 0x4910c0: r0 = int?()
+    //     0x4910c0: bl              #0x6ffd14  ; IsType_int?_Stub
+    // 0x4910c4: r0 = Devices()
+    //     0x4910c4: bl              #0x491258  ; AllocateDevicesStub -> Devices (size=0xc0)
+    // 0x4910c8: ldur            x1, [fp, #-0x10]
+    // 0x4910cc: StoreField: r0->field_7 = r1
+    //     0x4910cc: stur            w1, [x0, #7]
+    // 0x4910d0: ldur            x1, [fp, #-0x18]
+    // 0x4910d4: StoreField: r0->field_b = r1
+    //     0x4910d4: stur            w1, [x0, #0xb]
+    // 0x4910d8: ldur            x1, [fp, #-0x20]
+    // 0x4910dc: StoreField: r0->field_f = r1
+    //     0x4910dc: stur            w1, [x0, #0xf]
+    // 0x4910e0: ldur            x1, [fp, #-0x28]
+    // 0x4910e4: StoreField: r0->field_13 = r1
+    //     0x4910e4: stur            w1, [x0, #0x13]
+    // 0x4910e8: ldur            x1, [fp, #-0x30]
+    // 0x4910ec: ArrayStore: r0[0] = r1  ; List_4
+    //     0x4910ec: stur            w1, [x0, #0x17]
+    // 0x4910f0: ldur            x1, [fp, #-0x38]
+    // 0x4910f4: StoreField: r0->field_1b = r1
+    //     0x4910f4: stur            w1, [x0, #0x1b]
+    // 0x4910f8: ldur            x1, [fp, #-0x40]
+    // 0x4910fc: StoreField: r0->field_1f = r1
+    //     0x4910fc: stur            w1, [x0, #0x1f]
+    // 0x491100: ldur            x1, [fp, #-0x48]
+    // 0x491104: StoreField: r0->field_23 = r1
+    //     0x491104: stur            w1, [x0, #0x23]
+    // 0x491108: ldur            x1, [fp, #-0x50]
+    // 0x49110c: StoreField: r0->field_27 = r1
+    //     0x49110c: stur            w1, [x0, #0x27]
+    // 0x491110: ldur            x1, [fp, #-0x58]
+    // 0x491114: StoreField: r0->field_2b = r1
+    //     0x491114: stur            w1, [x0, #0x2b]
+    // 0x491118: ldur            x1, [fp, #-0x60]
+    // 0x49111c: StoreField: r0->field_2f = r1
+    //     0x49111c: stur            w1, [x0, #0x2f]
+    // 0x491120: ldur            x1, [fp, #-0x68]
+    // 0x491124: StoreField: r0->field_33 = r1
+    //     0x491124: stur            w1, [x0, #0x33]
+    // 0x491128: ldur            x1, [fp, #-0x70]
+    // 0x49112c: LoadField: d0 = r1->field_7
+    //     0x49112c: ldur            d0, [x1, #7]
+    // 0x491130: StoreField: r0->field_37 = d0
+    //     0x491130: stur            d0, [x0, #0x37]
+    // 0x491134: ldur            x1, [fp, #-0x78]
+    // 0x491138: StoreField: r0->field_47 = r1
+    //     0x491138: stur            w1, [x0, #0x47]
+    // 0x49113c: ldur            x1, [fp, #-0x80]
+    // 0x491140: StoreField: r0->field_4b = r1
+    //     0x491140: stur            w1, [x0, #0x4b]
+    // 0x491144: ldur            x1, [fp, #-0x88]
+    // 0x491148: StoreField: r0->field_4f = r1
+    //     0x491148: stur            w1, [x0, #0x4f]
+    // 0x49114c: ldur            x1, [fp, #-0x90]
+    // 0x491150: StoreField: r0->field_53 = r1
+    //     0x491150: stur            w1, [x0, #0x53]
+    // 0x491154: ldur            x1, [fp, #-0x98]
+    // 0x491158: StoreField: r0->field_57 = r1
+    //     0x491158: stur            w1, [x0, #0x57]
+    // 0x49115c: ldur            x1, [fp, #-0xa0]
+    // 0x491160: StoreField: r0->field_5b = r1
+    //     0x491160: stur            w1, [x0, #0x5b]
+    // 0x491164: ldur            x1, [fp, #-0xa8]
+    // 0x491168: StoreField: r0->field_5f = r1
+    //     0x491168: stur            w1, [x0, #0x5f]
+    // 0x49116c: ldur            x1, [fp, #-0xd0]
+    // 0x491170: StoreField: r0->field_43 = r1
+    //     0x491170: stur            w1, [x0, #0x43]
+    // 0x491174: ldur            x1, [fp, #-0xb0]
+    // 0x491178: StoreField: r0->field_63 = r1
+    //     0x491178: stur            w1, [x0, #0x63]
+    // 0x49117c: ldur            x1, [fp, #-0xb8]
+    // 0x491180: StoreField: r0->field_67 = r1
+    //     0x491180: stur            w1, [x0, #0x67]
+    // 0x491184: ldur            x1, [fp, #-0xc8]
+    // 0x491188: StoreField: r0->field_77 = r1
+    //     0x491188: stur            w1, [x0, #0x77]
+    // 0x49118c: ldur            x1, [fp, #-0xc0]
+    // 0x491190: StoreField: r0->field_6b = r1
+    //     0x491190: stur            w1, [x0, #0x6b]
+    // 0x491194: ldur            x1, [fp, #-0xd8]
+    // 0x491198: StoreField: r0->field_7b = r1
+    //     0x491198: stur            w1, [x0, #0x7b]
+    // 0x49119c: ldur            x1, [fp, #-0xe0]
+    // 0x4911a0: StoreField: r0->field_7f = r1
+    //     0x4911a0: stur            w1, [x0, #0x7f]
+    // 0x4911a4: ldur            x1, [fp, #-0xe8]
+    // 0x4911a8: StoreField: r0->field_83 = r1
+    //     0x4911a8: stur            w1, [x0, #0x83]
+    // 0x4911ac: ldur            x1, [fp, #-0xf0]
+    // 0x4911b0: StoreField: r0->field_87 = r1
+    //     0x4911b0: stur            w1, [x0, #0x87]
+    // 0x4911b4: ldur            x1, [fp, #-0xf8]
+    // 0x4911b8: StoreField: r0->field_8b = r1
+    //     0x4911b8: stur            w1, [x0, #0x8b]
+    // 0x4911bc: ldur            x1, [fp, #-0x100]
+    // 0x4911c0: StoreField: r0->field_8f = r1
+    //     0x4911c0: stur            w1, [x0, #0x8f]
+    // 0x4911c4: r17 = -264
+    //     0x4911c4: mov             x17, #-0x108
+    // 0x4911c8: ldr             x1, [fp, x17]
+    // 0x4911cc: StoreField: r0->field_93 = r1
+    //     0x4911cc: stur            w1, [x0, #0x93]
+    // 0x4911d0: r17 = -272
+    //     0x4911d0: mov             x17, #-0x110
+    // 0x4911d4: ldr             x1, [fp, x17]
+    // 0x4911d8: StoreField: r0->field_97 = r1
+    //     0x4911d8: stur            w1, [x0, #0x97]
+    // 0x4911dc: r17 = -280
+    //     0x4911dc: mov             x17, #-0x118
+    // 0x4911e0: ldr             x1, [fp, x17]
+    // 0x4911e4: StoreField: r0->field_9b = r1
+    //     0x4911e4: stur            w1, [x0, #0x9b]
+    // 0x4911e8: r17 = -296
+    //     0x4911e8: mov             x17, #-0x128
+    // 0x4911ec: ldr             x1, [fp, x17]
+    // 0x4911f0: StoreField: r0->field_a3 = r1
+    //     0x4911f0: stur            w1, [x0, #0xa3]
+    // 0x4911f4: r17 = -288
+    //     0x4911f4: mov             x17, #-0x120
+    // 0x4911f8: ldr             x1, [fp, x17]
+    // 0x4911fc: StoreField: r0->field_9f = r1
+    //     0x4911fc: stur            w1, [x0, #0x9f]
+    // 0x491200: r17 = -312
+    //     0x491200: mov             x17, #-0x138
+    // 0x491204: ldr             x1, [fp, x17]
+    // 0x491208: StoreField: r0->field_ab = r1
+    //     0x491208: stur            w1, [x0, #0xab]
+    // 0x49120c: r17 = -304
+    //     0x49120c: mov             x17, #-0x130
+    // 0x491210: ldr             x1, [fp, x17]
+    // 0x491214: StoreField: r0->field_a7 = r1
+    //     0x491214: stur            w1, [x0, #0xa7]
+    // 0x491218: r17 = -320
+    //     0x491218: mov             x17, #-0x140
+    // 0x49121c: ldr             x1, [fp, x17]
+    // 0x491220: StoreField: r0->field_af = r1
+    //     0x491220: stur            w1, [x0, #0xaf]
+    // 0x491224: r17 = -328
+    //     0x491224: mov             x17, #-0x148
+    // 0x491228: ldr             x1, [fp, x17]
+    // 0x49122c: StoreField: r0->field_b3 = r1
+    //     0x49122c: stur            w1, [x0, #0xb3]
+    // 0x491230: r17 = -336
+    //     0x491230: mov             x17, #-0x150
+    // 0x491234: ldr             x1, [fp, x17]
+    // 0x491238: StoreField: r0->field_b7 = r1
+    //     0x491238: stur            w1, [x0, #0xb7]
+    // 0x49123c: ldur            x1, [fp, #-8]
+    // 0x491240: StoreField: r0->field_bb = r1
+    //     0x491240: stur            w1, [x0, #0xbb]
+    // 0x491244: LeaveFrame
+    //     0x491244: mov             SP, fp
+    //     0x491248: ldp             fp, lr, [SP], #0x10
+    // 0x49124c: ret
+    //     0x49124c: ret             
+    // 0x491250: r0 = StackOverflowSharedWithoutFPURegs()
+    //     0x491250: bl              #0x6f9ef8  ; StackOverflowSharedWithoutFPURegsStub
+    // 0x491254: b               #0x490210
+  }

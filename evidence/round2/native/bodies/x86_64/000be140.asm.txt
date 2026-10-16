@@ -1,0 +1,30 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000059800 <.text>:
+   be140: ba 00 00 00 00               	movl	$0x0, %edx
+   be145: e9 56 ff ff ff               	jmp	0xbe0a0 <.text+0x648a0>
+   be14a: cc                           	int3
+   be14b: cc                           	int3
+   be14c: cc                           	int3
+   be14d: cc                           	int3
+   be14e: cc                           	int3
+   be14f: cc                           	int3
+   be150: cc                           	int3
+   be151: cc                           	int3
+   be152: cc                           	int3
+   be153: cc                           	int3
+   be154: cc                           	int3
+   be155: cc                           	int3
+   be156: cc                           	int3
+   be157: cc                           	int3
+   be158: cc                           	int3
+   be159: cc                           	int3
+   be15a: cc                           	int3
+   be15b: cc                           	int3
+   be15c: cc                           	int3
+   be15d: cc                           	int3
+   be15e: cc                           	int3
+   be15f: cc                           	int3

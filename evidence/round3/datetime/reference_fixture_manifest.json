@@ -1,0 +1,25 @@
+{
+  "oracle": "Official Dart SDK 3.5.2 macos_arm64, not original APK execution",
+  "cases_per_zone": 6204,
+  "comparisons": 37224,
+  "zones": [
+    "UTC",
+    "America/Los_Angeles",
+    "Asia/Shanghai",
+    "Europe/Berlin",
+    "Australia/Lord_Howe",
+    "Pacific/Apia"
+  ],
+  "files": {
+    "inputs.base64.txt": "f6b1c3a31e97a73aa2b5272ff2b91b583a692ba38bddfab57ab887b624b32517",
+    "zones.txt": "0a38d43ed2abc15827855e45b5036d312c133491df35cf0df9da73f405b29ea3",
+    "oracle-UTC.tsv": "6cebb16a5414f9390957c5f06ff5980ea4e7508081e080f2f5dc299008b57e62",
+    "oracle-America_Los_Angeles.tsv": "7de3d3670cda3ea49eb60b57112a3f38f5206996ec609ff70d27e22e804a3e61",
+    "oracle-Asia_Shanghai.tsv": "0c7624f4fda9ca4b0f49e3ee4e5f4b29e258243270b404be4fb59146f81af098",
+    "oracle-Europe_Berlin.tsv": "825c9a2087511271ae4c7b7de7d29dfafde42d38905cdc3b696ac6fb272e19dc",
+    "oracle-Australia_Lord_Howe.tsv": "2892800c91c61f6f8fac6b39e1709749dacf3cefd6d7cce73eee06eeb1cd530b",
+    "oracle-Pacific_Apia.tsv": "80ab7736776a44f9e01167f23fc57298468b1f13897e5d66abf3d86a8d83fe08"
+  },
+  "original_source_recovered": false,
+  "archive_sha256": "85fd04be548aa6fdc060220f4d5a49d823d9567fbc59b9d19ebd8cf66fb8a7c4"
+}

@@ -1,0 +1,50 @@
+
+<LOCAL_APP>/unpacked/lib/arm64-v8a/librsa_bridge.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000059010 <.text>:
+   5ae90: aa1f03eb     	mov	x11, xzr
+   5ae94: b4000502     	cbz	x2, 0x5af34 <.text+0x1f24>
+   5ae98: f100805f     	cmp	x2, #0x20
+   5ae9c: 54000423     	b.lo	0x5af20 <.text+0x1f10>
+   5aea0: f2401009     	ands	x9, x0, #0x1f
+   5aea4: 54000120     	b.eq	0x5aec8 <.text+0x1eb8>
+   5aea8: 927be803     	and	x3, x0, #0xffffffffffffffe0
+   5aeac: 91008063     	add	x3, x3, #0x20
+   5aeb0: 38401405     	ldrb	w5, [x0], #0x1
+   5aeb4: eb05003f     	cmp	x1, x5
+   5aeb8: 9a8b156b     	cinc	x11, x11, eq
+   5aebc: d1000442     	sub	x2, x2, #0x1
+   5aec0: eb00007f     	cmp	x3, x0
+   5aec4: 54ffff61     	b.ne	0x5aeb0 <.text+0x1ea0>
+   5aec8: 927be849     	and	x9, x2, #0xffffffffffffffe0
+   5aecc: b40002a9     	cbz	x9, 0x5af20 <.text+0x1f10>
+   5aed0: 8b000123     	add	x3, x9, x0
+   5aed4: b24003e5     	orr	x5, xzr, #0x1
+   5aed8: 4e010ca5     	dup	v5.16b, w5
+   5aedc: cb090042     	sub	x2, x2, x9
+   5aee0: 4e010c20     	dup	v0.16b, w1
+   5aee4: 2e271ce7     	eor	v7.8b, v7.8b, v7.8b
+   5aee8: 2e281d08     	eor	v8.8b, v8.8b, v8.8b
+   5aeec: 4cdfa001     	ld1	{ v1.16b, v2.16b }, [x0], #32
+   5aef0: eb00007f     	cmp	x3, x0
+   5aef4: 6e208c23     	cmeq	v3.16b, v1.16b, v0.16b
+   5aef8: 6e208c44     	cmeq	v4.16b, v2.16b, v0.16b
+   5aefc: 4e251c63     	and	v3.16b, v3.16b, v5.16b
+   5af00: 4e251c84     	and	v4.16b, v4.16b, v5.16b
+   5af04: 4e24bc66     	addp	v6.16b, v3.16b, v4.16b
+   5af08: 6e3038c7     	uaddlv	h7, v6.16b
+   5af0c: 5ee78508     	add	d8, d8, d7
+   5af10: 54fffee1     	b.ne	0x5aeec <.text+0x1edc>
+   5af14: 4e083d06     	mov	x6, v8.d[0]
+   5af18: 8b06016b     	add	x11, x11, x6
+   5af1c: b40000c2     	cbz	x2, 0x5af34 <.text+0x1f24>
+   5af20: 38401405     	ldrb	w5, [x0], #0x1
+   5af24: d1000442     	sub	x2, x2, #0x1
+   5af28: eb05003f     	cmp	x1, x5
+   5af2c: 9a8b156b     	cinc	x11, x11, eq
+   5af30: b5ffff82     	cbnz	x2, 0x5af20 <.text+0x1f10>
+   5af34: f900010b     	str	x11, [x8]
+   5af38: d65f03c0     	ret
+   5af3c: 00000000     	udf	#0x0

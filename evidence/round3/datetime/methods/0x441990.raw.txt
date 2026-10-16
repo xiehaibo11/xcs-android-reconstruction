@@ -1,0 +1,24 @@
+[dart:core] DateTime::second
+0x441990: fd79bfa9 stp x29, x30, [x15, #-0x10]!
+0x441994: fd030faa mov x29, x15
+0x441998: 501f40f9 ldr x16, [x26, #0x38]
+0x44199c: ff0110eb cmp x15, x16
+0x4419a0: 09020054 b.ls #0x4419e0
+0x4419a4: 9c000094 bl #0x441c14
+0x4419a8: e20300aa mov x2, x0
+0x4419ac: 43b040b8 ldur w3, [x2, #0xb]
+0x4419b0: 607c4193 sbfx x0, x3, #1, #0x1f
+0x4419b4: 410080d2 mov x1, #2
+0x4419b8: 3f0000eb cmp x1, x0
+0x4419bc: 62010054 b.hs #0x4419e8
+0x4419c0: 417041b8 ldur w1, [x2, #0x17]
+0x4419c4: 21801c8b add x1, x1, x28, lsl #32
+0x4419c8: 207c4193 sbfx x0, x1, #1, #0x1f
+0x4419cc: 41000036 tbz w1, #0, #0x4419d4
+0x4419d0: 207040f8 ldur x0, [x1, #7]
+0x4419d4: ef031daa mov x15, x29
+0x4419d8: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x4419dc: c0035fd6 ret 
+0x4419e0: 46e10a94 bl #0x6f9ef8
+0x4419e4: f0ffff17 b #0x4419a4
+0x4419e8: 56e20a94 bl #0x6fa340

@@ -1,0 +1,112 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000059800 <.text>:
+   bdd80: 48 89 f8                     	movq	%rdi, %rax
+   bdd83: 48 89 f3                     	movq	%rsi, %rbx
+   bdd86: 48 83 ec 28                  	subq	$0x28, %rsp
+   bdd8a: 48 83 e4 f0                  	andq	$-0x10, %rsp
+   bdd8e: 48 89 44 24 18               	movq	%rax, 0x18(%rsp)
+   bdd93: 48 89 5c 24 20               	movq	%rbx, 0x20(%rsp)
+   bdd98: 48 8d 3d a1 61 38 00         	leaq	0x3861a1(%rip), %rdi    # 0x443f40
+   bdd9f: 48 8d 9c 24 00 00 ff ff      	leaq	-0x10000(%rsp), %rbx
+   bdda7: 48 89 5f 10                  	movq	%rbx, 0x10(%rdi)
+   bddab: 48 89 5f 18                  	movq	%rbx, 0x18(%rdi)
+   bddaf: 48 89 1f                     	movq	%rbx, (%rdi)
+   bddb2: 48 89 67 08                  	movq	%rsp, 0x8(%rdi)
+   bddb6: b8 00 00 00 00               	movl	$0x0, %eax
+   bddbb: 0f a2                        	cpuid
+   bddbd: 83 f8 00                     	cmpl	$0x0, %eax
+   bddc0: 74 2c                        	je	0xbddee <.text+0x645ee>
+   bddc2: 81 fb 47 65 6e 75            	cmpl	$0x756e6547, %ebx       # imm = 0x756E6547
+   bddc8: 75 17                        	jne	0xbdde1 <.text+0x645e1>
+   bddca: 81 fa 69 6e 65 49            	cmpl	$0x49656e69, %edx       # imm = 0x49656E69
+   bddd0: 75 0f                        	jne	0xbdde1 <.text+0x645e1>
+   bddd2: 81 f9 6e 74 65 6c            	cmpl	$0x6c65746e, %ecx       # imm = 0x6C65746E
+   bddd8: 75 07                        	jne	0xbdde1 <.text+0x645e1>
+   bddda: c6 05 18 44 3b 00 01         	movb	$0x1, 0x3b4418(%rip)    # 0x4721f9
+   bdde1: b8 01 00 00 00               	movl	$0x1, %eax
+   bdde6: 0f a2                        	cpuid
+   bdde8: 89 05 76 44 3b 00            	movl	%eax, 0x3b4476(%rip)    # 0x472264
+   bddee: 48 8b 05 a3 d9 37 00         	movq	0x37d9a3(%rip), %rax    # 0x43b798
+   bddf5: 48 85 c0                     	testq	%rax, %rax
+   bddf8: 74 44                        	je	0xbde3e <.text+0x6463e>
+   bddfa: 48 8d 35 9f f2 ff ff         	leaq	-0xd61(%rip), %rsi      # 0xbd0a0 <.text+0x638a0>
+   bde01: 48 c7 c2 00 00 00 00         	movq	$0x0, %rdx
+   bde08: 48 c7 c1 00 00 00 00         	movq	$0x0, %rcx
+   bde0f: 48 8d 15 f2 57 35 00         	leaq	0x3557f2(%rip), %rdx    # 0x413608
+   bde16: 48 8b 0d eb 57 35 00         	movq	0x3557eb(%rip), %rcx    # 0x413608
+   bde1d: 64 48 8b 49 f0               	movq	%fs:-0x10(%rcx), %rcx
+   bde22: ff d0                        	callq	*%rax
+   bde24: 48 8d 0d 15 61 38 00         	leaq	0x386115(%rip), %rcx    # 0x443f40
+   bde2b: 48 8b 01                     	movq	(%rcx), %rax
+   bde2e: 48 05 a0 03 00 00            	addq	$0x3a0, %rax            # imm = 0x3A0
+   bde34: 48 89 41 10                  	movq	%rax, 0x10(%rcx)
+   bde38: 48 89 41 18                  	movq	%rax, 0x18(%rcx)
+   bde3c: eb 2f                        	jmp	0xbde6d <.text+0x6466d>
+   bde3e: 48 8d 3d 63 65 38 00         	leaq	0x386563(%rip), %rdi    # 0x4443a8
+   bde45: e8 b6 40 00 00               	callq	0xc1f00 <_cgo_topofstack+0x1f40>
+   bde4a: 48 8b 1d b7 57 35 00         	movq	0x3557b7(%rip), %rbx    # 0x413608
+   bde51: 64 48 c7 03 23 01 00 00      	movq	$0x123, %fs:(%rbx)      # imm = 0x123
+   bde59: 48 8b 05 48 65 38 00         	movq	0x386548(%rip), %rax    # 0x4443a8
+   bde60: 48 3d 23 01 00 00            	cmpq	$0x123, %rax            # imm = 0x123
+   bde66: 74 05                        	je	0xbde6d <.text+0x6466d>
+   bde68: e8 b3 1f 00 00               	callq	0xbfe20 <.text+0x66620>
+   bde6d: 48 8b 1d 94 57 35 00         	movq	0x355794(%rip), %rbx    # 0x413608
+   bde74: 48 8d 0d c5 60 38 00         	leaq	0x3860c5(%rip), %rcx    # 0x443f40
+   bde7b: 64 48 89 0b                  	movq	%rcx, %fs:(%rbx)
+   bde7f: 48 8d 05 9a 64 38 00         	leaq	0x38649a(%rip), %rax    # 0x444320
+   bde86: 48 89 08                     	movq	%rcx, (%rax)
+   bde89: 48 89 41 30                  	movq	%rax, 0x30(%rcx)
+   bde8d: fc                           	cld
+   bde8e: e8 8d 49 00 00               	callq	0xc2820 <_cgo_topofstack+0x2860>
+   bde93: 8b 44 24 18                  	movl	0x18(%rsp), %eax
+   bde97: 89 04 24                     	movl	%eax, (%rsp)
+   bde9a: 48 8b 44 24 20               	movq	0x20(%rsp), %rax
+   bde9f: 48 89 44 24 08               	movq	%rax, 0x8(%rsp)
+   bdea4: e8 37 49 00 00               	callq	0xc27e0 <_cgo_topofstack+0x2820>
+   bdea9: e8 12 47 00 00               	callq	0xc25c0 <_cgo_topofstack+0x2600>
+   bdeae: e8 6d 48 00 00               	callq	0xc2720 <_cgo_topofstack+0x2760>
+   bdeb3: 48 8d 05 9e a5 22 00         	leaq	0x22a59e(%rip), %rax    # 0x2e8458
+   bdeba: 50                           	pushq	%rax
+   bdebb: e8 e0 48 00 00               	callq	0xc27a0 <_cgo_topofstack+0x27e0>
+   bdec0: 58                           	popq	%rax
+   bdec1: e8 7a 00 00 00               	callq	0xbdf40 <.text+0x64740>
+   bdec6: e8 55 1f 00 00               	callq	0xbfe20 <.text+0x66620>
+   bdecb: c3                           	retq
+   bdecc: 48 c7 04 24 02 00 00 00      	movq	$0x2, (%rsp)
+   bded4: 48 8d 05 45 f9 1c 00         	leaq	0x1cf945(%rip), %rax    # 0x28d820
+   bdedb: 48 89 44 24 08               	movq	%rax, 0x8(%rsp)
+   bdee0: 48 c7 44 24 10 54 00 00 00   	movq	$0x54, 0x10(%rsp)
+   bdee9: e8 52 4a 00 00               	callq	0xc2940 <_cgo_topofstack+0x2980>
+   bdeee: 48 c7 04 24 01 00 00 00      	movq	$0x1, (%rsp)
+   bdef6: e8 e5 37 00 00               	callq	0xc16e0 <_cgo_topofstack+0x1720>
+   bdefb: e8 20 1f 00 00               	callq	0xbfe20 <.text+0x66620>
+   bdf00: c3                           	retq
+   bdf01: 48 8d 05 18 22 00 00         	leaq	0x2218(%rip), %rax      # 0xc0120 <_cgo_topofstack+0x160>
+   bdf08: c3                           	retq
+   bdf09: cc                           	int3
+   bdf0a: cc                           	int3
+   bdf0b: cc                           	int3
+   bdf0c: cc                           	int3
+   bdf0d: cc                           	int3
+   bdf0e: cc                           	int3
+   bdf0f: cc                           	int3
+   bdf10: cc                           	int3
+   bdf11: cc                           	int3
+   bdf12: cc                           	int3
+   bdf13: cc                           	int3
+   bdf14: cc                           	int3
+   bdf15: cc                           	int3
+   bdf16: cc                           	int3
+   bdf17: cc                           	int3
+   bdf18: cc                           	int3
+   bdf19: cc                           	int3
+   bdf1a: cc                           	int3
+   bdf1b: cc                           	int3
+   bdf1c: cc                           	int3
+   bdf1d: cc                           	int3
+   bdf1e: cc                           	int3
+   bdf1f: cc                           	int3

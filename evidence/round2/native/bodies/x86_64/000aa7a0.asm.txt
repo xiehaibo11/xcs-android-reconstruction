@@ -1,0 +1,44 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000059800 <.text>:
+   aa7a0: 55                           	pushq	%rbp
+   aa7a1: 48 89 e5                     	movq	%rsp, %rbp
+   aa7a4: 48 83 ec 18                  	subq	$0x18, %rsp
+   aa7a8: 90                           	nop
+   aa7a9: b8 02 00 00 00               	movl	$0x2, %eax
+   aa7ae: 48 8d 1d 2a 99 18 00         	leaq	0x18992a(%rip), %rbx    # 0x2340df
+   aa7b5: b9 33 00 00 00               	movl	$0x33, %ecx
+   aa7ba: e8 81 4c 00 00               	callq	0xaf440 <.text+0x55c40>
+   aa7bf: 48 83 c4 18                  	addq	$0x18, %rsp
+   aa7c3: 5d                           	popq	%rbp
+   aa7c4: c3                           	retq
+   aa7c5: cc                           	int3
+   aa7c6: cc                           	int3
+   aa7c7: cc                           	int3
+   aa7c8: cc                           	int3
+   aa7c9: cc                           	int3
+   aa7ca: cc                           	int3
+   aa7cb: cc                           	int3
+   aa7cc: cc                           	int3
+   aa7cd: cc                           	int3
+   aa7ce: cc                           	int3
+   aa7cf: cc                           	int3
+   aa7d0: cc                           	int3
+   aa7d1: cc                           	int3
+   aa7d2: cc                           	int3
+   aa7d3: cc                           	int3
+   aa7d4: cc                           	int3
+   aa7d5: cc                           	int3
+   aa7d6: cc                           	int3
+   aa7d7: cc                           	int3
+   aa7d8: cc                           	int3
+   aa7d9: cc                           	int3
+   aa7da: cc                           	int3
+   aa7db: cc                           	int3
+   aa7dc: cc                           	int3
+   aa7dd: cc                           	int3
+   aa7de: cc                           	int3
+   aa7df: cc                           	int3

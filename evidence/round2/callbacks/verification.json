@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "business_method_evidence_count": 35,
+  "framework_method_evidence_count": 10,
+  "new_bounded_business_associations": 14,
+  "new_association_addresses": [
+    "0x4a1f4c",
+    "0x4a1fac",
+    "0x4a1fd0",
+    "0x4a2030",
+    "0x4a3390",
+    "0x4a36c0",
+    "0x4a36f8",
+    "0x4a37a0",
+    "0x4a37d8",
+    "0x4a383c",
+    "0x4a566c",
+    "0x4a56d4",
+    "0x4a6b94",
+    "0x4a6c04"
+  ],
+  "verified_instruction_words": 2895,
+  "failures": [],
+  "whole_methods_claimed_complete": 0,
+  "original_source_recovered": false,
+  "frozen_audit_modified": false,
+  "target_dart_invoked": false,
+  "business_server_contacted": false
+}

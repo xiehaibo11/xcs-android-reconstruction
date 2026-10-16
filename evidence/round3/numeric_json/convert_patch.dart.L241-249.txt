@@ -1,0 +1,9 @@
+241:     return result;
+242:   }
+243: 
+244:   // TODO(lrn): See if parsing of numbers can be abstracted to something
+245:   // not only working on strings, but also on char-code lists, without losing
+246:   // performance.
+247:   num parseNum() => num.parse(getString());
+248:   double parseDouble() => double.parse(getString());
+249: }

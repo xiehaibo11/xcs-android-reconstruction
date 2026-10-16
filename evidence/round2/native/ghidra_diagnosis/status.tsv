@@ -1,0 +1,16 @@
+phase	address	complete	calling_convention	signature	body	error
+baseline	15af40	false	unknown	undefined FUN_0015af40(void)	[[0015ae90, 0015af3b] [0015af40, 0015af53]]	 Recoverable Error: Unable to find unique hash for varnode
+baseline	15b400	false	unknown	undefined FUN_0015b400(void)	[[0015b400, 0015b413]]	 Recoverable Error: Unable to find unique hash for varnode
+baseline	15b420	false	unknown	undefined FUN_0015b420(void)	[[0015b310, 0015b3f3] [0015b420, 0015b433]]	 Recoverable Error: Unable to find unique hash for varnode
+baseline	15ae90	absent
+baseline	15b310	absent
+metadata_boundaries	15af40	false	unknown	undefined FUN_0015af40(void)	[[0015af40, 0015af53]]	 Recoverable Error: Unable to find unique hash for varnode
+metadata_boundaries	15b400	false	unknown	undefined FUN_0015b400(void)	[[0015b400, 0015b413]]	 Recoverable Error: Unable to find unique hash for varnode
+metadata_boundaries	15b420	false	unknown	undefined FUN_0015b420(void)	[[0015b420, 0015b433]]	 Recoverable Error: Unable to find unique hash for varnode
+metadata_boundaries	15ae90	false	unknown	undefined diagnostic_15ae90(void)	[[0015ae90, 0015af3b]]	 Recoverable Error: Unable to find unique hash for varnode
+metadata_boundaries	15b310	false	unknown	undefined diagnostic_15b310(void)	[[0015b310, 0015b3f3]]	 Recoverable Error: Unable to find unique hash for varnode
+explicit_tail_calls	15af40	true	unknown	undefined FUN_0015af40(void)	[[0015af40, 0015af53]]	
+explicit_tail_calls	15b400	true	unknown	undefined FUN_0015b400(void)	[[0015b400, 0015b413]]	
+explicit_tail_calls	15b420	true	unknown	undefined FUN_0015b420(void)	[[0015b420, 0015b433]]	
+explicit_tail_calls	15ae90	false	unknown	undefined diagnostic_15ae90(void)	[[0015ae90, 0015af3b]]	 Recoverable Error: Unable to find unique hash for varnode
+explicit_tail_calls	15b310	false	unknown	undefined diagnostic_15b310(void)	[[0015b310, 0015b3f3]]	 Recoverable Error: Unable to find unique hash for varnode

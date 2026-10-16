@@ -1,0 +1,32 @@
+{
+  "scope": "Publication checks for source-only reverse tools; not a rerun of all historical analysis.",
+  "python_ast_files": 68,
+  "shell_syntax_files": 2,
+  "original_source_files_verified_unchanged": 100,
+  "sensitive_format_scan": {
+    "status": "PASS",
+    "finding_count": 0,
+    "secret_values_printed": false,
+    "categories": [
+      "private_key_block",
+      "known_production_account",
+      "known_production_host",
+      "jwt_shape",
+      "developer_home_path",
+      "developer_jdk_path"
+    ]
+  },
+  "portable_simd_tool": {
+    "status": "PASS",
+    "fixture_inputs": 16160,
+    "java_result_checks": 64640,
+    "java_boundary_checks": 36,
+    "c_neon_result_checks": 48480,
+    "c_scalar_result_checks": 48480,
+    "fixture_binary_copied_under_reverse": false,
+    "original_apk_executed": false,
+    "backend_contacted": false
+  },
+  "all_historical_scripts_reexecuted": false,
+  "complete_original_source_recovered": false
+}

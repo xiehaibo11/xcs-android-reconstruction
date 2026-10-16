@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "scope": "Two SIMD shared bodies, genuine compiled reconstructions and original-instruction differential tests",
+  "original_source_recovered": false,
+  "original_source_recovered_count": 0,
+  "remaining_original_body_decompiler_errors": 2,
+  "compiled_semantic_implementations": [
+    "go_byte_primitives.c",
+    "app/src/main/java/com/re/xcs/rebuild/core/GoBytePrimitives.java"
+  ],
+  "new_business_call_sites": 0,
+  "business_server_contacted": false,
+  "dataset_inputs": 16160,
+  "original_arm64_function_executions": 32320,
+  "compiled_c_result_checks": 96960,
+  "java_result_checks": 64640,
+  "java_boundary_checks": 36,
+  "c_sanitizer_checks": 26156,
+  "original_memory_boundary_checks": 1218,
+  "original_instruction_coverage": {
+    "executed": 100,
+    "total": 100
+  },
+  "fixture_file": "original_arm64_cases.bin.gz",
+  "fixture_sha256": "b4e3ae9ce654fdd2758b25cacca9d4b74c46e3eefeaf2d2d16b58e5fcf4ea5f2",
+  "java_source_sha256": "2b2061c38fe2ea83ba5767cb5b269dec5c955721c2b0deb5e4c4f8c1a7fea3e5",
+  "c_source_sha256": "25458cc0faa3ef50980188f4539fa150c28a7aaa8ea7840292dfea519e1b068c",
+  "portable_test_command": "sh evidence/round3/simd/run_tests.sh",
+  "portable_test_type": "Replay recorded original ARM64 results; does not emulate original machine code without the APK",
+  "detailed_original_execution_report": "differential_verification.json",
+  "ghidra_diagnosis": {
+    "original_bodies_still_fail": true,
+    "temporary_nop_ablations": true,
+    "temporary_ld1_to_ldp_analysis_outputs": 2,
+    "all_elf_and_database_changes_rolled_back": true,
+    "diagnostic_c_used_as_implementation": false,
+    "internal_hash_collision_count_measured": false,
+    "results": "ghidra/status.tsv"
+  },
+  "limitations": [
+    "Original Go authoring source is not recovered.",
+    "Original ARM64 index reads whole aligned blocks; safe Java/C index uses bounded reads.",
+    "Caller must supply valid readable/writable objects; C range checks cannot prove arbitrary pointer validity.",
+    "Original tested ISA is little-endian ARM64; C tested on macOS arm64 with NEON and scalar backends.",
+    "Checked argument failures are reconstruction API behavior, not original Go assembly exceptions.",
+    "No concurrent runtime, JNI or business invocation equivalence is claimed."
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "original_source_recovered": false,
+  "files": [
+    {
+      "file": "DiagnoseSimd.java",
+      "bytes": 4642,
+      "sha256": "58b4d50f48765ab35ed4175774074210b9a833c1f3f15f08b3a7a4c7db3b6717"
+    },
+    {
+      "file": "GoBytePrimitivesProbe.java",
+      "bytes": 2883,
+      "sha256": "d2e0d62890617b83a6b920136d4a90a2e0b824cc1eadbd7639e193407715b389"
+    },
+    {
+      "file": "PortablePrimitiveTest.java",
+      "bytes": 1915,
+      "sha256": "0e2b12d07b74fde650b8185cd1f0750f058b03e237137be91f67c418e24ed557"
+    },
+    {
+      "file": "README.txt",
+      "bytes": 7946,
+      "sha256": "7500b63af6f4065f5b91eac30331eeeac091194551dbf48557f41baf5f52727f"
+    },
+    {
+      "file": "differential_run.log",
+      "bytes": 298,
+      "sha256": "da98be5e71ce959e197b68955bce5482d7b643b30988c6d647ceeb0a2e9b52ca"
+    },
+    {
+      "file": "differential_test.py",
+      "bytes": 10952,
+      "sha256": "0ea2cabe9d0382f6eb602d5055b53c9f87a858721e09439bb7b6d0020a488b51"
+    },
+    {
+      "file": "differential_verification.json",
+      "bytes": 13376,
+      "sha256": "ce47b7c563d717c7316102905a112f1483a1c1fc1d78b16cde5a78c272f4d325"
+    },
+    {
+      "file": "ghidra/all_neon_nop_15ae90.c",
+      "bytes": 1119,
+      "sha256": "df24b9741a6e99805a273b550118ea5722de44c03927edfd341ffab1f3bf8325"
+    },
+    {
+      "file": "ghidra/all_neon_nop_15b310.c",
+      "bytes": 1519,
+      "sha256": "4ef30004477ae0ea31d267f54e575d62a16b4eb05a48526b9cd811f35ffa9e13"
+    },
+    {
+      "file": "ghidra/baseline_15ae90.xml",
+      "bytes": 4648,
+      "sha256": "4dc4d668ed164d3e713da565b96e97d30f8e9d89459b286d0005b872f1fe21e3"
+    },
+    {
+      "file": "ghidra/baseline_15b310.xml",
+      "bytes": 4764,
+      "sha256": "4aee14976ddfa0787106be88238070bb47f197f6e789de6966b10d1a24549bbf"
+    },
+    {
+      "file": "ghidra/equivalent_ldp_15ae90.c",
+      "bytes": 2875,
+      "sha256": "d849b53e277e92527bc43b5e09a84220a3e7704d6954fb4730535ba00972f4aa"
+    },
+    {
+      "file": "ghidra/equivalent_ldp_15ae90.xml",
+      "bytes": 4793,
+      "sha256": "3f34111e0e9a88465d2ab1c6d710b56f1cde36381cf33cea49ff135632f5fc20"
+    },
+    {
+      "file": "ghidra/equivalent_ldp_15b310.c",
+      "bytes": 11926,
+      "sha256": "8ef050da8b884ef982a7f0fd76c8affb5c2ee0f69aedddb0e2a0166bd7e2cc5b"
+    },
+    {
+      "file": "ghidra/equivalent_ldp_15b310.xml",
+      "bytes": 5173,
+      "sha256": "ca6acad099aeb51f493dbb3e01f5ff39f0f5943c3c8ca3632f8850c906dd3032"
+    },
+    {
+      "file": "ghidra/instruction_pcode.txt",
+      "bytes": 78140,
+      "sha256": "39d4d0a085dc32562b7fcbd8a9e978860c2f345e1c63ea48363987a0551e21e5"
+    },
+    {
+      "file": "ghidra/status.tsv",
+      "bytes": 2934,
+      "sha256": "8aca1eb25e747f23eb19050a36064f3391dbcbdad8cc18ce137df1bee0e5cf4d"
+    },
+    {
+      "file": "ghidra_run.log",
+      "bytes": 4190,
+      "sha256": "838ff1a1707069a66a75bd2c844b661e97b097dfc6c2a35af771b1e9bc5f4e91"
+    },
+    {
+      "file": "go_byte_primitives.c",
+      "bytes": 4553,
+      "sha256": "25458cc0faa3ef50980188f4539fa150c28a7aaa8ea7840292dfea519e1b068c"
+    },
+    {
+      "file": "go_byte_primitives.h",
+      "bytes": 1341,
+      "sha256": "47668a79e3c4220d3d7e8ad5f7625b9ed31f8a54aabd1105d5e3e82a9e3f892d"
+    },
+    {
+      "file": "native_boundaries.c",
+      "bytes": 2770,
+      "sha256": "916a2c4480491211e36cb2a6b2553febc39bae8d26246cf192f9b260c21fc2b4"
+    },
+    {
+      "file": "original_arm64_cases.bin.gz",
+      "bytes": 1281598,
+      "sha256": "b4e3ae9ce654fdd2758b25cacca9d4b74c46e3eefeaf2d2d16b58e5fcf4ea5f2"
+    },
+    {
+      "file": "original_bodies/0005ae90.asm.txt",
+      "bytes": 2131,
+      "sha256": "862963f759865118d49eee3bf87c547faabd26cfc5c79395089bc6ffc0883d94"
+    },
+    {
+      "file": "original_bodies/0005ae90.bin",
+      "bytes": 176,
+      "sha256": "0e55df30846b491508b22a952045266e0a08e8504d2c2bbb062b152241e507b3"
+    },
+    {
+      "file": "original_bodies/0005b310.asm.txt",
+      "bytes": 2798,
+      "sha256": "f277526bd8974c3062db81b76ff656cec9ea55922f8dd2dc995d8cc331fe1134"
+    },
+    {
+      "file": "original_bodies/0005b310.bin",
+      "bytes": 240,
+      "sha256": "5ac46873c102d28b4ea1faf5ffe3f8ccd777959068d47821c23d7607a335af7e"
+    },
+    {
+      "file": "original_bodies/metadata.json",
+      "bytes": 2496,
+      "sha256": "03e8b5a9eb91e4bd44d095dab4da6c03c3a56369ae307f7dd6fa0e7756924cdf"
+    },
+    {
+      "file": "portable_native_test.c",
+      "bytes": 1512,
+      "sha256": "1aacf6add744b7ba553e033b26662b68840c1480e90cbe3707f38e1a08091449"
+    },
+    {
+      "file": "portable_test_run.log",
+      "bytes": 265,
+      "sha256": "639bf7151fd12b20896284b4ab4c597d16a2b7027f543316f50ee2a18f0b75f3"
+    },
+    {
+      "file": "publish_evidence.py",
+      "bytes": 4969,
+      "sha256": "c5f71ea9afc22764ad6452552fb24177db503e8fe18999239e633a5be921a866"
+    },
+    {
+      "file": "run_tests.sh",
+      "bytes": 1877,
+      "sha256": "dfcefb8574ac931de31102d42947960e6fe9cb1cb26588b9ca73fa9dae73861c"
+    },
+    {
+      "file": "verification.json",
+      "bytes": 2309,
+      "sha256": "f62f24223565d320f3474839aa618ad32714d9ae552e258531f6ed195351f526"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "exact_original_binary_intervals_verified": 103,
+  "abi_target_counts": {
+    "arm64-v8a": 8,
+    "armeabi-v7a": 8,
+    "x86": 7,
+    "x86_64": 8
+  },
+  "bytealg_cases_verified": 22854,
+  "runtime_cases_verified": 16,
+  "emulator_script_hash_matches_report": true,
+  "wrapper_diagnostic_c_successes": 3,
+  "remaining_simd_decompiler_errors": 2,
+  "original_source_recovered_count": 0
+}

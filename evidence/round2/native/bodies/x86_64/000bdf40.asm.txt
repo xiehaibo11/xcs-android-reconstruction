@@ -1,0 +1,34 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000059800 <.text>:
+   bdf40: e8 fb 47 00 00               	callq	0xc2740 <_cgo_topofstack+0x2780>
+   bdf45: c3                           	retq
+   bdf46: cc                           	int3
+   bdf47: cc                           	int3
+   bdf48: cc                           	int3
+   bdf49: cc                           	int3
+   bdf4a: cc                           	int3
+   bdf4b: cc                           	int3
+   bdf4c: cc                           	int3
+   bdf4d: cc                           	int3
+   bdf4e: cc                           	int3
+   bdf4f: cc                           	int3
+   bdf50: cc                           	int3
+   bdf51: cc                           	int3
+   bdf52: cc                           	int3
+   bdf53: cc                           	int3
+   bdf54: cc                           	int3
+   bdf55: cc                           	int3
+   bdf56: cc                           	int3
+   bdf57: cc                           	int3
+   bdf58: cc                           	int3
+   bdf59: cc                           	int3
+   bdf5a: cc                           	int3
+   bdf5b: cc                           	int3
+   bdf5c: cc                           	int3
+   bdf5d: cc                           	int3
+   bdf5e: cc                           	int3
+   bdf5f: cc                           	int3

@@ -1,0 +1,107 @@
+公开副本说明：本文件为历史分析报告，具体本机路径已脱敏为 <LOCAL_APP> 或 <LOCAL_WORKSPACE>；报告中的历史完成状态不代表完整原始源码已恢复。
+
+鑫财神 Android APK 静态逆向分析记录
+
+分析对象：<LOCAL_WORKSPACE>/app_xcs(新).apk.1.1
+分析工作目录：<LOCAL_APP>
+分析日期：2026-10-13
+SHA-256：8fd060966759990ab5ef90639e3376a2b6aea209f3f545d768a2fdc668dfeaa9
+原文件与工作副本的 SHA-256 均已复核一致。原文件未修改。
+
+应用信息
+应用名：鑫财神
+包名：com.re.xcs
+版本：2.1.6（versionCode 39）；来自 analysis/aapt_badging.txt。
+最低 Android API：21；目标 API：34。
+APK：44,379,386 字节；ZIP 条目 427 个；classes.dex 1 个。
+启动 Activity：com.example.distinguish.MainActivity。
+签名校验：apksigner verify 成功；详细证书信息见 analysis/apk_signature.txt。
+
+已完成的逆向工作
+1. 保存工作副本，并完整提取全部 ZIP 条目至 unpacked。
+2. Apktool 解包成功，得到 Manifest、资源和 5133 个 Smali 文件。
+3. JADX 导出 2508 个 Java 文件。初次有 11 个错误，涉及 8 个文件；这 8 个类均以 fallback 模式另行导出成功，位于 jadx_fallback，共 8 个文件。fallback 是指令形式，不能理解为已恢复可编译 Java 源码。
+4. 分析 arm64 的 libapp、libflutter、librust_lib_distinguish、librsa_bridge 的 ELF 节、动态符号和字符串。
+5. 从 Dart AOT 快照的一段连续字符串序列中解析出 23,484 条字符串，含 53 个应用文件路径、21 个业务 API 路径和 403 条含中文的字符串。文件路径和字符串是编译产物线索，不是已还原的 .dart 源码。
+6. Ghidra 建立 xcs_native 项目，并完成 Rust 和 RSA 两个 arm64 库的自动分析。函数索引分别含 3632 和 2863 个函数；入口及直接调用函数分别导出 8、9 个伪代码函数。
+
+架构与功能证据
+Android MainActivity 的主要自定义行为是 MethodChannel android/back/desktop 的 backDesktop，调用 moveTaskToBack(false)。其他原生能力由插件注册提供。
+主要业务编译于 Flutter libapp.so。可见 login_page、main_page、online_setting_page、online_setting_wifi_page、frame_preview_page、key_form_page、update_app_page 和 edit_pwd__page 等文件路径。
+service 包可见 login、account、config、main、games、preview、log、view_setting、app；model 包可见 user、devices、mj_config、data_config、wifi_config、online_config、lighting_config、channel、message 等。
+Dart HTTP 层出现 Dio、request_interceptors、response_interceptors、Authorization 和 Bearer 字符串。具体请求方法、鉴权流程和参数结构尚未从运行时验证。
+
+Rust 库职责
+Ghidra 分发器确认的 FRB 函数 ID：
+  primary 1 create_event_stream
+  sync    2 greet
+  primary 3 init_app
+  primary 4 init_ws
+  primary 5 is_content_ws
+  primary 6 ws_login
+  primary 7 ws_logout
+Rust 字符串存在 tokio/tungstenite、WebSocket 握手、登录回调、心跳、自动重登录、QoS 重传和重复包处理。协议字段线索包括 types、data_content、to、fp、qos。
+第二轮已通过格式描述器及 ELF 重定位确认 URI 模板为 ws://{运行时地址}:18889；消息结构已继续静态提取，见深度提取报告.txt。服务器实际地址及可达性未验证。
+这些证据支持 Rust 模块承担通信职责。库名包含 distinguish，不能据此认定它执行本地麻将图像推理；本次未确认到本地识别模型或模型推理代码。
+
+业务接口线索
+以下 21 个路径来自 libapp.so 字符串常量；尾部斜杠可能用于追加参数。没有访问这些接口，也未确认 HTTP 方法和请求体。
+  /api/preview/end_preview/
+  /api/preview/start_preview/
+  /api/config/set_data_config
+  /api/login/login/distinguish
+  /api/config/set_wifi
+  /api/zhuo/zhuo_reset_games
+  /api/mj/get_config
+  /api/config/get_device_wifi_list
+  /api/zhuo/restart_device
+  /api/server/get_server_addr
+  /api/preview/set_preview_img_type/
+  /api/config/get_default_wifi
+  /api/zhuo/start_games
+  /api/zhuo/add
+  /api/preview/set_params_v2/
+  /api/config/set_number
+  /api/config/wifi_device_up
+  /api/zhuo/device_status_all
+  /api/app/check_update
+  /api/config/get_config
+  /api/zhuo/end_games
+
+更新与设备功能
+包内出现更新下载地址 http://s02.mss666.com/app.apk，以及 /api/app/check_update。该地址的现状未访问验证。
+中文文本与模块路径显示应用含设备 WiFi 配置、设备张数/方位配置、光控/电机配置、预览图像、识别牌数据和开局/结束控制的界面线索。它们不能证明相关功能在当前服务器上均可用。
+Manifest 注册 OTA 更新插件的 FileProvider，声明 REQUEST_INSTALL_PACKAGES；包内另有 WiFi 扫描、图片访问、视频、音频、WebView、设备信息、保持唤醒等 Flutter 插件。
+
+密钥与网络配置
+assets/flutter_assets/key/private_key.pem 和 pub_key.pem 是匹配的 2048 位 RSA 私钥/公钥，匹配性通过 OpenSSL 在本机验证。所有已提取的 PEM 副本权限设为 600；报告仅记录公钥指纹，不包含私钥内容。
+librsa_bridge.so 导出 RSABridgeCall，并含 Go/cgo 桥接入口；具体密钥用于哪条业务链路还需追踪 Dart 调用。
+Manifest usesCleartextTraffic=true，network_security_config base-config 允许明文通信。网络层与客户端内置私钥是后续审计应关注的位置；尚未确认私钥能否用于服务端身份伪造。
+
+本机工具状态
+已运行并验证：JADX 1.5.6、Apktool 3.0.3、Ghidra 12.1.4、Java 21.0.10、radare2 6.2.4、Rizin 0.9.1、Frida 17.16.4、LLVM objdump 23.1.3、adb、aapt/aapt2、apksigner。
+已发现安装：dex2jar 2.4、APK Analyzer、JADX GUI。Objection 1.12.5 已安装，但本次启动因尝试写入工作区外的 ~/.objection/objection.log 被文件权限限制拒绝；不影响本次静态分析。
+未在 PATH 发现 dart、flutter、blutter、reflutter、darter、独立 smali/baksmali 命令。Apktool 已完成 Smali 输出。
+工具绝对路径和版本输出见 analysis/local_tools.json；相关 GUI 应用见 analysis/local_apps.json。
+
+分析限制
+Flutter 为 release AOT，JADX 只能处理 DEX 中的 Android 层；本次没有恢复完整可编辑的 Dart 工程。
+Ghidra 报告整体分析及项目保存成功，但日志含 GCC 异常表反汇编警告和 Go 类型分析失败（runtime.sigset）。伪代码的类型、Go 调用约定和局部变量可能不准确；导出成功不代表语义全部正确。
+没有安装 APK、运行应用、连接设备或模拟器、执行 Hook，也没有访问业务服务器。所有接口、端口和功能推断均是静态结果。
+
+目录导航
+input/app_xcs.apk              工作副本
+unpacked/                     原始 ZIP 内容，含各架构 SO 和 Flutter 资源
+apktool/decoded/               Manifest、解码资源、Smali
+jadx/sources/                 Java 反编译输出
+jadx_fallback/                初次出错类的指令形式输出
+analysis/flutter/             Dart 快照字符串、业务路径、API、中文文本
+analysis/native/              arm64 原生库字符串、ELF 节、符号
+analysis/ghidra/               原生函数索引、入口伪代码、导出状态
+analysis/rust_bridge_map.json Rust 分发器映射与通信线索
+analysis/local_tools.json     本机逆向工具清单
+analysis/analysis_status.json 分析验证状态
+ghidra/xcs_native.gpr          可在 Ghidra 中打开的项目
+scripts/                      字符串提取与 Ghidra 导出脚本
+logs/                         工具执行日志与错误证据
+深度提取报告.txt               第二轮协议、符号、平台参数及 RSA 请求表结果

@@ -1,0 +1,3 @@
+23361: const char* Mint::ToCString() const {
+23362:   return OS::SCreate(Thread::Current()->zone(), "%" Pd64 "", value());
+23363: }

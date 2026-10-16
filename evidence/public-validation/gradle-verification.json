@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "command": [
+    "./gradlew",
+    "--offline",
+    ":app:assembleDebug"
+  ],
+  "android_sdk_configured_via_environment": true,
+  "apk": "app/build/outputs/apk/debug/app-debug.apk",
+  "apk_sha256": "af74fec2805cb9a3c72c0dc59c448fa64a730aa46a2d483f0f8e896498d475b4",
+  "observed_summary": "BUILD SUCCESSFUL; 32 actionable tasks: 32 executed",
+  "device_execution_performed": false
+}

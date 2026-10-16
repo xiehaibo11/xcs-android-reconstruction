@@ -1,0 +1,3 @@
+23291: const char* Smi::ToCString() const {
+23292:   return OS::SCreate(Thread::Current()->zone(), "%" Pd "", Value());
+23293: }

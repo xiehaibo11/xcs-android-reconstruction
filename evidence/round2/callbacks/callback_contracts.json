@@ -1,0 +1,1006 @@
+{
+  "scope": "Bounded callback/state reconstruction, never complete original source",
+  "claims": [
+    {
+      "id": "preview_state_ownership_and_async_values",
+      "business_methods": [
+        "457b58",
+        "457dc4",
+        "4580b4",
+        "45911c",
+        "459704",
+        "460ab4",
+        "460b60",
+        "461014",
+        "4ac0b8",
+        "51d844"
+      ],
+      "scope": "Previously established preview contract made executable; rereading is not new method completion.",
+      "slots": {
+        "PreviewService.field_b": "nullable Devices.id; default0; request/route ID",
+        "MainService.field_f": "unboxed int WS102 filter; default-1",
+        "MainService.field_b": "singleton RxString, initial empty"
+      },
+      "events": [
+        "startPreview writes service ID before HTTP GET. Its response callback reads captured Devices.id at callback time, null=>0, and sets filter regardless ok/business success.",
+        "A rejected or still-pending Future never runs the onValue callback; do not synthesize its effect.",
+        "savePreviewParams and endPreview clear service ID before POST. Failure does not roll it back.",
+        "Save callback checks ok then strict bool success then captured close bool. Accepted close calls endPreview(captured Devices current id), attaches null callback, then Navigator.pop(true) without awaiting end.",
+        "Route completion ignores pop result. If current service ID !=0, including null, issues endPreview(current ID); zero skips.",
+        "FramePreview.initState clears RxString only; no startPreview/filter-reset call occurs in that method.",
+        "end does not clear filter/frame. Reentry retains old filter until a normal start response overwrites it. Completion order wins; no epoch/generation check.",
+        "Late save-close callback issues end before consulting State.element; if disposed, the later navigation can throw after end was dispatched."
+      ],
+      "limits": [
+        "No server acceptance inferred from HTTP completion. Android route guards intentionally differ and must be documented by its owner."
+      ]
+    },
+    {
+      "id": "ws102_rx_string_receiver",
+      "business_methods": [
+        "527460",
+        "459704",
+        "51d844"
+      ],
+      "framework_methods": [
+        "4597b0",
+        "459810",
+        "51d884",
+        "2db568",
+        "55e340",
+        "674170",
+        "673f8c"
+      ],
+      "events": [
+        "WS102 content dynamic toString; optional prefix int.parse split[0] compared to MainService.field_f, takes split[1], ignores later parts; unprefixed text bypasses filter.",
+        "decodeData runs before value=; parse/decode failure preserves previous frame. Rendering/base64 failure occurs outside this setter and cannot roll back its stored value.",
+        "MainService._getInstance allocates StringExtension.obs => RxString<String>, initial empty and field_17=true.",
+        "At 0x51d8e4..0x51d908 setter returns when GetStream.field_1b is null (close writes null at0x55e36c).",
+        "At0x51d90c..0x51d968 current String == incoming String and first flag false returns without store or add. Initial flag true permits equal empty first event.",
+        "Accepted update first sets flag=false, then stores _value, then GetStream.add. Original snapshot resolves direct GDT[cid] for CID93 to _OneByteString::==0x674170 and CID94 to _TwoByteString::==0x673f8c.",
+        "No preview-page, serviceID, connection/auth, mounted or epoch test appears in WS102 receive branch. Duplicate suppression is Rx value equality, not a protocol-level duplicate check."
+      ],
+      "limits": [
+        "Framework observer scheduling/listener exceptions and repaint details are not reproduced by the synchronous Java Listener callback. Stream-close helper exposes framework semantics; route exit does not invoke it."
+      ]
+    },
+    {
+      "id": "shared_end_completion",
+      "business_methods": [
+        "460b60",
+        "527460"
+      ],
+      "framework_methods": [
+        "6f2a58"
+      ],
+      "events": [
+        "PP0x1be10 and PP0x14ca0 refer to the same pooled code address0x6f2a58. Original 8-byte body e00316aac0035fd6 is mov x0,x22; ret; ignores response and returns null.",
+        "The historical pretty-printer name Shader::Shader._ reflects shared code canonicalization, not a shader operation. sharedNullCompletion is an exact known no-op, not an unfinished implementation."
+      ],
+      "limits": [
+        "Future exception propagation is framework-owned; this onValue closure is not a catchError/retry/cleanup callback."
+      ]
+    },
+    {
+      "id": "main_view_modes_and_palette",
+      "business_methods": [
+        "565264",
+        "4aa6b8",
+        "4aa71c",
+        "4a36c0",
+        "4a36f8",
+        "4a375c",
+        "4a37a0",
+        "4a37d8",
+        "4a383c",
+        "4a1f4c",
+        "4a1fac",
+        "4a1fd0",
+        "4a2030",
+        "4a566c",
+        "4a56d4",
+        "4a6b94",
+        "4a6c04",
+        "4a3390",
+        "4a33cc",
+        "4a344c"
+      ],
+      "slots": {
+        "MainState.field_27": "pageMode, initial1",
+        "MainState.field_47": "displayType, initial2",
+        "MainState.field_4f": "paletteVisible initialfalse",
+        "MainState.field_2f": "selected ChannelResult initiallynull"
+      },
+      "events": [
+        "onOpenChangePage sets pageMode2. onCloseChangePage is pageMode==1?0:1; mode0 must not be erased by an assumed constant return-to-main.",
+        "onViewShowType is displayType==2?1:2; does not clear palette or selected object.",
+        "Palette open/close set only field4f. Result click captures actual ChannelResult into selected field2f and opens palette.",
+        "Cancel/dialog closure clears selected before Navigator.pop, with no palette field write.",
+        "Outer onSelectMj0x4a33cc checks selected null and returns. Inner0x4a344c requires nonnull, stores config.id.toString and config.url; hides palette only when displayType2, retaining selected object."
+      ],
+      "limits": [
+        "Analyst field aliases are not recovered original variable names. Java state methods do not replicate Flutter layout/widgets or setState after disposal."
+      ]
+    },
+    {
+      "id": "recognition_and_upload_view_effects",
+      "business_methods": [
+        "527460",
+        "529164",
+        "529c50",
+        "4aa6b8",
+        "4aa71c",
+        "4a32b0"
+      ],
+      "events": [
+        "WS113 at0x527db0..0x527db8 replaces each channel results with a new empty list; late saveImg completion iterates current channels/results and may append into the new round.",
+        "Recognized-count equality cancels timer, sets countdown0/status, then onOpenChangePage before onValidDataAndSendData at0x529814/0x529824.",
+        "Upload accepted callback executes for each live channel: pageMode1, replaces that channel results with a fresh empty list, hides visible palette only for displayType2.",
+        "Zero channels means no loop iteration, hence no pageMode/palette change. SelectedResult and removedOffset are not cleared by this callback."
+      ],
+      "limits": [
+        "Java now replaces List references for WS113 and upload callbacks; renderer/widget subscriptions and other outstanding list aliases are not reconstructed. Validation/server correctness remain separate."
+      ]
+    },
+    {
+      "id": "http401_numeric_equality",
+      "business_methods": [
+        "67f850"
+      ],
+      "framework_methods": [
+        "6747cc",
+        "674930"
+      ],
+      "events": [
+        "ResponseInterceptors requires status401 AND dynamic data.code==401. Snapshot GDT equality resolves _Double::==0x6747cc and _IntegerImplementation::==0x674930; numeric401.0 satisfies numeric equality while String401 does not.",
+        "Matching branch clears Dart JWT and navigates offAll(LoginPage), without handler.next in that branch. It does not directly clear preview IDs/frame or native authentication."
+      ],
+      "limits": [
+        "SessionState.onHttpError implements numeric predicate/JWT mutation only; it does not model the original possibly pending completer or full navigation/native token lifetime."
+      ]
+    }
+  ],
+  "method_proofs": [
+    {
+      "address": "0x457b58",
+      "source": "analysis/aot_dump/asm/distinguish/pages/frame_preview/frame_preview_page.dart",
+      "signature": "_ _onStartPreview(/* No info */) {",
+      "elf_offset": 4553560,
+      "size": 620,
+      "body_sha256": "fbc4a7e18aa8767536701eb3d6f3c1b90268ed5e762a539fd3ba3fc1996d4f69",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x457dc4",
+      "source": "analysis/aot_dump/asm/distinguish/service/preview_service.dart",
+      "signature": "_ startPreview(/* No info */) {",
+      "elf_offset": 4554180,
+      "size": 200,
+      "body_sha256": "0871988478597889d2686fae2c603e37f81b52d6cfed8631ab400fdb1e0565aa",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4580b4",
+      "source": "analysis/aot_dump/asm/distinguish/service/preview_service.dart",
+      "signature": "static _ _getInstance(/* No info */) {",
+      "elf_offset": 4554932,
+      "size": 132,
+      "body_sha256": "017573d0a29a3035def14d8afab8c0171402cee43a0035567a4449a24d19aad1",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x45911c",
+      "source": "analysis/aot_dump/asm/distinguish/pages/frame_preview/frame_preview_page.dart",
+      "signature": "[closure] Null <anonymous closure>(dynamic, HttpResponse) {",
+      "elf_offset": 4559132,
+      "size": 140,
+      "body_sha256": "d6c315f3bd9c69314282d43968c535e2299ceedbeb16d159ed45dbe98a753ebb",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x459704",
+      "source": "analysis/aot_dump/asm/distinguish/service/main_service.dart",
+      "signature": "static _ _getInstance(/* No info */) {",
+      "elf_offset": 4560644,
+      "size": 172,
+      "body_sha256": "5f72b41d8c295455201c1fda3f3f99de7ffe8e210de54d099ba3541d5501a2d4",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x460ab4",
+      "source": "analysis/aot_dump/asm/distinguish/service/preview_service.dart",
+      "signature": "_ savePreviewParams(/* No info */) {",
+      "elf_offset": 4590260,
+      "size": 172,
+      "body_sha256": "0037b9d6c9a4656bb12683db2f91d652db8ce3570dcd1846a5096cc8aa9ed49e",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x460b60",
+      "source": "analysis/aot_dump/asm/distinguish/pages/frame_preview/frame_preview_page.dart",
+      "signature": "[closure] Null <anonymous closure>(dynamic, HttpResponse) {",
+      "elf_offset": 4590432,
+      "size": 388,
+      "body_sha256": "b9a182504190e7e128561d752fab8b6012d41ff89d417e5b5fe13c5a968f9750",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x461014",
+      "source": "analysis/aot_dump/asm/distinguish/service/preview_service.dart",
+      "signature": "_ endPreview(/* No info */) {",
+      "elf_offset": 4591636,
+      "size": 156,
+      "body_sha256": "cd41e3be844b91e7d96fcb974673c467b3a6d4a0be350edb973240353f9c1cf9",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a1f4c",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "elf_offset": 4857676,
+      "size": 96,
+      "body_sha256": "12cfa0adb72b479f4bb5079acc203a0c2f9c197469248b656cf42656bb97c49e",
+      "prior_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a1fac",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "elf_offset": 4857772,
+      "size": 36,
+      "body_sha256": "d76642b6c04378c4910e7252491eb798f8c6e295222fc65822a64a281caf738e",
+      "prior_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a1fd0",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "elf_offset": 4857808,
+      "size": 96,
+      "body_sha256": "abf1ceb1c1d041eddedf96c0f2123707af0142cfa13124c40ad3a6842aa7ce70",
+      "prior_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a2030",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "elf_offset": 4857904,
+      "size": 36,
+      "body_sha256": "9da2edb26c0e0bd89cc219310c27095fb62e98bb6a6974a3f87402046a8318da",
+      "prior_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a32b0",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "elf_offset": 4862640,
+      "size": 192,
+      "body_sha256": "e5ca2a524c1e7141d99a865c7d8a3879f6c9a94021994ddb08e8d2dc600a5222",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a3390",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void onSelectMj(dynamic, MjConfig) {",
+      "elf_offset": 4862864,
+      "size": 60,
+      "body_sha256": "bc48b63eb1a278ba19b654bbae3c1803cea58ce278d8c0187e7a8fa91bb06cba",
+      "prior_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a33cc",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "_ onSelectMj(/* No info */) {",
+      "elf_offset": 4862924,
+      "size": 128,
+      "body_sha256": "4720b0f01ffb2fb9e0966f5abd54dac10c66a3060866075ba4a9e510acf9e5fc",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a344c",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "elf_offset": 4863052,
+      "size": 300,
+      "body_sha256": "e366bbe7987e71af621473e664cf66f2b1ec25271de11548d37b750bc20dc099",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a36c0",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void onCloseChangePage(dynamic) {",
+      "elf_offset": 4863680,
+      "size": 56,
+      "body_sha256": "4b3ea1adac4a2fa4e86b2b9ca17fc9c1456fc2c5c85810d3618d7b0ff47d6294",
+      "prior_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a36f8",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "_ onCloseChangePage(/* No info */) {",
+      "elf_offset": 4863736,
+      "size": 100,
+      "body_sha256": "62dbe6237f7fb95d515f665cbd82c6815cda8c6d5300c94a8579091adc099fc6",
+      "prior_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a375c",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "elf_offset": 4863836,
+      "size": 68,
+      "body_sha256": "a1f80fd1f8c67c854e2bfe0f34e080ba139aba0b1ad51d33b7f3363e4efb652a",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a37a0",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void onViewShowType(dynamic) {",
+      "elf_offset": 4863904,
+      "size": 56,
+      "body_sha256": "f9bda75ab90f41880ee5a65d8740072fa964f5e67fd682839c718499eeccc087",
+      "prior_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a37d8",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "_ onViewShowType(/* No info */) {",
+      "elf_offset": 4863960,
+      "size": 100,
+      "body_sha256": "21eacb03163a086988d60d8665729919510927c727df8d3aca192dc5fa1b2cbb",
+      "prior_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a383c",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "elf_offset": 4864060,
+      "size": 76,
+      "body_sha256": "0d50275c6e76ae1fad443c623f002ce7aea6aa80ebcc5f13690bbcc3d1b90dd1",
+      "prior_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a566c",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "elf_offset": 4871788,
+      "size": 104,
+      "body_sha256": "a6143557487330503d81383341ef381967f4f4de1c91cabba971cbd0cb8c92c6",
+      "prior_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a56d4",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "elf_offset": 4871892,
+      "size": 88,
+      "body_sha256": "07bd3f04509bae335c230caf3f9fca75972a633528264e220ec5e0eeed7be94e",
+      "prior_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a6b94",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "elf_offset": 4877204,
+      "size": 112,
+      "body_sha256": "bbbc2dbcc184e60978b46c234ae02832512969a22de61eb908c8d60fbbd48b9c",
+      "prior_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4a6c04",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "elf_offset": 4877316,
+      "size": 124,
+      "body_sha256": "3807ac930f38cc2778c914ed6378673dca9bcd66f55ca0b21ce338ca67f12335",
+      "prior_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4aa6b8",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "_ onOpenChangePage(/* No info */) {",
+      "elf_offset": 4892344,
+      "size": 100,
+      "body_sha256": "29c55d6a86077a1f6691af4f680b31cbb5081216797ce114cae0f31f2c9b67e8",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4aa71c",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "elf_offset": 4892444,
+      "size": 36,
+      "body_sha256": "6da16de684b85025edc6be6100168eb8ad772966290f20e26714a5ab30a80a03",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x4ac0b8",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] Null <anonymous closure>(dynamic, dynamic) {",
+      "elf_offset": 4899000,
+      "size": 124,
+      "body_sha256": "f2e220945b5ebea5a4d46e7f58f1e5346b5a9bb3d3e3a290ae0ec1d01ac413b4",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x51d844",
+      "source": "analysis/aot_dump/asm/distinguish/pages/frame_preview/frame_preview_page.dart",
+      "signature": "_ initState(/* No info */) {",
+      "elf_offset": 5363780,
+      "size": 64,
+      "body_sha256": "62398e364e9e7fd388fe0dd4459f28cda8891b25c43bd9df94f3234d846f077b",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x527460",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void <anonymous closure>(dynamic, WsEvent) {",
+      "elf_offset": 5403744,
+      "size": 3092,
+      "body_sha256": "ff730660d270d138edec760bde60bccec5c4141213c96bbcd45f7a00e720d3bd",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x529164",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] Null <anonymous closure>(dynamic, HttpResponse) {",
+      "elf_offset": 5411172,
+      "size": 1892,
+      "body_sha256": "3fc80acbde5f906bcb3ffc67de46e0fd163277a6b26a58a97091a283e7ca9b6e",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x529c50",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "elf_offset": 5413968,
+      "size": 48,
+      "body_sha256": "d413c7d967b4a971d67fef413fcc7b13b8297be165437e2ebbea0731f76673c5",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x565264",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "signature": "_ _MainPageState(/* No info */) {",
+      "elf_offset": 5657188,
+      "size": 308,
+      "body_sha256": "bbdf6e24c81379815bbc9b60d6f93e5c81eccb411a9d88a910ff84d7ecfa055f",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    },
+    {
+      "address": "0x67f850",
+      "source": "analysis/aot_dump/asm/distinguish/common/http/response_interceptors.dart",
+      "signature": "_ onError(/* No info */) {",
+      "elf_offset": 6813776,
+      "size": 340,
+      "body_sha256": "cd834865df6bd2dfc10accb7fad7db8ea16cfd7d336274e0eba92e143e842cb4",
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_matches_frozen": true,
+        "raw_matches_frozen": true,
+        "body_matches_frozen": true,
+        "raw_full_body": true,
+        "raw_words_match_elf": true
+      }
+    }
+  ],
+  "framework_method_proofs": [
+    {
+      "address": "0x2db568",
+      "size": 128,
+      "source": "analysis/aot_dump/asm/get/get_rx/src/rx_stream/rx_stream.dart",
+      "signature": "_ add(/* No info */) {",
+      "asm_sha256": "e77bda6f097964200ea75a7f9359dd018edd66abe9e9f9e9651ce54e4a808e70",
+      "elf_offset": 2995560,
+      "body_sha256": "40270cbb8927e4248fa42cbc897bb3dcda9597a99422e9247217480469a4f938",
+      "raw_instruction_count": 32,
+      "disassembly_covers_body": true
+    },
+    {
+      "address": "0x4597b0",
+      "size": 96,
+      "source": "analysis/aot_dump/asm/get/get_rx/src/rx_types/rx_types.dart",
+      "signature": "static _ StringExtension.obs(/* No info */) {",
+      "asm_sha256": "4e826e7d9f74f40142840894ff0d85d4bc65d48458e6801e68390bfd7a43fce1",
+      "elf_offset": 4560816,
+      "body_sha256": "ec9b6d14ed0463851c33877110180c883f2fa04d7188bc0825224086bed4aa7b",
+      "raw_instruction_count": 24,
+      "disassembly_covers_body": true
+    },
+    {
+      "address": "0x459810",
+      "size": 252,
+      "source": "analysis/aot_dump/asm/get/get_rx/src/rx_types/rx_types.dart",
+      "signature": "_ RxNotifier(/* No info */) {",
+      "asm_sha256": "d0e7d335e47370db80f7354b6c9b45431da9baaf173ba5db11b4b60ab08f49f7",
+      "elf_offset": 4560912,
+      "body_sha256": "1b96b1dd7018d71ebb6f5eba86b545e29c5fedbfe31a9c2d9fc9e2bbd97d8ed8",
+      "raw_instruction_count": 63,
+      "disassembly_covers_body": true
+    },
+    {
+      "address": "0x51d884",
+      "size": 336,
+      "source": "analysis/aot_dump/asm/get/get_rx/src/rx_types/rx_types.dart",
+      "signature": "set _ value=(/* No info */) {",
+      "asm_sha256": "7c6f828d0c111e0819a7506e94ee430b6b2a5c47c9910db66a2e2eab83750001",
+      "elf_offset": 5363844,
+      "body_sha256": "501699a3f52b5a5bf2569c8222dbfbe5e52dda53dba774be1b7fd20383aa5254",
+      "raw_instruction_count": 84,
+      "disassembly_covers_body": true
+    },
+    {
+      "address": "0x55e340",
+      "size": 76,
+      "source": "analysis/aot_dump/asm/get/get_rx/src/rx_stream/rx_stream.dart",
+      "signature": "_ close(/* No info */) {",
+      "asm_sha256": "fd058bf6a3281c3b156ae7ba035b3d9761d094a00171d0dd1f825da04c8f30da",
+      "elf_offset": 5628736,
+      "body_sha256": "602f5149e00bb0b3a30d1bb4a05fba73d3bdcf42abc7334b47766b679c8aa433",
+      "raw_instruction_count": 19,
+      "disassembly_covers_body": true
+    },
+    {
+      "address": "0x673f8c",
+      "size": 192,
+      "signature": "[dart:core] _TwoByteString::==",
+      "source": "Original snapshot metadata",
+      "elf_offset": 6766476,
+      "body_sha256": "62b561fc6bc97f69f6daa9b67f4d385304542e100538bfbaacd57080d4c5e2c3",
+      "raw_instruction_count": 48,
+      "disassembly_covers_body": true
+    },
+    {
+      "address": "0x674170",
+      "size": 196,
+      "signature": "[dart:core] _OneByteString::==",
+      "source": "Original snapshot metadata",
+      "elf_offset": 6766960,
+      "body_sha256": "fcb18a70b357ff9aabd2c7251ff5e84d878bf3bcac5f312b74e041824b061cfc",
+      "raw_instruction_count": 49,
+      "disassembly_covers_body": true
+    },
+    {
+      "address": "0x6747cc",
+      "size": 232,
+      "signature": "[dart:core] _Double::==",
+      "source": "Original snapshot metadata",
+      "elf_offset": 6768588,
+      "body_sha256": "3c182d63f1bde06360533c263f7bfe455e40e833d6bec381a89848f0dc2e7078",
+      "raw_instruction_count": 58,
+      "disassembly_covers_body": true
+    },
+    {
+      "address": "0x674930",
+      "size": 252,
+      "signature": "[dart:core] _IntegerImplementation::==",
+      "source": "Original snapshot metadata",
+      "elf_offset": 6768944,
+      "body_sha256": "a6ffc9daf383734ef1b24fb53a1f7365bf9340782f9c84e831fbb0fefbe9bd27",
+      "raw_instruction_count": 63,
+      "disassembly_covers_body": true
+    },
+    {
+      "address": "0x6f2a58",
+      "size": 8,
+      "signature": "[dart:ui] Shader::Shader._",
+      "source": "Original snapshot metadata",
+      "elf_offset": 7285336,
+      "body_sha256": "9c704a0804e0f7a84160857b442c3d1aedc71cb2cbd76a52b7ba9c42d9d29763",
+      "raw_instruction_count": 2,
+      "disassembly_covers_body": true
+    }
+  ],
+  "closure_references": [
+    {
+      "owner": "0x457b58",
+      "reference": "//     0x457ba0: add             x1, PP, #0x1b, lsl #12  ; [pp+0x1ba88] AnonymousClosure: (0x459e60), in [package:distinguish/pages/frame_preview/frame_preview_page.dart] _FramePreviewPageState::_onStartPreview (0x457b58)"
+    },
+    {
+      "owner": "0x457b58",
+      "reference": "//     0x457d30: add             x1, PP, #0x1b, lsl #12  ; [pp+0x1baa0] AnonymousClosure: (0x459b30), in [package:distinguish/pages/frame_preview/frame_preview_page.dart] _FramePreviewPageState::_onStartPreview (0x457b58)"
+    },
+    {
+      "owner": "0x457b58",
+      "reference": "//     0x457d78: add             x1, PP, #0x1b, lsl #12  ; [pp+0x1baa8] AnonymousClosure: (0x45911c), in [package:distinguish/pages/frame_preview/frame_preview_page.dart] _FramePreviewPageState::_onStartPreview (0x457b58)"
+    },
+    {
+      "owner": "0x460b60",
+      "reference": "//     0x460c50: add             x1, PP, #0x1b, lsl #12  ; [pp+0x1be10] Function: [dart:ui] Shader::Shader._ (0x6f2a58)"
+    },
+    {
+      "owner": "0x4a1f4c",
+      "reference": "//     0x4a1f7c: add             x1, PP, #0x14, lsl #12  ; [pp+0x14478] AnonymousClosure: (0x4a1fac), in [package:distinguish/pages/main/main_page.dart] _MainPageState::_buildRightView (0x4a1aec)"
+    },
+    {
+      "owner": "0x4a1fd0",
+      "reference": "//     0x4a2000: add             x1, PP, #0x14, lsl #12  ; [pp+0x14480] AnonymousClosure: (0x4a2030), in [package:distinguish/pages/main/main_page.dart] _MainPageState::_buildRightView (0x4a1aec)"
+    },
+    {
+      "owner": "0x4a33cc",
+      "reference": "//     0x4a341c: add             x1, PP, #0x14, lsl #12  ; [pp+0x145b0] AnonymousClosure: (0x4a344c), in [package:distinguish/pages/main/main_page.dart] _MainPageState::onSelectMj (0x4a33cc)"
+    },
+    {
+      "owner": "0x4a36f8",
+      "reference": "//     0x4a372c: add             x1, PP, #0x14, lsl #12  ; [pp+0x145b8] AnonymousClosure: (0x4a375c), in [package:distinguish/pages/main/main_page.dart] _MainPageState::onCloseChangePage (0x4a36f8)"
+    },
+    {
+      "owner": "0x4a37d8",
+      "reference": "//     0x4a380c: add             x1, PP, #0x14, lsl #12  ; [pp+0x145c0] AnonymousClosure: (0x4a383c), in [package:distinguish/pages/main/main_page.dart] _MainPageState::onViewShowType (0x4a37d8)"
+    },
+    {
+      "owner": "0x4a566c",
+      "reference": "//     0x4a56a4: add             x1, PP, #0x14, lsl #12  ; [pp+0x14858] AnonymousClosure: (0x4a56d4), in [package:distinguish/pages/main/main_page.dart] _MainPageState::_buildChange (0x4a485c)"
+    },
+    {
+      "owner": "0x4a6b94",
+      "reference": "//     0x4a6bd4: add             x1, PP, #0x14, lsl #12  ; [pp+0x14930] AnonymousClosure: (0x4a6c04), in [package:distinguish/pages/main/main_page.dart] _MainPageState::_buildChange (0x4a485c)"
+    },
+    {
+      "owner": "0x4aa6b8",
+      "reference": "//     0x4aa6ec: add             x1, PP, #0x14, lsl #12  ; [pp+0x149c0] AnonymousClosure: (0x4aa71c), in [package:distinguish/pages/main/main_page.dart] _MainPageState::onOpenChangePage (0x4aa6b8)"
+    },
+    {
+      "owner": "0x527460",
+      "reference": "//     0x52755c: add             x1, PP, #0x14, lsl #12  ; [pp+0x14ca0] Function: [dart:ui] Shader::Shader._ (0x6f2a58)"
+    },
+    {
+      "owner": "0x527460",
+      "reference": "//     0x527894: add             x1, PP, #0x14, lsl #12  ; [pp+0x14cb0] AnonymousClosure: (0x52a6fc), in [package:distinguish/pages/main/main_page.dart] _MainPageState::initState (0x51f028)"
+    },
+    {
+      "owner": "0x527460",
+      "reference": "//     0x527c74: add             x1, PP, #0x14, lsl #12  ; [pp+0x14cb8] AnonymousClosure: (0x52a6d4), in [package:distinguish/pages/main/main_page.dart] _MainPageState::initState (0x51f028)"
+    },
+    {
+      "owner": "0x527460",
+      "reference": "//     0x527ce0: add             x1, PP, #0x14, lsl #12  ; [pp+0x14cc0] AnonymousClosure: (0x52a52c), in [package:distinguish/pages/main/main_page.dart] _MainPageState::initState (0x51f028)"
+    },
+    {
+      "owner": "0x527460",
+      "reference": "//     0x527e78: add             x1, PP, #0x14, lsl #12  ; [pp+0x14cc8] AnonymousClosure: (0x52a474), in [package:distinguish/pages/main/main_page.dart] _MainPageState::initState (0x51f028)"
+    },
+    {
+      "owner": "0x527460",
+      "reference": "//     0x527ebc: add             x1, PP, #0x14, lsl #12  ; [pp+0x14cd0] AnonymousClosure: (0x52a3d0), in [package:distinguish/pages/main/main_page.dart] _MainPageState::initState (0x51f028)"
+    },
+    {
+      "owner": "0x527460",
+      "reference": "//     0x527f38: add             x1, PP, #0x14, lsl #12  ; [pp+0x14ce0] AnonymousClosure: (0x52a398), in [package:distinguish/pages/main/main_page.dart] _MainPageState::initState (0x51f028)"
+    },
+    {
+      "owner": "0x529164",
+      "reference": "//     0x5295e0: add             x1, PP, #0x14, lsl #12  ; [pp+0x14e88] AnonymousClosure: (0x529c80), in [package:distinguish/pages/main/main_page.dart] _MainPageState::saveImg (0x5281d8)"
+    },
+    {
+      "owner": "0x529164",
+      "reference": "//     0x5297f0: add             x1, PP, #0x14, lsl #12  ; [pp+0x14e90] AnonymousClosure: (0x529c50), in [package:distinguish/pages/main/main_page.dart] _MainPageState::saveImg (0x5281d8)"
+    }
+  ],
+  "dynamic_receiver_metadata": "snapshot_targets.tsv",
+  "source_manifest": [
+    {
+      "path": "unpacked/lib/arm64-v8a/libapp.so",
+      "sha256": "40d890193daa716defe2eec6cd2959bdbf7f7cf8345f8213b1747e54863a5a55"
+    },
+    {
+      "path": "analysis/completeness_audit/flutter/method_coverage.json",
+      "sha256": "eddb170f70d13b3ce0571b23586d246624d4f29b819a3488114618bf449619c5"
+    },
+    {
+      "path": "analysis/aot_dump/asm/get/get_rx/src/rx_types/rx_types.dart",
+      "sha256": "a5eed5e64c6dbd3745557acf5099d918bb15bb3ddefdc9db7c5af460680aac4a"
+    },
+    {
+      "path": "analysis/aot_dump/asm/get/get_rx/src/rx_stream/rx_stream.dart",
+      "sha256": "0e22eafa264a1243c9befd318adfd373be666d89e7eb93cf036b49a6048d3f59"
+    },
+    {
+      "path": "analysis/reconstruction_round2/callbacks/snapshot_callback_targets.cpp",
+      "sha256": "7857e7e8a3188a4474e5102013a6d2f2260dc7c3eb74e7ef9edfbd4b8ae8e336"
+    },
+    {
+      "path": "analysis/reconstruction_round2/callbacks/snapshot_tool_build_commands.json",
+      "sha256": "c8a3f5a0d58805f386ef3bf8d0efbec25de3328e2b9b595b45b86d424360834a"
+    },
+    {
+      "path": "analysis/reconstruction_round2/callbacks/snapshot_targets.tsv",
+      "sha256": "af8ebccb09a5e566a7deb184f208f785e5ec7ac43b52152bd263620a1d3804e2"
+    }
+  ],
+  "reconstructed_sources": [
+    {
+      "path": "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/SessionState.java",
+      "sha256": "cead6c7b13906535ebfd5b7012af681e0cf02178abd7d1f395e1036cb07505ac"
+    },
+    {
+      "path": "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/MessageEngine.java",
+      "sha256": "02e786a543b2baa27445f8c949b902861beebde78f6504a62f5aabb3b327a911"
+    },
+    {
+      "path": "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/ResultRules.java",
+      "sha256": "6e4ce2bc3b8869dc5597d8dcaf1da8a7ab75b8d5eb90d67ac10823fce0a4db47"
+    }
+  ],
+  "limitations": [
+    "No original source text/project files recovered; this is bounded functional reconstruction.",
+    "No original Dart entrypoint or business server executed by this callback audit. Tests execute reconstructed Java only.",
+    "Android mounted/generation protection suppresses some late UI effects that the original lacks. Core onValue methods deliberately have no route/epoch guard; engine.close blocks message receive and late image completion as a stated reconstruction lifecycle policy.",
+    "Original GetStream listener ordering/scheduling and Flutter painting/navigation are not recreated; Rx value store/equality behavior is represented.",
+    "HTTP special401 pending completer and native reconnect/authentication remain outside these Java callback methods.",
+    "Dynamic content conversion delegates DartConversions supported receiver types; unsupported receiver/conversion cases throw, not synthesize success."
+  ]
+}

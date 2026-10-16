@@ -1,0 +1,14 @@
+23010: IntegerPtr Integer::NewCanonical(int64_t value) {
+23011:   if (Smi::IsValid(value)) {
+23012:     return Smi::New(static_cast<intptr_t>(value));
+23013:   }
+23014:   return Mint::NewCanonical(value);
+23015: }
+23016: 
+23017: IntegerPtr Integer::New(int64_t value, Heap::Space space) {
+23018:   const bool is_smi = Smi::IsValid(value);
+23019:   if (is_smi) {
+23020:     return Smi::New(static_cast<intptr_t>(value));
+23021:   }
+23022:   return Mint::New(value, space);
+23023: }

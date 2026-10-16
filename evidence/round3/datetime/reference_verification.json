@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "java_unit_test": "PASS 62 DateTime assertions",
+  "oracle": "Official Dart SDK 3.5.2 macos_arm64 running reference_oracle.dart; not original APK execution",
+  "dart_version": "Dart SDK version: 3.5.2 (stable) (Wed Aug 28 10:01:20 2024 +0000) on \"macos_arm64\"",
+  "cases_per_zone": 6204,
+  "comparisons": 37224,
+  "zones": [
+    {
+      "zone": "UTC",
+      "cases": 6204,
+      "differences": 0
+    },
+    {
+      "zone": "America/Los_Angeles",
+      "cases": 6204,
+      "differences": 0
+    },
+    {
+      "zone": "Asia/Shanghai",
+      "cases": 6204,
+      "differences": 0
+    },
+    {
+      "zone": "Europe/Berlin",
+      "cases": 6204,
+      "differences": 0
+    },
+    {
+      "zone": "Australia/Lord_Howe",
+      "cases": 6204,
+      "differences": 0
+    },
+    {
+      "zone": "Pacific/Apia",
+      "cases": 6204,
+      "differences": 0
+    }
+  ],
+  "differences": [],
+  "original_source_recovered": false,
+  "original_apk_executed": false,
+  "business_server_contacted": false,
+  "sources": {
+    "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/DartDateTime.java": "e1e52d12c572084e2be067289f07821d4370ec7554ca47ea664913b2a7bba0d0",
+    "reconstruction/evidence/round3/datetime/DateTimeTest.java": "a152c819d6c0c8116e164f78b3b67a2c700c199f474d039c797c30300408eefc",
+    "analysis/reconstruction_round3/datetime/reference_oracle.dart": "9a8c96c465ccc543539d07f13861ee458d132cfe721089193b2392b081fc4316",
+    "analysis/reconstruction_round3/datetime/reference_cases.json": "6c9ac0305dbf6bd6bb43523285499926e1213ae03cab4dbe83e08fc938df485e",
+    "analysis/reconstruction_round3/datetime/reference/date_time.dart": "57c2914adfd4618308df38f0217f8b6cb8e21465611e496fe40ad8a8b73d62d8",
+    "analysis/reconstruction_round3/datetime/reference/date_patch.dart": "1b6906bd5ea6b70f4298719b30a42f5596a1c6bc2bc69d6f0fbfe5a55237a54c",
+    "analysis/reconstruction_round3/datetime/reference/dart-sdk/bin/dart": "168835589df48ee3708ae61aa566a1010dcdf9d12d9a17d6d39b8229fad0ff72"
+  }
+}

@@ -1,0 +1,20 @@
+[dart:core] DateTime::_weekDay
+0x4423c4: fd79bfa9 stp x29, x30, [x15, #-0x10]!
+0x4423c8: fd030faa mov x29, x15
+0x4423cc: 501f40f9 ldr x16, [x26, #0x38]
+0x4423d0: ff0110eb cmp x15, x16
+0x4423d4: 69010054 b.ls #0x442400
+0x4423d8: 0e000094 bl #0x442410
+0x4423dc: 01100091 add x1, x0, #4
+0x4423e0: e20080d2 mov x2, #7
+0x4423e4: 230cc29a sdiv x3, x1, x2
+0x4423e8: 6084029b msub x0, x3, x2, x1
+0x4423ec: 1f001feb cmp x0, xzr
+0x4423f0: cb000054 b.lt #0x442408
+0x4423f4: ef031daa mov x15, x29
+0x4423f8: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x4423fc: c0035fd6 ret 
+0x442400: bede0a94 bl #0x6f9ef8
+0x442404: f5ffff17 b #0x4423d8
+0x442408: 0000028b add x0, x0, x2
+0x44240c: faffff17 b #0x4423f4

@@ -1,0 +1,258 @@
+{
+  "status": "PASS",
+  "scope": "Bounded native Dart 3.5.2 JSON number decoding and non-finite encode rejection; no complete JSON codec equivalence claim",
+  "claims": [
+    {
+      "id": "JSON.signed64",
+      "behavior": "Integer grammar without decimal/exponent remains native signed64 int, including -2^63,+2^63-1 and integers above2^53. -0 is int0.",
+      "implementation": "Java Long preserving all64bits; no intermediate double."
+    },
+    {
+      "id": "JSON.integer_overflow",
+      "behavior": "Larger integer literals become double, not BigInt and not immediate parse errors; infinities are valid decoder outcomes.",
+      "implementation": "Long overflow falls back to Double; native type distinction is retained."
+    },
+    {
+      "id": "JSON.decimal_exponent",
+      "behavior": "Decimal/exponent literals become double, including signedzero/subnormals/underflow/infinities.",
+      "implementation": "End-of-input follows parseDouble. A following delimiter/whitespace follows original numeric fast path, using binary64 mantissa/powers arithmetic and the exponent>400 shortcut."
+    },
+    {
+      "id": "JSON.context_boundary",
+      "examples": [
+        {
+          "input": "400 digits9 followed by e-401, no suffix",
+          "result": "double0.1"
+        },
+        {
+          "input": "same token with trailing space or in array/object",
+          "result": "double0.0"
+        },
+        {
+          "input": "0. plus401zeroes then1e401, no suffix",
+          "result": "double0.1"
+        },
+        {
+          "input": "same token with trailing space or in array/object",
+          "result": "Infinity"
+        }
+      ],
+      "reason": "Dart3.5.2 finishChunkNumber reparses the full token, while parseNumber may take exponentOverflow before considering combined decimal scale."
+    },
+    {
+      "id": "JSON.encode_nonfinite",
+      "behavior": "NaN/positiveInfinity/negativeInfinity remain rejected by serializer at scalar and nested list/map positions.",
+      "implementation": "Existing writer finite check retained and explicitly tested."
+    }
+  ],
+  "snapshot_metadata": [
+    "FUNCTION\t0x2ed154\t[dart:convert] __JsonStringParser&_JsonParserWithListener&_ChunkedJsonParser::parseNumber\tnative=0",
+    "FUNCTION\t0x2eb3ac\t[dart:convert] __JsonStringParser&_JsonParserWithListener&_ChunkedJsonParser::finishChunkNumber\tnative=0",
+    "FUNCTION\t0x2eb520\t[dart:convert] _NumberBuffer::parseDouble\tnative=0",
+    "FUNCTION\t0x2ebda4\t[dart:convert] _NumberBuffer::parseNum\tnative=0",
+    "FUNCTION\t0x2edd6c\t[dart:convert] ::_parseDouble\tnative=1\tnative_name=Double_parse",
+    "POOL\t0xbe8\t0x7ff0000000000000",
+    "POOL\t0xbf8\t0x4340000000000000",
+    "POOL\t0xc90\t0x8000000000000000",
+    "POOL\t0xc98\t0xfff0000000000000"
+  ],
+  "targeted_original_branches": [
+    {
+      "range": "0x2ed7e8..0x2ed858",
+      "meaning": "Signed exponent comparison against0x190(400), sticky overflow flag, end-of-chunk bypass at0x2ed804, and flag test before overflow result branches."
+    },
+    {
+      "range": "0x2ed85c..0x2ed938",
+      "meaning": "Zero-mantissa/negative-exponent branch emits signedzero; otherwise chooses -Infinity/+Infinity by sign. Actual snapshot immediate pool bits at0xc90/0xc98/0xbe8 were read again."
+    },
+    {
+      "range": "0x2ed970..0x2ed988",
+      "meaning": "Exponent ending exactly at chunk boundary calls beginChunkNumber with NUM_E_DIGIT0x1c."
+    },
+    {
+      "range": "0x2eb428..0x2eb494",
+      "meaning": "finishChunkNumber routes NUM_DIGIT to NumberBuffer.parseNum and NUM_DOT_DIGIT/NUM_E_DIGIT to NumberBuffer.parseDouble."
+    },
+    {
+      "range": "0x2eda04..0x2edb40",
+      "meaning": "Mantissa comparison against pooled2^53 and exponent limits±22 gate FDIV/FMUL fast paths."
+    }
+  ],
+  "original_methods": [
+    {
+      "entry": "0x2ed154",
+      "name": "parseNumber",
+      "size": 2984,
+      "elf_offset": 3068244,
+      "sha256": "c6a8f8e9e60844aa7d5f4717a64007acea89eaac931cf8c27a1bf531319487fb",
+      "instruction_words": 746,
+      "scope": "Original body captured and byte-grounded; not original-runtime execution or exhaustive method proof."
+    },
+    {
+      "entry": "0x2eb3ac",
+      "name": "finishChunkNumber",
+      "size": 372,
+      "elf_offset": 3060652,
+      "sha256": "abe55d3adeaa5496b748abd1104e9fac05cec3195ce512a7e709feb00a7d8556",
+      "instruction_words": 93,
+      "scope": "Original body captured and byte-grounded; not original-runtime execution or exhaustive method proof."
+    },
+    {
+      "entry": "0x2eb520",
+      "name": "NumberBuffer.parseDouble",
+      "size": 52,
+      "elf_offset": 3061024,
+      "sha256": "a57f685798437be3e4329b716ff88e9b23d870d64c52ab561936941495246e43",
+      "instruction_words": 13,
+      "scope": "Original body captured and byte-grounded; not original-runtime execution or exhaustive method proof."
+    },
+    {
+      "entry": "0x2ebda4",
+      "name": "NumberBuffer.parseNum",
+      "size": 52,
+      "elf_offset": 3063204,
+      "sha256": "bfc89544c8aab60b69014f6821ed267589eda4f808db91368312203e8bd8813d",
+      "instruction_words": 13,
+      "scope": "Original body captured and byte-grounded; not original-runtime execution or exhaustive method proof."
+    },
+    {
+      "entry": "0x2edd6c",
+      "name": "_parseDouble",
+      "size": 128,
+      "elf_offset": 3071340,
+      "sha256": "dbfbafc36b2f36e7bebafccaa41232c499b7729a61231f685b5c9f022d56a764",
+      "instruction_words": 32,
+      "scope": "Original body captured and byte-grounded; not original-runtime execution or exhaustive method proof."
+    }
+  ],
+  "original_instruction_words_captured": 897,
+  "reference": {
+    "kind": "Official Dart3.5.2 SDK macOSARM64 jsonDecode/jsonEncode execution",
+    "download_provenance": "Sibling round3/datetime reference SDK and its provenance",
+    "sdk_version": "3.5.2",
+    "vm_android_snapshot_distinction": "SDK execution is a version-matched native VM reference, not execution of original Android libflutter."
+  },
+  "reference_excerpts": [
+    {
+      "path": "reconstruction/evidence/round3/numeric_json/convert_patch.dart.L241-249.txt",
+      "sha256": "b4dea89502f449cb4a98be1f9c0726e5dbfa66e8a4dd3ae64ed1921b6e05c743",
+      "reference_start_line": 241,
+      "reference_end_line": 249
+    },
+    {
+      "path": "reconstruction/evidence/round3/numeric_json/convert_patch.dart.L1253-1299.txt",
+      "sha256": "87ef6a4b98ef8ef82525acc0136da6a17757fbb1b7fd4031f33c4b24ef4066ee",
+      "reference_start_line": 1253,
+      "reference_end_line": 1299
+    },
+    {
+      "path": "reconstruction/evidence/round3/numeric_json/convert_patch.dart.L1303-1458.txt",
+      "sha256": "810e703feb7ec2c5f5b7419e93896e38f8c416bc04d72dadc0b697006319d1a3",
+      "reference_start_line": 1303,
+      "reference_end_line": 1458
+    },
+    {
+      "path": "reconstruction/evidence/round3/numeric_json/convert_patch.dart.L1654-1656.txt",
+      "sha256": "12de5d3d872d6e11b2e49e61e26137a42516d51cfd136127d2773d52679f12e0",
+      "reference_start_line": 1654,
+      "reference_end_line": 1656
+    }
+  ],
+  "verification": {
+    "status": "PASS",
+    "boundary_assertions": 29,
+    "differential_cases": 52778,
+    "parser_modes_checked": 2,
+    "integer_cases": 16372,
+    "double_cases": 36276,
+    "malformed_cases": 130,
+    "nonfinite_cases": 8034,
+    "differences": 0,
+    "seed": 3521303,
+    "random_tokens": 13000,
+    "boundary_tokens": 162,
+    "malformed_tokens": 34,
+    "contexts": [
+      "top-level token ending at input boundary",
+      "top-level token followed by whitespace",
+      "single-array item",
+      "object n property"
+    ]
+  },
+  "remaining": [
+    "Original full Dart source and whole JSON codec equivalence are not recovered.",
+    "Non-numeric JSON grammar, Unicode edge cases, recursion/resource limits, duplicate-key policy, arbitrary receivers/toJson, exact exception class/message/offset and streaming chunk APIs are not fully ported.",
+    "JsonCodec.stringify finite Double lexical formatting still uses Java Number.toString; semantically equal JSON numbers may have different decimal/exponent spellings than Dart jsonEncode.",
+    "This tests native Dart3.5.2 reference. Dart JavaScript numeric semantics and other VM versions/architectures are outside scope."
+  ],
+  "source_manifest": [
+    {
+      "path": "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/JsonCodec.java",
+      "sha256": "1ea03024863ee825881ec5684d0014983bcbef9434906ac5344c7d026328c97a"
+    },
+    {
+      "path": "reconstruction/evidence/round3/numeric_json/NumericJsonTest.java",
+      "sha256": "9eaff3a93dedef275a502c1b04b2f875fd1042b592c554c5d208f3fa800179b0"
+    },
+    {
+      "path": "reconstruction/evidence/round3/numeric_json/run_tests.sh",
+      "sha256": "a636d07b6c0917de2e9be08a4021f5ee76b4a40545e8112021145b441f362a76"
+    },
+    {
+      "path": "reconstruction/evidence/round3/numeric_json/reference.tsv",
+      "sha256": "71556caf55ce3aa7f19dfbd72f97aaa82cfe3e138ab11d895ca9232a273e39b8"
+    },
+    {
+      "path": "reconstruction/evidence/round3/numeric_json/snapshot_metadata.tsv",
+      "sha256": "ec4f660e37df9a654413af01acd9b6ceaa0130447c41150f37059f8aac2ee694"
+    },
+    {
+      "path": "reconstruction/evidence/round3/numeric_json/DART_LICENSE.txt",
+      "sha256": "2cfa3ee8e7512e6d44c854b986510810fadc815f93f890373b3a81c1b6ccd256"
+    },
+    {
+      "path": "analysis/reconstruction_round3/numeric_json/reference.dart",
+      "sha256": "a65a7f8c4a2c1272dc9a702eb5ba630662f28daa92a0139c967ea0ab42b7e77d"
+    },
+    {
+      "path": "analysis/reconstruction_round3/numeric_json/generate_cases.py",
+      "sha256": "e37316b6a14ed3055c2acdfbdfdcf4051c18ba0169600f9c8e0aef9508132896"
+    },
+    {
+      "path": "analysis/reconstruction_round3/numeric_json/cases.json",
+      "sha256": "8e8c0402f91a9880086229e1a4db35d00e32a9e40a7e3ec7c6505941908d8b8a"
+    },
+    {
+      "path": "analysis/reconstruction_round3/numeric_json/snapshot_numeric_targets.cpp",
+      "sha256": "712f85edfc505b940d70a281e23253ae839b045b42a868ea3ee6ec5914653fa6"
+    },
+    {
+      "path": "analysis/reconstruction_round3/numeric_json/build_commands.json",
+      "sha256": "3a6b133504a5e397184fe9875ec60804480e323a62eba02d7e7a4c4065204816"
+    },
+    {
+      "path": "analysis/reconstruction_round3/numeric_json/build_contracts.py",
+      "sha256": "656397ef80ed47e9f9ac9d6080dc308514fd60644b419b28990d08750018f6cb"
+    },
+    {
+      "path": "analysis/reconstruction_round3/datetime/reference/dart-sdk/lib/_internal/vm/lib/convert_patch.dart",
+      "sha256": "a64212f83335392dd793ec969672a92bdca6239c73c82fc603eff5ab69fc4921"
+    },
+    {
+      "path": "analysis/reconstruction_round3/datetime/reference/dart-sdk/version",
+      "sha256": "36e68867ce939b2464649670eb1b3f9759d1a99e7326dac3c79d0942e01f5d65"
+    },
+    {
+      "path": "analysis/reconstruction_round3/datetime/reference/dart-sdk/bin/dart",
+      "sha256": "168835589df48ee3708ae61aa566a1010dcdf9d12d9a17d6d39b8229fad0ff72"
+    },
+    {
+      "path": "unpacked/lib/arm64-v8a/libapp.so",
+      "sha256": "40d890193daa716defe2eec6cd2959bdbf7f7cf8345f8213b1747e54863a5a55"
+    }
+  ],
+  "business_server_contacted": false,
+  "original_apk_runtime_executed": false,
+  "original_source_recovered": false,
+  "frozen_audit_modified": false
+}

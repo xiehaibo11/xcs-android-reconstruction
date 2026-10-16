@@ -1,0 +1,61 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000059800 <.text>:
+   be000: 55                           	pushq	%rbp
+   be001: 48 89 e5                     	movq	%rsp, %rbp
+   be004: 48 8b 7c 24 10               	movq	0x10(%rsp), %rdi
+   be009: 48 8b 0d f8 55 35 00         	movq	0x3555f8(%rip), %rcx    # 0x413608
+   be010: 64 48 8b 01                  	movq	%fs:(%rcx), %rax
+   be014: 48 8b 58 30                  	movq	0x30(%rax), %rbx
+   be018: 48 3b 43 50                  	cmpq	0x50(%rbx), %rax
+   be01c: 74 5d                        	je	0xbe07b <.text+0x6487b>
+   be01e: 48 8b 13                     	movq	(%rbx), %rdx
+   be021: 48 39 d0                     	cmpq	%rdx, %rax
+   be024: 74 55                        	je	0xbe07b <.text+0x6487b>
+   be026: 48 3b 83 c0 00 00 00         	cmpq	0xc0(%rbx), %rax
+   be02d: 75 55                        	jne	0xbe084 <.text+0x64884>
+   be02f: e8 2c f0 ff ff               	callq	0xbd060 <.text+0x63860>
+   be034: 64 48 89 11                  	movq	%rdx, %fs:(%rcx)
+   be038: 49 89 d6                     	movq	%rdx, %r14
+   be03b: 48 8b 62 38                  	movq	0x38(%rdx), %rsp
+   be03f: 48 89 fa                     	movq	%rdi, %rdx
+   be042: 48 8b 3f                     	movq	(%rdi), %rdi
+   be045: ff d7                        	callq	*%rdi
+   be047: 48 8b 0d ba 55 35 00         	movq	0x3555ba(%rip), %rcx    # 0x413608
+   be04e: 64 48 8b 01                  	movq	%fs:(%rcx), %rax
+   be052: 48 8b 58 30                  	movq	0x30(%rax), %rbx
+   be056: 48 8b 83 c0 00 00 00         	movq	0xc0(%rbx), %rax
+   be05d: 64 48 89 01                  	movq	%rax, %fs:(%rcx)
+   be061: 48 8b 60 38                  	movq	0x38(%rax), %rsp
+   be065: 48 8b 68 68                  	movq	0x68(%rax), %rbp
+   be069: 48 c7 40 38 00 00 00 00      	movq	$0x0, 0x38(%rax)
+   be071: 48 c7 40 68 00 00 00 00      	movq	$0x0, 0x68(%rax)
+   be079: 5d                           	popq	%rbp
+   be07a: c3                           	retq
+   be07b: 48 89 fa                     	movq	%rdi, %rdx
+   be07e: 48 8b 3f                     	movq	(%rdi), %rdi
+   be081: 5d                           	popq	%rbp
+   be082: ff e7                        	jmpq	*%rdi
+   be084: 48 8d 05 f5 47 00 00         	leaq	0x47f5(%rip), %rax      # 0xc2880 <_cgo_topofstack+0x28c0>
+   be08b: ff d0                        	callq	*%rax
+   be08d: cd 03                        	int	$0x3
+   be08f: cc                           	int3
+   be090: cc                           	int3
+   be091: cc                           	int3
+   be092: cc                           	int3
+   be093: cc                           	int3
+   be094: cc                           	int3
+   be095: cc                           	int3
+   be096: cc                           	int3
+   be097: cc                           	int3
+   be098: cc                           	int3
+   be099: cc                           	int3
+   be09a: cc                           	int3
+   be09b: cc                           	int3
+   be09c: cc                           	int3
+   be09d: cc                           	int3
+   be09e: cc                           	int3
+   be09f: cc                           	int3

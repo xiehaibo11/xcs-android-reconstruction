@@ -1,0 +1,451 @@
+{
+  "status": "FAIL",
+  "error": "AssertionError(\"Missing event state; events=[{'event': 'state', 'at': 1792000869897, 'connected': True, 'authenticated': False, 'detail': '连接已建立，等待认证'}, {'event': 'state', 'at': 1792000869899, 'connected': True, 'authenticated': True, 'detail': '认证成功'}]\")",
+  "tests": [
+    {
+      "name": "masked client frames, large lengths, fragmented UTF-8, interleaved ping/pong, close handshake",
+      "status": "PASS",
+      "seconds": 0.13130737515166402
+    },
+    {
+      "name": "masked server frame",
+      "status": "PASS",
+      "seconds": 0.09685666719451547
+    },
+    {
+      "name": "server RSV bit",
+      "status": "PASS",
+      "seconds": 0.11524720792658627
+    },
+    {
+      "name": "nonminimal length",
+      "status": "PASS",
+      "seconds": 0.0970358329359442
+    },
+    {
+      "name": "orphan continuation",
+      "status": "PASS",
+      "seconds": 0.10621883301064372
+    },
+    {
+      "name": "binary message unsupported",
+      "status": "PASS",
+      "seconds": 0.1076487919781357
+    },
+    {
+      "name": "invalid UTF-8",
+      "status": "PASS",
+      "seconds": 0.10017079184763134
+    },
+    {
+      "name": "fragmented control",
+      "status": "PASS",
+      "seconds": 0.09891425003297627
+    },
+    {
+      "name": "one-byte close",
+      "status": "PASS",
+      "seconds": 0.10313579090870917
+    },
+    {
+      "name": "reserved close status",
+      "status": "PASS",
+      "seconds": 0.0966203750576824
+    },
+    {
+      "name": "invalid upgrade accept",
+      "status": "PASS",
+      "seconds": 0.10609808308072388
+    },
+    {
+      "name": "auth, QoS duplicate ACK/dedupe, malformed business, stale-reader guard, TCP reconnect, auth rejection stop",
+      "status": "PASS",
+      "seconds": 6.631646624999121
+    },
+    {
+      "name": "server types=54 stops session and reconnect",
+      "status": "PASS",
+      "seconds": 3.657977208029479
+    },
+    {
+      "name": "production 30-second heartbeat, 35-second timeout, reconnect, logout",
+      "status": "FAIL",
+      "seconds": 40.150726083200425,
+      "error": "Missing event state; events=[{'event': 'state', 'at': 1792000869897, 'connected': True, 'authenticated': False, 'detail': '连接已建立，等待认证'}, {'event': 'state', 'at': 1792000869899, 'connected': True, 'authenticated': True, 'detail': '认证成功'}]"
+    }
+  ],
+  "transcript": [
+    {
+      "probe_events": [
+        {
+          "event": "wire_pass",
+          "at": 1792000858425
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "probe_events": [
+        {
+          "event": "wire_rejected",
+          "at": 1792000858543,
+          "reason": "Invalid server RSV/masking"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "probe_events": [
+        {
+          "event": "wire_rejected",
+          "at": 1792000858659,
+          "reason": "Invalid server RSV/masking"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "probe_events": [
+        {
+          "event": "wire_rejected",
+          "at": 1792000858756,
+          "reason": "Nonminimal length"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "probe_events": [
+        {
+          "event": "wire_rejected",
+          "at": 1792000858862,
+          "reason": "Invalid continuation/opcode"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "probe_events": [
+        {
+          "event": "wire_rejected",
+          "at": 1792000858967,
+          "reason": "Binary messages unsupported by reconstruction"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "probe_events": [
+        {
+          "event": "wire_rejected",
+          "at": 1792000859069,
+          "reason": "Invalid UTF-8"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "probe_events": [
+        {
+          "event": "wire_rejected",
+          "at": 1792000859169,
+          "reason": "Invalid frame size"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "probe_events": [
+        {
+          "event": "wire_rejected",
+          "at": 1792000859272,
+          "reason": "Invalid close payload"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "probe_events": [
+        {
+          "event": "wire_rejected",
+          "at": 1792000859368,
+          "reason": "Invalid close status code"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "probe_events": [
+        {
+          "event": "wire_rejected",
+          "at": 1792000859472,
+          "reason": "Invalid WebSocket handshake"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "direction": "client_to_local_peer",
+      "at_monotonic": 1049265.147582125,
+      "packet": {
+        "types": 6,
+        "data_content": "local-test-token",
+        "fp": "d03142da-8498-49a5-a557-aa5881f0968a",
+        "qos": false
+      }
+    },
+    {
+      "direction": "client_to_local_peer",
+      "at_monotonic": 1049265.14855625,
+      "packet": {
+        "types": 4,
+        "data_content": "auth-fp",
+        "from": "client",
+        "to": "server",
+        "fp": "08adcd37-c14a-4863-8066-3ed3be3eb48c",
+        "qos": false
+      }
+    },
+    {
+      "direction": "client_to_local_peer",
+      "at_monotonic": 1049265.149292666,
+      "packet": {
+        "types": 1,
+        "data_content": "💓",
+        "fp": "d55bd4c0-eb90-4f40-a6fe-bbbaed6633a5",
+        "qos": false
+      }
+    },
+    {
+      "direction": "client_to_local_peer",
+      "at_monotonic": 1049265.14985725,
+      "packet": {
+        "types": 4,
+        "data_content": "same-message",
+        "from": "client",
+        "to": "device",
+        "fp": "7fa09b98-c784-47eb-9791-9068b8ce077a",
+        "qos": false
+      }
+    },
+    {
+      "direction": "client_to_local_peer",
+      "at_monotonic": 1049265.150041541,
+      "packet": {
+        "types": 4,
+        "data_content": "same-message",
+        "from": "client",
+        "to": "device",
+        "fp": "a96320c8-28c0-438c-92d8-58926050faf5",
+        "qos": false
+      }
+    },
+    {
+      "direction": "client_to_local_peer",
+      "at_monotonic": 1049265.155344583,
+      "packet": {
+        "types": 6,
+        "data_content": "local-test-token",
+        "fp": "e6f64a81-2e84-4f2b-8326-4bef6591acf1",
+        "qos": false
+      }
+    },
+    {
+      "direction": "client_to_local_peer",
+      "at_monotonic": 1049268.157026791,
+      "packet": {
+        "types": 6,
+        "data_content": "local-test-token",
+        "fp": "102cb255-cc41-42ed-95af-3862be77ea4a",
+        "qos": false
+      }
+    },
+    {
+      "probe_events": [
+        {
+          "event": "state",
+          "at": 1792000859586,
+          "connected": true,
+          "authenticated": false,
+          "detail": "连接已建立，等待认证"
+        },
+        {
+          "event": "error",
+          "at": 1792000859587,
+          "detail": "无效认证响应: Missing login response fields"
+        },
+        {
+          "event": "state",
+          "at": 1792000859588,
+          "connected": true,
+          "authenticated": true,
+          "detail": "认证成功"
+        },
+        {
+          "event": "business",
+          "at": 1792000859589,
+          "message": {
+            "msg_type": 117,
+            "msg_content": "serial|unknown"
+          }
+        },
+        {
+          "event": "error",
+          "at": 1792000859589,
+          "detail": "业务消息解析失败: msg_type must be i32"
+        },
+        {
+          "event": "repeat_start_rejected",
+          "at": 1792000859589
+        },
+        {
+          "event": "stale_reader_ignored",
+          "at": 1792000859592
+        },
+        {
+          "event": "status",
+          "at": 1792000859592,
+          "connected": true,
+          "authenticated": true,
+          "business_count": 1
+        },
+        {
+          "event": "error",
+          "at": 1792000859592,
+          "detail": "WebSocket: null"
+        },
+        {
+          "event": "state",
+          "at": 1792000859593,
+          "connected": false,
+          "authenticated": true,
+          "detail": "连接断开"
+        },
+        {
+          "event": "state",
+          "at": 1792000859594,
+          "connected": true,
+          "authenticated": true,
+          "detail": "连接已建立，等待认证"
+        },
+        {
+          "event": "state",
+          "at": 1792000862597,
+          "connected": false,
+          "authenticated": true,
+          "detail": "认证被拒绝，code=401"
+        },
+        {
+          "event": "error",
+          "at": 1792000862597,
+          "detail": "WebSocket: Socket closed"
+        },
+        {
+          "event": "state",
+          "at": 1792000862597,
+          "connected": false,
+          "authenticated": true,
+          "detail": "连接断开"
+        },
+        {
+          "event": "finished",
+          "at": 1792000866101
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "direction": "client_to_local_peer",
+      "at_monotonic": 1049271.802588625,
+      "packet": {
+        "types": 6,
+        "data_content": "local-test-token",
+        "fp": "fa882b1f-f7bc-47d3-9576-f3e72b963bfc",
+        "qos": false
+      }
+    },
+    {
+      "direction": "client_to_local_peer",
+      "at_monotonic": 1049271.803865916,
+      "packet": {
+        "types": 1,
+        "data_content": "💓",
+        "fp": "ad277218-4ede-451b-b1fc-e502d9c945a6",
+        "qos": false
+      }
+    },
+    {
+      "probe_events": [
+        {
+          "event": "state",
+          "at": 1792000866241,
+          "connected": true,
+          "authenticated": false,
+          "detail": "连接已建立，等待认证"
+        },
+        {
+          "event": "state",
+          "at": 1792000866242,
+          "connected": true,
+          "authenticated": true,
+          "detail": "认证成功"
+        },
+        {
+          "event": "state",
+          "at": 1792000866244,
+          "connected": false,
+          "authenticated": false,
+          "detail": "服务端结束会话"
+        },
+        {
+          "event": "finished",
+          "at": 1792000869747
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "direction": "client_to_local_peer",
+      "at_monotonic": 1049275.459067125,
+      "packet": {
+        "types": 6,
+        "data_content": "local-test-token",
+        "fp": "575abb80-3e64-4f3f-8e6b-8864c18b3842",
+        "qos": false
+      }
+    },
+    {
+      "direction": "client_to_local_peer",
+      "at_monotonic": 1049275.460275666,
+      "packet": {
+        "types": 1,
+        "data_content": "💓",
+        "fp": "d5d3674d-8287-44b8-ba39-c7afc5f1fc7e",
+        "qos": false
+      }
+    },
+    {
+      "direction": "client_to_local_peer",
+      "at_monotonic": 1049305.469348166,
+      "packet": {
+        "types": 1,
+        "data_content": "💓",
+        "fp": "d1494cd1-f1de-4574-a948-178a8642ce50",
+        "qos": false
+      }
+    }
+  ],
+  "scope": "Host Java reconstruction over real TCP sockets bound only to 127.0.0.1; no original target binary or business server",
+  "rust_concurrency_equivalent": false,
+  "original_source_recovered": false,
+  "source_sha256": {
+    "app/src/main/java/com/re/xcs/rebuild/net/WsWire.java": "40cb12ad08b85534b3b74745b62bd6c68d21fd9c5ff010a8491f845e38525c03",
+    "app/src/main/java/com/re/xcs/rebuild/net/WsSession.java": "8edda21490ec98c2576e1c5964ac0888b1739927539e647ac496b2bee111e268",
+    "app/src/main/java/com/re/xcs/rebuild/core/JsonCodec.java": "868bc3895edb77e1be3777a72029e1629bc9a7cc5bd673c8378628d037b80744",
+    "app/src/main/java/com/re/xcs/rebuild/core/Models.java": "ac6f2f17cc9b5faedb29ee26645093a885065b28d0cbf85cfbf759d306ecbf77",
+    "app/src/main/java/com/re/xcs/rebuild/core/DartConversions.java": "54de99a2f863cda3be9a434c7ff2b614e622dd8d3e8886fa1688778eebb35eee",
+    "app/src/main/java/com/re/xcs/rebuild/core/ApiContract.java": "f7eea172f4ab151685f9e898a2de18e2512142bb89ef609bace3a5485c6469be",
+    "evidence/transport/WsNetworkProbe.java": "f7f4796654cc88fac1bc321b2782114fd93b326f0b8115b7c0c3e466575d24a0",
+    "evidence/transport/run_network_tests.py": "843493335245b543418de970f3e6b4e24b8504de392371e33b750fd5c700d790"
+  }
+}

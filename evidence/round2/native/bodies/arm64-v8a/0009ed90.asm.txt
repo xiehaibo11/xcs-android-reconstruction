@@ -1,0 +1,36 @@
+
+<LOCAL_APP>/unpacked/lib/arm64-v8a/librsa_bridge.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000059010 <.text>:
+   9ed90: f9400b90     	ldr	x16, [x28, #0x10]
+   9ed94: eb3063ff     	cmp	sp, x16
+   9ed98: 54000289     	b.ls	0x9ede8 <.text+0x45dd8>
+   9ed9c: f81e0ffe     	str	x30, [sp, #-0x20]!
+   9eda0: f81f83fd     	stur	x29, [sp, #-0x8]
+   9eda4: d10023fd     	sub	x29, sp, #0x8
+   9eda8: f0001d3b     	adrp	x27, 0x445000
+   9edac: b903a760     	str	w0, [x27, #0x3a4]
+   9edb0: f0001d3b     	adrp	x27, 0x445000
+   9edb4: b9476362     	ldr	w2, [x27, #0x760]
+   9edb8: 340000c2     	cbz	w2, 0x9edd0 <.text+0x45dc0>
+   9edbc: 940084e1     	bl	0xc0140 <_cgo_topofstack+0xb0>
+   9edc0: f9000321     	str	x1, [x25]
+   9edc4: b0001b9b     	adrp	x27, 0x40f000
+   9edc8: f947bf62     	ldr	x2, [x27, #0xf78]
+   9edcc: f9000722     	str	x2, [x25, #0x8]
+   9edd0: b0001b9b     	adrp	x27, 0x40f000
+   9edd4: f907bf61     	str	x1, [x27, #0xf78]
+   9edd8: 97ffae4e     	bl	0x8a710 <.text+0x31700>
+   9eddc: a97ffbfd     	ldp	x29, x30, [sp, #-0x8]
+   9ede0: 910083ff     	add	sp, sp, #0x20
+   9ede4: d65f03c0     	ret
+   9ede8: b9000be0     	str	w0, [sp, #0x8]
+   9edec: f9000be1     	str	x1, [sp, #0x10]
+   9edf0: aa1e03e3     	mov	x3, x30
+   9edf4: 94007b9b     	bl	0xbdc60 <.text+0x64c50>
+   9edf8: b9800be0     	ldrsw	x0, [sp, #0x8]
+   9edfc: f9400be1     	ldr	x1, [sp, #0x10]
+   9ee00: 17ffffe4     	b	0x9ed90 <.text+0x45d80>
+		...

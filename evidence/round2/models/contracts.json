@@ -1,0 +1,382 @@
+{
+  "scope": "Round2 bounded model conversion contract; never complete original source recovery",
+  "claims": [
+    {
+      "id": "Devices.version.dynamic_toDouble",
+      "status": "selector_closed_numeric_receiver_subset_reconstructed",
+      "entry": "0x4901f0",
+      "callsite": "0x490614..0x490620",
+      "object_pool_offset": "0x10840",
+      "selector": "dyn:toDouble",
+      "original_dataflow": [
+        "0x4905f4..0x490604 reads JSON[version] through map index dispatch.",
+        "0x490608 puts that result in receiver slot; 0x490614..0x490620 uses PP0x10840 UnlinkedCall. Snapshot target_name is dyn:toDouble.",
+        "There is no null/type-to-string/default branch between this map read and the dynamic call. Missing/null is not mapped to a numeric default.",
+        "0x490624..0x49062c preserves returned value; 0x491128..0x491130 loads returned Double payload and stores unboxed Devices.field37."
+      ],
+      "bounded_implementation": {
+        "accepted": "Java integral wrappers Byte/Short/Integer/Long and Double; returns doubleValue (rounding applies for large integers).",
+        "rejected": "null, String, Boolean and unsupported custom receivers; no numeric-string parser or silent zero default.",
+        "observed_snapshot_numeric_entry": [
+          {
+            "cid": 61,
+            "receiver": "[dart:core] _Double",
+            "entry": "0x6f78fc",
+            "function": "[dart:core] _Double::toDouble"
+          }
+        ]
+      },
+      "limits": [
+        "The IC selector is proven; every possible runtime receiver/noSuchMethod path is not enumerated.",
+        "The int-to-double Java conversion is a primitive numeric reconstruction supported by matching Dart runtime Double_doubleFromInteger/AsDoubleValue behavior. These tests are not exhaustive original-APK IC execution.",
+        "Devices model remains partial because create_time DateTime conversion is still unrecovered."
+      ]
+    },
+    {
+      "id": "Message.toJson.msg_content",
+      "status": "null_branch_and_dispatch_selector_closed_supported_receivers_bounded",
+      "entry": "0x52a2a4",
+      "null_branch": "0x52a308..0x52a314",
+      "dispatch": "0x52a318..0x52a33c",
+      "original_dataflow": [
+        "The two-entry result Map copies msg_type from field7 unchanged.",
+        "msg_content loads field_b. Null bypasses dispatch and writes actual null; it is not the four-character string null.",
+        "For non-null, compressed Smi receives CID59; heap receivers load CID. 0x52a330 uses GDT[cid+0x6d49] with a receiver-only argument descriptor.",
+        "The call result becomes Map[msg_content] before Map._fromLiteral. This is dynamic toString formatting, not JSON serialization of the content object."
+      ],
+      "snapshot_receiver_rows": [
+        {
+          "cid": 59,
+          "receiver": "[dart:core] _Smi",
+          "entry": "0x580434",
+          "canonical_function_label": "[dart:core] _Smi::toString"
+        },
+        {
+          "cid": 60,
+          "receiver": "[dart:core] _Mint",
+          "entry": "0x580b30",
+          "canonical_function_label": "[dart:core] Object::toString"
+        },
+        {
+          "cid": 61,
+          "receiver": "[dart:core] _Double",
+          "entry": "0x580114",
+          "canonical_function_label": "[dart:core] _Double::toString"
+        },
+        {
+          "cid": 62,
+          "receiver": "[dart:core] bool",
+          "entry": "0x5800fc",
+          "canonical_function_label": "[dart:core] bool::toString"
+        },
+        {
+          "cid": 85,
+          "receiver": "[dart:collection] _Map<X0, X1>",
+          "entry": "0x57fbfc",
+          "canonical_function_label": "[dart:collection] __Map&_HashVMBase&MapMixin::toString"
+        },
+        {
+          "cid": 86,
+          "receiver": "[dart:collection] _ConstMap<X0, X1>",
+          "entry": "0x57fbfc",
+          "canonical_function_label": "[dart:collection] __Map&_HashVMBase&MapMixin::toString"
+        },
+        {
+          "cid": 89,
+          "receiver": "[dart:core] _List<X0>",
+          "entry": "0x57fb60",
+          "canonical_function_label": "[dart:collection] ListBase::toString"
+        },
+        {
+          "cid": 90,
+          "receiver": "[dart:core] _ImmutableList<X0>",
+          "entry": "0x57fb60",
+          "canonical_function_label": "[dart:collection] ListBase::toString"
+        },
+        {
+          "cid": 91,
+          "receiver": "[dart:core] _GrowableList<X0>",
+          "entry": "0x57fb60",
+          "canonical_function_label": "[dart:collection] ListBase::toString"
+        },
+        {
+          "cid": 93,
+          "receiver": "[dart:core] _OneByteString",
+          "entry": "0x6f79a8",
+          "canonical_function_label": "[package:flutter/src/services/restoration.dart] RestorationBucket::<anonymous closure>"
+        },
+        {
+          "cid": 94,
+          "receiver": "[dart:core] _TwoByteString",
+          "entry": "0x6f79a8",
+          "canonical_function_label": "[package:flutter/src/services/restoration.dart] RestorationBucket::<anonymous closure>"
+        }
+      ],
+      "supported_receiver_subset": {
+        "String": "CID93/94 both select 0x6f79a8, exact ldr x0,[SP];ret; returns the receiver even though shared code has an unrelated canonical label.",
+        "bool": "CID62 ->0x5800fc; reads boolean bit and returns pooled true/false string.",
+        "Smi": "CID59 ->0x580434 _Smi::toString; compressed signed range [-2^30, 2^30).",
+        "Double": "CID61 ->0x580114 _Double::toString; Java shortest formatting checked against local Dart 3.5.2 reference implementation.",
+        "List": "CID89/90/91 ->0x57fb60 ListBase::toString; bounded acyclic list display syntax, comma+space, no JSON string quotes.",
+        "Map": "CID85/86 ->0x57fbfc MapMixin::toString; bounded acyclic insertion-order map display syntax key: value with comma+space."
+      },
+      "unsupported_receivers": [
+        "Mint: CID60 dispatch is 0x580b30 Object::toString in this snapshot, not Smi::toString. Its observable text is deliberately not guessed from the label; large integer content is unresolved and rejected.",
+        "Custom receiver classes and DateTime as dynamic content are not reconstructed.",
+        "Cyclic lists/maps and their Dart recursion/truncation behavior are not reconstructed."
+      ],
+      "examples": [
+        {
+          "input": "null",
+          "output": "actual null"
+        },
+        {
+          "input": "String 文本",
+          "output": "文本"
+        },
+        {
+          "input": "List [String a, bool true, null, int2]",
+          "output": "[a, true, null, 2]"
+        },
+        {
+          "input": "Map x -> [1,2]",
+          "output": "{x: [1, 2]}"
+        }
+      ]
+    },
+    {
+      "id": "Double.display_reference",
+      "status": "bounded_local_reference_differential_validation",
+      "original_target": "CID61 ->0x580114",
+      "reference_file": "tools/blutter/dartsdk/v3.5.2/runtime/vm/double_conversion.cc",
+      "reference_function": "dart::DoubleToCString",
+      "parameters": {
+        "mode": "ToShortest",
+        "decimal_low": -6,
+        "decimal_high": 21,
+        "exponent_char": "e",
+        "infinity": "Infinity",
+        "nan": "NaN",
+        "flags": [
+          "EMIT_POSITIVE_EXPONENT_SIGN",
+          "EMIT_TRAILING_DECIMAL_POINT",
+          "EMIT_TRAILING_ZERO_AFTER_POINT"
+        ]
+      },
+      "observed_test_result": {
+        "model_assertions": 38,
+        "double_cases": 20100,
+        "differences": 0,
+        "record": "reconstruction/evidence/round2/models/verification.json"
+      },
+      "sampling": "20,000 deterministic random uint64 bit patterns with seed352, plus100 curated IEEE754/boundary/adjacent bit cases, including signed zero, infinities, NaN, subnormal/minimum normal/maximum finite and exponent thresholds.",
+      "limits": [
+        "This runs local C++ double-conversion code from matching Dart 3.5.2 source and the Java reconstruction. It does not execute the original APK or its native Double formatter.",
+        "20,100 cases are sampled differential evidence, not exhaustive proof for every double bit pattern.",
+        "toDouble numeric conversion and toString formatting are separate operations; this oracle checks formatting only."
+      ]
+    },
+    {
+      "id": "Devices.create_time.remaining",
+      "status": "explicitly_unrecovered",
+      "original_calls": [
+        "0x490328 -> DateTime.parse 0x491264",
+        "0x459f80 -> DateTime.toIso8601String 0x45a9dc"
+      ],
+      "implementation": "Requires/retains source String and exposes an unresolved item; Devices.Record.toJson refuses to claim completed serialization.",
+      "limits": [
+        "Parsing overflow, timezone/local offset, date range, fractional seconds and ISO formatting are not ported.",
+        "Rejecting malformed dates at the original parse point is not reproduced merely by retaining String.",
+        "Version improvement does not complete Devices.fromJson or Devices.toJson."
+      ]
+    }
+  ],
+  "machine_code_review": {
+    "status": "PASS",
+    "whole_business_method_bodies_checked": 3,
+    "selected_framework_slices_checked": 3,
+    "instruction_words_checked": 1811,
+    "failures": []
+  },
+  "method_proofs": [
+    {
+      "entry": "0x4901f0",
+      "size": 4200,
+      "signature": "factory _ Devices.fromJson(/* No info */) {",
+      "source": "analysis/aot_dump/asm/distinguish/model/devices.dart",
+      "elf_file_offset": 4784624,
+      "body_sha256": "9cc4acee7c93175a51f4df53d44f97d05e45f8288e8435c251a84b1d6f50792a",
+      "raw_instruction_count": 1050,
+      "checks": {
+        "frozen_asm_hash": true,
+        "frozen_raw_hash": true,
+        "frozen_machine_hash": true,
+        "whole_body_raw_coverage": true,
+        "every_raw_word_matches_elf": true
+      },
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false
+    },
+    {
+      "entry": "0x459f08",
+      "size": 2772,
+      "signature": "Map<String, dynamic> toJson(Devices) {",
+      "source": "analysis/aot_dump/asm/distinguish/model/devices.dart",
+      "elf_file_offset": 4562696,
+      "body_sha256": "eb37e89916b13432c339d2652c480a20ed9e65d68f6205de90136f6410da1741",
+      "raw_instruction_count": 693,
+      "checks": {
+        "frozen_asm_hash": true,
+        "frozen_raw_hash": true,
+        "frozen_machine_hash": true,
+        "whole_body_raw_coverage": true,
+        "every_raw_word_matches_elf": true
+      },
+      "prior_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false
+    },
+    {
+      "entry": "0x52a2a4",
+      "size": 232,
+      "signature": "Map<String, dynamic> toJson(Message) {",
+      "source": "analysis/aot_dump/asm/distinguish/model/message.dart",
+      "elf_file_offset": 5415588,
+      "body_sha256": "e8c9659556e1e7f58e676306584f3711d16099c54aa1f694bc1f5b92485b57a4",
+      "raw_instruction_count": 58,
+      "checks": {
+        "frozen_asm_hash": true,
+        "frozen_raw_hash": true,
+        "frozen_machine_hash": true,
+        "whole_body_raw_coverage": true,
+        "every_raw_word_matches_elf": true
+      },
+      "prior_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false
+    }
+  ],
+  "framework_slices": [
+    {
+      "entry": "0x6f78fc",
+      "selected_size": 8,
+      "elf_file_offset": 7305468,
+      "bytes_le": "e00140f9c0035fd6",
+      "sha256": "0bf4b4e8eea90c3dbad07ea8aa1e879252b06369909575f81549d0ead264c70e",
+      "checks": {
+        "raw_covers_selected_slice": true,
+        "exact_receiver_identity_body": true
+      },
+      "scope": "Selected body slice; not a new full SDK coverage claim"
+    },
+    {
+      "entry": "0x6f79a8",
+      "selected_size": 8,
+      "elf_file_offset": 7305640,
+      "bytes_le": "e00140f9c0035fd6",
+      "sha256": "0bf4b4e8eea90c3dbad07ea8aa1e879252b06369909575f81549d0ead264c70e",
+      "checks": {
+        "raw_covers_selected_slice": true,
+        "exact_receiver_identity_body": true
+      },
+      "scope": "Selected body slice; not a new full SDK coverage claim"
+    },
+    {
+      "entry": "0x5800fc",
+      "selected_size": 24,
+      "elf_file_offset": 5767420,
+      "bytes_le": "e10140f961002037606746f902000014606f46f9c0035fd6",
+      "sha256": "9fafb82dc957b5c34f35fff3b2265ba14885bbc7abb518c00761529bf0c85418",
+      "checks": {
+        "raw_covers_selected_slice": true
+      },
+      "scope": "Selected body slice; not a new full SDK coverage claim"
+    }
+  ],
+  "pool_references": [
+    {
+      "line": 467,
+      "text": "[pp+0xcc8] String: \"true\""
+    },
+    {
+      "line": 469,
+      "text": "[pp+0xcd8] String: \"false\""
+    },
+    {
+      "line": 14431,
+      "text": "[pp+0x10840] UnlinkedCall: 0x2b3c2c - SwitchableCallMissStub"
+    },
+    {
+      "line": 17273,
+      "text": "[pp+0x14fb0] String: \"msg_content\""
+    }
+  ],
+  "metadata_reading": {
+    "tool": "analysis/reconstruction_round2/models/snapshot_model_targets.cpp",
+    "reads": "Original libapp.so snapshot ObjectPool UnlinkedCall target_name and GDT ArrayOrigin()[0x6d49+cid]",
+    "target_Dart_method_invoked": false,
+    "caution": "GDT canonical function names may label shared code. CID-specific targets are proven, while behavior requires body evidence/reference limits."
+  },
+  "source_manifest": [
+    {
+      "path": "unpacked/lib/arm64-v8a/libapp.so",
+      "sha256": "40d890193daa716defe2eec6cd2959bdbf7f7cf8345f8213b1747e54863a5a55"
+    },
+    {
+      "path": "analysis/completeness_audit/flutter/method_coverage.json",
+      "sha256": "eddb170f70d13b3ce0571b23586d246624d4f29b819a3488114618bf449619c5"
+    },
+    {
+      "path": "analysis/reconstruction_round2/models/snapshot_model_targets.cpp",
+      "sha256": "34fd8c37ebc605f9b30bb60d2b5e91b46a58c9ddb31016d5af541d402a6331b8"
+    },
+    {
+      "path": "analysis/reconstruction_round2/models/snapshot_targets.tsv",
+      "sha256": "4ef1bfb32b5235763b9e22b4655a8ad4c49ef82e4dcc58aa4cc935539cf2824e"
+    },
+    {
+      "path": "analysis/reconstruction_round2/models/snapshot_tool_build_commands.json",
+      "sha256": "9a0ef50c0293c9507235a052657b51fc1303f725eaebf992a0a6790f5caca912"
+    },
+    {
+      "path": "analysis/reconstruction_round2/models/verify_model_conversions.py",
+      "sha256": "1e552e850f7549ac842cc37c17d7b6c715828fe9d1867b3cc6ae53c9b5dfc5bc"
+    },
+    {
+      "path": "analysis/reconstruction_round2/models/double_oracle.cpp",
+      "sha256": "4b5d64ff8921ef3f8e027807d336ef8e5630234e7f9d2601dd3727a1ce32ef9c"
+    },
+    {
+      "path": "tools/blutter/dartsdk/v3.5.2/runtime/vm/double_conversion.cc",
+      "sha256": "01bef51163554aa768606504b361b9993df58d0c41e4546ebdf6c7d94ca99a7d"
+    },
+    {
+      "path": "tools/blutter/dartsdk/v3.5.2/runtime/lib/double.cc",
+      "sha256": "f98eed1bd99c8b0e844de0a1f30565f7d5baa684eb83067319efaaf4d69d199c"
+    },
+    {
+      "path": "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/Models.java",
+      "sha256": "ac6f2f17cc9b5faedb29ee26645093a885065b28d0cbf85cfbf759d306ecbf77"
+    },
+    {
+      "path": "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/DartConversions.java",
+      "sha256": "54de99a2f863cda3be9a434c7ff2b614e622dd8d3e8886fa1688778eebb35eee"
+    },
+    {
+      "path": "reconstruction/evidence/round2/models/ModelConversionTest.java",
+      "sha256": "4c4d051db94f5b7e32208a27ee7f2d4553808ce46ca39ba66628e5200edfff9f"
+    },
+    {
+      "path": "reconstruction/evidence/round2/models/run_tests.sh",
+      "sha256": "b90876323d94bc3e31c43d41f724ea78e5d86ced904532420e4ff4d2d19e1751"
+    }
+  ],
+  "coverage": {
+    "new_bounded_association_addresses": [
+      "0x52a2a4"
+    ],
+    "whole_methods_claimed_complete": 0,
+    "frozen_audit_modified": false
+  },
+  "original_source_recovered": false,
+  "original_apk_executed_by_this_audit": false,
+  "business_server_contacted": false
+}

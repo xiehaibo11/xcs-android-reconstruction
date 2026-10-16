@@ -1,0 +1,43 @@
+
+<LOCAL_APP>/unpacked/lib/armeabi-v7a/librsa_bridge.so:	file format elf32-littlearm
+
+Disassembly of section .text:
+
+0001d7ec <.text>:
+   73394: e59a1008     	ldr	r1, [r10, #0x8]
+   73398: e15d0001     	cmp	sp, r1
+   7339c: 9a000019     	bls	0x73408 <.text+0x55c1c> @ imm = #0x64
+   733a0: e52de00c     	str	lr, [sp, #-0xc]!
+   733a4: e59d0010     	ldr	r0, [sp, #0x10]
+   733a8: e59fb068     	ldr	r11, [pc, #0x68]        @ 0x73418 <.text+0x55c2c>
+   733ac: e08fb00b     	add	r11, pc, r11
+   733b0: e58b0000     	str	r0, [r11]
+   733b4: e59fb060     	ldr	r11, [pc, #0x60]        @ 0x7341c <.text+0x55c30>
+   733b8: e08fb00b     	add	r11, pc, r11
+   733bc: e59b1000     	ldr	r1, [r11]
+   733c0: e3510000     	cmp	r1, #0
+   733c4: 1a000001     	bne	0x733d0 <.text+0x55be4> @ imm = #0x4
+   733c8: e59d1014     	ldr	r1, [sp, #0x14]
+   733cc: ea000006     	b	0x733ec <.text+0x55c00> @ imm = #0x18
+   733d0: eb00952a     	bl	0x98880 <_cgo_topofstack+0x84> @ imm = #0x254a8
+   733d4: e59d1014     	ldr	r1, [sp, #0x14]
+   733d8: e5881000     	str	r1, [r8]
+   733dc: e59fb03c     	ldr	r11, [pc, #0x3c]        @ 0x73420 <.text+0x55c34>
+   733e0: e08fb00b     	add	r11, pc, r11
+   733e4: e59b2000     	ldr	r2, [r11]
+   733e8: e5882004     	str	r2, [r8, #0x4]
+   733ec: e59fb030     	ldr	r11, [pc, #0x30]        @ 0x73424 <.text+0x55c38>
+   733f0: e08fb00b     	add	r11, pc, r11
+   733f4: e58b1000     	str	r1, [r11]
+   733f8: e58d0004     	str	r0, [sp, #0x4]
+   733fc: e58d1008     	str	r1, [sp, #0x8]
+   73400: ebff9abe     	bl	0x59f00 <.text+0x3c714> @ imm = #-0x19508
+   73404: e49df00c     	ldr	pc, [sp], #12
+   73408: e1a0300e     	mov	r3, lr
+   7340c: eb008dfa     	bl	0x96bfc <.text+0x79410> @ imm = #0x237e8
+   73410: eaffffdf     	b	0x73394 <.text+0x55ba8> @ imm = #-0x84
+   73414: eafffffe     	b	0x73414 <.text+0x55c28> @ imm = #-0x8
+   73418: 003bba24     	eorseq	r11, r11, r4, lsr #20
+   7341c: 003bbd10     	eorseq	r11, r11, r0, lsl sp
+   73420: 003aaa34     	eorseq	r10, r10, r4, lsr r10
+   73424: 003aaa24     	eorseq	r10, r10, r4, lsr #20

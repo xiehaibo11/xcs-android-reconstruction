@@ -1,0 +1,119 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000059800 <.text>:
+   5bcc0: 66 48 0f 6e c0               	movq	%rax, %xmm0
+   5bcc5: 66 0f 60 c0                  	punpcklbw	%xmm0, %xmm0    # xmm0 = xmm0[0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7]
+   5bcc9: 66 0f 60 c0                  	punpcklbw	%xmm0, %xmm0    # xmm0 = xmm0[0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7]
+   5bccd: 66 0f 70 c0 00               	pshufd	$0x0, %xmm0, %xmm0      # xmm0 = xmm0[0,0,0,0]
+   5bcd2: 48 83 fb 10                  	cmpq	$0x10, %rbx
+   5bcd6: 7c 6e                        	jl	0x5bd46 <.text+0x2546>
+   5bcd8: 49 c7 c4 00 00 00 00         	movq	$0x0, %r12
+   5bcdf: 48 89 f7                     	movq	%rsi, %rdi
+   5bce2: 48 83 fb 20                  	cmpq	$0x20, %rbx
+   5bce6: 0f 87 c8 00 00 00            	ja	0x5bdb4 <.text+0x25b4>
+   5bcec: 48 8d 44 1e f0               	leaq	-0x10(%rsi,%rbx), %rax
+   5bcf1: eb 17                        	jmp	0x5bd0a <.text+0x250a>
+   5bcf3: f3 0f 6f 0f                  	movdqu	(%rdi), %xmm1
+   5bcf7: 66 0f 74 c8                  	pcmpeqb	%xmm0, %xmm1
+   5bcfb: 66 0f d7 d1                  	pmovmskb	%xmm1, %edx
+   5bcff: f3 0f b8 d2                  	popcntl	%edx, %edx
+   5bd03: 49 01 d4                     	addq	%rdx, %r12
+   5bd06: 48 83 c7 10                  	addq	$0x10, %rdi
+   5bd0a: 48 39 c7                     	cmpq	%rax, %rdi
+   5bd0d: 76 e4                        	jbe	0x5bcf3 <.text+0x24f3>
+   5bd0f: 48 83 e3 0f                  	andq	$0xf, %rbx
+   5bd13: 74 2d                        	je	0x5bd42 <.text+0x2542>
+   5bd15: 48 c7 c1 10 00 00 00         	movq	$0x10, %rcx
+   5bd1c: 48 29 d9                     	subq	%rbx, %rcx
+   5bd1f: 49 c7 c2 ff ff 00 00         	movq	$0xffff, %r10           # imm = 0xFFFF
+   5bd26: 49 d3 fa                     	sarq	%cl, %r10
+   5bd29: 49 d3 e2                     	shlq	%cl, %r10
+   5bd2c: f3 0f 6f 08                  	movdqu	(%rax), %xmm1
+   5bd30: 66 0f 74 c8                  	pcmpeqb	%xmm0, %xmm1
+   5bd34: 66 0f d7 d1                  	pmovmskb	%xmm1, %edx
+   5bd38: 4c 21 d2                     	andq	%r10, %rdx
+   5bd3b: f3 0f b8 d2                  	popcntl	%edx, %edx
+   5bd3f: 49 01 d4                     	addq	%rdx, %r12
+   5bd42: 4d 89 20                     	movq	%r12, (%r8)
+   5bd45: c3                           	retq
+   5bd46: 48 85 db                     	testq	%rbx, %rbx
+   5bd49: 74 31                        	je	0x5bd7c <.text+0x257c>
+   5bd4b: 48 8d 46 10                  	leaq	0x10(%rsi), %rax
+   5bd4f: 66 a9 f0 0f                  	testw	$0xff0, %ax             # imm = 0xFF0
+   5bd53: 74 2f                        	je	0x5bd84 <.text+0x2584>
+   5bd55: 88 d9                        	movb	%bl, %cl
+   5bd57: 49 c7 c2 01 00 00 00         	movq	$0x1, %r10
+   5bd5e: 49 d3 e2                     	shlq	%cl, %r10
+   5bd61: 49 83 ea 01                  	subq	$0x1, %r10
+   5bd65: f3 0f 6f 0e                  	movdqu	(%rsi), %xmm1
+   5bd69: 66 0f 74 c8                  	pcmpeqb	%xmm0, %xmm1
+   5bd6d: 66 0f d7 d1                  	pmovmskb	%xmm1, %edx
+   5bd71: 4c 21 d2                     	andq	%r10, %rdx
+   5bd74: f3 0f b8 d2                  	popcntl	%edx, %edx
+   5bd78: 49 89 10                     	movq	%rdx, (%r8)
+   5bd7b: c3                           	retq
+   5bd7c: 49 c7 00 00 00 00 00         	movq	$0x0, (%r8)
+   5bd83: c3                           	retq
+   5bd84: 48 c7 c1 10 00 00 00         	movq	$0x10, %rcx
+   5bd8b: 48 29 d9                     	subq	%rbx, %rcx
+   5bd8e: 49 c7 c2 ff ff 00 00         	movq	$0xffff, %r10           # imm = 0xFFFF
+   5bd95: 49 d3 fa                     	sarq	%cl, %r10
+   5bd98: 49 d3 e2                     	shlq	%cl, %r10
+   5bd9b: f3 0f 6f 4c 1e f0            	movdqu	-0x10(%rsi,%rbx), %xmm1
+   5bda1: 66 0f 74 c8                  	pcmpeqb	%xmm0, %xmm1
+   5bda5: 66 0f d7 d1                  	pmovmskb	%xmm1, %edx
+   5bda9: 4c 21 d2                     	andq	%r10, %rdx
+   5bdac: f3 0f b8 d2                  	popcntl	%edx, %edx
+   5bdb0: 49 89 10                     	movq	%rdx, (%r8)
+   5bdb3: c3                           	retq
+   5bdb4: 80 3d c8 6e 41 00 01         	cmpb	$0x1, 0x416ec8(%rip)    # 0x472c83
+   5bdbb: 0f 85 2b ff ff ff            	jne	0x5bcec <.text+0x24ec>
+   5bdc1: 66 48 0f 6e c0               	movq	%rax, %xmm0
+   5bdc6: 4c 8d 5c 1e e0               	leaq	-0x20(%rsi,%rbx), %r11
+   5bdcb: c4 e2 7d 78 c8               	vpbroadcastb	%xmm0, %ymm1
+   5bdd0: c5 fe 6f 17                  	vmovdqu	(%rdi), %ymm2
+   5bdd4: c5 ed 74 d9                  	vpcmpeqb	%ymm1, %ymm2, %ymm3
+   5bdd8: c5 fd d7 d3                  	vpmovmskb	%ymm3, %edx
+   5bddc: f3 0f b8 d2                  	popcntl	%edx, %edx
+   5bde0: 49 01 d4                     	addq	%rdx, %r12
+   5bde3: 48 83 c7 20                  	addq	$0x20, %rdi
+   5bde7: 4c 39 df                     	cmpq	%r11, %rdi
+   5bdea: 7e e4                        	jle	0x5bdd0 <.text+0x25d0>
+   5bdec: 4c 39 df                     	cmpq	%r11, %rdi
+   5bdef: 74 3a                        	je	0x5be2b <.text+0x262b>
+   5bdf1: 4c 89 df                     	movq	%r11, %rdi
+   5bdf4: c5 fe 6f 17                  	vmovdqu	(%rdi), %ymm2
+   5bdf8: c5 ed 74 d9                  	vpcmpeqb	%ymm1, %ymm2, %ymm3
+   5bdfc: c5 fd d7 d3                  	vpmovmskb	%ymm3, %edx
+   5be00: c5 f8 77                     	vzeroupper
+   5be03: 48 83 e3 1f                  	andq	$0x1f, %rbx
+   5be07: 48 c7 c1 20 00 00 00         	movq	$0x20, %rcx
+   5be0e: 48 29 d9                     	subq	%rbx, %rcx
+   5be11: 41 ba ff ff ff ff            	movl	$0xffffffff, %r10d      # imm = 0xFFFFFFFF
+   5be17: 49 d3 fa                     	sarq	%cl, %r10
+   5be1a: 49 d3 e2                     	shlq	%cl, %r10
+   5be1d: 4c 21 d2                     	andq	%r10, %rdx
+   5be20: f3 0f b8 d2                  	popcntl	%edx, %edx
+   5be24: 49 01 d4                     	addq	%rdx, %r12
+   5be27: 4d 89 20                     	movq	%r12, (%r8)
+   5be2a: c3                           	retq
+   5be2b: c5 f8 77                     	vzeroupper
+   5be2e: 4d 89 20                     	movq	%r12, (%r8)
+   5be31: c3                           	retq
+   5be32: cc                           	int3
+   5be33: cc                           	int3
+   5be34: cc                           	int3
+   5be35: cc                           	int3
+   5be36: cc                           	int3
+   5be37: cc                           	int3
+   5be38: cc                           	int3
+   5be39: cc                           	int3
+   5be3a: cc                           	int3
+   5be3b: cc                           	int3
+   5be3c: cc                           	int3
+   5be3d: cc                           	int3
+   5be3e: cc                           	int3
+   5be3f: cc                           	int3

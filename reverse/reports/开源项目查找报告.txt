@@ -1,0 +1,105 @@
+公开副本说明：本文件为历史分析报告，具体本机路径已脱敏为 <LOCAL_APP> 或 <LOCAL_WORKSPACE>；报告中的历史完成状态不代表完整原始源码已恢复。
+
+鑫财神 APK 开源项目查找报告
+检索日期：2026-10-13
+目标：app_xcs(新).apk.1.1；Android com.re.xcs；Dart package distinguish
+
+一、主要结果
+
+本轮公开检索未定位到能确认属于本 APP 的完整业务源码仓库。
+已经确认多项开源组件进入 APK，并找到与其通信实现高度相关的 MobileIMSDK 官方源码。
+“直接依赖”“通信实现来源线索”“同领域参考”分别列出。相近项目不足以确认是本 APP 源码。
+本轮结论限定于可访问的搜索索引和公开文件；仓库改名、未索引、历史删除和私有仓库仍属未知。
+
+二、最值得用于继续逆向的项目
+
+1. JackJiang2011/MobileIMSDK —— 通信实现来源线索，强关联
+https://github.com/JackJiang2011/MobileIMSDK
+
+APK 的 types=1/2/3/4/50/51/52/54 与官方协议中的心跳、业务数据、退出、ACK、登录响应、心跳响应、错误和被踢消息对应。
+APK 内 QoS4SendDaemon 风格的重传日志、QoS发送/接收守护、心跳守护、自动重登录及ClientCoreSDK模块也有源码级对应。
+APK 本地 Rust 模块名：qos4_send_daemon.rs、qos4_receive_daemon.rs、keep_alive_daemon.rs、auto_re_login_daemon.rs、client_core_sdk.rs。
+这是强关联的移植/改造线索；尚不能绑定具体公开 Rust 仓库、作者或提交。
+
+关键差异：官方登录类型为0，本 APK 使用6；官方有毫秒计时实现，本 APK 已还原的 Rust 逻辑按秒判断。
+APK 已确认的默认值：心跳30秒、检测2秒、超时35秒、自动重登录3秒；QoS扫描60秒、重发年龄阈值3001秒、最多2次成功重发。
+这些 APK 值来自原始二进制；不能用官方当前默认值覆盖，也不能据此假定官方服务端可直接替换本 APP 服务端。
+官方树内的 Flutter 社区版是 Dart TCP 学习参考实现，本轮读取的官方树未包含 Rust 源文件。
+官方仓库的开源范围与付费精编版本范围不同，具体源码文件和许可见 network_candidates.json。
+
+2. fzyzcjy/flutter_rust_bridge —— 已确认的桥接依赖
+https://github.com/fzyzcjy/flutter_rust_bridge
+
+原始 Rust ELF 的 Cargo 构建路径明确记录 flutter_rust_bridge-2.0.0-dev.37。
+此前已还原 Rust事件→FRB生成层→Dart事件分发的交叉调用；该项目可帮助解释生成桥接代码与运行时。
+库名/版本与原始字符串已逐字节核对。具体 Dart/Rust 业务文件不属于上游桥接库。
+
+3. jerson/rsa-mobile 与 jerson/flutter-rsa —— APK 内 RSA 组件来源
+https://github.com/jerson/rsa-mobile
+https://github.com/jerson/flutter-rsa
+
+librsa_bridge.so 的 Go build info 明确依赖 github.com/jerson/rsa-mobile，版本标为(devel)，无法恢复具体提交。
+原库有对应包路径、桥接实例/操作函数和34项RSA操作；Flutter AOT另有 package:fast_rsa 命名空间。
+这能确认组件来源，但不意味着该组件的全部功能均被业务调用。
+当前已还原的服务器配置 RSA 解密路径走 Dart encrypt/PointyCastle；Go RSA 在包内不等于该登录路径调用 Go RSA。
+
+4. Tokio / tokio-tungstenite / tungstenite —— 已确认的 Rust 网络依赖
+https://github.com/tokio-rs/tokio
+https://github.com/snapview/tokio-tungstenite
+https://github.com/snapview/tungstenite-rs
+
+原始 Cargo 构建路径记录：tokio 1.40.0；tokio-tungstenite 0.21.0；tungstenite 0.21.0。
+这些仓库用于解释异步任务和 WebSocket 收发基础设施；APP 的 types/msg_type/心跳业务规则由自定义层决定。
+其它本地版本包括 chrono 0.4.38、uuid 1.10.0、serde_json 1.0.128。
+共提取35个库名/版本对、155条路径证据，均按原ELF文件偏移核对；这是部分版本库存，不能替代完整 Cargo.lock。
+
+5. Dart HTTP 与配置加解密相关依赖
+https://github.com/cfug/dio
+https://github.com/leocavalcante/encrypt
+https://github.com/bcgit/pc-dart
+
+此前已还原的 HTTP 请求与 RSA PKCS1Encoding 业务路径可结合这些上游项目阅读。
+普通 Flutter 包只有命名空间/函数证据时，不推定具体版本。更多依赖、角色、许可及证据见 dependency_candidates.json。
+
+三、同领域项目
+
+Camerash/mahjong-dataset
+https://github.com/Camerash/mahjong-dataset
+https://github.com/Camerash/mahjong-dataset/blob/master/LICENSE
+中国麻将图像及标签数据，仓库许可证声明MIT。它是数据集；没有证明本 APP 使用它。
+数据集采用1..42连续类别索引，本 APP 已提取的本地牌典采用分组编码，接入时需要明确映射。
+
+Unarimit/mahjong-sol_recognition
+https://github.com/Unarimit/mahjong-sol_recognition
+Python雀魂截图牌面识别，可作为图像识别方案参考；本轮未确认其明确许可。
+
+LYiHub/AR-Mahjong-Assistant-preview
+https://github.com/LYiHub/AR-Mahjong-Assistant-preview
+AR眼镜客户端配合Python/YOLOv8 ONNX后端，可作为视觉识别系统结构参考；本轮未确认其明确许可。
+
+以上三项均未确认与com.re.xcs、distinguish、/api/zhuo/add或101/113/114业务消息同源。
+许可未确认的公开代码仅列为参考线索，不作已确认许可的可复用项目推荐。
+
+四、业务源码检索范围
+
+使用特征：鑫财神、com.re.xcs、rust_lib_distinguish、package distinguish、/api/zhuo/add、/api/mj/get_config、/api/zhuo/zhuo_reset_games。
+另用独特业务方法onValidDataAndSendData、mahjong_number+ai_precision、number_error.wav+mahjong及Rust模块/日志交叉检索。
+应用检索部分执行27次Web查询；GitHub连接器另保存了精确查询的返回结果。
+部分中文名、路径搜索出现宽泛无关结果，已排除；没有把名字接近当作源码命中。
+GitHub全站代码搜索和Gitee内部搜索未能穷尽，本地公开API访问也有限制；失败已保存，未作为仓库不存在的证据。
+
+五、文件索引与复核
+
+analysis/open_source/application_candidates.json：应用检索词、3项同行参考及差异
+analysis/open_source/应用源码检索说明.txt：应用检索结论和访问限制
+analysis/open_source/network_candidates.json：MobileIMSDK源码对照、版本范围与差异
+analysis/open_source/网络开源来源说明.txt：通信来源说明
+analysis/open_source/dependency_candidates.json：已识别依赖、许可与版本证据
+analysis/open_source/依赖开源来源说明.txt：依赖来源说明
+analysis/open_source/rust_crate_versions.json：35个Rust库名/版本对，155条原ELF路径证据
+analysis/open_source/root_exact_search_results.json：GitHub连接器精确查询原返回结果
+scripts/open_source_inventory.py：可重复生成原ELF依赖版本库存
+
+复核命令：python3 APP/scripts/open_source_inventory.py
+本轮只读取本地文件与公开仓库文档/源码。未运行APK/原生目标代码，未请求APP业务服务器。
+原始APK、原始解包ELF的内容保持不变。

@@ -1,0 +1,237 @@
+
+<LOCAL_APP>/unpacked/lib/x86/librsa_bridge.so:	file format elf32-i386
+
+Disassembly of section .text:
+
+0001d8f0 <.text>:
+   5d6d0: e8 eb 02 fc ff               	calll	0x1d9c0 <.text+0xd0>
+   5d6d5: 8b 89 6b 3e 3a 00            	movl	0x3a3e6b(%ecx), %ecx
+   5d6db: 65 8b 09                     	movl	%gs:(%ecx), %ecx
+   5d6de: 3b 61 08                     	cmpl	0x8(%ecx), %esp
+   5d6e1: 0f 86 7b 03 00 00            	jbe	0x5da62 <.text+0x40172>
+   5d6e7: 83 ec 20                     	subl	$0x20, %esp
+   5d6ea: e8 c1 02 fc ff               	calll	0x1d9b0 <.text+0xc0>
+   5d6ef: 8b 80 51 3e 3a 00            	movl	0x3a3e51(%eax), %eax
+   5d6f5: 65 8b 00                     	movl	%gs:(%eax), %eax
+   5d6f8: 89 44 24 1c                  	movl	%eax, 0x1c(%esp)
+   5d6fc: e8 bf 02 fc ff               	calll	0x1d9c0 <.text+0xd0>
+   5d701: 8d 89 0f 02 3d 00            	leal	0x3d020f(%ecx), %ecx
+   5d707: c7 01 10 27 00 00            	movl	$0x2710, (%ecx)         # imm = 0x2710
+   5d70d: e8 ae 02 fc ff               	calll	0x1d9c0 <.text+0xd0>
+   5d712: 8d 89 4e 69 3a 00            	leal	0x3a694e(%ecx), %ecx
+   5d718: eb 1a                        	jmp	0x5d734 <.text+0x3fe44>
+   5d71a: 89 4c 24 18                  	movl	%ecx, 0x18(%esp)
+   5d71e: 89 0c 24                     	movl	%ecx, (%esp)
+   5d721: e8 3a bb 01 00               	calll	0x79260 <.text+0x5b970>
+   5d726: 8b 44 24 18                  	movl	0x18(%esp), %eax
+   5d72a: 8b 88 24 01 00 00            	movl	0x124(%eax), %ecx
+   5d730: 8b 44 24 1c                  	movl	0x1c(%esp), %eax
+   5d734: 85 c9                        	testl	%ecx, %ecx
+   5d736: 75 e2                        	jne	0x5d71a <.text+0x3fe2a>
+   5d738: 31 c9                        	xorl	%ecx, %ecx
+   5d73a: eb 23                        	jmp	0x5d75f <.text+0x3fe6f>
+   5d73c: 89 ca                        	movl	%ecx, %edx
+   5d73e: c1 e1 06                     	shll	$0x6, %ecx
+   5d741: 42                           	incl	%edx
+   5d742: e8 99 02 fc ff               	calll	0x1d9e0 <.text+0xf0>
+   5d747: 8d 9b 79 28 3e 00            	leal	0x3e2879(%ebx), %ebx
+   5d74d: c7 44 0b 04 00 00 00 00      	movl	$0x0, 0x4(%ebx,%ecx)
+   5d755: c7 44 0b 08 00 00 00 00      	movl	$0x0, 0x8(%ebx,%ecx)
+   5d75d: 89 d1                        	movl	%edx, %ecx
+   5d75f: 83 f9 04                     	cmpl	$0x4, %ecx
+   5d762: 7c d8                        	jl	0x5d73c <.text+0x3fe4c>
+   5d764: 31 c9                        	xorl	%ecx, %ecx
+   5d766: eb 20                        	jmp	0x5d788 <.text+0x3fe98>
+   5d768: e8 63 02 fc ff               	calll	0x1d9d0 <.text+0xe0>
+   5d76d: 8d 92 b7 27 3e 00            	leal	0x3e27b7(%edx), %edx
+   5d773: 8d 1c ca                     	leal	(%edx,%ecx,8), %ebx
+   5d776: 8d 54 ca 04                  	leal	0x4(%edx,%ecx,8), %edx
+   5d77a: 41                           	incl	%ecx
+   5d77b: 90                           	nop
+   5d77c: c7 03 00 00 00 00            	movl	$0x0, (%ebx)
+   5d782: c7 02 00 00 00 00            	movl	$0x0, (%edx)
+   5d788: 83 f9 13                     	cmpl	$0x13, %ecx
+   5d78b: 7c db                        	jl	0x5d768 <.text+0x3fe78>
+   5d78d: e8 4e b6 fc ff               	calll	0x28de0 <.text+0xb4f0>
+   5d792: 90                           	nop
+   5d793: c7 04 24 00 00 00 00         	movl	$0x0, (%esp)
+   5d79a: c7 44 24 04 00 00 00 00      	movl	$0x0, 0x4(%esp)
+   5d7a2: e8 a9 0d fc ff               	calll	0x1e550 <.text+0xc60>
+   5d7a7: e8 04 02 fc ff               	calll	0x1d9b0 <.text+0xc0>
+   5d7ac: 8d 80 7e 26 3e 00            	leal	0x3e267e(%eax), %eax
+   5d7b2: 0f b6 00                     	movzbl	(%eax), %eax
+   5d7b5: e8 06 02 fc ff               	calll	0x1d9c0 <.text+0xd0>
+   5d7ba: 8d 89 2e 1d 3e 00            	leal	0x3e1d2e(%ecx), %ecx
+   5d7c0: 88 01                        	movb	%al, (%ecx)
+   5d7c2: e8 e9 01 fc ff               	calll	0x1d9b0 <.text+0xc0>
+   5d7c7: 8d 80 68 26 3e 00            	leal	0x3e2668(%eax), %eax
+   5d7cd: 0f b6 00                     	movzbl	(%eax), %eax
+   5d7d0: e8 eb 01 fc ff               	calll	0x1d9c0 <.text+0xd0>
+   5d7d5: 8d 89 14 1d 3e 00            	leal	0x3e1d14(%ecx), %ecx
+   5d7db: 88 01                        	movb	%al, (%ecx)
+   5d7dd: e8 ce 01 fc ff               	calll	0x1d9b0 <.text+0xc0>
+   5d7e2: 8d 80 45 26 3e 00            	leal	0x3e2645(%eax), %eax
+   5d7e8: 0f b6 00                     	movzbl	(%eax), %eax
+   5d7eb: e8 d0 01 fc ff               	calll	0x1d9c0 <.text+0xd0>
+   5d7f0: 8d 89 fa 1c 3e 00            	leal	0x3e1cfa(%ecx), %ecx
+   5d7f6: 88 01                        	movb	%al, (%ecx)
+   5d7f8: e8 73 38 fc ff               	calll	0x21070 <.text+0x3780>
+   5d7fd: 90                           	nop
+   5d7fe: e8 ad 01 fc ff               	calll	0x1d9b0 <.text+0xc0>
+   5d803: 8d 80 99 1d 3e 00            	leal	0x3e1d99(%eax), %eax
+   5d809: 89 04 24                     	movl	%eax, (%esp)
+   5d80c: c7 44 24 04 04 00 00 00      	movl	$0x4, 0x4(%esp)
+   5d814: c7 44 24 08 04 00 00 00      	movl	$0x4, 0x8(%esp)
+   5d81c: e8 df 87 ff ff               	calll	0x56000 <.text+0x38710>
+   5d821: 8b 44 24 1c                  	movl	0x1c(%esp), %eax
+   5d825: 8b 48 18                     	movl	0x18(%eax), %ecx
+   5d828: 89 0c 24                     	movl	%ecx, (%esp)
+   5d82b: c7 44 24 08 ff ff ff ff      	movl	$0xffffffff, 0x8(%esp)  # imm = 0xFFFFFFFF
+   5d833: c7 44 24 04 ff ff ff ff      	movl	$0xffffffff, 0x4(%esp)  # imm = 0xFFFFFFFF
+   5d83b: e8 d0 05 00 00               	calll	0x5de10 <.text+0x40520>
+   5d840: e8 db b7 01 00               	calll	0x79020 <.text+0x5b730>
+   5d845: e8 16 6a 02 00               	calll	0x84260 <.text+0x66970>
+   5d84a: e8 f1 a1 fc ff               	calll	0x27a40 <.text+0xa150>
+   5d84f: e8 9c 98 01 00               	calll	0x770f0 <.text+0x59800>
+   5d854: 8b 44 24 1c                  	movl	0x1c(%esp), %eax
+   5d858: 8b 48 18                     	movl	0x18(%eax), %ecx
+   5d85b: 84 01                        	testb	%al, (%ecx)
+   5d85d: 83 c1 48                     	addl	$0x48, %ecx
+   5d860: 90                           	nop
+   5d861: c7 04 24 02 00 00 00         	movl	$0x2, (%esp)
+   5d868: c7 44 24 04 00 00 00 00      	movl	$0x0, 0x4(%esp)
+   5d870: 89 4c 24 08                  	movl	%ecx, 0x8(%esp)
+   5d874: c7 44 24 0c 08 00 00 00      	movl	$0x8, 0xc(%esp)
+   5d87c: e8 ff 25 03 00               	calll	0x8fe80 <_cgo_topofstack+0xfc0>
+   5d881: 8b 44 24 1c                  	movl	0x1c(%esp), %eax
+   5d885: 8b 40 18                     	movl	0x18(%eax), %eax
+   5d888: 8b 48 48                     	movl	0x48(%eax), %ecx
+   5d88b: 8b 40 4c                     	movl	0x4c(%eax), %eax
+   5d88e: e8 3d 01 fc ff               	calll	0x1d9d0 <.text+0xe0>
+   5d893: 8d 92 cd 1d 3e 00            	leal	0x3e1dcd(%edx), %edx
+   5d899: 89 0a                        	movl	%ecx, (%edx)
+   5d89b: 89 42 04                     	movl	%eax, 0x4(%edx)
+   5d89e: e8 3d f0 00 00               	calll	0x6c8e0 <.text+0x4eff0>
+   5d8a3: 90                           	nop
+   5d8a4: e8 a7 f1 00 00               	calll	0x6ca50 <.text+0x4f160>
+   5d8a9: e8 32 07 01 00               	calll	0x6dfe0 <.text+0x506f0>
+   5d8ae: e8 3d fc 00 00               	calll	0x6d4f0 <.text+0x4fc00>
+   5d8b3: e8 a8 94 fd ff               	calll	0x36d60 <.text+0x19470>
+   5d8b8: e8 f3 00 fc ff               	calll	0x1d9b0 <.text+0xc0>
+   5d8bd: 8d 80 43 ae 3c 00            	leal	0x3cae43(%eax), %eax
+   5d8c3: 0f b6 00                     	movzbl	(%eax), %eax
+   5d8c6: 84 c0                        	testb	%al, %al
+   5d8c8: 74 11                        	je	0x5d8db <.text+0x3ffeb>
+   5d8ca: e8 e1 00 fc ff               	calll	0x1d9b0 <.text+0xc0>
+   5d8cf: 8d 80 05 3c 3a 00            	leal	0x3a3c05(%eax), %eax
+   5d8d5: c7 00 00 00 00 00            	movl	$0x0, (%eax)
+   5d8db: 90                           	nop
+   5d8dc: 90                           	nop
+   5d8dd: e8 ce 00 fc ff               	calll	0x1d9b0 <.text+0xc0>
+   5d8e2: 8d 80 16 00 3d 00            	leal	0x3d0016(%eax), %eax
+   5d8e8: 89 04 24                     	movl	%eax, (%esp)
+   5d8eb: e8 40 ac fc ff               	calll	0x28530 <.text+0xac40>
+   5d8f0: 90                           	nop
+   5d8f1: e8 ca 24 03 00               	calll	0x8fdc0 <_cgo_topofstack+0xf00>
+   5d8f6: 8b 44 24 04                  	movl	0x4(%esp), %eax
+   5d8fa: 8b 0c 24                     	movl	(%esp), %ecx
+   5d8fd: 90                           	nop
+   5d8fe: e8 cd 00 fc ff               	calll	0x1d9d0 <.text+0xe0>
+   5d903: 8d 92 e5 ff 3c 00            	leal	0x3cffe5(%edx), %edx
+   5d909: 89 14 24                     	movl	%edx, (%esp)
+   5d90c: 89 44 24 08                  	movl	%eax, 0x8(%esp)
+   5d910: 89 4c 24 04                  	movl	%ecx, 0x4(%esp)
+   5d914: e8 e7 1d fc ff               	calll	0x1f700 <.text+0x1e10>
+   5d919: e8 92 00 fc ff               	calll	0x1d9b0 <.text+0xc0>
+   5d91e: 8d 80 9e 1c 3e 00            	leal	0x3e1c9e(%eax), %eax
+   5d924: 8b 00                        	movl	(%eax), %eax
+   5d926: 89 44 24 14                  	movl	%eax, 0x14(%esp)
+   5d92a: e8 91 00 fc ff               	calll	0x1d9c0 <.text+0xd0>
+   5d92f: 8d 89 7a 43 1e 00            	leal	0x1e437a(%ecx), %ecx
+   5d935: 89 0c 24                     	movl	%ecx, (%esp)
+   5d938: c7 44 24 04 0a 00 00 00      	movl	$0xa, 0x4(%esp)
+   5d940: e8 eb 6b fc ff               	calll	0x24530 <.text+0x6c40>
+   5d945: 8b 44 24 08                  	movl	0x8(%esp), %eax
+   5d949: 8b 4c 24 0c                  	movl	0xc(%esp), %ecx
+   5d94d: 89 04 24                     	movl	%eax, (%esp)
+   5d950: 89 4c 24 04                  	movl	%ecx, 0x4(%esp)
+   5d954: e8 57 a7 01 00               	calll	0x780b0 <.text+0x5a7c0>
+   5d959: 8b 44 24 08                  	movl	0x8(%esp), %eax
+   5d95d: 89 c1                        	movl	%eax, %ecx
+   5d95f: c1 f8 1f                     	sarl	$0x1f, %eax
+   5d962: 39 4c 24 08                  	cmpl	%ecx, 0x8(%esp)
+   5d966: 0f 94 c2                     	sete	%dl
+   5d969: 39 44 24 0c                  	cmpl	%eax, 0xc(%esp)
+   5d96d: 0f 94 c0                     	sete	%al
+   5d970: 21 d0                        	andl	%edx, %eax
+   5d972: 84 c0                        	testb	%al, %al
+   5d974: 75 02                        	jne	0x5d978 <.text+0x40088>
+   5d976: 31 c9                        	xorl	%ecx, %ecx
+   5d978: 0f b6 54 24 10               	movzbl	0x10(%esp), %edx
+   5d97d: 21 c2                        	andl	%eax, %edx
+   5d97f: 84 d2                        	testb	%dl, %dl
+   5d981: 74 04                        	je	0x5d987 <.text+0x40097>
+   5d983: 85 c9                        	testl	%ecx, %ecx
+   5d985: 7f 04                        	jg	0x5d98b <.text+0x4009b>
+   5d987: 8b 4c 24 14                  	movl	0x14(%esp), %ecx
+   5d98b: 89 0c 24                     	movl	%ecx, (%esp)
+   5d98e: e8 cd a0 00 00               	calll	0x67a60 <.text+0x4a170>
+   5d993: 8b 44 24 04                  	movl	0x4(%esp), %eax
+   5d997: 85 c0                        	testl	%eax, %eax
+   5d999: 0f 85 a7 00 00 00            	jne	0x5da46 <.text+0x40156>
+   5d99f: 90                           	nop
+   5d9a0: 90                           	nop
+   5d9a1: e8 0a 00 fc ff               	calll	0x1d9b0 <.text+0xc0>
+   5d9a6: 8d 80 52 ff 3c 00            	leal	0x3cff52(%eax), %eax
+   5d9ac: 89 04 24                     	movl	%eax, (%esp)
+   5d9af: e8 6c ad fc ff               	calll	0x28720 <.text+0xae30>
+   5d9b4: e8 f7 ff fb ff               	calll	0x1d9b0 <.text+0xc0>
+   5d9b9: 8d 80 6f ae 3c 00            	leal	0x3cae6f(%eax), %eax
+   5d9bf: 8b 48 04                     	movl	0x4(%eax), %ecx
+   5d9c2: 85 c9                        	testl	%ecx, %ecx
+   5d9c4: 75 3a                        	jne	0x5da00 <.text+0x40110>
+   5d9c6: e8 f5 ff fb ff               	calll	0x1d9c0 <.text+0xd0>
+   5d9cb: 8d 89 61 ae 3c 00            	leal	0x3cae61(%ecx), %ecx
+   5d9d1: c7 01 07 00 00 00            	movl	$0x7, (%ecx)
+   5d9d7: e8 e4 ff fb ff               	calll	0x1d9c0 <.text+0xd0>
+   5d9dc: 8d 89 d4 1e 3e 00            	leal	0x3e1ed4(%ecx), %ecx
+   5d9e2: 8b 11                        	movl	(%ecx), %edx
+   5d9e4: 85 d2                        	testl	%edx, %edx
+   5d9e6: 74 09                        	je	0x5d9f1 <.text+0x40101>
+   5d9e8: 8b 10                        	movl	(%eax), %edx
+   5d9ea: e8 51 15 03 00               	calll	0x8ef40 <_cgo_topofstack+0x80>
+   5d9ef: 89 17                        	movl	%edx, (%edi)
+   5d9f1: e8 da ff fb ff               	calll	0x1d9d0 <.text+0xe0>
+   5d9f6: 8d 92 29 39 1e 00            	leal	0x1e3929(%edx), %edx
+   5d9fc: 89 10                        	movl	%edx, (%eax)
+   5d9fe: eb 0b                        	jmp	0x5da0b <.text+0x4011b>
+   5da00: e8 bb ff fb ff               	calll	0x1d9c0 <.text+0xd0>
+   5da05: 8d 89 ab 1e 3e 00            	leal	0x3e1eab(%ecx), %ecx
+   5da0b: e8 a0 ff fb ff               	calll	0x1d9b0 <.text+0xc0>
+   5da10: 8d 80 78 ae 3c 00            	leal	0x3cae78(%eax), %eax
+   5da16: 83 78 04 01                  	cmpl	$0x1, 0x4(%eax)
+   5da1a: 75 26                        	jne	0x5da42 <.text+0x40152>
+   5da1c: e8 af ff fb ff               	calll	0x1d9d0 <.text+0xe0>
+   5da21: 8d 92 6b ae 3c 00            	leal	0x3cae6b(%edx), %edx
+   5da27: c7 02 00 00 00 00            	movl	$0x0, (%edx)
+   5da2d: 8b 09                        	movl	(%ecx), %ecx
+   5da2f: 85 c9                        	testl	%ecx, %ecx
+   5da31: 74 09                        	je	0x5da3c <.text+0x4014c>
+   5da33: 8b 08                        	movl	(%eax), %ecx
+   5da35: e8 06 15 03 00               	calll	0x8ef40 <_cgo_topofstack+0x80>
+   5da3a: 89 0f                        	movl	%ecx, (%edi)
+   5da3c: c7 00 00 00 00 00            	movl	$0x0, (%eax)
+   5da42: 83 c4 20                     	addl	$0x20, %esp
+   5da45: c3                           	retl
+   5da46: e8 65 ff fb ff               	calll	0x1d9b0 <.text+0xc0>
+   5da4b: 8d 80 95 f2 1e 00            	leal	0x1ef295(%eax), %eax
+   5da51: 89 04 24                     	movl	%eax, (%esp)
+   5da54: c7 44 24 04 2b 00 00 00      	movl	$0x2b, 0x4(%esp)
+   5da5c: e8 7f bb ff ff               	calll	0x595e0 <.text+0x3bcf0>
+   5da61: 90                           	nop
+   5da62: e8 69 ff 02 00               	calll	0x8d9d0 <.text+0x700e0>
+   5da67: e9 64 fc ff ff               	jmp	0x5d6d0 <.text+0x3fde0>
+   5da6c: cc                           	int3
+   5da6d: cc                           	int3
+   5da6e: cc                           	int3
+   5da6f: cc                           	int3

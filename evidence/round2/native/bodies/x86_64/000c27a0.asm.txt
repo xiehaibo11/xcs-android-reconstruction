@@ -1,0 +1,39 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+00000000000bffc0 <_cgo_topofstack>:
+   c27a0: 55                           	pushq	%rbp
+   c27a1: 48 89 e5                     	movq	%rsp, %rbp
+   c27a4: 48 83 ec 08                  	subq	$0x8, %rsp
+   c27a8: 48 8b 44 24 18               	movq	0x18(%rsp), %rax
+   c27ad: 45 0f 57 ff                  	xorps	%xmm15, %xmm15
+   c27b1: 4c 8b 35 50 0e 35 00         	movq	0x350e50(%rip), %r14    # 0x413608
+   c27b8: 64 4d 8b 36                  	movq	%fs:(%r14), %r14
+   c27bc: 0f 1f 40 00                  	nopl	(%rax)
+   c27c0: e8 9b 6e fd ff               	callq	0x99660 <.text+0x3fe60>
+   c27c5: 48 83 c4 08                  	addq	$0x8, %rsp
+   c27c9: 5d                           	popq	%rbp
+   c27ca: c3                           	retq
+   c27cb: cc                           	int3
+   c27cc: cc                           	int3
+   c27cd: cc                           	int3
+   c27ce: cc                           	int3
+   c27cf: cc                           	int3
+   c27d0: cc                           	int3
+   c27d1: cc                           	int3
+   c27d2: cc                           	int3
+   c27d3: cc                           	int3
+   c27d4: cc                           	int3
+   c27d5: cc                           	int3
+   c27d6: cc                           	int3
+   c27d7: cc                           	int3
+   c27d8: cc                           	int3
+   c27d9: cc                           	int3
+   c27da: cc                           	int3
+   c27db: cc                           	int3
+   c27dc: cc                           	int3
+   c27dd: cc                           	int3
+   c27de: cc                           	int3
+   c27df: cc                           	int3

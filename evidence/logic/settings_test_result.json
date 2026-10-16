@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "recorded_at_utc": "2026-10-14T18:01:32.882128+00:00",
+  "javac_release": "8",
+  "compile_exit_code": 0,
+  "test_exit_code": 0,
+  "assertions": 102,
+  "source_sha256": {
+    "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/JsonCodec.java": "868bc3895edb77e1be3777a72029e1629bc9a7cc5bd673c8378628d037b80744",
+    "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/ApiContract.java": "f7eea172f4ab151685f9e898a2de18e2512142bb89ef609bace3a5485c6469be",
+    "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/Models.java": "ac6f2f17cc9b5faedb29ee26645093a885065b28d0cbf85cfbf759d306ecbf77",
+    "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/SessionState.java": "cead6c7b13906535ebfd5b7012af681e0cf02178abd7d1f395e1036cb07505ac",
+    "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/SettingsLogic.java": "b02dd8e53ffe8b6adb6a77eefab6936e8e993f4237ca220e2161944338488dec",
+    "reconstruction/evidence/logic/SettingsLogicTest.java": "edca1f4637ddf3b98ad0e4230efaf1b42cd468c93a7eba8200cd8e0cdba54920",
+    "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/DartConversions.java": "54de99a2f863cda3be9a434c7ff2b614e622dd8d3e8886fa1688778eebb35eee"
+  },
+  "scope": "Executable bounded settings behavior only; static fixture assertions are not dynamic equivalence against the original APK.",
+  "network_used": false,
+  "original_binary_executed": false,
+  "original_source_recovered": false,
+  "whole_methods_claimed_complete": false,
+  "full_app_behavior_completed": false,
+  "unresolved": [
+    "WiFi original sort output for multiple items: comparator returns 0/1 and cannot be supplied to Java sort; parser explicitly returns input order with orderingRecovered=false",
+    "Malformed WiFi record recovery branches and non-String dynamic response conversion are not ported; these inputs fail explicitly",
+    "Dart int.parse formats outside signed decimal and values outside Java int range are not ported; these inputs fail explicitly",
+    "Some Dart dynamic toString inputs other than null, String, bool and integer are not ported",
+    "Full Flutter widget layout, lifecycle setState behavior and original navigation implementation are not recovered by this core test"
+  ]
+}

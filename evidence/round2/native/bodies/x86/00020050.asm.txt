@@ -1,0 +1,29 @@
+
+<LOCAL_APP>/unpacked/lib/x86/librsa_bridge.so:	file format elf32-i386
+
+Disassembly of section .text:
+
+0001d8f0 <.text>:
+   20050: 8b 74 24 04                  	movl	0x4(%esp), %esi
+   20054: 8b 4c 24 08                  	movl	0x8(%esp), %ecx
+   20058: 8a 44 24 10                  	movb	0x10(%esp), %al
+   2005c: 89 f7                        	movl	%esi, %edi
+   2005e: fc                           	cld
+   2005f: f2 ae                        	repne		scasb	%es:(%edi), %al
+   20061: 74 09                        	je	0x2006c <.text+0x277c>
+   20063: c7 44 24 14 ff ff ff ff      	movl	$0xffffffff, 0x14(%esp) # imm = 0xFFFFFFFF
+   2006b: c3                           	retl
+   2006c: 29 f7                        	subl	%esi, %edi
+   2006e: 83 ef 01                     	subl	$0x1, %edi
+   20071: 89 7c 24 14                  	movl	%edi, 0x14(%esp)
+   20075: c3                           	retl
+   20076: cc                           	int3
+   20077: cc                           	int3
+   20078: cc                           	int3
+   20079: cc                           	int3
+   2007a: cc                           	int3
+   2007b: cc                           	int3
+   2007c: cc                           	int3
+   2007d: cc                           	int3
+   2007e: cc                           	int3
+   2007f: cc                           	int3

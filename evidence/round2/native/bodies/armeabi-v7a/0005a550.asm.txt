@@ -1,0 +1,59 @@
+
+<LOCAL_APP>/unpacked/lib/armeabi-v7a/librsa_bridge.so:	file format elf32-littlearm
+
+Disassembly of section .text:
+
+0001d7ec <.text>:
+   5a550: e59a1008     	ldr	r1, [r10, #0x8]
+   5a554: e15d0001     	cmp	sp, r1
+   5a558: 9a000025     	bls	0x5a5f4 <.text+0x3ce08> @ imm = #0x94
+   5a55c: e52de008     	str	lr, [sp, #-0x8]!
+   5a560: ebfffd4f     	bl	0x59aa4 <.text+0x3c2b8> @ imm = #-0xac4
+   5a564: e59d0004     	ldr	r0, [sp, #0x4]
+   5a568: e59fb094     	ldr	r11, [pc, #0x94]        @ 0x5a604 <.text+0x3ce18>
+   5a56c: e08fb00b     	add	r11, pc, r11
+   5a570: e58b0000     	str	r0, [r11]
+   5a574: ebffff9c     	bl	0x5a3ec <.text+0x3cc00> @ imm = #-0x190
+   5a578: e59d0004     	ldr	r0, [sp, #0x4]
+   5a57c: e59fb084     	ldr	r11, [pc, #0x84]        @ 0x5a608 <.text+0x3ce1c>
+   5a580: e08fb00b     	add	r11, pc, r11
+   5a584: e58b0000     	str	r0, [r11]
+   5a588: e59fb07c     	ldr	r11, [pc, #0x7c]        @ 0x5a60c <.text+0x3ce20>
+   5a58c: e08fb00b     	add	r11, pc, r11
+   5a590: e5db0000     	ldrb	r0, [r11]
+   5a594: e3500000     	cmp	r0, #0
+   5a598: 0a000014     	beq	0x5a5f0 <.text+0x3ce04> @ imm = #0x50
+   5a59c: e59fb06c     	ldr	r11, [pc, #0x6c]        @ 0x5a610 <.text+0x3ce24>
+   5a5a0: e08fb00b     	add	r11, pc, r11
+   5a5a4: e59b0000     	ldr	r0, [r11]
+   5a5a8: e3c00102     	bic	r0, r0, #-2147483648
+   5a5ac: 00000000     	andeq	r0, r0, r0
+   5a5b0: e59fb05c     	ldr	r11, [pc, #0x5c]        @ 0x5a614 <.text+0x3ce28>
+   5a5b4: e08fb00b     	add	r11, pc, r11
+   5a5b8: e58b0000     	str	r0, [r11]
+   5a5bc: e59fb054     	ldr	r11, [pc, #0x54]        @ 0x5a618 <.text+0x3ce2c>
+   5a5c0: e08fb00b     	add	r11, pc, r11
+   5a5c4: e59b0000     	ldr	r0, [r11]
+   5a5c8: e3c01001     	bic	r1, r0, #1
+   5a5cc: e3c00003     	bic	r0, r0, #3
+   5a5d0: 00000000     	andeq	r0, r0, r0
+   5a5d4: e59fb040     	ldr	r11, [pc, #0x40]        @ 0x5a61c <.text+0x3ce30>
+   5a5d8: e08fb00b     	add	r11, pc, r11
+   5a5dc: e58b1000     	str	r1, [r11]
+   5a5e0: 00000000     	andeq	r0, r0, r0
+   5a5e4: e59fb034     	ldr	r11, [pc, #0x34]        @ 0x5a620 <.text+0x3ce34>
+   5a5e8: e08fb00b     	add	r11, pc, r11
+   5a5ec: e58b0000     	str	r0, [r11]
+   5a5f0: e49df008     	ldr	pc, [sp], #8
+   5a5f4: e1a0300e     	mov	r3, lr
+   5a5f8: eb00f17f     	bl	0x96bfc <.text+0x79410> @ imm = #0x3c5fc
+   5a5fc: eaffffd3     	b	0x5a550 <.text+0x3cd64> @ imm = #-0xb4
+   5a600: eafffffe     	b	0x5a600 <.text+0x3ce14> @ imm = #-0x8
+   5a604: 003d486c     	eorseq	r4, sp, r12, ror #16
+   5a608: 003d47b4     	ldrhteq	r4, [sp], -r4
+   5a60c: 00398efc     	ldrshteq	r8, [r9], -r12
+   5a610: 00398fc8     	eorseq	r8, r9, r8, asr #31
+   5a614: 00398fb4     	ldrhteq	r8, [r9], -r4
+   5a618: 00398fac     	eorseq	r8, r9, r12, lsr #31
+   5a61c: 00398f94     	mlaseq	r9, r4, pc, r8
+   5a620: 00398f84     	eorseq	r8, r9, r4, lsl #31

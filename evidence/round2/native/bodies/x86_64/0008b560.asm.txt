@@ -1,0 +1,63 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000059800 <.text>:
+   8b560: 49 3b 66 10                  	cmpq	0x10(%r14), %rsp
+   8b564: 76 53                        	jbe	0x8b5b9 <.text+0x31db9>
+   8b566: 55                           	pushq	%rbp
+   8b567: 48 89 e5                     	movq	%rsp, %rbp
+   8b56a: e8 d1 f6 ff ff               	callq	0x8ac40 <.text+0x31440>
+   8b56f: 89 05 e3 6c 3e 00            	movl	%eax, 0x3e6ce3(%rip)    # 0x472258
+   8b575: e8 c6 fe ff ff               	callq	0x8b440 <.text+0x31c40>
+   8b57a: 48 89 05 37 6d 3e 00         	movq	%rax, 0x3e6d37(%rip)    # 0x4722b8
+   8b581: 80 3d 18 7f 38 00 00         	cmpb	$0x0, 0x387f18(%rip)    # 0x4134a0
+   8b588: 74 2d                        	je	0x8b5b7 <.text+0x31db7>
+   8b58a: 8b 05 c8 7f 38 00            	movl	0x387fc8(%rip), %eax    # 0x413558
+   8b590: 0f ba f0 1f                  	btrl	$0x1f, %eax
+   8b594: 90                           	nop
+   8b595: 89 05 bd 7f 38 00            	movl	%eax, 0x387fbd(%rip)    # 0x413558
+   8b59b: 8b 05 bb 7f 38 00            	movl	0x387fbb(%rip), %eax    # 0x41355c
+   8b5a1: 89 c1                        	movl	%eax, %ecx
+   8b5a3: 83 e0 fe                     	andl	$-0x2, %eax
+   8b5a6: 83 e1 fc                     	andl	$-0x4, %ecx
+   8b5a9: 90                           	nop
+   8b5aa: 89 05 ac 7f 38 00            	movl	%eax, 0x387fac(%rip)    # 0x41355c
+   8b5b0: 90                           	nop
+   8b5b1: 89 0d a5 7f 38 00            	movl	%ecx, 0x387fa5(%rip)    # 0x41355c
+   8b5b7: 5d                           	popq	%rbp
+   8b5b8: c3                           	retq
+   8b5b9: e8 82 2b 03 00               	callq	0xbe140 <.text+0x64940>
+   8b5be: 66 90                        	nop
+   8b5c0: eb 9e                        	jmp	0x8b560 <.text+0x31d60>
+   8b5c2: cc                           	int3
+   8b5c3: cc                           	int3
+   8b5c4: cc                           	int3
+   8b5c5: cc                           	int3
+   8b5c6: cc                           	int3
+   8b5c7: cc                           	int3
+   8b5c8: cc                           	int3
+   8b5c9: cc                           	int3
+   8b5ca: cc                           	int3
+   8b5cb: cc                           	int3
+   8b5cc: cc                           	int3
+   8b5cd: cc                           	int3
+   8b5ce: cc                           	int3
+   8b5cf: cc                           	int3
+   8b5d0: cc                           	int3
+   8b5d1: cc                           	int3
+   8b5d2: cc                           	int3
+   8b5d3: cc                           	int3
+   8b5d4: cc                           	int3
+   8b5d5: cc                           	int3
+   8b5d6: cc                           	int3
+   8b5d7: cc                           	int3
+   8b5d8: cc                           	int3
+   8b5d9: cc                           	int3
+   8b5da: cc                           	int3
+   8b5db: cc                           	int3
+   8b5dc: cc                           	int3
+   8b5dd: cc                           	int3
+   8b5de: cc                           	int3
+   8b5df: cc                           	int3

@@ -1,0 +1,214 @@
+{
+  "scope": "Signed 64-bit native Dart int toString/toDouble reconstruction; not full original-source recovery",
+  "status": "PASS",
+  "resolved_claims": [
+    {
+      "id": "Mint.msg_content.toString",
+      "dispatch": "Message.toJson 0x52a330 GDT[cid+0x6d49], CID60 ->0x580b30",
+      "native_binding": "Object_toString (read from original snapshot Function.native_name)",
+      "native_body_reference": "Object_toString creates Instance::CheckedHandle, then calls instance.ToCString(). The handle preserves concrete runtime type; Mint::ToCString uses signed Pd64 decimal. This is not the generic Instance::ToCString text.",
+      "implementation": "DartIntegers.toDartString accepts Java Byte/Short/Integer/Long, formats all signed64 values including Long.MIN_VALUE; Java wrappers are adapters for native Dart int and do not define its Smi/Mint allocation."
+    },
+    {
+      "id": "Integer.toDouble",
+      "dispatch": "_IntegerImplementation.toDouble 0x6f791c -> _Double.fromInteger 0x2ebc94; snapshot native_name Double_doubleFromInteger",
+      "original_body": "Smi fast path sign-extracts 31-bit compressed value and SCVTFs it. Mint takes native fallback.",
+      "native_body_reference": "Double_doubleFromInteger calls Integer::AsDoubleValue. Smi and Mint each static_cast<double> their signed payload.",
+      "implementation": "DartIntegers.toDouble casts checked signed64 long to double; binary64 rounding is preserved, with 2^53 and signed64 boundaries tested."
+    },
+    {
+      "id": "Smi.Mint.representation",
+      "observed_snapshot": "compressed pointers enabled, CID59 Smi valid [-1073741824,1073741823], CID60 Mint holds remaining signed64 values",
+      "limitation": "This is the inspected ARM64 compressed snapshot, not a claim that every 64-bit Dart build has 31-bit Smis. Mint is signed64 despite compressed references."
+    }
+  ],
+  "snapshot_metadata": [
+    "BUILD\tcompressed_pointers\t1\tSmiMin\t-1073741824\tSmiMax\t1073741823\tMintBits\t63",
+    "GDT\t59\t[dart:core] _Smi\t0x580434\t[dart:core] _Smi::toString\tnative=0",
+    "GDT\t60\t[dart:core] _Mint\t0x580b30\t[dart:core] Object::toString\tnative=1\tnative_name=Object_toString",
+    "GDT\t61\t[dart:core] _Double\t0x580114\t[dart:core] _Double::toString\tnative=0",
+    "GDT\t4688\t[dart:core] DateTime\t0x5715ac\t[dart:core] DateTime::toString\tnative=0",
+    "NATIVE_FACTORY\t0x2ebc94\t[dart:core] _Double::_Double.fromInteger\tnative=1\tnative_name=Double_doubleFromInteger",
+    "DOUBLE_METHOD\t58\t0x6f791c\t[dart:core] _IntegerImplementation::toDouble\tnative=0",
+    "DOUBLE_METHOD\t61\t0x6f78fc\t[dart:core] _Double::toDouble\tnative=0",
+    "DOUBLE_METHOD\t4695\t0x2d8ea0\t[dart:core] _BigIntImpl::toDouble\tnative=0",
+    "DOUBLE_METHOD\t4695\t0x2d8f08\t[dart:core] _BigIntImpl::toDouble\tnative=0"
+  ],
+  "method_proofs": [
+    {
+      "entry": "0x52a2a4",
+      "name": "Message.toJson",
+      "size": 232,
+      "elf_file_offset": 5415588,
+      "sha256": "e8c9659556e1e7f58e676306584f3711d16099c54aa1f694bc1f5b92485b57a4",
+      "instruction_words": 58,
+      "whole_selected_body_disassembled": true,
+      "original_runtime_execution": false
+    },
+    {
+      "entry": "0x580b30",
+      "name": "Object.toString",
+      "size": 132,
+      "elf_file_offset": 5770032,
+      "sha256": "e27b4049980184802410a2c04e73f2c614b64157ac4ac32466508569a2d392c9",
+      "instruction_words": 33,
+      "whole_selected_body_disassembled": true,
+      "original_runtime_execution": false
+    },
+    {
+      "entry": "0x6f791c",
+      "name": "_IntegerImplementation.toDouble",
+      "size": 56,
+      "elf_file_offset": 7305500,
+      "sha256": "5ffd8a5a3e15de045122f1c011e5e07d3006953dc9b836161e23ce6616cfea1b",
+      "instruction_words": 14,
+      "whole_selected_body_disassembled": true,
+      "original_runtime_execution": false
+    },
+    {
+      "entry": "0x2ebc94",
+      "name": "_Double.fromInteger",
+      "size": 184,
+      "elf_file_offset": 3062932,
+      "sha256": "c86f464483e40aa5c60b0f1549a1d597bce888b36d95d8e91fd8c66c2d61e645",
+      "instruction_words": 46,
+      "whole_selected_body_disassembled": true,
+      "original_runtime_execution": false
+    }
+  ],
+  "original_instruction_words_reviewed": 151,
+  "reference_excerpts": [
+    {
+      "source": "tools/blutter/dartsdk/v3.5.2/runtime/lib/object.cc",
+      "source_sha256": "cd2add21f2c1a8dd4b37f33b135d114a6e9bb2cf53a4914bb8d52ebb97271a40",
+      "first_line": 61,
+      "last_line": 74,
+      "captured_excerpt": "reconstruction/evidence/round3/mint/object.cc.L61-74.txt",
+      "excerpt_sha256": "b8f993c15d31ab5c243d4ad1966fad67ca538c255476b60b1e21a0cad5aa1b62"
+    },
+    {
+      "source": "tools/blutter/dartsdk/v3.5.2/runtime/lib/double.cc",
+      "source_sha256": "f98eed1bd99c8b0e844de0a1f30565f7d5baa684eb83067319efaaf4d69d199c",
+      "first_line": 22,
+      "last_line": 30,
+      "captured_excerpt": "reconstruction/evidence/round3/mint/double.cc.L22-30.txt",
+      "excerpt_sha256": "4dcd7f1e3ff1cce1a342771d667f9bcd9eab237078714fc1654a4a3ec7393683"
+    },
+    {
+      "source": "tools/blutter/dartsdk/v3.5.2/runtime/vm/object.cc",
+      "source_sha256": "57fcaad4b946e05aeb5db7f9ec4b9307f272fa39870f0241435cca60d155e1ae",
+      "first_line": 23010,
+      "last_line": 23023,
+      "captured_excerpt": "reconstruction/evidence/round3/mint/object.cc.L23010-23023.txt",
+      "excerpt_sha256": "9fb52efdf36d91e4db0383627688abc20b46d18040c3f4df127df4b3d3966b3d"
+    },
+    {
+      "source": "tools/blutter/dartsdk/v3.5.2/runtime/vm/object.cc",
+      "source_sha256": "57fcaad4b946e05aeb5db7f9ec4b9307f272fa39870f0241435cca60d155e1ae",
+      "first_line": 23257,
+      "last_line": 23259,
+      "captured_excerpt": "reconstruction/evidence/round3/mint/object.cc.L23257-23259.txt",
+      "excerpt_sha256": "509068da79931b2902125e936ed4d7154797f65d5d2bc9ce3a5de70af4eefd9f"
+    },
+    {
+      "source": "tools/blutter/dartsdk/v3.5.2/runtime/vm/object.cc",
+      "source_sha256": "57fcaad4b946e05aeb5db7f9ec4b9307f272fa39870f0241435cca60d155e1ae",
+      "first_line": 23291,
+      "last_line": 23293,
+      "captured_excerpt": "reconstruction/evidence/round3/mint/object.cc.L23291-23293.txt",
+      "excerpt_sha256": "23fe180abc34cdc9c79a8340355087371ad81358aaf4eff8a717980a7ff86978"
+    },
+    {
+      "source": "tools/blutter/dartsdk/v3.5.2/runtime/vm/object.cc",
+      "source_sha256": "57fcaad4b946e05aeb5db7f9ec4b9307f272fa39870f0241435cca60d155e1ae",
+      "first_line": 23331,
+      "last_line": 23337,
+      "captured_excerpt": "reconstruction/evidence/round3/mint/object.cc.L23331-23337.txt",
+      "excerpt_sha256": "65cdaa53125fe8a819d670b4dee893e55ace14aba9d9b6515f67cd4d38ccf6d3"
+    },
+    {
+      "source": "tools/blutter/dartsdk/v3.5.2/runtime/vm/object.cc",
+      "source_sha256": "57fcaad4b946e05aeb5db7f9ec4b9307f272fa39870f0241435cca60d155e1ae",
+      "first_line": 23361,
+      "last_line": 23363,
+      "captured_excerpt": "reconstruction/evidence/round3/mint/object.cc.L23361-23363.txt",
+      "excerpt_sha256": "b18e1d1fdf26852111d99794b9e9c88cd7fea09b18de9ec7560c3c71a4060e45"
+    },
+    {
+      "source": "tools/blutter/dartsdk/v3.5.2/runtime/platform/globals.h",
+      "source_sha256": "f9e012da43f63c78953b32b8f611bd717e92303f0afc400215b2ccedb5f326ac",
+      "first_line": 413,
+      "last_line": 418,
+      "captured_excerpt": "reconstruction/evidence/round3/mint/globals.h.L413-418.txt",
+      "excerpt_sha256": "ce775b85b505db16e162a69698eb9596250d03cdfdb0bd2cab9a0d618c1724b3"
+    }
+  ],
+  "verification": {
+    "status": "PASS",
+    "boundary_assertions": 52,
+    "differential_cases": 20856,
+    "smi_cases": 394,
+    "mint_cases": 20462,
+    "differences": 0,
+    "reference": "Local Dart VM3.5.2 linked C++ implementation, loaded with original APK snapshot; Integer::New, Instance::ToCString and Integer::AsDoubleValue executed directly. Original APK target entrypoints and libflutter native methods were not invoked.",
+    "seed": 35260,
+    "random_samples_requested": 20000,
+    "boundary_cases_added": 856
+  },
+  "remaining": [
+    "BigInt, numeric parsing, arithmetic overflow, custom Number subclasses, and arbitrary Dart dynamic receivers are outside this helper.",
+    "DateTime has its own CID4688 GDT toString override at0x5715ac; it must use the separately reconstructed DateTime implementation.",
+    "Entire Object_toString behavior for non-int instances, full noSuchMethod/error identity, and original engine native runtime execution are not claimed.",
+    "Method-level original source and whole-application equivalence remain unrecovered."
+  ],
+  "source_manifest": [
+    {
+      "path": "unpacked/lib/arm64-v8a/libapp.so",
+      "sha256": "40d890193daa716defe2eec6cd2959bdbf7f7cf8345f8213b1747e54863a5a55"
+    },
+    {
+      "path": "analysis/reconstruction_round3/mint/mint_oracle.cpp",
+      "sha256": "9d1243ae45c716174481d49ae6932047c0aa8019dbc5480b150503265824cbdf"
+    },
+    {
+      "path": "analysis/reconstruction_round3/mint/build_commands.json",
+      "sha256": "dad4cba441f0161fe870191c113b82833d3fcbde781cb325d150648f715f36a8"
+    },
+    {
+      "path": "analysis/reconstruction_round3/mint/verify_mint.py",
+      "sha256": "1b64cc47afc908ae38ac46087f382cd6ad8201669f270b128ed13f0c6a753eb7"
+    },
+    {
+      "path": "analysis/reconstruction_round3/mint/build_contracts.py",
+      "sha256": "7b8d7b0faa21809be99dbf5e638e5f24091a593b0299973bc832ceb73a0e8773"
+    },
+    {
+      "path": "analysis/reconstruction_round3/mint/cases.txt",
+      "sha256": "55046409938544d714e4cba71de2c7df38c583157bc85aa508493f85f8d32c41"
+    },
+    {
+      "path": "reconstruction/evidence/round3/mint/reference.tsv",
+      "sha256": "34fc4110716e7886eb813f838ea524a62651d6b642ea82d3fed38697cc5b4c3e"
+    },
+    {
+      "path": "reconstruction/evidence/round3/mint/MintConversionTest.java",
+      "sha256": "ff312f50d849cb234cc695a0a9150aa489bdebccb00e3f49686286aa9e8c85e0"
+    },
+    {
+      "path": "reconstruction/evidence/round3/mint/run_tests.sh",
+      "sha256": "87b81e5073f9b7b064bd4f4030e8a4aa3831683184834c1e3dcc6948f14b62da"
+    },
+    {
+      "path": "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/DartIntegers.java",
+      "sha256": "f7f6e7cd2f46df3369dbae2a5bdc34417e683e3e89fe2b9a3705e65c3d62bc45"
+    },
+    {
+      "path": "tools/blutter/packages/lib/libdartvm3.5.2_android_arm64.a",
+      "sha256": "8428ae2d5af5e4ebd9dd64f4883b7c1a0d04c2d82ac9914d13574fc21327dd76"
+    }
+  ],
+  "business_server_contacted": false,
+  "original_apk_runtime_executed": false,
+  "original_source_recovered": false,
+  "frozen_audit_modified": false
+}

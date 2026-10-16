@@ -1,0 +1,632 @@
+{
+  "status": "PASS",
+  "original_source_recovered": false,
+  "business_server_contacted": false,
+  "dataset_inputs": 16160,
+  "original_arm64_function_executions": 32320,
+  "compiled_c_result_checks": 96960,
+  "java_result_checks": 64640,
+  "java_boundary_checks": 36,
+  "sanitizer_runs": [
+    {
+      "status": "PASS",
+      "backend": "arm64-neon",
+      "checks": 13078
+    },
+    {
+      "status": "PASS",
+      "backend": "portable-c",
+      "checks": 13078
+    }
+  ],
+  "memory_boundaries": {
+    "status": "PASS",
+    "checks": 1218,
+    "read_footprint_cases": 1152,
+    "witnesses": [
+      {
+        "entry": "0x5ae90",
+        "alignment": 1,
+        "length": 0,
+        "logical_start": "0x810001",
+        "logical_end_exclusive": "0x810001",
+        "reads": []
+      },
+      {
+        "entry": "0x5ae90",
+        "alignment": 1,
+        "length": 1,
+        "logical_start": "0x810001",
+        "logical_end_exclusive": "0x810002",
+        "reads": [
+          {
+            "address": "0x810001",
+            "size": 1
+          }
+        ]
+      },
+      {
+        "entry": "0x5ae90",
+        "alignment": 1,
+        "length": 32,
+        "logical_start": "0x810001",
+        "logical_end_exclusive": "0x810021",
+        "reads": [
+          {
+            "address": "0x810001",
+            "size": 1
+          },
+          {
+            "address": "0x810002",
+            "size": 1
+          },
+          {
+            "address": "0x810003",
+            "size": 1
+          },
+          {
+            "address": "0x810004",
+            "size": 1
+          },
+          {
+            "address": "0x810005",
+            "size": 1
+          },
+          {
+            "address": "0x810006",
+            "size": 1
+          },
+          {
+            "address": "0x810007",
+            "size": 1
+          },
+          {
+            "address": "0x810008",
+            "size": 1
+          },
+          {
+            "address": "0x810009",
+            "size": 1
+          },
+          {
+            "address": "0x81000a",
+            "size": 1
+          },
+          {
+            "address": "0x81000b",
+            "size": 1
+          },
+          {
+            "address": "0x81000c",
+            "size": 1
+          },
+          {
+            "address": "0x81000d",
+            "size": 1
+          },
+          {
+            "address": "0x81000e",
+            "size": 1
+          },
+          {
+            "address": "0x81000f",
+            "size": 1
+          },
+          {
+            "address": "0x810010",
+            "size": 1
+          },
+          {
+            "address": "0x810011",
+            "size": 1
+          },
+          {
+            "address": "0x810012",
+            "size": 1
+          },
+          {
+            "address": "0x810013",
+            "size": 1
+          },
+          {
+            "address": "0x810014",
+            "size": 1
+          },
+          {
+            "address": "0x810015",
+            "size": 1
+          },
+          {
+            "address": "0x810016",
+            "size": 1
+          },
+          {
+            "address": "0x810017",
+            "size": 1
+          },
+          {
+            "address": "0x810018",
+            "size": 1
+          },
+          {
+            "address": "0x810019",
+            "size": 1
+          },
+          {
+            "address": "0x81001a",
+            "size": 1
+          },
+          {
+            "address": "0x81001b",
+            "size": 1
+          },
+          {
+            "address": "0x81001c",
+            "size": 1
+          },
+          {
+            "address": "0x81001d",
+            "size": 1
+          },
+          {
+            "address": "0x81001e",
+            "size": 1
+          },
+          {
+            "address": "0x81001f",
+            "size": 1
+          },
+          {
+            "address": "0x810020",
+            "size": 1
+          }
+        ]
+      },
+      {
+        "entry": "0x5ae90",
+        "alignment": 1,
+        "length": 33,
+        "logical_start": "0x810001",
+        "logical_end_exclusive": "0x810022",
+        "reads": [
+          {
+            "address": "0x810001",
+            "size": 1
+          },
+          {
+            "address": "0x810002",
+            "size": 1
+          },
+          {
+            "address": "0x810003",
+            "size": 1
+          },
+          {
+            "address": "0x810004",
+            "size": 1
+          },
+          {
+            "address": "0x810005",
+            "size": 1
+          },
+          {
+            "address": "0x810006",
+            "size": 1
+          },
+          {
+            "address": "0x810007",
+            "size": 1
+          },
+          {
+            "address": "0x810008",
+            "size": 1
+          },
+          {
+            "address": "0x810009",
+            "size": 1
+          },
+          {
+            "address": "0x81000a",
+            "size": 1
+          },
+          {
+            "address": "0x81000b",
+            "size": 1
+          },
+          {
+            "address": "0x81000c",
+            "size": 1
+          },
+          {
+            "address": "0x81000d",
+            "size": 1
+          },
+          {
+            "address": "0x81000e",
+            "size": 1
+          },
+          {
+            "address": "0x81000f",
+            "size": 1
+          },
+          {
+            "address": "0x810010",
+            "size": 1
+          },
+          {
+            "address": "0x810011",
+            "size": 1
+          },
+          {
+            "address": "0x810012",
+            "size": 1
+          },
+          {
+            "address": "0x810013",
+            "size": 1
+          },
+          {
+            "address": "0x810014",
+            "size": 1
+          },
+          {
+            "address": "0x810015",
+            "size": 1
+          },
+          {
+            "address": "0x810016",
+            "size": 1
+          },
+          {
+            "address": "0x810017",
+            "size": 1
+          },
+          {
+            "address": "0x810018",
+            "size": 1
+          },
+          {
+            "address": "0x810019",
+            "size": 1
+          },
+          {
+            "address": "0x81001a",
+            "size": 1
+          },
+          {
+            "address": "0x81001b",
+            "size": 1
+          },
+          {
+            "address": "0x81001c",
+            "size": 1
+          },
+          {
+            "address": "0x81001d",
+            "size": 1
+          },
+          {
+            "address": "0x81001e",
+            "size": 1
+          },
+          {
+            "address": "0x81001f",
+            "size": 1
+          },
+          {
+            "address": "0x810020",
+            "size": 1
+          },
+          {
+            "address": "0x810021",
+            "size": 1
+          }
+        ]
+      },
+      {
+        "entry": "0x5b310",
+        "alignment": 1,
+        "length": 0,
+        "logical_start": "0x810001",
+        "logical_end_exclusive": "0x810001",
+        "reads": []
+      },
+      {
+        "entry": "0x5b310",
+        "alignment": 1,
+        "length": 1,
+        "logical_start": "0x810001",
+        "logical_end_exclusive": "0x810002",
+        "reads": [
+          {
+            "address": "0x810000",
+            "size": 8
+          },
+          {
+            "address": "0x810008",
+            "size": 8
+          },
+          {
+            "address": "0x810010",
+            "size": 8
+          },
+          {
+            "address": "0x810018",
+            "size": 8
+          }
+        ]
+      },
+      {
+        "entry": "0x5b310",
+        "alignment": 1,
+        "length": 32,
+        "logical_start": "0x810001",
+        "logical_end_exclusive": "0x810021",
+        "reads": [
+          {
+            "address": "0x810000",
+            "size": 8
+          },
+          {
+            "address": "0x810008",
+            "size": 8
+          },
+          {
+            "address": "0x810010",
+            "size": 8
+          },
+          {
+            "address": "0x810018",
+            "size": 8
+          },
+          {
+            "address": "0x810020",
+            "size": 8
+          },
+          {
+            "address": "0x810028",
+            "size": 8
+          },
+          {
+            "address": "0x810030",
+            "size": 8
+          },
+          {
+            "address": "0x810038",
+            "size": 8
+          }
+        ]
+      },
+      {
+        "entry": "0x5b310",
+        "alignment": 1,
+        "length": 33,
+        "logical_start": "0x810001",
+        "logical_end_exclusive": "0x810022",
+        "reads": [
+          {
+            "address": "0x810000",
+            "size": 8
+          },
+          {
+            "address": "0x810008",
+            "size": 8
+          },
+          {
+            "address": "0x810010",
+            "size": 8
+          },
+          {
+            "address": "0x810018",
+            "size": 8
+          },
+          {
+            "address": "0x810020",
+            "size": 8
+          },
+          {
+            "address": "0x810028",
+            "size": 8
+          },
+          {
+            "address": "0x810030",
+            "size": 8
+          },
+          {
+            "address": "0x810038",
+            "size": 8
+          }
+        ]
+      }
+    ],
+    "invalid_pointer_faults": [
+      {
+        "entry": "0x5ae90",
+        "case": "null nonempty data",
+        "fault_pc": "0x5af20",
+        "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)"
+      },
+      {
+        "entry": "0x5ae90",
+        "case": "null result slot",
+        "fault_pc": "0x5af34",
+        "error": "Invalid memory write (UC_ERR_WRITE_UNMAPPED)"
+      },
+      {
+        "entry": "0x5b310",
+        "case": "null nonempty data",
+        "fault_pc": "0x5b374",
+        "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)"
+      },
+      {
+        "entry": "0x5b310",
+        "case": "null result slot",
+        "fault_pc": "0x5b3ec",
+        "error": "Invalid memory write (UC_ERR_WRITE_UNMAPPED)"
+      }
+    ],
+    "count_reads_exact_logical_range": true,
+    "index_absent_reads_aligned_32_byte_cover": true,
+    "valid_page_boundary_slices_do_not_cross_unmapped_adjacent_pages": true
+  },
+  "backend_names": [
+    "arm64-neon",
+    "portable-c"
+  ],
+  "dataset_sha256": "c4ac3df5d5d70b8835b58104307fc473a794ec94e80024d44c3673371ad5a8c0",
+  "original_result_sha256": "a36c2ae25b4f6ccac07b8647dfe5c0e5ad348c87bd0da0cc77c78057cc9a440b",
+  "original_fixture_file": "original_arm64_cases.bin.gz",
+  "original_fixture_sha256": "b4e3ae9ce654fdd2758b25cacca9d4b74c46e3eefeaf2d2d16b58e5fcf4ea5f2",
+  "original_fixture_uncompressed_bytes": 8159786,
+  "lengths": [
+    0,
+    1,
+    2,
+    3,
+    7,
+    15,
+    16,
+    17,
+    30,
+    31,
+    32,
+    33,
+    47,
+    63,
+    64,
+    65,
+    95,
+    96,
+    97,
+    127,
+    128,
+    129,
+    255,
+    256,
+    257,
+    511,
+    512,
+    513,
+    1023,
+    1024,
+    1025,
+    4095,
+    4096,
+    4097
+  ],
+  "all_256_target_bytes_at_all_32_alignments": true,
+  "all_32_simd_match_lanes_at_all_32_alignments": true,
+  "original_executed_instructions": [
+    "0x5ae90",
+    "0x5ae94",
+    "0x5ae98",
+    "0x5ae9c",
+    "0x5aea0",
+    "0x5aea4",
+    "0x5aea8",
+    "0x5aeac",
+    "0x5aeb0",
+    "0x5aeb4",
+    "0x5aeb8",
+    "0x5aebc",
+    "0x5aec0",
+    "0x5aec4",
+    "0x5aec8",
+    "0x5aecc",
+    "0x5aed0",
+    "0x5aed4",
+    "0x5aed8",
+    "0x5aedc",
+    "0x5aee0",
+    "0x5aee4",
+    "0x5aee8",
+    "0x5aeec",
+    "0x5aef0",
+    "0x5aef4",
+    "0x5aef8",
+    "0x5aefc",
+    "0x5af00",
+    "0x5af04",
+    "0x5af08",
+    "0x5af0c",
+    "0x5af10",
+    "0x5af14",
+    "0x5af18",
+    "0x5af1c",
+    "0x5af20",
+    "0x5af24",
+    "0x5af28",
+    "0x5af2c",
+    "0x5af30",
+    "0x5af34",
+    "0x5af38",
+    "0x5b310",
+    "0x5b314",
+    "0x5b318",
+    "0x5b31c",
+    "0x5b320",
+    "0x5b324",
+    "0x5b328",
+    "0x5b32c",
+    "0x5b330",
+    "0x5b334",
+    "0x5b338",
+    "0x5b33c",
+    "0x5b340",
+    "0x5b344",
+    "0x5b348",
+    "0x5b34c",
+    "0x5b350",
+    "0x5b354",
+    "0x5b358",
+    "0x5b35c",
+    "0x5b360",
+    "0x5b364",
+    "0x5b368",
+    "0x5b36c",
+    "0x5b370",
+    "0x5b374",
+    "0x5b378",
+    "0x5b37c",
+    "0x5b380",
+    "0x5b384",
+    "0x5b388",
+    "0x5b38c",
+    "0x5b390",
+    "0x5b394",
+    "0x5b398",
+    "0x5b39c",
+    "0x5b3a0",
+    "0x5b3a4",
+    "0x5b3a8",
+    "0x5b3ac",
+    "0x5b3b0",
+    "0x5b3b4",
+    "0x5b3b8",
+    "0x5b3bc",
+    "0x5b3c0",
+    "0x5b3c4",
+    "0x5b3c8",
+    "0x5b3cc",
+    "0x5b3d0",
+    "0x5b3d4",
+    "0x5b3d8",
+    "0x5b3dc",
+    "0x5b3e0",
+    "0x5b3e4",
+    "0x5b3e8",
+    "0x5b3ec",
+    "0x5b3f0"
+  ],
+  "tested_original_architecture": "APK arm64-v8a, little endian",
+  "c_host_architecture": "macOS arm64; NEON and forced portable-C backends",
+  "java_class_sha256": "2b2061c38fe2ea83ba5767cb5b269dec5c955721c2b0deb5e4c4f8c1a7fea3e5",
+  "c_source_sha256": "25458cc0faa3ef50980188f4539fa150c28a7aaa8ea7840292dfea519e1b068c",
+  "test_script_sha256": "0ea2cabe9d0382f6eb602d5055b53c9f87a858721e09439bb7b6d0020a488b51",
+  "original_library_sha256": "1691fb0b7e241d8afdd8ae2d5b8b97ed4aadf70ab3ca6f31a7d4f9df2043f705",
+  "limits": [
+    "Synthetic single-threaded fragment execution; no full runtime/JNI/business invocation.",
+    "Java uses bounded byte-array reads, not SIMD instructions.",
+    "Checked C/Java argument errors are explicit reconstruction API contracts, not the original Go caller ABI."
+  ]
+}

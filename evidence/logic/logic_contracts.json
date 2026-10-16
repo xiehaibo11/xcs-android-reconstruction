@@ -1,0 +1,1793 @@
+{
+  "scope": "Incremental, bounded static contracts for password/settings/WiFi; not complete recovered source or complete application behavior.",
+  "claims": [
+    {
+      "id": "password_change",
+      "status": "bounded_static_contract",
+      "methods": [
+        "42c004",
+        "42c1c8",
+        "455208",
+        "457320",
+        "457418",
+        "457438",
+        "4573d0"
+      ],
+      "request": {
+        "method": "POST",
+        "path": "/account/edit/pwd",
+        "body": {
+          "old_password": "old controller text",
+          "password": "new controller text"
+        }
+      },
+      "validation": [
+        "原密码 UTF-16 长度至少 6；小于 6 提示请输入原密码。",
+        "新密码仅检查非空；本链没有最小长度 6、trim 或 MD5。",
+        "确认密码非空且与新密码相等；表单通过后 onLogin 再次比较两次密码。"
+      ],
+      "response": [
+        "所有普通 HttpResponse 回调首先 dismiss loading。",
+        "ok 为 false：showErr(exception.message 或空字符串)，留在当前页。",
+        "ok 为 true 且 body.success == false：将 body.msg 按 String 读取并 showErr。",
+        "其余正常分支：toast 修改密码成功，然后 Get.offAll(LoginPage)。这是 success != false 分支，不是严格 success == true。",
+        "回调内没有直接清除 token、删除 login_conf、更新所存密码或断开 WebSocket 的操作。页面销毁或导航其他效果不能由本回调缺少操作推断。"
+      ],
+      "limits": [
+        "未将 UI 样式、框架异常或服务端密码约束纳入闭合范围。"
+      ]
+    },
+    {
+      "id": "online_config_initialization",
+      "status": "bounded_static_contract",
+      "methods": [
+        "52afa4",
+        "52b020",
+        "52b0b4",
+        "52b110",
+        "52c350",
+        "5653ec"
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/api/config/get_config"
+      },
+      "response": [
+        "ok false 或 success == false 时显示错误并记录红色日志，保留当前表单。",
+        "其余正常分支记录获取配置成功，body.data 强制为 Map<String,dynamic>，经 OnlineConfig.fromJson 保存，setState 后再次执行 _initFormData。"
+      ],
+      "default_values": {
+        "east": 26,
+        "south": 26,
+        "west": 26,
+        "north": 26,
+        "timeout": 60,
+        "delay": 5,
+        "data_send": 1,
+        "count_type": 1,
+        "upload_img_clarity": 1
+      },
+      "state_slots": {
+        "0x1b": "east text",
+        "0x1f": "south text",
+        "0x23": "west text",
+        "0x27": "north text",
+        "0x2b": "data_send unboxed integer",
+        "0x33": "count_type unboxed integer",
+        "0x3b": "upload_img_clarity unboxed integer",
+        "0x43": "timeout text",
+        "0x47": "delay text",
+        "0x4b": "manual SSID text",
+        "0x4f": "manual WiFi password text"
+      },
+      "notes": [
+        "四方向读 config_number；其余五项读 data_config。默认值针对模型/字段为空分支，不代表服务端默认。",
+        "_initFormData 没有把 wifi_config 写回手工 SSID、密码输入框；build 单独展示当前 WiFi。"
+      ],
+      "limits": [
+        "OnlineConfig 嵌套模型空值接受性仍以原模型字段契约为准；不能将表单默认推成 JSON schema 默认。"
+      ]
+    },
+    {
+      "id": "online_data_save",
+      "status": "bounded_static_contract",
+      "methods": [
+        "4ac23c",
+        "4aff50",
+        "4aff98",
+        "4b02b0",
+        "4b0318",
+        "4b062c",
+        "4b06c0",
+        "4b0710",
+        "4b07a4",
+        "4b0838",
+        "4b0888",
+        "4b091c",
+        "4b09b0",
+        "4b0a44",
+        "4b0ad8",
+        "4b0b28",
+        "4b0bbc",
+        "4b0c50",
+        "4b0ce4"
+      ],
+      "request": {
+        "method": "POST",
+        "path": "/api/config/set_data_config",
+        "body_types": {
+          "data_send": "int",
+          "timeout": "int.parse(timeout text)",
+          "delay": "int.parse(delay text)",
+          "count_type": "int",
+          "upload_img_clarity": "int"
+        }
+      },
+      "enums": {
+        "count_type": {
+          "1": "光控计数",
+          "2": "机头双线（该 Radio 外层 Visibility.visible=false）",
+          "5": "机头单线",
+          "3": "T系列",
+          "4": "S系列"
+        },
+        "upload_img_clarity": {
+          "0": "节流",
+          "1": "标清",
+          "2": "高清",
+          "3": "超清"
+        },
+        "data_send": {
+          "1": "自动放送",
+          "2": "手动发送"
+        }
+      },
+      "events": [
+        "count_type、upload_img_clarity、data_send 的 Radio 回调先 setState 写入非空 int，再立即 onSaveDataConfig。",
+        "保存配置按钮也调用同一方法。此方法无 saveAndValidate、取值范围验证或 int.parse 异常捕获。",
+        "请求发出之前，把 int.parse(timeout text) 写入 Utils.loginUser.timeout (0x23)。",
+        "失败仅显示错误；未回滚 Radio 状态或 loginUser.timeout。成功 toast 保存成功。没有同步更新 loginUser.data_send 或 loginUser.delay 的写入。"
+      ],
+      "response_policy": "ok false => exception error; otherwise success == false => body.msg String error; otherwise toast 保存成功",
+      "limits": [
+        "没有证明服务端接受任意数值；不把输入类型检查替代服务器约束。"
+      ]
+    },
+    {
+      "id": "direction_count_save",
+      "status": "bounded_static_contract",
+      "methods": [
+        "4b0db0",
+        "4b103c",
+        "4b10a4"
+      ],
+      "request": {
+        "method": "POST",
+        "path": "/api/config/set_number",
+        "body_types": {
+          "east": "int.parse(text)",
+          "south": "int.parse(text)",
+          "west": "int.parse(text)",
+          "north": "int.parse(text)"
+        }
+      },
+      "events": [
+        "点击时显示保存方位数量；方法内没有表单或数值范围验证。",
+        "ok false：显示并红色记录异常消息；success == false：显示并红色记录 body.msg。",
+        "其余正常分支遍历页面构造参数中的 channel 列表；device.direction=1/2/3/4 时将 device.mj_count 写成 east/south/west/north。",
+        "成功回调读取的是响应到达时的控制器文本并再次 int.parse，不是请求发出时的值快照。",
+        "最后 toast 配置方位数量成功；回调无显式 setState 或 markNeedsBuild。"
+      ],
+      "slot_proofs": {
+        "Devices.direction": "0x4b",
+        "Devices.mj_count": "0x5f"
+      },
+      "limits": [
+        "未对不在 1..4 的 direction 写入数量；不应猜测其方向。"
+      ]
+    },
+    {
+      "id": "channel_display_order",
+      "status": "bounded_static_contract",
+      "methods": [
+        "4ac23c",
+        "4b04ec",
+        "4b0570",
+        "4b05a8",
+        "5281d8"
+      ],
+      "events": [
+        "正序显示 Radio=false；倒叙显示 Radio=true。回调 setState 后写 static field 0xbc4 (field_table+0x1788)。",
+        "该设置回调不发送配置 HTTP 请求，也不写文件。",
+        "saveImg 0x5282ac 读取此值；true 时把识别 channel_id 偶数减 1、奇数加 1；false 时保留原 id。"
+      ],
+      "limits": [
+        "仅闭合该设置写入和 saveImg 的读点；未把整个 saveImg 标记完成。"
+      ]
+    },
+    {
+      "id": "manual_wifi_save_and_restart",
+      "status": "bounded_static_contract",
+      "methods": [
+        "4afb30",
+        "4afc3c",
+        "4afd30",
+        "4af648",
+        "4af6e0",
+        "4af7f8",
+        "4af558"
+      ],
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/config/set_wifi",
+          "body_types": {
+            "ssid": "String controller text",
+            "pwd": "String controller text"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/zhuo/restart_device",
+          "parameters": "no request-specific parameters in this wrapper"
+        }
+      ],
+      "events": [
+        "设置页手工 WiFi 保存函数没有非空校验，直接发送 ssid、pwd。成功仅 toast 保存成功，不刷新已加载配置。",
+        "手工 WiFi 请求异常会 showErr 并写红色日志；业务 success==false 时 showErr(body.msg)，此分支没有红色日志调用。",
+        "重启前写黑色日志重启所有设备；失败 showErr 并写红色日志。",
+        "重启成功先 Navigator.pop 当前路由，再 showErr(重启所有设备成功) 并写同文黑色日志。showErr 是原函数名，不代表分支失败。",
+        "_scanWifi 只打开 OnlineSettingWifiPage，本方法不直接调用 Android WiFi 扫描插件。"
+      ],
+      "limits": [
+        "设备是否已实际重启、WiFi 是否已切换取决于服务端和设备执行，不由 toast 证明。"
+      ]
+    },
+    {
+      "id": "wifi_page_lifecycle_and_submit",
+      "status": "bounded_static_contract",
+      "methods": [
+        "52c834",
+        "52c940",
+        "52c988",
+        "556b04",
+        "4b2ed8",
+        "4b2f5c",
+        "4b2fb8",
+        "4b3018",
+        "4b309c",
+        "4b2a78",
+        "4b2b8c",
+        "4b2c14",
+        "4b2c70",
+        "4b42d0",
+        "4b447c"
+      ],
+      "events": [
+        "initState 连续调用两次 _onDeviceUpWifi；没有 await 两次调用。",
+        "每 3 秒 _onGetWifiDeviceWifiList；每 15 秒 _onDeviceUpWifi。",
+        "deviceUp 的普通 HttpResponse 回调无 ok/success 分支：记录响应 data 后调用取列表。",
+        "dispose 取消两只 Timer 并 dispose SSID/密码控制器和两个 FocusNode。没有中止既有 HTTP Future 的代码。",
+        "点击 WiFi 条目先清空密码，再填 SSID 并请求密码框焦点。",
+        "读取默认 WiFi 使用 POST /api/config/get_default_wifi；ok true 且 success 必须为布尔 true 时填 data.ssid.toString、data.pwd.toString。false/网络失败静默；success 非 bool 的类型异常不能当 false。",
+        "本页保存检查 SSID 非空、pwd 非空；分别提示请选择WIFI！/请输入WIFI密码！。POST /api/config/set_wifi；保存后仅 toast，不自动退页或停轮询。"
+      ],
+      "timers_ms": {
+        "get_device_wifi_list": 3000,
+        "wifi_device_up": 15000
+      },
+      "limits": [
+        "迟到列表回调没有 mounted 检查；取消计时器不代表既有请求已取消。",
+        "这两个 Timer 是 WiFi 页面刷新机制，与 WebSocket 心跳不同。"
+      ]
+    },
+    {
+      "id": "wifi_list_decode",
+      "status": "partial_static_contract_not_full_parser_equivalence",
+      "methods": [
+        "4b30f8",
+        "4b3e18",
+        "4b3fdc",
+        "4b4214"
+      ],
+      "events": [
+        "只检查 HttpResponse.ok，不检查 body.success。body.data == 空串时产生空列表。",
+        "data 转字符串后找双引号：不存在双引号时先按逗号分记录，再按竖线分字段，field[0] 为 dBm 文本，field[1] 去双引号后作 SSID。",
+        "存在双引号时先按竖线分记录，再按逗号分字段，field[0] 去双引号后作 SSID，field[1].split(Signallevel)[0] 作分数文本。",
+        "dBm 分数：>-45 为5/5；(-55,-45] 为4/5；(-70,-55] 为3/5；(-80,-70] 为2/5；其余1/5。",
+        "两种分支都有对首字段空或长度恰为2、第二字段空的跳过路径；逗号外层分支额外显式跳过字段数为1。",
+        "SSID 开头为字面 \\x 时，取最后一个 \\x 位置加4为界，把前缀每两个hex字符解析为字节，UTF8解码后拼接剩余文本。",
+        "WifiListItem 保存SSID和分数String；分数按/拆分且至少2段时计算 trunc(int(first)/int(second)*100)，否则百分比0。",
+        "排序比较器是 (a.percentage??0) > (b.percentage??0) ? 0 : 1，不是常规三值比较器；不能声称已得到稳定降序。"
+      ],
+      "limits": [
+        "两条循环包含异常恢复跳转及保留寄存器路径；异常路径下继续项的具体取值尚未穷尽验证。",
+        "未运行 Dart 排序器，对异常比较器不得静默替换成 Java Comparator 降序后宣称等价。",
+        "需要对两种实际服务器字符串及畸形样本进行动态差分，完整 parser 仍未闭合。"
+      ]
+    },
+    {
+      "id": "msg117_tail_and_inlet_file_boundary",
+      "status": "bounded_negative_findings_with_explicit_unknowns",
+      "methods": [
+        "527460",
+        "52a6fc",
+        "48c86c",
+        "48c8bc"
+      ],
+      "events": [
+        "msg117 在 0x5276f8..0x5278ac 把 msg_content.toString 按|拆分，只读取 index0 并与 Devices.serial_no 比较；匹配则 lighting_switch=1 并 markNeedsBuild。",
+        "循环结束后不管是否匹配，setState 将文案设为升降牌打开，等待洗牌中...；本分支不读取 index1、校验第二段或用第二段恢复状态。",
+        "inlet_pwd.conf 在当前完整已导出 AOT 中只看到 KeyForm 保存路径及 Utils.inletPwdDbWrite。对全部 AOT、Java、原生反编译文本的限定扫描未找到文件读取函数。"
+      ],
+      "limits": [
+        "msg117 发送端第二段含义未知；接收端忽略不等于发送端不存在该字段。",
+        "未证明被优化/内联/构造路径的代码或外部进程永不读取 inlet_pwd.conf；访问控制读取用途保持未恢复。"
+      ]
+    }
+  ],
+  "method_proofs": [
+    {
+      "address": "0x42c004",
+      "signature": "_ onLogin(/* No info */) {",
+      "class": "_EditPwdPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/edit_pwd/edit_pwd__page.dart",
+      "source_line": 750,
+      "exported_body_size": 452,
+      "elf_file_offset": 4374532,
+      "body_sha256": "9e31b6f93131acbdbd8df1fbd3fe06906f43ebf6c134360f1278166c9142da7b",
+      "asm_sha256": "23b14b1488f47f7e408205595032b61dc58a733a8b976916a131e3a0ec79b624",
+      "raw_sha256": "25b6c9b5d42db737d0b895d3873ed2088fb9fbea50fec1239b0a56498b4a7630",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x42c1c8",
+      "signature": "_ editPwdReq(/* No info */) {",
+      "class": "AccountService",
+      "source": "analysis/aot_dump/asm/distinguish/service/account_service.dart",
+      "source_line": 12,
+      "exported_body_size": 104,
+      "elf_file_offset": 4374984,
+      "body_sha256": "c4ecd147f0203ae3299cf4dbb1344e04986966001f01a13974ee9438bc33ebd1",
+      "asm_sha256": "f7ff56b456588ed015bbbea9ff75ce28634a522a0f28adfaa84d913feee08c9c",
+      "raw_sha256": "92148c394278604fbdd5b8b3be09ae81a4962518c223e390be2c0c332a72fa13",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x455208",
+      "signature": "[closure] Null <anonymous closure>(dynamic, HttpResponse) {",
+      "class": "_EditPwdPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/edit_pwd/edit_pwd__page.dart",
+      "source_line": 932,
+      "exported_body_size": 524,
+      "elf_file_offset": 4542984,
+      "body_sha256": "357215feb794e51b92c54d3bc46df0a5baaff4ffb73eabe469fc38aa1f2a79a5",
+      "asm_sha256": "c02e0a32d331734f4ed60010941c99759bacbb97d7b0d1aa09f9f5d56360d2c7",
+      "raw_sha256": "21d714a32c27c589a8c8b01d92a22d6fcd19b837b127a5d84580f89f599c14b2",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x457320",
+      "signature": "[closure] String? <anonymous closure>(dynamic, String) {",
+      "class": "_EditPwdPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/edit_pwd/edit_pwd__page.dart",
+      "source_line": 1126,
+      "exported_body_size": 176,
+      "elf_file_offset": 4551456,
+      "body_sha256": "40a68e8c5dc3947eed5e3ac7bafdb8284c55644d03b49626f009eb7ffbffd8fa",
+      "asm_sha256": "8879dc4ca760dcf6686ad86a97950979a75ccf658114557813ca321d73e1e4bb",
+      "raw_sha256": "f5efc9d764dc1f0c8bc15b68470695514449dfeea6b415f4e10f37495bfff39c",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4573d0",
+      "signature": "[closure] void <anonymous closure>(dynamic, String) {",
+      "class": "_EditPwdPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/edit_pwd/edit_pwd__page.dart",
+      "source_line": 1197,
+      "exported_body_size": 72,
+      "elf_file_offset": 4551632,
+      "body_sha256": "ba61b165ba8f626fc77368b83d89b3982adcac2ed6e5a5b513fe727d6d0751bf",
+      "asm_sha256": "4f9c8ab93db4772b190f46d401e20386ec4459f70e3a9a23ec5f9ffce8d4a849",
+      "raw_sha256": "99465dccada0676b34c50c6cf46ea70cd2857521978263a091d64f2a349532a3",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x457418",
+      "signature": "[closure] String? <anonymous closure>(dynamic, String) {",
+      "class": "_EditPwdPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/edit_pwd/edit_pwd__page.dart",
+      "source_line": 1229,
+      "exported_body_size": 32,
+      "elf_file_offset": 4551704,
+      "body_sha256": "b0c3323b584ef98e2cfe4a73a8c556f278785a3138839aad28136022a3e17069",
+      "asm_sha256": "b10262a9503edcc66c6f0e5e8135a9425c6202941b1d54b6f14cb5b12a3c9621",
+      "raw_sha256": "404dd6a84ca029355bb3ab31f824b3533b71f2906d261948e180401cec55d6ff",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x457438",
+      "signature": "[closure] String? <anonymous closure>(dynamic, String) {",
+      "class": "_EditPwdPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/edit_pwd/edit_pwd__page.dart",
+      "source_line": 1245,
+      "exported_body_size": 40,
+      "elf_file_offset": 4551736,
+      "body_sha256": "fc8f14da0b0cb3a6a2c9a2df679456a3c83e4c77e94fbe1e7c23643f328d7505",
+      "asm_sha256": "1967a91f82fb88310babd8b4c74eed1a4398eb3ecd39ed0790999cef6cb6dfce",
+      "raw_sha256": "e9897dc28f2b940da2c1b67c7f9558a1e4b2b6cafd564d4731daecafc6969a9e",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x48c86c",
+      "signature": "_ save_config(/* No info */) async {",
+      "class": "_KeyFormPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/key/key_form_page.dart",
+      "source_line": 737,
+      "exported_body_size": 80,
+      "elf_file_offset": 4769900,
+      "body_sha256": "081d44b6082e5b5ba86cac267ea1772150ed160a83353b2baa815d52a096698c",
+      "asm_sha256": "86d478ae81391fb553c8e19960cb3d32b10219cc8ebeaec22c82ff05d617d3d2",
+      "raw_sha256": "ced0995c5cb7ed66407f86720ef6cafac16af9e314e87eefb48b2ec8939b9c73",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x48c8bc",
+      "signature": "static void inletPwdDbWrite(String) async {",
+      "class": "::",
+      "source": "analysis/aot_dump/asm/distinguish/common/utils.dart",
+      "source_line": 47,
+      "exported_body_size": 220,
+      "elf_file_offset": 4769980,
+      "body_sha256": "27747cbc189f26f26d12a39f24f697e1f9dc8f3fe0d538146619ad19220e61d5",
+      "asm_sha256": "4e17c3e73ce1e7b83795386da5c0dc1ba67938adb35937102420abd8c5cd7471",
+      "raw_sha256": "dfb93096498ee2430ac9275e9aaed37a02d34a8ba03eb6635ca1daf616cbdccc",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4ac23c",
+      "signature": "_ build(/* No info */) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 45,
+      "exported_body_size": 12792,
+      "elf_file_offset": 4899388,
+      "body_sha256": "a717b0c9580a6f158ec36b7221f18f9fdaa75f012e55ee5469b459b3684469ff",
+      "asm_sha256": "f7edb859b723c1c4ffca68a7aa201726506ef41451f925cfdf15430441995b80",
+      "raw_sha256": "102e9f21f303e8d7e0f905a37acc723dbc7e0c3665c81baf8d830330f1dcaa29",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4af558",
+      "signature": "_ _scanWifi(/* No info */) async {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 5198,
+      "exported_body_size": 116,
+      "elf_file_offset": 4912472,
+      "body_sha256": "cb9ddfce00354a7eda0c5fc55fa7b65d74af18296fa03b2343e7a66ac3999923",
+      "asm_sha256": "194dbd7c4e92640d8703b136030f6089574d474703922f024b3cf3f2ef8d01f4",
+      "raw_sha256": "dec6343182164b8485138edbf119937a70d78c3c18f086d0fc01ecaa88956d40",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4af648",
+      "signature": "_ onRestartDevice(/* No info */) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 5282,
+      "exported_body_size": 152,
+      "elf_file_offset": 4912712,
+      "body_sha256": "757f57708a4757716d7961bd72e34378ab1ce0fa75426b998c220c29a3433bed",
+      "asm_sha256": "b89f5e2ac63f9b87cfff7648573766940569c04509919829ff72e324528a0983",
+      "raw_sha256": "ac7ab9ac4009e025e278babfc73a999c5eb85d48dbc0b63120b5df9e6aa6e1e1",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4af6e0",
+      "signature": "_ restartDevice(/* No info */) {",
+      "class": "GamesService",
+      "source": "analysis/aot_dump/asm/distinguish/service/games_service.dart",
+      "source_line": 240,
+      "exported_body_size": 92,
+      "elf_file_offset": 4912864,
+      "body_sha256": "03adc13cc88f9f60dca3455f93ab5798fe5ea6f5af9d275309d2ceea8ba87d30",
+      "asm_sha256": "b632bd829a96afa45c25c9a1c37ba13458abe1c6390a2a22c036b14a65c690ba",
+      "raw_sha256": "6281e4877c0565e1f057d72d2b1e92b45c8ff8a1bc6355d50df52a0f6b24484e",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4af7f8",
+      "signature": "[closure] Null <anonymous closure>(dynamic, HttpResponse) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 5344,
+      "exported_body_size": 768,
+      "elf_file_offset": 4913144,
+      "body_sha256": "8735b481840e98432195278ee5006513d3723d6690b8b999500b1b02ecb235f2",
+      "asm_sha256": "dae8b7c60567a6f163fcc3384fdd1d857823bcfd107301086b214391fefbd3a8",
+      "raw_sha256": "adf137626fe67fb6d33efaac67a4e7508c130c59e94a73609692951243f93105",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4afb30",
+      "signature": "_ onSaveWifiConfig(/* No info */) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 5658,
+      "exported_body_size": 268,
+      "elf_file_offset": 4913968,
+      "body_sha256": "92135e172aeccfc6c6317fd75c0ede82eab1a09bb6cef4d5c285baa676547015",
+      "asm_sha256": "05aae319ad05a6cc29138ca2d1d079a626aff3d4da23f0954eb4165c62b79749",
+      "raw_sha256": "bb3d4d8a7fa6dc4b00a6f8934926c8305fd467c53dbf6ee77834e6e2b28d6500",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4afc3c",
+      "signature": "_ setWifiReq(/* No info */) {",
+      "class": "ConfigService",
+      "source": "analysis/aot_dump/asm/distinguish/service/config_service.dart",
+      "source_line": 12,
+      "exported_body_size": 104,
+      "elf_file_offset": 4914236,
+      "body_sha256": "8fa5df146b954d584ff765f47fafa80ace4df3b3c2e02e49a29d3db4917b6bec",
+      "asm_sha256": "f7610923cc5622232901781d294b14c6e335493ebc5127fe71f0199c41e0b4cd",
+      "raw_sha256": "b6abefc47596baba15966edb04cbe9b8df2d00eb49fa54e0a9f057c691221825",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4afd30",
+      "signature": "[closure] Null <anonymous closure>(dynamic, HttpResponse) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 5772,
+      "exported_body_size": 544,
+      "elf_file_offset": 4914480,
+      "body_sha256": "79a0d6f2a1e45c4ac1b66a9fe3fa66f4d6fd73f63dd1bd5f31e9a3e0961eeb71",
+      "asm_sha256": "1aa13eab57ad40f1f202836bb4766caab8e8882a832e0bf220423a2737c4a0ec",
+      "raw_sha256": "17d62909103f8a59a232237feff24373fce46ba6682cd12db9ace59bb9f64399",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4aff50",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 5974,
+      "exported_body_size": 72,
+      "elf_file_offset": 4915024,
+      "body_sha256": "1767e71bac6fbf9f7671829f9c7773c332e104f3903ecc10ecdbd4f9bc24779f",
+      "asm_sha256": "70be708fda43c651186ed84bdaf65e829f4fb14cc8c55d2b96d5df1a4ce66790",
+      "raw_sha256": "42764500b3223ef9349f580cf5f4e1a9e5fb9cdac6cffe2fe8672d02c2149785",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4aff98",
+      "signature": "_ onSaveDataConfig(/* No info */) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 6006,
+      "exported_body_size": 792,
+      "elf_file_offset": 4915096,
+      "body_sha256": "7547185fde9ad4997fe3b2fd9997285bec5f323e712c2f03191dffb563a739e6",
+      "asm_sha256": "4072202784ea23d94bf850a1ebac468acdd3286dd323ff9b69d468076be4eaec",
+      "raw_sha256": "11ef20ea2ca3c24320f057cc6925c3022c3f57a28218d56d10e57b2096c68641",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b02b0",
+      "signature": "_ setDataConfigReq(/* No info */) {",
+      "class": "ConfigService",
+      "source": "analysis/aot_dump/asm/distinguish/service/config_service.dart",
+      "source_line": 103,
+      "exported_body_size": 104,
+      "elf_file_offset": 4915888,
+      "body_sha256": "471b23742fc2ceedce435f27ac566e9f8f573e1ef3d75718a163703c6857e483",
+      "asm_sha256": "f19646f47e0f8fc6b4fd9b2f6947da75240fed47584433fd99411a12200df26c",
+      "raw_sha256": "b45d8f411780d49b6cb3fb723fa550d61b25b675e0dbf91f5b9b79b8b091e869",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b0318",
+      "signature": "[closure] Null <anonymous closure>(dynamic, HttpResponse) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 6281,
+      "exported_body_size": 468,
+      "elf_file_offset": 4915992,
+      "body_sha256": "6d6e4e04d2603bb421f0349d3f3d1b8f04d82a5e13db2cfe33dffe6474920c93",
+      "asm_sha256": "6dcd36b63ff565fc76832bfd84c4b3b98fccfd63cf10c79325f09c6ff0ecde1f",
+      "raw_sha256": "c13276e4e9e666d7ca8fda0b8a64187ac58cabd3c3fe4d64b6ebeb1ae48836d1",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b04ec",
+      "signature": "[closure] void <anonymous closure>(dynamic, bool?) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 6457,
+      "exported_body_size": 132,
+      "elf_file_offset": 4916460,
+      "body_sha256": "caef35bd108696736d9a1f1346345c7f31a4fc3423ec178e820df1a83bf5f740",
+      "asm_sha256": "263f9b21fae13ddb2facce25972d84f999163888415ce6712db95b0effffd16e",
+      "raw_sha256": "a466a3f6cc2246ba79362f4f3f7ac3cb7e43ee4ac32a0ebf564c37d3adf2cd37",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b0570",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 6510,
+      "exported_body_size": 56,
+      "elf_file_offset": 4916592,
+      "body_sha256": "70ab27fb802b2eb3b5865a180edc89d1bcae93de13f2291d4e0bc28e45d796ea",
+      "asm_sha256": "385500cace353be65951eec7fd080d72801544b0b010541174f9bb148d0f3237",
+      "raw_sha256": "37fac552076413b0d3bedb8eda6c38bd9b7188534d26bec094079903173c0f9c",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b05a8",
+      "signature": "[closure] void <anonymous closure>(dynamic, bool?) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 6536,
+      "exported_body_size": 132,
+      "elf_file_offset": 4916648,
+      "body_sha256": "efcf2bd4a2a88ec8df775d6b8ff38021db43e1d01e42010af244437980fc4423",
+      "asm_sha256": "3f634150ac8fd5981d186d7ff6af238fd0269d64a24cecfd3a47ea41d2da752e",
+      "raw_sha256": "0d069b82879c72efa9ccc55d6d108cca8be6a86177987635937db294b1195e22",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b062c",
+      "signature": "[closure] void <anonymous closure>(dynamic, int?) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 6589,
+      "exported_body_size": 148,
+      "elf_file_offset": 4916780,
+      "body_sha256": "2cad17d041271577a12c96c1de9f7076a25ad72471714e294bf65ab29b112d28",
+      "asm_sha256": "bb29647a000911d9421d884f98854edcdffa325c4a2f2f3da3006a41605befaa",
+      "raw_sha256": "cf1e20ab509a92380860f9459270e47bf62d0877d17deae699c36d1b140f85aa",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b06c0",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 6649,
+      "exported_body_size": 80,
+      "elf_file_offset": 4916928,
+      "body_sha256": "d16912630f0b7de313a63b2c0c24acaccb10b5d72c559c12334eb96f7b96af0e",
+      "asm_sha256": "7642f77d9ddb5b1b8383405c1c5c8ffe9ca421ea62d65b2807b70e94b61e3519",
+      "raw_sha256": "54a7e95abd4b6b7efdc963d65a9b608555cdc525bb4eac7dfde4c1398acfb499",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b0710",
+      "signature": "[closure] void <anonymous closure>(dynamic, int?) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 6686,
+      "exported_body_size": 148,
+      "elf_file_offset": 4917008,
+      "body_sha256": "75cfb578bc8ff14e4a7b6547a2c3c852ee475d0b762609f0d8a92cc78b2559f9",
+      "asm_sha256": "07359713c0c0affaaea61486125682edf3cc8343aed5dc7a5458e3510582f15d",
+      "raw_sha256": "a0628133a774affd2e187cffb8916374cb02d1b212c1679922bc8828f2d2195e",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b07a4",
+      "signature": "[closure] void <anonymous closure>(dynamic, int?) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 6746,
+      "exported_body_size": 148,
+      "elf_file_offset": 4917156,
+      "body_sha256": "35d3b291648d9f59395431c5fbe63c6ba5ad7e9eb7e3e6a4775ca712d05e2794",
+      "asm_sha256": "cb99bea78e50dd338573a3ec33ba17b7a1de3212df7d7e4a7aef2aeb0a3e2aaa",
+      "raw_sha256": "3c625f41f9108329b93475f6a33774b3df4f47d7319a5d33b85272a49988af7f",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b0838",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 6806,
+      "exported_body_size": 80,
+      "elf_file_offset": 4917304,
+      "body_sha256": "4086ae1864ace3bac75c8ef87c4c4aaaace1eab09f8150b671656e5c79fc3ce8",
+      "asm_sha256": "a0141dc722be236abfd23dba4bf15a90b231a3805ecbc8beef2e1eee1d3c9bc2",
+      "raw_sha256": "2834b632670f6a52278f7157e80ed29d88d03e2fe6901d8a6d98b10beeb290d9",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b0888",
+      "signature": "[closure] void <anonymous closure>(dynamic, int?) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 6843,
+      "exported_body_size": 148,
+      "elf_file_offset": 4917384,
+      "body_sha256": "8d36db58eab9b518137326dcb3576cdfd87616deb4fd0f5fa25777d6cb689966",
+      "asm_sha256": "0310a3153e98c271fadf6385cc90024290cd797d379cfee62206a32cfd5dd029",
+      "raw_sha256": "7e08297b69d69427ca094f55f15bf1cfaac21e07cf8f368487059cd0965f9e84",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b091c",
+      "signature": "[closure] void <anonymous closure>(dynamic, int?) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 6903,
+      "exported_body_size": 148,
+      "elf_file_offset": 4917532,
+      "body_sha256": "c635a4839db8405af10077499a9e0a59d2e14edf6f3b603e60dbd5fe022faad7",
+      "asm_sha256": "997869bdbf3424c722f9a63e10e308c7b0774e2e96829a7f3abc55ecc3789ca0",
+      "raw_sha256": "926d3c848658c0fa65baee2309457becd1ea2e6708097a218b9ff95ff673ec22",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b09b0",
+      "signature": "[closure] void <anonymous closure>(dynamic, int?) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 6963,
+      "exported_body_size": 148,
+      "elf_file_offset": 4917680,
+      "body_sha256": "6f0de07dbe4f0a1dc25235a6b99c353d61742d1bda7f7a1b4ab83c302ac2d9e2",
+      "asm_sha256": "b6aad8c0b9c196f326c216d3926dbd39c7012824f387e6588ca0a414e6dea913",
+      "raw_sha256": "d87ce12dd4a9b68d4e7275565f766843b63cc4c5ca4b1fed2c998f6c0b196924",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b0a44",
+      "signature": "[closure] void <anonymous closure>(dynamic, int?) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 7023,
+      "exported_body_size": 148,
+      "elf_file_offset": 4917828,
+      "body_sha256": "45c8b8ab6da1b62fd26e8f8617cc3bed15c145a3348b29a6e9a0bb7176b9e8fb",
+      "asm_sha256": "4f2dc811b95a792e35845071ecfe24509f3fe2ed9348349a7cd62e10e81db664",
+      "raw_sha256": "f9ad56acdee9e8b875e68a560a746760d194636fcf31bfd3ff0f2bb5809d5a67",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b0ad8",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 7083,
+      "exported_body_size": 80,
+      "elf_file_offset": 4917976,
+      "body_sha256": "9bcac45b898266385d7573eabdd515b7a0a440f7d1bc5ea9fd4196b66fc573fa",
+      "asm_sha256": "d32b9c8cca20f0d57d397ac5828f14667651f2d289c5e277d57cd9e15f115b50",
+      "raw_sha256": "29dc4a55a81839e0f0f6f4c4dccc78a2e7eaa069cdda5eaf6ad370a68523317b",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b0b28",
+      "signature": "[closure] void <anonymous closure>(dynamic, int?) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 7120,
+      "exported_body_size": 148,
+      "elf_file_offset": 4918056,
+      "body_sha256": "f65bae068c80d7ba0fecb7afbcb539922dcdc07c2fc669377b0360a64de42d8b",
+      "asm_sha256": "5b57d40223c89e774ad68c8aaabba5488b0a38764c2f18c1b3deaf79f92726e0",
+      "raw_sha256": "7877ea46755086ff5f9e19eb93df9dcafcd6682243e112b8779cb9447519174c",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b0bbc",
+      "signature": "[closure] void <anonymous closure>(dynamic, int?) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 7180,
+      "exported_body_size": 148,
+      "elf_file_offset": 4918204,
+      "body_sha256": "fdde343bd7b6ca3581dbcf56e81df01e6aaf9fc63448b4705f446ea33f131d9d",
+      "asm_sha256": "46279b026d54c2d3c94dd8daa4e39ad1461042104860b13a35aa6a91a454952c",
+      "raw_sha256": "9eefd05aea6f85695764fd0b861bfc2487a056627ce8fc08c40f79cde1ec303e",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b0c50",
+      "signature": "[closure] void <anonymous closure>(dynamic, int?) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 7240,
+      "exported_body_size": 148,
+      "elf_file_offset": 4918352,
+      "body_sha256": "5b272516d48d18f3745685efa2979862c6db389d8e5289db4b272f5290b1ba20",
+      "asm_sha256": "74ed17d955172171b7dd93df25c8c7e2df2f5d93e87401c49c72d3b3dcea0c6f",
+      "raw_sha256": "843b6013b821cfe6b04aa74c4441a6b150e79de812da8da71ea305a1fae0991d",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b0ce4",
+      "signature": "[closure] void <anonymous closure>(dynamic, int?) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 7300,
+      "exported_body_size": 148,
+      "elf_file_offset": 4918500,
+      "body_sha256": "ed0b367525bca75473d68d3c752dd44335e0fcc87d587351cd23d2a25011be65",
+      "asm_sha256": "c9f2c2280b95c7ad85d6c8c2d5fde59579af229ca03988b272880cf31149bfc6",
+      "raw_sha256": "35807e789141c39212dbdebad9a1f3eac0d21231ab99ae00b6a0272079e32ccf",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b0db0",
+      "signature": "_ onSaveNumber(/* No info */) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 7385,
+      "exported_body_size": 652,
+      "elf_file_offset": 4918704,
+      "body_sha256": "23d6d84c90a65aedd6eead93755b4ef02d1ae9a30c187508b1041cff3ac85a7b",
+      "asm_sha256": "3693fc5e0dd049a856516d6780e8cca2c0dec40f6ee7c4da27655db41ddcff92",
+      "raw_sha256": "46f2284ec5a4d249b61003cd9d3fa7d181fbca03b39b9fe41ed19393e04bbabc",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b103c",
+      "signature": "_ setNumberConfigReq(/* No info */) {",
+      "class": "ConfigService",
+      "source": "analysis/aot_dump/asm/distinguish/service/config_service.dart",
+      "source_line": 146,
+      "exported_body_size": 104,
+      "elf_file_offset": 4919356,
+      "body_sha256": "16d137a69be661ca96f06fd628f82af915933a432c75cd6b2f66e8da7c500ab3",
+      "asm_sha256": "d8b0a9d3b2752e6f2562eea0f89020c7364799d7892a8b1f0f653be873e8bd01",
+      "raw_sha256": "fc157d53fa0129049b78de5887ed5f33df25129bd6cb12ca8235a2ac7262868c",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b10a4",
+      "signature": "[closure] Null <anonymous closure>(dynamic, HttpResponse) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 7625,
+      "exported_body_size": 1444,
+      "elf_file_offset": 4919460,
+      "body_sha256": "9063f45312467a462e5e8b9953cb5f8c8e245ffee027fda582f281936c0fddeb",
+      "asm_sha256": "19b3e1688d6167c9a49b2d5a0d581890c05bd3336671767c95248cf2021aea23",
+      "raw_sha256": "6c6bf6a659d4e5622050b56a9c538eef13a41bbca91f185d1403d61ea85d8dc7",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b2a78",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "class": "_OnlineSettingWifiPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_wifi_page.dart",
+      "source_line": 2065,
+      "exported_body_size": 188,
+      "elf_file_offset": 4926072,
+      "body_sha256": "eeef2c1c76b736bd7d656bcebfa632d3404574d3bace17f55155711ce7b64034",
+      "asm_sha256": "d55f3a4c097ac4882d196a0bfa6db16fefc5e1ba97b8feade710890215740416",
+      "raw_sha256": "bb4799577b487ca69df81332bb942cfd16cb236279a4d56907d32cf6f6301804",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b2b8c",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "class": "_OnlineSettingWifiPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_wifi_page.dart",
+      "source_line": 2185,
+      "exported_body_size": 136,
+      "elf_file_offset": 4926348,
+      "body_sha256": "16913124064bffaf06512fa901a4378fb7b40b5a009982d9e0cf42a4c6b43f94",
+      "asm_sha256": "022fb16ff9a560fff76fba53e826b0f8e07ff3a78e3d44ecd40199ad63a62783",
+      "raw_sha256": "4eadb20e3897a42fb1e86b4ca8bfdc72160b35b051169d48d32177893c2b00a7",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b2c14",
+      "signature": "_ getWifiDefault(/* No info */) {",
+      "class": "ConfigService",
+      "source": "analysis/aot_dump/asm/distinguish/service/config_service.dart",
+      "source_line": 189,
+      "exported_body_size": 92,
+      "elf_file_offset": 4926484,
+      "body_sha256": "6b2a40c81ada8eb71ba561aeef7156323e5c067aecc62e97d14ebe94a613ae25",
+      "asm_sha256": "adac5eabd46cfa0578ff70472ae0c8b0937d67f93de98477b58c9648f702c39a",
+      "raw_sha256": "f8e16989cddb6c04f4e25e655bab2dd9df8ccae3d79df7f4a439e88a6bbe23ce",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b2c70",
+      "signature": "[closure] Null <anonymous closure>(dynamic, HttpResponse) {",
+      "class": "_OnlineSettingWifiPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_wifi_page.dart",
+      "source_line": 2240,
+      "exported_body_size": 544,
+      "elf_file_offset": 4926576,
+      "body_sha256": "ed5c13aab75d77e109127a6b0ce4cfe6cc59196ce39194b36a0cc584e0ebae5f",
+      "asm_sha256": "9224971a675d2d2dd05f7d22cd1f71531177175b855ae9c035fd279ba2846840",
+      "raw_sha256": "5fe61998d49114f9208d30cbb2b3c3d6c1d2445c14bf907cc320bc1d765dae22",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b2ed8",
+      "signature": "_ _onDeviceUpWifi(/* No info */) {",
+      "class": "_OnlineSettingWifiPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_wifi_page.dart",
+      "source_line": 2475,
+      "exported_body_size": 132,
+      "elf_file_offset": 4927192,
+      "body_sha256": "61fb43edcbadeb6b61b002bfc57ce10bccce7a28772607cab7713f2b617cbdd4",
+      "asm_sha256": "1a663aed4c205b0b9e034f0a6cbc3ac8c855159b82d5d90cc6f2784e16ca46ea",
+      "raw_sha256": "c2c671397a11b212e95d7f880d1543daa42deee7f9397f410d0302f53fb58a7e",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b2f5c",
+      "signature": "_ wifiDeviceUp(/* No info */) {",
+      "class": "ConfigService",
+      "source": "analysis/aot_dump/asm/distinguish/service/config_service.dart",
+      "source_line": 228,
+      "exported_body_size": 92,
+      "elf_file_offset": 4927324,
+      "body_sha256": "5f9d4700d13f5cc836eaf8f913742187c4bd48afecbfb79c3d73b1f8f94b2f40",
+      "asm_sha256": "153798b56bf2c69a78b7202bbe6e28bd6ee7e0d11fcb274630adc9427a9c6f21",
+      "raw_sha256": "f178949936734964f9a72ac7e5a896d9e6ecd371bf78a3bfcc25c14a63186b85",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b2fb8",
+      "signature": "[closure] Null <anonymous closure>(dynamic, HttpResponse) {",
+      "class": "_OnlineSettingWifiPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_wifi_page.dart",
+      "source_line": 2529,
+      "exported_body_size": 96,
+      "elf_file_offset": 4927416,
+      "body_sha256": "40c76f5b140a37f0b80dc70e10740ac67f3e0331ee11de21dcb3aa3e325d08ca",
+      "asm_sha256": "8a0ea29517acc9045aed766ccd318ab7a3cb28b165f935befe227c5cfc46ab04",
+      "raw_sha256": "6ea8708123ae30083d78c40689147213ef38c8be26892341e2d06fd80d9bfcc6",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b3018",
+      "signature": "_ _onGetWifiDeviceWifiList(/* No info */) {",
+      "class": "_OnlineSettingWifiPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_wifi_page.dart",
+      "source_line": 2570,
+      "exported_body_size": 132,
+      "elf_file_offset": 4927512,
+      "body_sha256": "0af0a3dd9417fd25d83d8ebd1ee2c27673486b22fb5c4c55a6294d9abd45ab51",
+      "asm_sha256": "d34be5be9a4342461ba59e5b3c2288ac23ed1380fb36c9af2a889107cfa09a7a",
+      "raw_sha256": "74d97ede7b221e9188cb84d6ab030d875a6f8cb4c7bf45bfd6508ecca38dbf52",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b309c",
+      "signature": "_ wifiDeviceWifiList(/* No info */) {",
+      "class": "ConfigService",
+      "source": "analysis/aot_dump/asm/distinguish/service/config_service.dart",
+      "source_line": 267,
+      "exported_body_size": 92,
+      "elf_file_offset": 4927644,
+      "body_sha256": "0c23aee8489b04c0989349582b9144c723a91ed54317e4da6ac10b1d884a9a7b",
+      "asm_sha256": "ae31d80e37642d338b9377925b4653bbdabcdb76f043d5e56140cfe747e92952",
+      "raw_sha256": "4ce3e78ed817ae887715697654ee355e33cb9ee40db2303a1cb2665f08b0bd4a",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b30f8",
+      "signature": "[closure] Null <anonymous closure>(dynamic, HttpResponse) {",
+      "class": "_OnlineSettingWifiPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_wifi_page.dart",
+      "source_line": 2624,
+      "exported_body_size": 3360,
+      "elf_file_offset": 4927736,
+      "body_sha256": "5632c86ba4460a6f4ab5788dc79ce107d3261326b9976c18b1d99e9799e2411c",
+      "asm_sha256": "5739ffb01010897487f2e0cbcc5cf706d06751f8a19ccf4648baf7b3abf34533",
+      "raw_sha256": "9bdaaae22158cec83bb26dae9c34d34518d876e809b17ef0e28a5e956506ed20",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b3e18",
+      "signature": "_ escapedHexToUtf8(/* No info */) {",
+      "class": "_OnlineSettingWifiPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_wifi_page.dart",
+      "source_line": 3790,
+      "exported_body_size": 452,
+      "elf_file_offset": 4931096,
+      "body_sha256": "6c03165b2601d2e07cc8aec94bc8a533163f4032956be5c5ea4ab782e4f51688",
+      "asm_sha256": "91bb9ee1b2b101b86a7e5e2f1342e47c4c9086cd2da5e34b8d1d794cbc29b483",
+      "raw_sha256": "1a285773d27a86c4decc511ac01f81969af2092618339159259fb21e6e13962e",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b3fdc",
+      "signature": "_ WifiListItem(/* No info */) {",
+      "class": "WifiListItem",
+      "source": "analysis/aot_dump/asm/distinguish/model/wifi_list_item.dart",
+      "source_line": 10,
+      "exported_body_size": 444,
+      "elf_file_offset": 4931548,
+      "body_sha256": "493be474a09f604750656b27120bc03155ac3b7b6fa5d3473301ffa04c5dc4b3",
+      "asm_sha256": "541b7d3f33e05acf785e4b6967a81162a24d9c0c5e934978905c98407c2d497b",
+      "raw_sha256": "2e284e3ac5daa8c570117a4d936d0fe6dba006437f47c1890786c159fc48182b",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b4214",
+      "signature": "[closure] int <anonymous closure>(dynamic, WifiListItem, WifiListItem) {",
+      "class": "_OnlineSettingWifiPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_wifi_page.dart",
+      "source_line": 3988,
+      "exported_body_size": 116,
+      "elf_file_offset": 4932116,
+      "body_sha256": "06f7b389f9c7bcf440d540a662045680c95fefe3610bc0a9be517d04e0a0a953",
+      "asm_sha256": "c109f781e9bb9c9a86db6131e35bfe9fbb479317c3010d1703b04937cbf02a5f",
+      "raw_sha256": "e192ee6bbe45b71bbc4ce745d115c4422cb3987b7ac03771436dbc1588802e8b",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b42d0",
+      "signature": "_ onSaveWifiConfig(/* No info */) {",
+      "class": "_OnlineSettingWifiPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_wifi_page.dart",
+      "source_line": 4063,
+      "exported_body_size": 428,
+      "elf_file_offset": 4932304,
+      "body_sha256": "0de39ac342f6b6c305cb1384c8418269ecf09df0f5fdf4435c7671d0391130d5",
+      "asm_sha256": "becec1acbcf568de2c62582d6d98857abdff919a48b7d350de576e8e6692a468",
+      "raw_sha256": "9e61c8690b417ce6f0875eccc35ec8e8b4aec83587343e630ded6c660119d0df",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x4b447c",
+      "signature": "[closure] Null <anonymous closure>(dynamic, HttpResponse) {",
+      "class": "_OnlineSettingWifiPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_wifi_page.dart",
+      "source_line": 4247,
+      "exported_body_size": 476,
+      "elf_file_offset": 4932732,
+      "body_sha256": "1893452eb52e1d388bc383d2c875251cbf359309cf67a3b43b8a1ad78874e402",
+      "asm_sha256": "c86b90deeb0ce0e895db7a97d10f3511dc34b37590ab993077d557f1043b6e15",
+      "raw_sha256": "54a7677a8d2d4b921e02ffff5d0160992b895f4aa76672732e9d063c52d7eba8",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x527460",
+      "signature": "[closure] void <anonymous closure>(dynamic, WsEvent) {",
+      "class": "_MainPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "source_line": 10362,
+      "exported_body_size": 3092,
+      "elf_file_offset": 5403744,
+      "body_sha256": "ff730660d270d138edec760bde60bccec5c4141213c96bbcd45f7a00e720d3bd",
+      "asm_sha256": "972393a883772415bcd511a35b3a7f1650c5a9ce9d56f95087604ecb21b88e10",
+      "raw_sha256": "2207ed3055bc9b012e5ab7b23ef5831c31671d71563b3cabbee3f6b9f6bd2a14",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x5281d8",
+      "signature": "_ saveImg(/* No info */) async {",
+      "class": "_MainPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "source_line": 11485,
+      "exported_body_size": 1608,
+      "elf_file_offset": 5407192,
+      "body_sha256": "35c78ed8c62e128a52c452801c72c3f74fe2801c697964dd60f00b713fb1f6da",
+      "asm_sha256": "06fafb5ab2845a92108cf5e05792ae486b8f09624c1727dc68b6ac67488d5e8e",
+      "raw_sha256": "02fddc2981debd5200ef9ffbabc1801e5eb0eddafdcc2ac5670241f9e9cbff2f",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x52a6fc",
+      "signature": "[closure] void <anonymous closure>(dynamic) {",
+      "class": "_MainPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/main/main_page.dart",
+      "source_line": 13384,
+      "exported_body_size": 40,
+      "elf_file_offset": 5416700,
+      "body_sha256": "c9af0722f58a7f84ead4cfec3963063f4f13d6d1f48d154aa5f0c35eac74ecd1",
+      "asm_sha256": "4feafd1edb1b13bf4a86ada654eb73527d0bc8bf4edb2cc38124f27e559412f2",
+      "raw_sha256": "8cd764e709dc6d9bc2d404ef0d6db7edec8b8f33efa557d2ea8f3a68a56968de",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x52afa4",
+      "signature": "_ initState(/* No info */) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 8153,
+      "exported_body_size": 124,
+      "elf_file_offset": 5418916,
+      "body_sha256": "a04aa370e04ebaefe8ed01f0de10c2f61db0d5debb45bd2301f7b5a73fc4bdb1",
+      "asm_sha256": "b7b48b26f5562b46a29dbc28abd6c1aba00582117099f3ae3209edfc5e6b357b",
+      "raw_sha256": "d1d55438d3e84576fd582159bb85a3a630c82ed1854a0b949396c13bfb60533a",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x52b020",
+      "signature": "_ getConfig(/* No info */) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 8206,
+      "exported_body_size": 148,
+      "elf_file_offset": 5419040,
+      "body_sha256": "c95b1a9ea67c06d040ff4d4271b0c16d7f9378e4a1d694971e4393d9a5a5965c",
+      "asm_sha256": "6432bc6fc41a06b15d8e5852c766fbc2afc0a40f0a374ad6f51e78a58b0907b7",
+      "raw_sha256": "55ead3b40c62ae6879aec82a82a39a386f50e210dad1a8c80d80f55ef3b8d1a8",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x52b0b4",
+      "signature": "_ getConfigReq(/* No info */) {",
+      "class": "ConfigService",
+      "source": "analysis/aot_dump/asm/distinguish/service/config_service.dart",
+      "source_line": 345,
+      "exported_body_size": 92,
+      "elf_file_offset": 5419188,
+      "body_sha256": "cf87a143b17d0ea2d7d7f3fb7c11b71649226e2254a39de322e5c810a1194509",
+      "asm_sha256": "7a01d83043e67323c44ee3e9e5714eec78705cb1d4ec8c217a52658638135a4f",
+      "raw_sha256": "09278618caef015052efc9915d93a14a84aa6ea7518aba29d1ede4a8c14ab399",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x52b110",
+      "signature": "[closure] Null <anonymous closure>(dynamic, HttpResponse) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 8267,
+      "exported_body_size": 904,
+      "elf_file_offset": 5419280,
+      "body_sha256": "6185d60961e834dd7d8592a08be7e618e17b7d07238f09fc4026d9590c43d3cf",
+      "asm_sha256": "a40e8bf2f776ef6f1989700dae1fa732f717c164dace337e2944982e208568bf",
+      "raw_sha256": "5f3bcb04bdc65d9bc8b214e8fd1b23f4dfe485d33b8987a7400c186197a68ba6",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x52c350",
+      "signature": "_ _initFormData(/* No info */) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 8623,
+      "exported_body_size": 1252,
+      "elf_file_offset": 5423952,
+      "body_sha256": "61d1d0f8642a4c0d01873ac02529ffb92ddb3eb05dd079da159a0673cd801851",
+      "asm_sha256": "d6c2d6ce4738f3ae0a6c4cf9951116c0a813d3f7d74f60410749caeeccf68027",
+      "raw_sha256": "1e3b861c4ff83ad9276c2642eb2064372bfed5e955ac3cbf0671268672dc6d5d",
+      "previous_semantic_coverage": "partial_claims_present_not_whole_method_proof",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x52c834",
+      "signature": "_ initState(/* No info */) {",
+      "class": "_OnlineSettingWifiPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_wifi_page.dart",
+      "source_line": 4425,
+      "exported_body_size": 268,
+      "elf_file_offset": 5425204,
+      "body_sha256": "282a1f62cd6decf3975bedc59ffc4bbdfdc285097abf37a4828cf3ca2f795dcd",
+      "asm_sha256": "ec4d8d5a5a519c631254c799fdf1fd8cf27118651c3ce9998fea075c9051548d",
+      "raw_sha256": "e4148312d1e1ffcceca85a5ac40cabbe7b55616facf86cd973a3bd2a23c448fc",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x52c940",
+      "signature": "[closure] void <anonymous closure>(dynamic, Timer) {",
+      "class": "_OnlineSettingWifiPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_wifi_page.dart",
+      "source_line": 4524,
+      "exported_body_size": 72,
+      "elf_file_offset": 5425472,
+      "body_sha256": "682e0602fb29ddb800f31871188959c947bf08e5350b40e45b038bbce7b98b8c",
+      "asm_sha256": "2eda0d5fcc3703e65bdeb4d0cf35fb47bf5e5d95ec89e1ed315e9300b78835f0",
+      "raw_sha256": "b9d4707dd77982fcb6c29851371f4a3e73fc376cd650d942a51570781871d08e",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x52c988",
+      "signature": "[closure] void <anonymous closure>(dynamic, Timer) {",
+      "class": "_OnlineSettingWifiPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_wifi_page.dart",
+      "source_line": 4556,
+      "exported_body_size": 72,
+      "elf_file_offset": 5425544,
+      "body_sha256": "45cb7343d758f315546e791382d9ee316cefba146d54b62b427fa385eb5a4fdc",
+      "asm_sha256": "fa2b4cccda14a961f67b7569cb9ec5bf45c4d1d14aea0c75c1bf9bd49895891a",
+      "raw_sha256": "3a7319c44796282a43c9188197d387018eae1e77fbccae1a1bac5923d551e26f",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x556b04",
+      "signature": "_ dispose(/* No info */) {",
+      "class": "_OnlineSettingWifiPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_wifi_page.dart",
+      "source_line": 4588,
+      "exported_body_size": 164,
+      "elf_file_offset": 5597956,
+      "body_sha256": "9055ddfdb6f497ccbda6acbc78314be0780810f3b7f3851d01440c649cd9e58d",
+      "asm_sha256": "f3cd57062e2b0ef562bab37a93b56f838d600df3d4187948bfc19f1551a19d8e",
+      "raw_sha256": "22baff93c704fc57467fdfe16f152f68a40c2ed4131f8482f84fe7a6a796008c",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    },
+    {
+      "address": "0x5653ec",
+      "signature": "_ _OnlineSettingPageState(/* No info */) {",
+      "class": "_OnlineSettingPageState",
+      "source": "analysis/aot_dump/asm/distinguish/pages/online/online_setting_page.dart",
+      "source_line": 9147,
+      "exported_body_size": 788,
+      "elf_file_offset": 5657580,
+      "body_sha256": "dc39ff75f58d955b08a4745fe9984458fe6b357452d292d9d4769a592ea3b35d",
+      "asm_sha256": "6134970054ae3b4593271197d00534ca9cd6b6580d1808627ba7feda9a5cefda",
+      "raw_sha256": "9804e4a58244849c233ad05ba135cf25414af829327ac4875bf8e4aa734df8ff",
+      "previous_semantic_coverage": "no_explicit_semantic_association_found",
+      "whole_method_completed": false,
+      "checks": {
+        "asm_sha_matches_frozen": true,
+        "raw_sha_matches_frozen": true,
+        "body_bytes_match_frozen": true,
+        "each_raw_instruction_matches_original_elf": true,
+        "raw_covers_whole_exported_body": true
+      }
+    }
+  ],
+  "source_manifest": [
+    {
+      "path": "unpacked/lib/arm64-v8a/libapp.so",
+      "sha256": "40d890193daa716defe2eec6cd2959bdbf7f7cf8345f8213b1747e54863a5a55"
+    },
+    {
+      "path": "analysis/completeness_audit/flutter/method_coverage.json",
+      "sha256": "eddb170f70d13b3ce0571b23586d246624d4f29b819a3488114618bf449619c5"
+    }
+  ],
+  "original_source_recovered": false,
+  "target_app_executed": false,
+  "business_server_contacted": false
+}

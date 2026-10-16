@@ -1,0 +1,62 @@
+[dart:core] DateTime::_threeDigits
+0x45af1c: fd79bfa9 stp x29, x30, [x15, #-0x10]!
+0x45af20: fd030faa mov x29, x15
+0x45af24: ef4100d1 sub x15, x15, #0x10
+0x45af28: e30301aa mov x3, x1
+0x45af2c: a1831ff8 stur x1, [x29, #-8]
+0x45af30: 501f40f9 ldr x16, [x26, #0x38]
+0x45af34: ff0110eb cmp x15, x16
+0x45af38: 89060054 b.ls #0x45b008
+0x45af3c: 7f9001f1 cmp x3, #0x64
+0x45af40: 6b010054 b.lt #0x45af6c
+0x45af44: 60787f93 sbfiz x0, x3, #1, #0x1f
+0x45af48: 7f0480eb cmp x3, x0, asr #1
+0x45af4c: 60000054 b.eq #0x45af58
+0x45af50: 4a7c0a94 bl #0x6fa078
+0x45af54: 037000f8 stur x3, [x0, #7]
+0x45af58: e00100f9 str x0, [x15]
+0x45af5c: d581f997 bl #0x2bb6b0
+0x45af60: ef031daa mov x15, x29
+0x45af64: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x45af68: c0035fd6 ret 
+0x45af6c: 7f2800f1 cmp x3, #0xa
+0x45af70: 6b020054 b.lt #0x45afbc
+0x45af74: e10316aa mov x1, x22
+0x45af78: 820080d2 mov x2, #4
+0x45af7c: 9d7b0a94 bl #0x6f9df0
+0x45af80: e20300aa mov x2, x0
+0x45af84: 70936af9 ldr x16, [x27, #0x5520]
+0x45af88: 50f000b8 stur w16, [x2, #0xf]
+0x45af8c: a3835ff8 ldur x3, [x29, #-8]
+0x45af90: 60787f93 sbfiz x0, x3, #1, #0x1f
+0x45af94: 7f0480eb cmp x3, x0, asr #1
+0x45af98: 60000054 b.eq #0x45afa4
+0x45af9c: 377c0a94 bl #0x6fa078
+0x45afa0: 037000f8 stur x3, [x0, #7]
+0x45afa4: 403001b8 stur w0, [x2, #0x13]
+0x45afa8: e20100f9 str x2, [x15]
+0x45afac: 6f80f997 bl #0x2bb168
+0x45afb0: ef031daa mov x15, x29
+0x45afb4: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x45afb8: c0035fd6 ret 
+0x45afbc: e10316aa mov x1, x22
+0x45afc0: 820080d2 mov x2, #4
+0x45afc4: 8b7b0a94 bl #0x6f9df0
+0x45afc8: e20300aa mov x2, x0
+0x45afcc: 70434091 add x16, x27, #0x10, lsl #12
+0x45afd0: 10f242f9 ldr x16, [x16, #0x5e0]
+0x45afd4: 50f000b8 stur w16, [x2, #0xf]
+0x45afd8: a3835ff8 ldur x3, [x29, #-8]
+0x45afdc: 60787f93 sbfiz x0, x3, #1, #0x1f
+0x45afe0: 7f0480eb cmp x3, x0, asr #1
+0x45afe4: 60000054 b.eq #0x45aff0
+0x45afe8: 247c0a94 bl #0x6fa078
+0x45afec: 037000f8 stur x3, [x0, #7]
+0x45aff0: 403001b8 stur w0, [x2, #0x13]
+0x45aff4: e20100f9 str x2, [x15]
+0x45aff8: 5c80f997 bl #0x2bb168
+0x45affc: ef031daa mov x15, x29
+0x45b000: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x45b004: c0035fd6 ret 
+0x45b008: bc7b0a94 bl #0x6f9ef8
+0x45b00c: ccffff17 b #0x45af3c

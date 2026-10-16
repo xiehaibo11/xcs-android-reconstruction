@@ -1,0 +1,195 @@
+公开副本说明：本文件为历史分析报告，具体本机路径已脱敏为 <LOCAL_APP> 或 <LOCAL_WORKSPACE>；报告中的历史完成状态不代表完整原始源码已恢复。
+
+WebSocket 消息、心跳与识别结果上传流程还原
+对象：app_xcs(新).apk.1.1，包名 com.re.xcs，Manifest 版本 2.1.6
+分析范围：arm64 Flutter AOT 与 Rust ELF 静态分析。
+没有运行 APK/目标原生库，没有请求业务服务器。消息示例为依据代码合成的示例，不是抓包。
+
+阅读导航
+  外层协议与发送/接收类型：analysis/ws_protocol/
+  心跳、重登录、QoS 定时与缓存：analysis/ws_heartbeat/
+  识别、校验、人工修改及 HTTP 上传：analysis/result_pipeline/
+  Rust → Dart → HTTP 交叉证据：analysis/ws_result_integration/cross_layer_flow.json
+  本轮完整性检查：analysis/ws_result_reconstruction_verification.json
+  前轮登录、HTTP 参数和 msg_type：登录与业务协议还原报告.txt
+
+一、跨层消息格式
+
+WebSocket 地址来自登录后解密的业务主机：ws://{业务主机}:18889。
+外层 Protocol 是 JSON 对象，包含六个有名字段：
+  types        Rust i32，外层协议类型。
+  data_content Rust String，消息内容。业务/登录响应在这个字符串中再承载 JSON。
+  from         Rust String，发送方路由字段。
+  to           Rust String，接收方路由字段。
+  fp           Rust String，消息指纹。默认生成路径为 UUID 格式化。
+  qos          Rust bool，可靠性跟踪开关。
+序列化顺序为 types、data_content、from、to、fp、qos；空 String 字段被省略，types/qos 始终输出。
+缺省与解析规则、类型范围、重复字段处理以 ws_protocol 中对应 Schema 和说明为准。
+
+业务消息示意（占位值，没有实际设备/用户数据）：
+  {
+    "types": 2,
+    "data_content": "{\"msg_type\":101,\"msg_content\":{\"serial_number\":\"10001\",\"mahjong_number\":1,\"img\":\"images/card-1\",\"ai_val\":11,\"ai_precision\":0.98}}",
+    "from": "<sender>",
+    "to": "<receiver>",
+    "fp": "<message-fingerprint>",
+    "qos": true
+  }
+data_content 是字符串，不能把上例直接改成对象并认为客户端会接受。
+Rust 先解析外层，业务分支再检查 msg_type；101、102、113..117 才进入已恢复的 Flutter 转发路径。
+转发内容仍是原始内层 JSON 字符串；Rust 构造桥接事件整数4，第一个 String 为空，第二个 String 为该内容。
+Dart 通过 FRB 解码 uint32 事件和两个长度前缀 UTF-8 String，再 jsonDecode 第二个 String，构造 Message 并分发 msg_type。
+FRB 的进程内二进制编码和 WebSocket JSON 是两种不同格式。
+桥接事件10是连接成功通知，随后 Dart 才 wsLogin(JWT)；不能把10解释成认证成功。
+
+二、外层类型、心跳与可靠性机制
+
+本轮确认9个外层 types 值：
+  1  客户端心跳，data_content="💓"，qos=false，fp为新UUID。
+  2  入站业务，data_content内承载 {msg_type,msg_content} 的JSON字符串。
+  3  客户端主动退出，qos=false；尝试发送后清除内存JWT并停止相关任务，不以发送成功为清理前提。
+  4  QoS ACK，发送/接收两方向都存在。
+  6  客户端登录，data_content原样复制JWT字符串。
+  50 服务端登录响应，内层 code:i32、user_id:String、data:String 必需。
+  51 服务端心跳响应，以客户端本地当前时间更新时间状态，未使用payload作为服务器时间。
+  52 服务端错误分支；完整payload和业务回调尚未确认。
+  54 被踢指令，停止连接维持与相关任务。
+这些是实际构造/分支值，不是已恢复的完整原始枚举。
+命名对象解码器对缺省字段使用 types=0、String=""、qos=false；已知键重复或根值后有非空白数据会进入错误路径。
+未知命名键由跳值解析器忽略。底层另有序列/数组解码入口，目前Schema仅覆盖命名JSON对象。
+
+心跳与重登录已恢复的时间参数：
+  keep_alive发送：默认30秒；启动后立即发送一次，之后按周期发送。
+  心跳健康检查：先等待首个2秒tick，之后每2秒检查。
+  掉线阈值：当前epoch秒 - 最后心跳回复时间 >= 发送周期+5；默认35秒。
+  自动重登录：默认3秒；启动后立即尝试，之后周期尝试。
+发送周期及重登录周期存在非零配置覆写路径，30和3是当前默认，不是永远不可修改的协议常数。
+时间槽为0时，初次发送会用发送后的当前秒初始化；随后每次收到types51才刷新，因此未收首个回复并不直接按epoch零点超时。
+心跳from克隆SDK全局保存的一个String（+0x160）；本轮未将此槽确定为服务端user_id，不能填入假定身份。
+认证成功 types50.code=0 后启动心跳和QoS，停止重登录；认证失败和types54有不同清理路径。
+心跳失联由内部bool通道通知监控任务，监控任务清连接门控、停止心跳/QoS并启动auto_re_login。
+重登录使用内存中保存的原始wsLogin输入，即上游JWT；不等于重新POST账号密码，也未见该路径刷新JWT。
+主动退出经wsLogout和FRB调用进入Rust任务；已确认types3尝试发送和本地清理，不能据此推定已经发送WebSocket Close控制帧。
+原生关闭辅助函数有连接标志门控，而相关清理路径先清该标志；精确调用顺序和偏移见ws_heartbeat。
+
+QoS入站处理先于普通types业务分发。qos=true新fp入去重表、回复ACK后继续；重复fp再次ACK但丢弃重复业务。
+types50带qos时还先解析code，非零跳过该ACK处理块；不可把所有畸形消息都描述成安全忽略。
+发送ACK交换from/to，将收到包fp放入data_content，ACK自身fp新建、qos=false。
+接收ACK则实际读取ACK外层fp，删除两处发送跟踪记录，没有读取data_content作为关联键。
+以上两方向关联方式不同；没有服务端代码/真实流量，不能推定服务端如何回复，也不能据此直接判断线上故障。
+
+QoS发送跟踪只在通用发送器本地成功且qos=true后入表；登录和心跳走直接发送器，qos=false。
+入表与重发判断均按epoch秒计算时间；本构建重发阈值为0xbb9，即3001秒。
+发送扫描启动立即运行，之后每60秒扫描；时间达到阈值只会在扫描时被处理，不代表精准在第3001秒发出。
+成功重发递增计数，两次成功重发后进入删除路径；发送失败不递增，成功重发也未刷新已有fp的时间戳。
+入站去重缓存启动立即清理，之后每60秒清理；消息年龄>=60秒满足删除条件。
+重复包会更新时间戳；实际删除还取决于扫描相位，所以60秒是删除年龄门槛，并非每包精确存留60秒。
+此缓存只保证缓存窗口中的fp去重，不能把它称为永久去重或HTTP上传幂等。
+
+三、识别结果到上传的流程
+
+1. 业务准备
+MainPage 从登录得到的 Devices 构建 Channel，设备 serial_no 用于识别消息匹配，id 用于预览路径，direction 是方向。
+获取 /api/mj/get_config 的 MjConfig 字典；已确认字段为 id、number、name、url。
+Devices.mj_count 是每通道应收数量。不能将预览设备 id、字符串 serial_no 和上传数值 serial_number 混用。
+
+2. 开始接收：msg_type=113
+剩余倒计时大于0时忽略重复开始消息。否则清空各通道结果，剩余秒数使用 loginUser.timeout，空值缺省60。
+启动1秒周期定时器并刷新“数据接收中...(N秒)”文案。到0只取消该计时器，未见这一回调自动上传或自动重识别。
+
+3. 单张结果：msg_type=101
+msg_content 读出 serial_number:String?、mahjong_number:int?、img:String?、ai_val:int?、ai_precision:double?。
+按 serial_number == Devices.serial_no 匹配通道。
+mahjong_number空值回退0；一个未命名静态bool槽0xbc4为true时交换相邻编号：偶数n→n-1，奇数n→n+1。
+该静态槽不能视为User.data_send。正常图首次匹配通道时要求direction非null，编号为1时清删除偏移，随后编号减该偏移。
+img="x" 是本地占位路径，创建空result与empty.jpg，不进行图片HTTP请求，也不调整删除偏移或运行正常图片GET回调的完整数量判定。
+正常图片路径生成 GET URL；then回调直接把响应data转为String，经过登录配置给出的替换规则还原，再Base64解码写入临时图片缓存。
+img以http://或https://开头时原样使用；否则拼接http://{业务主机}/{img}，没有自动添加业务接口端口8081。
+GET没有另加query/body，经过公共HttpClient及请求拦截器；图片URL的来源和业务接口baseUri应分别保留。
+这一回调未先检查HttpResponse.ok；失败响应可能在类型转换或解码处抛异常，不能将其称为已检查HTTP成功的路径。
+ai_val=-1 分支跳过正常 AI 牌匹配；其他值按 MjConfig.number.toString() 查找牌字典，写入结果字符串、字典图片和精度。
+详细异常、空值和占位模型以 result_pipeline 输出为准。
+saveImg 的 Future 只等待临时目录准备；图片 GET 使用 then 回调，没有由外层串行 await。
+多条101可以并行下载，结果按 HTTP 完成后的 append 顺序进入列表；已审查路径没有按 mahjong_number 重排或按该编号去重。
+
+4. 自动进入校验与上传
+正常图片GET的then回调在解码、写盘、加入结果后，汇总所有非空result的数量，与sum(Devices.mj_count)比较。
+只有恰好相等才取消接收计时器、显示“等待数据发送中...”、打开修改/校验界面，并调用 onValidDataAndSendData。
+该汇总判断没有expected>0门槛；取消计时器后countdown归0。
+这是客户端的自动入口；手动“发送数据”按钮也调用同一函数。
+不能将“打开修改界面”直接解释为网络上传一定等待用户按确认。
+已审查的保存图片、自动开修改页、上传和计时器路径未读取 loginUser.data_send/loginUser.delay；不能按字段名加入延迟或人工确认条件。
+
+5. 本地 onValidData 校验
+按每通道 result 列表计数并将 result 用 int.parse 转为牌值，累计全局频次。
+每通道当前数量必须等于该设备配置的 mj_count；非零配置总数必须等于当前总数。
+每通道比较直接使用nullable mj_count，null与0不同；全局求和才使用mj_count??0。空channels缺少单独防护，可返回true。
+对已经出现的牌值，固定规则为：result < 40 且 count > 0 时，count 必须恰好为4，否则校验失败。
+这里比较的是已解箱的整数，40和4不是 Dart Smi 原始标记值；已独立核对原 ELF 中三条 CMP。
+这段代码不遍历完整牌字典，所以不能推定完全未出现的某种牌会仅因频次为0被判错。
+也未见这一函数用精度阈值、MjConfig 动态数量或结果编号唯一性作为校验条件。
+错误文字写入局部 List<String>，返回该列表是否为空；本函数未见显示这些文字或播放声音的调用。
+int.parse 失败会抛异常，不会自然变成“校验 false”。
+
+6. 人工修改
+右侧选牌调用onSelectMj，把选中MjConfig.id.toString()写入result；右侧ContentRightSide.initState本地构造42张牌，已确认该本地集合id==number。
+左侧changeMj在修改已有结果和补牌时使用config.number；AI路径同样按number匹配并使用AI值。
+本地右侧集合的id==number不能用于推定/api/mj/get_config返回的服务端id与number总相等。
+删除、补牌和修改入口详见result_pipeline；没有找到可确认的“再次识别”请求链。
+onResetGames是独立resetGames请求并立即清空结果，不能把它解释成AI重新识别。
+Main确认删除移除所有相等编号，较大编号减1，删除偏移加1；左侧组件自身删除只过滤相等编号，不调整Main偏移。
+校验界面计数显示另按code<50，popover警示另按次数>0且!=4，二者不能代替上传时code<40的校验规则。
+
+7. 生成并发送 HTTP 数组
+onValidDataAndSendData 先同步调用 onValidData；false 时直接返回，不调用上传。
+true 时显示“保存中...”，按 Channel 列表顺序，再按各结果列表顺序展开 payload，发送 POST /api/zhuo/add。
+登录配置的业务baseUri为http://{业务主机}:8081/；本请求相对路径由公共客户端解析。
+每一项四字段：
+  mahjong_number：ChannelResult 记录的整数。
+  serial_number：num.tryParse(Devices.serial_no ?? "0")；无法解析则主动抛 FormatException。
+  direction：Devices.direction，nullable int。
+  result：int.parse(ChannelResult.result)。
+body 是 JSON 数组，不是外层 {data:[...]}；图片、ai_precision 和结果展示图片不会随这个请求上传。
+公共Authorization使用前轮HTTP登录保存的Bearer JWT；另外设置clienttype=android、deviceId静态槽和构造时的clientversion。
+deviceId槽初始为空且前轮未找到确定写入，不能推定为硬件ID。公共contentType为application/json。
+外层函数返回 void；请求后挂 Future.then，没有 await 网络完成。
+样例（仅说明数组及字段类型）：
+  [{"mahjong_number":1,"serial_number":10001,"direction":1,"result":11}]
+单项示例不是通过完整数量校验的整轮样例。
+
+8. 返回与状态处理
+回调先关闭加载提示。HttpResponse.ok 为 false 时显示 HTTP 异常信息；为 true 时读取响应 data.success。
+success == false 显示 data.msg；其他分支进入“发送成功”提示及结果清理，不能将条件改写为“必须 success == true”。
+成功回调清空当前live channels的结果，page mode设为1，showtype==2时另清一个bool标志。
+该回调未清选中指针、offset、计时器或状态文案；请求过程中当前通道发生变化时，回调引用的是当时的live对象。
+失败分支不走成功清理路径；已审查函数没有自动重试 POST 或给上传数组添加幂等编号。
+上传过程中转换异常与 Future 异常处理边界，以详细伪代码与证据为准。
+具体而言，result非整数在显示加载前抛异常；serial_no无法解析在显示加载后抛异常，该分支没有本地dismiss。
+POST Future直接以error完成时不会进入上述then成功回调；所审查函数没有catchError/finally来关闭加载或转成错误提示。
+
+四、采集完成与计时边界
+
+msg_type=114 按字符串 serial_no 匹配设备，将 lighting_switch 设为0；这不是 Devices.status 字段。
+所有设备 lighting_switch 都不等于1时，更新“接受完成，等待下轮数据...”，取消并清空计时器，剩余秒数归0。
+随后安排一个5秒 Future.delayed；回调仅当当前结果列表条数小于 sum(mj_count??0) 时播放 number_error.wav。
+这条114路径不直接调用 onValidDataAndSendData，也没有自动再次识别请求。
+101自动判定使用非空 result 数量；114延迟检查使用列表条数，两者统计口径不同。
+图片GET、114的5秒Future和上传then都读取回调运行时的状态；所审查方法未添加roundId/批次版本或提交inflight门槛。
+dispose取消订阅和已保存Timer，但未保存取消这些delayed/HTTP then的句柄；这里只记录代码边界，不判定真实故障已发生。
+以上均是静态控制流。当前未通过实机/抓包验证 HTTP 并发完成顺序、跨轮回调或服务端去重行为。
+
+五、证据与复现
+
+本轮跨层提取脚本：scripts/ws_result_cross_layer.py。
+专项提取脚本：scripts/ws_protocol_extract.py、scripts/ws_heartbeat_extract.py、scripts/result_pipeline_extract.py。
+统一校验脚本：scripts/verify_ws_result_reconstruction.py；执行记录见analysis/ws_result_reconstruction_verification.json。
+原始业务桥接指令：analysis/ws_result_integration/rust_business_to_flutter.llvm.txt。
+关键 Dart 函数摘录：analysis/ws_result_integration/*.asm.txt。
+每个摘录保留绝对来源、行号、SHA-256；关键调用目标与原始 libapp.so 的 BL 指令独立比对。
+统一核验通过：17份JSON可解析，16个外层合成示例和8个内层JSON往返一致。
+共核对230条直接BL目标、12条原生RELA绑定及12条B跳转，覆盖8467个不同原ELF指令地址。
+识别专项另有83个完整方法摘录、13个来源文件和42项本地牌字典；所有来源范围和摘录SHA均通过检查。
+上述验证证明证据一致性，不自动证明每项人工语义，也不证明服务端接受合成示例。
+原 APK SHA-256：8fd060966759990ab5ef90639e3376a2b6aea209f3f545d768a2fdc668dfeaa9。
+原APK与两份关键arm64库的SHA-256均保持一致。
+完整原始 Dart/Rust 源码没有恢复；可读伪代码为人工重建，AOT .dart 文件实际是注释汇编。

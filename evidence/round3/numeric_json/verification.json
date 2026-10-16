@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "boundary_assertions": 29,
+  "differential_cases": 52778,
+  "parser_modes_checked": 2,
+  "integer_cases": 16372,
+  "double_cases": 36276,
+  "malformed_cases": 130,
+  "nonfinite_cases": 8034,
+  "differences": 0,
+  "source_manifest": [
+    {
+      "path": "reconstruction/app/src/main/java/com/re/xcs/rebuild/core/JsonCodec.java",
+      "sha256": "1ea03024863ee825881ec5684d0014983bcbef9434906ac5344c7d026328c97a"
+    },
+    {
+      "path": "reconstruction/evidence/round3/numeric_json/NumericJsonTest.java",
+      "sha256": "9eaff3a93dedef275a502c1b04b2f875fd1042b592c554c5d208f3fa800179b0"
+    },
+    {
+      "path": "reconstruction/evidence/round3/numeric_json/run_tests.sh",
+      "sha256": "a636d07b6c0917de2e9be08a4021f5ee76b4a40545e8112021145b441f362a76"
+    },
+    {
+      "path": "reconstruction/evidence/round3/numeric_json/reference.tsv",
+      "sha256": "71556caf55ce3aa7f19dfbd72f97aaa82cfe3e138ab11d895ca9232a273e39b8"
+    }
+  ],
+  "reference": {
+    "kind": "Official Dart3.5.2 SDK macOSARM64 jsonDecode/jsonEncode execution",
+    "download_provenance": "Sibling round3/datetime reference SDK and its provenance",
+    "sdk_version": "3.5.2",
+    "vm_android_snapshot_distinction": "SDK execution is a version-matched native VM reference, not execution of original Android libflutter."
+  },
+  "original_apk_runtime_executed": false,
+  "business_server_contacted": false,
+  "original_source_recovered": false
+}

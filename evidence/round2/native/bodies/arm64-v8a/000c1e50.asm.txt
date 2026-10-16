@@ -1,0 +1,8 @@
+
+<LOCAL_APP>/unpacked/lib/arm64-v8a/librsa_bridge.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+00000000000c0090 <_cgo_topofstack>:
+   c1e50: 17ff3c00     	b	0x90e50 <.text+0x37e40>
+		...

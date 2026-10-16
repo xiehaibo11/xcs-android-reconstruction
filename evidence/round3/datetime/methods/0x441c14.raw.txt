@@ -1,0 +1,34 @@
+[dart:core] DateTime::_parts
+0x441c14: fd79bfa9 stp x29, x30, [x15, #-0x10]!
+0x441c18: fd030faa mov x29, x15
+0x441c1c: ef2100d1 sub x15, x15, #8
+0x441c20: e00301aa mov x0, x1
+0x441c24: a1831ff8 stur x1, [x29, #-8]
+0x441c28: 501f40f9 ldr x16, [x26, #0x38]
+0x441c2c: ff0110eb cmp x15, x16
+0x441c30: 09030054 b.ls #0x441c90
+0x441c34: 01f040b8 ldur w1, [x0, #0xf]
+0x441c38: 21801c8b add x1, x1, x28, lsl #32
+0x441c3c: 3f00166b cmp w1, w22
+0x441c40: 01020054 b.ne #0x441c80
+0x441c44: e10300aa mov x1, x0
+0x441c48: 2e010094 bl #0x442100
+0x441c4c: e10300aa mov x1, x0
+0x441c50: 12000094 bl #0x441c98
+0x441c54: e10300aa mov x1, x0
+0x441c58: a2835ff8 ldur x2, [x29, #-8]
+0x441c5c: 40f000b8 stur w0, [x2, #0xf]
+0x441c60: 50f05f38 ldurb w16, [x2, #-1]
+0x441c64: 11f05f38 ldurb w17, [x0, #-1]
+0x441c68: 300a508a and x16, x17, x16, lsr #2
+0x441c6c: 1f825cea tst x16, x28, lsr #32
+0x441c70: 40000054 b.eq #0x441c78
+0x441c74: 2fda0a94 bl #0x6f8530
+0x441c78: e00301aa mov x0, x1
+0x441c7c: 02000014 b #0x441c84
+0x441c80: e00301aa mov x0, x1
+0x441c84: ef031daa mov x15, x29
+0x441c88: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x441c8c: c0035fd6 ret 
+0x441c90: 9ae00a94 bl #0x6f9ef8
+0x441c94: e8ffff17 b #0x441c34

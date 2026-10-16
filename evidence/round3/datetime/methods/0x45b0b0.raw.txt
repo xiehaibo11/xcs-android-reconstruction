@@ -1,0 +1,66 @@
+[dart:core] DateTime::_sixDigits
+0x45b0b0: fd79bfa9 stp x29, x30, [x15, #-0x10]!
+0x45b0b4: fd030faa mov x29, x15
+0x45b0b8: ef6100d1 sub x15, x15, #0x18
+0x45b0bc: 501f40f9 ldr x16, [x26, #0x38]
+0x45b0c0: ff0110eb cmp x15, x16
+0x45b0c4: 49070054 b.ls #0x45b1ac
+0x45b0c8: 6100f8b7 tbnz x1, #0x3f, #0x45b0d4
+0x45b0cc: c0c20091 add x0, x22, #0x30
+0x45b0d0: 02000014 b #0x45b0d8
+0x45b0d4: c0820091 add x0, x22, #0x20
+0x45b0d8: 80002037 tbnz w0, #4, #0x45b0e8
+0x45b0dc: e20301cb neg x2, x1
+0x45b0e0: e30302aa mov x3, x2
+0x45b0e4: 02000014 b #0x45b0ec
+0x45b0e8: e30301aa mov x3, x1
+0x45b0ec: a3031ff8 stur x3, [x29, #-0x10]
+0x45b0f0: 60002037 tbnz w0, #4, #0x45b0fc
+0x45b0f4: 609362f9 ldr x0, [x27, #0x4520]
+0x45b0f8: 02000014 b #0x45b100
+0x45b0fc: 605f4df9 ldr x0, [x27, #0x1ab8]
+0x45b100: a0831ff8 stur x0, [x29, #-8]
+0x45b104: 11d490d2 mov x17, #0x86a0
+0x45b108: 3100a0f2 movk x17, #1, lsl #16
+0x45b10c: 7f0011eb cmp x3, x17
+0x45b110: 6b020054 b.lt #0x45b15c
+0x45b114: e10316aa mov x1, x22
+0x45b118: 820080d2 mov x2, #4
+0x45b11c: 357b0a94 bl #0x6f9df0
+0x45b120: e20300aa mov x2, x0
+0x45b124: a0835ff8 ldur x0, [x29, #-8]
+0x45b128: 40f000b8 stur w0, [x2, #0xf]
+0x45b12c: a3035ff8 ldur x3, [x29, #-0x10]
+0x45b130: 60787f93 sbfiz x0, x3, #1, #0x1f
+0x45b134: 7f0480eb cmp x3, x0, asr #1
+0x45b138: 60000054 b.eq #0x45b144
+0x45b13c: cf7b0a94 bl #0x6fa078
+0x45b140: 037000f8 stur x3, [x0, #7]
+0x45b144: 403001b8 stur w0, [x2, #0x13]
+0x45b148: e20100f9 str x2, [x15]
+0x45b14c: 0780f997 bl #0x2bb168
+0x45b150: ef031daa mov x15, x29
+0x45b154: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x45b158: c0035fd6 ret 
+0x45b15c: e10316aa mov x1, x22
+0x45b160: c20080d2 mov x2, #6
+0x45b164: 237b0a94 bl #0x6f9df0
+0x45b168: e20300aa mov x2, x0
+0x45b16c: a0835ff8 ldur x0, [x29, #-8]
+0x45b170: 40f000b8 stur w0, [x2, #0xf]
+0x45b174: 70936af9 ldr x16, [x27, #0x5520]
+0x45b178: 503001b8 stur w16, [x2, #0x13]
+0x45b17c: a3035ff8 ldur x3, [x29, #-0x10]
+0x45b180: 60787f93 sbfiz x0, x3, #1, #0x1f
+0x45b184: 7f0480eb cmp x3, x0, asr #1
+0x45b188: 60000054 b.eq #0x45b194
+0x45b18c: bb7b0a94 bl #0x6fa078
+0x45b190: 037000f8 stur x3, [x0, #7]
+0x45b194: 407001b8 stur w0, [x2, #0x17]
+0x45b198: e20100f9 str x2, [x15]
+0x45b19c: f37ff997 bl #0x2bb168
+0x45b1a0: ef031daa mov x15, x29
+0x45b1a4: fd79c1a8 ldp x29, x30, [x15], #0x10
+0x45b1a8: c0035fd6 ret 
+0x45b1ac: 537b0a94 bl #0x6f9ef8
+0x45b1b0: c6ffff17 b #0x45b0c8

@@ -1,0 +1,28 @@
+apply plugin: 'com.android.application'
+
+android {
+    namespace 'com.re.xcs.rebuild'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'com.re.xcs.rebuild'
+        minSdk 26
+        targetSdk 28
+        versionCode 1
+        versionName '2.1.6-rebuild.1'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    // Local fixture instrumentation is deliberately available only in debug.
+    sourceSets { debug.java.srcDirs += 'src/androidTest/java' }
+    buildTypes { debug { debuggable true } }
+}
+
+// Generate checkout-local fixture keys before either debug or release packaging.
+// No original application private key is included in the public repository.
+tasks.register('prepareDevelopmentAssets', Exec) {
+    workingDir rootProject.projectDir
+    commandLine 'python3', 'scripts/prepare_dev_assets.py'
+}
+tasks.named('preBuild').configure { dependsOn 'prepareDevelopmentAssets' }

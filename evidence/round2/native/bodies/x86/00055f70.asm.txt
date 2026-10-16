@@ -1,0 +1,48 @@
+
+<LOCAL_APP>/unpacked/lib/x86/librsa_bridge.so:	file format elf32-i386
+
+Disassembly of section .text:
+
+0001d8f0 <.text>:
+   55f70: e8 4b 7a fc ff               	calll	0x1d9c0 <.text+0xd0>
+   55f75: 8b 89 cb b5 3a 00            	movl	0x3ab5cb(%ecx), %ecx
+   55f7b: 65 8b 09                     	movl	%gs:(%ecx), %ecx
+   55f7e: 3b 61 08                     	cmpl	0x8(%ecx), %esp
+   55f81: 76 70                        	jbe	0x55ff3 <.text+0x38703>
+   55f83: 83 ec 04                     	subl	$0x4, %esp
+   55f86: e8 95 f6 ff ff               	calll	0x55620 <.text+0x37d30>
+   55f8b: 8b 04 24                     	movl	(%esp), %eax
+   55f8e: e8 2d 7a fc ff               	calll	0x1d9c0 <.text+0xd0>
+   55f93: 8d 89 29 96 3e 00            	leal	0x3e9629(%ecx), %ecx
+   55f99: 89 01                        	movl	%eax, (%ecx)
+   55f9b: e8 a0 fe ff ff               	calll	0x55e40 <.text+0x38550>
+   55fa0: 8b 04 24                     	movl	(%esp), %eax
+   55fa3: e8 18 7a fc ff               	calll	0x1d9c0 <.text+0xd0>
+   55fa8: 8d 89 70 95 3e 00            	leal	0x3e9570(%ecx), %ecx
+   55fae: 89 01                        	movl	%eax, (%ecx)
+   55fb0: e8 fb 79 fc ff               	calll	0x1d9b0 <.text+0xc0>
+   55fb5: 8d 80 eb b4 3a 00            	leal	0x3ab4eb(%eax), %eax
+   55fbb: 0f b6 00                     	movzbl	(%eax), %eax
+   55fbe: 84 c0                        	testb	%al, %al
+   55fc0: 74 2d                        	je	0x55fef <.text+0x386ff>
+   55fc2: 90                           	nop
+   55fc3: e8 e8 79 fc ff               	calll	0x1d9b0 <.text+0xc0>
+   55fc8: 8d 80 c0 b5 3a 00            	leal	0x3ab5c0(%eax), %eax
+   55fce: 81 20 ff ff ff 7f            	andl	$0x7fffffff, (%eax)     # imm = 0x7FFFFFFF
+   55fd4: e8 d7 79 fc ff               	calll	0x1d9b0 <.text+0xc0>
+   55fd9: 8d 80 b3 b5 3a 00            	leal	0x3ab5b3(%eax), %eax
+   55fdf: 8b 08                        	movl	(%eax), %ecx
+   55fe1: 89 ca                        	movl	%ecx, %edx
+   55fe3: 83 e1 fe                     	andl	$-0x2, %ecx
+   55fe6: 83 e2 fc                     	andl	$-0x4, %edx
+   55fe9: 90                           	nop
+   55fea: 89 08                        	movl	%ecx, (%eax)
+   55fec: 90                           	nop
+   55fed: 89 10                        	movl	%edx, (%eax)
+   55fef: 83 c4 04                     	addl	$0x4, %esp
+   55ff2: c3                           	retl
+   55ff3: e8 d8 79 03 00               	calll	0x8d9d0 <.text+0x700e0>
+   55ff8: e9 73 ff ff ff               	jmp	0x55f70 <.text+0x38680>
+   55ffd: cc                           	int3
+   55ffe: cc                           	int3
+   55fff: cc                           	int3

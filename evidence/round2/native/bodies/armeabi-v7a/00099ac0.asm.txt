@@ -1,0 +1,17 @@
+
+<LOCAL_APP>/unpacked/lib/armeabi-v7a/librsa_bridge.so:	file format elf32-littlearm
+
+Disassembly of section .text:
+
+000987fc <_cgo_topofstack>:
+   99ac0: ee1d0f70     	mrc	p15, #0x0, r0, c13, c0, #0x3
+   99ac4: e3c00003     	bic	r0, r0, #3
+   99ac8: e59fb018     	ldr	r11, [pc, #0x18]        @ 0x99ae8 <_cgo_topofstack+0x12ec>
+   99acc: e08fb00b     	add	r11, pc, r11
+   99ad0: e59bb000     	ldr	r11, [r11]
+   99ad4: e080000b     	add	r0, r0, r11
+   99ad8: e580a000     	str	r10, [r0]
+   99adc: e1a0000a     	mov	r0, r10
+   99ae0: e28ef000     	add	pc, lr, #0
+   99ae4: eafffffe     	b	0x99ae4 <_cgo_topofstack+0x12e8> @ imm = #-0x8
+   99ae8: 00359a58     	eorseq	r9, r5, r8, asr r10

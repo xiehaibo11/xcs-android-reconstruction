@@ -1,0 +1,32 @@
+
+<LOCAL_APP>/unpacked/lib/x86_64/librsa_bridge.so:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000059800 <.text>:
+   9eda0: 49 3b 66 10                  	cmpq	0x10(%r14), %rsp
+   9eda4: 76 3f                        	jbe	0x9ede5 <.text+0x455e5>
+   9eda6: 55                           	pushq	%rbp
+   9eda7: 48 89 e5                     	movq	%rsp, %rbp
+   9edaa: 48 83 ec 10                  	subq	$0x10, %rsp
+   9edae: 89 05 9c 34 3d 00            	movl	%eax, 0x3d349c(%rip)    # 0x472250
+   9edb4: 83 3d 45 38 3d 00 00         	cmpl	$0x0, 0x3d3845(%rip)    # 0x472600
+   9edbb: 74 16                        	je	0x9edd3 <.text+0x455d3>
+   9edbd: 0f 1f 00                     	nopl	(%rax)
+   9edc0: e8 7b 12 02 00               	callq	0xc0040 <_cgo_topofstack+0x80>
+   9edc5: 49 89 1b                     	movq	%rbx, (%r11)
+   9edc8: 48 8b 0d 49 41 3a 00         	movq	0x3a4149(%rip), %rcx    # 0x442f18
+   9edcf: 49 89 4b 08                  	movq	%rcx, 0x8(%r11)
+   9edd3: 48 89 1d 3e 41 3a 00         	movq	%rbx, 0x3a413e(%rip)    # 0x442f18
+   9edda: e8 61 c2 fe ff               	callq	0x8b040 <.text+0x31840>
+   9eddf: 48 83 c4 10                  	addq	$0x10, %rsp
+   9ede3: 5d                           	popq	%rbp
+   9ede4: c3                           	retq
+   9ede5: 89 44 24 08                  	movl	%eax, 0x8(%rsp)
+   9ede9: 48 89 5c 24 10               	movq	%rbx, 0x10(%rsp)
+   9edee: e8 4d f3 01 00               	callq	0xbe140 <.text+0x64940>
+   9edf3: 8b 44 24 08                  	movl	0x8(%rsp), %eax
+   9edf7: 48 8b 5c 24 10               	movq	0x10(%rsp), %rbx
+   9edfc: eb a2                        	jmp	0x9eda0 <.text+0x455a0>
+   9edfe: cc                           	int3
+   9edff: cc                           	int3

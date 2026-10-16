@@ -1,0 +1,36 @@
+
+<LOCAL_APP>/unpacked/lib/x86/librsa_bridge.so:	file format elf32-i386
+
+Disassembly of section .text:
+
+0001d8f0 <.text>:
+   65f50: e8 6b 7a fb ff               	calll	0x1d9c0 <.text+0xd0>
+   65f55: 8b 89 eb b5 39 00            	movl	0x39b5eb(%ecx), %ecx
+   65f5b: 65 8b 09                     	movl	%gs:(%ecx), %ecx
+   65f5e: 3b 61 08                     	cmpl	0x8(%ecx), %esp
+   65f61: 76 64                        	jbe	0x65fc7 <.text+0x486d7>
+   65f63: 83 ec 14                     	subl	$0x14, %esp
+   65f66: e8 45 7a fb ff               	calll	0x1d9b0 <.text+0xc0>
+   65f6b: 8b 80 d5 b5 39 00            	movl	0x39b5d5(%eax), %eax
+   65f71: 65 8b 00                     	movl	%gs:(%eax), %eax
+   65f74: c7 44 24 04 00 00 00 00      	movl	$0x0, 0x4(%esp)
+   65f7c: c7 44 24 08 00 00 00 00      	movl	$0x0, 0x8(%esp)
+   65f84: c7 44 24 0c 00 00 00 00      	movl	$0x0, 0xc(%esp)
+   65f8c: c7 44 24 10 00 00 00 00      	movl	$0x0, 0x10(%esp)
+   65f94: e8 27 7a fb ff               	calll	0x1d9c0 <.text+0xd0>
+   65f99: 8d 89 37 00 00 00            	leal	0x37(%ecx), %ecx
+   65f9f: 89 4c 24 04                  	movl	%ecx, 0x4(%esp)
+   65fa3: 8b 4c 24 18                  	movl	0x18(%esp), %ecx
+   65fa7: 89 4c 24 08                  	movl	%ecx, 0x8(%esp)
+   65fab: 89 44 24 0c                  	movl	%eax, 0xc(%esp)
+   65faf: 8b 44 24 14                  	movl	0x14(%esp), %eax
+   65fb3: 89 44 24 10                  	movl	%eax, 0x10(%esp)
+   65fb7: 8d 44 24 04                  	leal	0x4(%esp), %eax
+   65fbb: 89 04 24                     	movl	%eax, (%esp)
+   65fbe: e8 0d 79 02 00               	calll	0x8d8d0 <.text+0x6ffe0>
+   65fc3: 83 c4 14                     	addl	$0x14, %esp
+   65fc6: c3                           	retl
+   65fc7: e8 04 7a 02 00               	calll	0x8d9d0 <.text+0x700e0>
+   65fcc: eb 82                        	jmp	0x65f50 <.text+0x48660>
+   65fce: cc                           	int3
+   65fcf: cc                           	int3

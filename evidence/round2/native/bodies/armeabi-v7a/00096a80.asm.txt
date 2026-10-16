@@ -1,0 +1,10 @@
+
+<LOCAL_APP>/unpacked/lib/armeabi-v7a/librsa_bridge.so:	file format elf32-littlearm
+
+Disassembly of section .text:
+
+0001d7ec <.text>:
+   96a80: e52de004     	str	lr, [sp, #-0x4]!
+   96a84: ebff36c0     	bl	0x6458c <.text+0x46da0> @ imm = #-0x32500
+   96a88: e49df004     	ldr	pc, [sp], #4
+   96a8c: 00000000     	andeq	r0, r0, r0
