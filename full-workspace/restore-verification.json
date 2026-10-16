@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "checks": {
+    "actual_restore_from_repository_parts": "PASS",
+    "restore_from_unrelated_working_directory": "PASS",
+    "restored_file_bytes": 1843151831,
+    "restored_file_sha256": "831189b605e0d0ca5ba88cb55010b1da07ea2fe3ae8475300163f399c934f1c9",
+    "existing_output_refused": "PASS",
+    "temporary_restored_archive_deleted": true,
+    "path_traversal_and_absolute_paths_rejected": "PASS",
+    "escaping_symlink_rejected": "PASS",
+    "corrupt_part_rejected_and_partial_output_cleaned": "PASS"
+  },
+  "archive_original_retained_outside_repository": true,
+  "restored_archive_not_present_in_repository": true
+}

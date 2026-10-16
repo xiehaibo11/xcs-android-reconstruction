@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "archive_members_equal_manifest": true,
+  "archive_member_hashes_checked": 42534,
+  "archive_member_bytes_checked": 3153516657,
+  "source_file_hashes_checked": 42534,
+  "source_file_bytes_checked": 3153516657,
+  "source_path_sets_unchanged": true,
+  "archive_sha256": "831189b605e0d0ca5ba88cb55010b1da07ea2fe3ae8475300163f399c934f1c9",
+  "errors": []
+}

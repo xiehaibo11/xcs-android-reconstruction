@@ -20,3 +20,4 @@ __pycache__/
 .env.*
 .idea/
 *.iml
+/full-workspace/APP-complete.tar.gz

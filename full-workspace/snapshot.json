@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "created_at_utc": "2026-10-16T12:31:48.589167+00:00",
+  "source": "/Users/mosc/Downloads/软件/APP",
+  "archive_root": "APP",
+  "exclusions": [],
+  "public_subtree_included": true,
+  "hidden_files_included": true,
+  "embedded_git_metadata_included": true,
+  "archive": {
+    "filename": "APP-complete.tar.gz",
+    "bytes": 1843151831,
+    "sha256": "831189b605e0d0ca5ba88cb55010b1da07ea2fe3ae8475300163f399c934f1c9",
+    "format": "PAX tar + gzip",
+    "gzip_level": 1
+  },
+  "manifest": {
+    "filename": "files.jsonl",
+    "bytes": 12120951,
+    "sha256": "22109fdfd054f98a3937eed77e2c8caab52a5983efbff1b20b5853a0cf53ef70",
+    "entries": 46855
+  },
+  "counts": {
+    "directory": 4321,
+    "file": 42534
+  },
+  "regular_file_bytes": 3153516657,
+  "snapshot_script_sha256": "dd72fcfd50fb98d267acaa304dd82edf5eb07d808a7f3cc87127a5bf8bf3492f",
+  "elapsed_seconds": 65.913
+}
