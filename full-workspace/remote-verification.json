@@ -1,0 +1,66 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-16T13:04:49.002552+00:00",
+  "repository": "https://github.com/xiehaibo11/xcs-android-reconstruction",
+  "verified_commit": "1ffcdbdcf431610e6ff2b424da1713578ac368d2",
+  "separate_network_clone": true,
+  "anonymous_git_and_lfs_access": true,
+  "local_lfs_cache_empty_before_network_fetch": true,
+  "remote_actual_part_count": 7,
+  "remote_actual_bytes": 1843151831,
+  "all_remote_parts_match_sha256": true,
+  "parts": [
+    {
+      "path": "parts/APP-complete.tar.gz.part-000",
+      "bytes": 268435456,
+      "sha256": "c2c97c789de71b2a45523bd53ac7bd5afa8852c0790c4b92a8a369344dd8ab70",
+      "status": "PASS"
+    },
+    {
+      "path": "parts/APP-complete.tar.gz.part-001",
+      "bytes": 268435456,
+      "sha256": "625ae5f9b0d520ae110bc24627c612f2d75d162261d4b85184bcfa1378260755",
+      "status": "PASS"
+    },
+    {
+      "path": "parts/APP-complete.tar.gz.part-002",
+      "bytes": 268435456,
+      "sha256": "cc4e739acc5b83b695622c424faa2c073bcf4c3808b23e7ba319c2a1c1dbe9bb",
+      "status": "PASS"
+    },
+    {
+      "path": "parts/APP-complete.tar.gz.part-003",
+      "bytes": 268435456,
+      "sha256": "7aa49a54b3eee7b6230f7a2946f41f47803270b25c024070a06d7cc3064f4151",
+      "status": "PASS"
+    },
+    {
+      "path": "parts/APP-complete.tar.gz.part-004",
+      "bytes": 268435456,
+      "sha256": "e1ada6623e7e3b34b6205e30755913673e88bd9c6b6d980ce198e1f64ae9bfa2",
+      "status": "PASS"
+    },
+    {
+      "path": "parts/APP-complete.tar.gz.part-005",
+      "bytes": 268435456,
+      "sha256": "eb6c05bb9acd0ae3adf2a5de5058e9128e89b17f04ae8c5acecb439ed2321c74",
+      "status": "PASS"
+    },
+    {
+      "path": "parts/APP-complete.tar.gz.part-006",
+      "bytes": 232539095,
+      "sha256": "4756694e2e9fd603c9d6a6aee0a3af506e03207403f165f0e968b36ce2c630b3",
+      "status": "PASS"
+    }
+  ],
+  "concatenated_archive_sha256": "831189b605e0d0ca5ba88cb55010b1da07ea2fe3ae8475300163f399c934f1c9",
+  "archive_matches_original_verified_local_snapshot": true,
+  "manifest_sha256_matches": true,
+  "git_lfs_fsck": "PASS",
+  "snapshot_counts": {
+    "directory": 4321,
+    "file": 42534
+  },
+  "source_regular_file_bytes": 3153516657,
+  "note": "All seven actual object bodies were downloaded from GitHub into a separate checkout; original upload cache was not reused."
+}

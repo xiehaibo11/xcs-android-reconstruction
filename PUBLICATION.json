@@ -165,5 +165,6 @@
       "Build outputs, local environment and runtime logs/screenshots"
     ],
     "historical_evidence": "Existing reports retain their historical artifact hashes. Path redaction changes report file bytes. Public build verification is recorded separately; a historical PASS is not a verification of the public adaptation."
-  }
+  },
+  "remote_archive_verification": "full-workspace/remote-verification.json"
 }
